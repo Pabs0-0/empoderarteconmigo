@@ -24,28 +24,17 @@
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
-    font-family: 'Quicksand', sans-serif;
-    background-color: var(--crema);
-    background-image:
-      radial-gradient(circle at 20% 20%, rgba(229,83,123,0.08) 0%, transparent 50%),
-      radial-gradient(circle at 80% 80%, rgba(197,23,34,0.06) 0%, transparent 50%),
-      radial-gradient(circle at 50% 50%, rgba(244,178,74,0.04) 0%, transparent 60%);
-    min-height: 100vh;
-    overflow-x: hidden;
-    position: relative;
-  }
+  font-family: 'Quicksand', sans-serif;
+  background: url('img/background.png') center center / cover no-repeat fixed;
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
 
   /* Decorative background pattern */
   body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image:
-      url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Ccircle cx='30' cy='30' r='2' fill='%23E5537B' fill-opacity='0.06'/%3E%3Ccircle cx='10' cy='10' r='1.5' fill='%23F4B24A' fill-opacity='0.08'/%3E%3Ccircle cx='50' cy='10' r='1' fill='%23C51722' fill-opacity='0.05'/%3E%3Ccircle cx='10' cy='50' r='1' fill='%23E95A5F' fill-opacity='0.07'/%3E%3C/g%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 0;
-  }
-
+  display: none;
+}
   .page-wrapper {
     position: relative;
     z-index: 1;
@@ -159,7 +148,7 @@
     position: absolute;
     right: 24px;
     bottom: 0;
-    width: 100px;
+    width: 270px;
     opacity: 0.85;
     filter: drop-shadow(0 4px 12px rgba(0,0,0,0.3));
   }
@@ -771,7 +760,7 @@
       </ul>
     </div>
     <!-- Ceci character placeholder -->
-    <img src="img/ceci.png" alt="Ceci" class="ceci-header"
+    <img src="img/fase2.png" alt="Ceci" class="ceci-header"
          onerror="this.style.display='none'">
   </div>
 
@@ -895,7 +884,7 @@
 
   <!-- Luna decoration -->
   <div style="text-align:right;margin-top:-10px;margin-bottom:16px;padding-right:16px;">
-    <img src="img/luna.png" alt="Luna" style="width:80px;opacity:0.85;filter:drop-shadow(0 4px 8px rgba(0,0,0,0.1))"
+    <img src="img/luna_side.png" alt="Luna" style="width:80px;opacity:0.85;filter:drop-shadow(0 4px 8px rgba(0,0,0,0.1))"
          onerror="this.style.display='none'">
   </div>
 
@@ -918,8 +907,7 @@
       Aprender sus nombres correctos te ayuda a comprenderlo mejor, expresarte con claridad y reconocer que tu cuerpo merece ser tratado con respeto.
     </p>
     <div class="modal-characters">
-      <img src="img/ceci.png" alt="Ceci" class="modal-char" onerror="this.style.display='none'">
-      <img src="img/luna.png" alt="Luna" class="modal-char" onerror="this.style.display='none'">
+      <img src="img/ceci_luna_holdingbreath.png" alt="Ceci" class="modal-char" onerror="this.style.display='none'">
     </div>
     <button class="modal-btn" onclick="closeModal()">¡Continuar explorando! 🌿</button>
   </div>
