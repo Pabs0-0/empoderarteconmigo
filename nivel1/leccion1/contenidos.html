@@ -1,0 +1,1367 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>El Espejo de Pandora – Nivel 1</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Nunito:wght@400;600;700;800;900&display=swap');
+
+  :root {
+    --azul-noche: #1D163B;
+    --indigo: #32365C;
+    --petroleo: #52808B;
+    --celeste: #A4C2C4;
+    --coral: #E44F60;
+    --rosado: #AA5874;
+    --malva: #5C345A;
+    --crema: #EFEDE4;
+    --oro: #F5C842;
+    --blanco: #ffffff;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background-color: var(--azul-noche);
+    background-image: url('img/background.png');
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Overlay sutil sobre el fondo */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .page-wrapper {
+    position: relative;
+    z-index: 1;
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 28px 18px 60px;
+  }
+
+  /* ─── HEADER ─── */
+  .level-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(164, 194, 196, 0.308);
+    border: 1.5px solid var(--celeste);
+    border-radius: 30px;
+    padding: 6px 18px;
+    color: var(--celeste);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  /* ─── INTRO CARD ─── */
+  .intro-card {
+    background: linear-gradient(160deg, rgba(10, 6, 27, 0.82) 10%, rgb(26 20 76) 60%, rgb(46 9 51) 100%);
+    border-radius: 28px;
+    padding: 36px 40px 32px;
+    box-shadow: 0 12px 48px rgba(29, 22, 59, 0.699), 0 0 0 2px var(--celeste);
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 36px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 20px;
+    align-items: center;
+  }
+
+  .intro-card::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 180px; height: 180px;
+    background: radial-gradient(circle, rgba(164,194,196,0.3) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .intro-card h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    color: #ff46b2;
+    margin-bottom: 14px;
+    line-height: 1.2;
+  }
+
+  .intro-card p {
+    font-size: 1.02rem;
+    color: #f5f5f5;
+    line-height: 1.7;
+    max-width: 540px;
+  }
+
+  .intro-ceci {
+    width: clamp(100px, 18vw, 160px);
+    filter: drop-shadow(0 8px 18px rgba(90,52,90,0.4));
+    animation: float 4s ease-in-out infinite;
+    flex-shrink: 0;
+  }
+
+  @keyframes float {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  /* decorative sparkles */
+  .sparkle {
+    position: absolute;
+    width: 10px; height: 10px;
+    background: var(--celeste);
+    clip-path: polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);
+    opacity: 0;
+    animation: twinkle 3s ease-in-out infinite;
+  }
+  @keyframes twinkle {
+    0%,100% { opacity:0; transform:scale(0.5) rotate(0deg); }
+    50% { opacity:1; transform:scale(1.1) rotate(180deg); }
+  }
+
+  /* ─── INSTRUCTIONS ─── */
+  .instruction-block {
+    background: linear-gradient(135deg, #141956, #300831);
+    border-radius: 20px;
+    padding: 22px 28px;
+    color: var(--crema);
+    margin-bottom: 36px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    box-shadow: 0 6px 28px rgba(29,22,59,0.5);
+    border: 1.5px solid rgba(164,194,196,0.3);
+  }
+
+  .instruction-icon {
+    font-size: 2.4rem;
+    flex-shrink: 0;
+  }
+
+  .instruction-block p {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  .instruction-block strong {
+    color: var(--celeste);
+  }
+
+  /* ─── CARDS POOL ─── */
+  .cards-section {
+    margin-bottom: 36px;
+  }
+
+  .cards-section h2 {
+    color: #171a29;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    margin-bottom: 16px;
+    text-align: center;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.4);
+  }
+
+  #cards-pool {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    min-height: 80px;
+    padding: 20px;
+    background: rgba(29,22,59,0.5);
+    border-radius: 20px;
+    border: 2px dashed rgba(164,194,196,0.35);
+    transition: border-color 0.3s;
+  }
+
+  #cards-pool.drag-over {
+    border-color: var(--celeste);
+    background: rgba(164,194,196,0.1);
+  }
+
+  .phrase-card {
+    background: linear-gradient(135deg, var(--coral), var(--rosado));
+    color: white;
+    padding: 13px 22px;
+    border-radius: 50px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: grab;
+    user-select: none;
+    box-shadow: 0 4px 16px rgba(228,79,96,0.35), inset 0 1px 0 rgba(255,255,255,0.2);
+    transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
+    border: 2px solid rgba(255,255,255,0.25);
+    position: relative;
+    overflow: hidden;
+    touch-action: none;
+  }
+
+  .phrase-card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 60%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+  }
+
+  .phrase-card:hover::after { left: 150%; }
+
+  .phrase-card:nth-child(3n) {
+    background: linear-gradient(135deg, #52808B, #32365C);
+    box-shadow: 0 4px 16px rgba(82,128,139,0.4);
+  }
+
+  .phrase-card:nth-child(3n+1) {
+    background: linear-gradient(135deg, var(--malva), var(--rosado));
+    box-shadow: 0 4px 16px rgba(92,52,90,0.4);
+  }
+
+  .phrase-card:hover {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 8px 24px rgba(228,79,96,0.45);
+  }
+
+  .phrase-card.dragging {
+    opacity: 0.5;
+    transform: scale(0.95);
+    cursor: grabbing;
+  }
+
+  .phrase-card.correct {
+    background: linear-gradient(135deg, #2e7d52, #4caf7a) !important;
+    box-shadow: 0 0 20px rgba(76,175,122,0.6) !important;
+    cursor: default;
+    animation: correctPop 0.5s ease;
+  }
+
+  .phrase-card.incorrect-flash {
+    animation: errorShake 0.5s ease;
+  }
+
+  @keyframes correctPop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.12); }
+    100% { transform: scale(1); }
+  }
+
+  @keyframes errorShake {
+    0%,100% { transform: translateX(0); }
+    25% { transform: translateX(-8px); }
+    75% { transform: translateX(8px); }
+  }
+
+  /* ─── MIRRORS ZONE ─── */
+  .mirrors-zone {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 36px;
+  }
+
+  .mirror-panel {
+    background: linear-gradient(160deg, rgba(29,22,59,0.9), rgba(50,54,92,0.85));
+    border: 3px solid rgba(164,194,196,0.4);
+    border-radius: 24px;
+    min-height: 260px;
+    padding: 22px 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    transition: border-color 0.4s, box-shadow 0.4s;
+    overflow: hidden;
+  }
+
+  .mirror-panel::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 22px;
+    background: linear-gradient(160deg, rgba(164,194,196,0.06) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .mirror-panel.glow {
+    border-color: var(--celeste);
+    box-shadow: 0 0 30px rgba(164,194,196,0.5), inset 0 0 20px rgba(164,194,196,0.08);
+    animation: mirrorGlow 1s ease;
+  }
+
+  .mirror-panel.blur-error {
+    filter: blur(1.5px);
+    animation: blurPulse 0.8s ease forwards;
+  }
+
+  @keyframes mirrorGlow {
+    0% { box-shadow: 0 0 0 rgba(164,194,196,0); }
+    50% { box-shadow: 0 0 50px rgba(164,194,196,0.7); }
+    100% { box-shadow: 0 0 30px rgba(164,194,196,0.5); }
+  }
+
+  @keyframes blurPulse {
+    0% { filter: blur(0); }
+    40% { filter: blur(2.5px); }
+    100% { filter: blur(0); }
+  }
+
+  .mirror-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    color: var(--celeste);
+    text-align: center;
+    margin-bottom: 8px;
+    font-weight: 700;
+  }
+
+  .mirror-subtitle {
+    font-size: 0.9rem;
+    color: rgba(239,237,228,0.8);
+    text-align: center;
+    margin-bottom: 16px;
+    font-style: italic;
+  }
+
+  .mirror-drop-zone {
+    flex: 1;
+    width: 100%;
+    min-height: 130px;
+    border-radius: 14px;
+    border: 2px dashed rgba(164,194,196,0.3);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 12px;
+    align-content: flex-start;
+    justify-content: center;
+    transition: border-color 0.3s, background 0.3s;
+  }
+
+  .mirror-drop-zone.drag-over {
+    border-color: var(--celeste);
+    background: rgba(164,194,196,0.12);
+  }
+
+  .mirror-drop-zone .phrase-card {
+    font-size: 0.8rem;
+    padding: 8px 14px;
+  }
+
+  .mirror-reflection {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--celeste), transparent);
+    opacity: 0;
+    transition: opacity 0.5s;
+    border-radius: 24px 24px 0 0;
+  }
+
+  .mirror-panel.glow .mirror-reflection { opacity: 1; }
+
+  /* star particles */
+  .star-burst {
+    position: absolute;
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  .star-burst span {
+    position: absolute;
+    width: 8px; height: 8px;
+    background: var(--celeste);
+    clip-path: polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);
+    animation: starFly 0.8s ease-out forwards;
+  }
+
+  @keyframes starFly {
+    0% { opacity:1; transform:scale(1) translate(0,0); }
+    100% { opacity:0; transform:scale(0.3) translate(var(--tx), var(--ty)); }
+  }
+
+  /* ─── FEEDBACK TOAST ─── */
+  .feedback-toast {
+    position: fixed;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-100px);
+    background: linear-gradient(135deg, var(--indigo), var(--malva));
+    color: var(--crema);
+    padding: 14px 32px;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: 800;
+    border: 2px solid var(--celeste);
+    box-shadow: 0 8px 32px rgba(29,22,59,0.6);
+    z-index: 1000;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    white-space: nowrap;
+  }
+
+  .feedback-toast.show {
+    transform: translateX(-50%) translateY(0);
+  }
+
+  /* ─── HINT CARD ─── */
+  .hint-card {
+    background: linear-gradient(135deg, rgba(92,52,90,0.95), rgba(50,54,92,0.95));
+    border: 2px solid var(--celeste);
+    border-radius: 20px;
+    padding: 22px 26px;
+    color: var(--crema);
+    margin-bottom: 24px;
+    display: none;
+    animation: fadeInDown 0.4s ease;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+  }
+
+  .hint-card.visible { display: block; }
+
+  .hint-card h3 {
+    color: var(--celeste);
+    font-family: 'Playfair Display', serif;
+    margin-bottom: 10px;
+    font-size: 1rem;
+  }
+
+  .hint-card p { font-size: 0.95rem; line-height: 1.7; }
+
+  @keyframes fadeInDown {
+    from { opacity:0; transform: translateY(-12px); }
+    to { opacity:1; transform: translateY(0); }
+  }
+
+  /* ─── BONUS ─── */
+  #bonus-trigger-zone {
+    display: none;
+    text-align: center;
+    margin-bottom: 40px;
+    animation: fadeInDown 0.8s ease;
+  }
+
+  #bonus-trigger-zone.visible { display: block; }
+
+  .bonus-ready-msg {
+    color: #171a29;
+    font-size: 1rem;
+    margin-bottom: 16px;
+    font-weight: 700;
+    animation: pulseText 1.5s ease-in-out infinite;
+  }
+
+  @keyframes pulseText {
+    0%,100% { opacity:1; }
+    50% { opacity:0.6; }
+  }
+
+  .bonus-box {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .bonus-chest {
+    width: 130px;
+    height: 110px;
+    background: linear-gradient(145deg, #f7df08, #ffd700, #ddc80b);
+    border-radius: 16px 16px 12px 12px;
+    border: 3px solid #ffd700;
+    position: relative;
+    box-shadow: 0 0 40px rgba(245,200,66,0.7), 0 0 80px rgba(245,200,66,0.3);
+    animation: chestPulse 2s ease-in-out infinite;
+    transition: transform 0.3s;
+  }
+
+  .bonus-chest:hover { transform: scale(1.07) rotate(-2deg); }
+
+  .bonus-chest::before {
+    content: '✨';
+    position: absolute;
+    top: -20px; left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.6rem;
+    animation: bounceStar 1s ease-in-out infinite;
+  }
+
+  .bonus-chest .chest-lid {
+    width: 100%;
+    height: 42px;
+    background: linear-gradient(135deg, #d4a017, #ffd700);
+    border-radius: 14px 14px 0 0;
+    border-bottom: 3px solid rgba(0,0,0,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+  }
+
+  .bonus-chest .chest-body {
+    width: 100%;
+    height: 68px;
+    background: linear-gradient(135deg, #fffa10, #e6b820);
+    border-radius: 0 0 12px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .bonus-label {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: var(--azul-noche);
+    letter-spacing: 3px;
+    text-shadow: 0 1px 0 rgba(255,255,255,0.4);
+  }
+
+  @keyframes chestPulse {
+    0%,100% { box-shadow: 0 0 30px rgba(245,200,66,0.6), 0 0 60px rgba(245,200,66,0.2); }
+    50% { box-shadow: 0 0 60px rgba(245,200,66,0.9), 0 0 120px rgba(245,200,66,0.4); }
+  }
+
+  @keyframes bounceStar {
+    0%,100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(-6px); }
+  }
+
+  /* ─── BONUS CONTENT ─── */
+  #bonus-content {
+    display: none;
+    margin-bottom: 40px;
+    animation: fadeInDown 0.8s ease;
+  }
+
+  #bonus-content.visible { display: block; }
+
+  .bonus-intro-card {
+    background: linear-gradient(135deg, #141956, #300831);
+    border-radius: 24px;
+    padding: 30px 34px;
+    color: var(--crema);
+    margin-bottom: 24px;
+    border: 2px solid rgba(164,194,196,0.3);
+    box-shadow: 0 12px 40px rgba(29,22,59,0.5);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .bonus-intro-card h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    color: var(--celeste);
+    margin-bottom: 14px;
+  }
+
+  .bonus-intro-card p {
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  .bonus-cards-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+
+  .bonus-phrase-card {
+    background: linear-gradient(90deg, rgba(29,22,59,0.9), rgba(92,52,90,0.8));
+    border: 2px solid rgba(164,194,196,0.25);
+    border-left: 4px solid var(--coral);
+    border-radius: 14px;
+    padding: 15px 22px;
+    color: var(--crema);
+    font-size: 1rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    animation: slideInLeft 0.4s ease both;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+  }
+
+  .bonus-phrase-card:nth-child(2) { animation-delay: 0.1s; }
+  .bonus-phrase-card:nth-child(3) { animation-delay: 0.2s; }
+  .bonus-phrase-card:nth-child(4) { animation-delay: 0.3s; }
+  .bonus-phrase-card:nth-child(5) { animation-delay: 0.4s; }
+
+  @keyframes slideInLeft {
+    from { opacity:0; transform: translateX(-30px); }
+    to { opacity:1; transform: translateX(0); }
+  }
+
+  .bonus-phrase-card::before {
+    content: '✗';
+    color: var(--coral);
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+
+  .bonus-reflection {
+    background: linear-gradient(135deg, #141956, #300831);
+    border: 2px solid var(--celeste);
+    border-radius: 20px;
+    padding: 26px 30px;
+    color: var(--crema);
+    text-align: center;
+    font-size: 1.05rem;
+    line-height: 1.8;
+    box-shadow: 0 8px 28px rgba(0,0,0,0.3);
+  }
+
+  .bonus-reflection strong {
+    color: var(--celeste);
+    display: block;
+    font-size: 1.15rem;
+    margin-bottom: 10px;
+    font-family: 'Playfair Display', serif;
+  }
+
+  /* ─── REWARD ─── */
+  #reward-section {
+    display: none;
+    text-align: center;
+    padding: 40px 20px;
+    animation: fadeInDown 0.8s ease;
+  }
+
+  #reward-section.visible { display: block; }
+
+  .reward-card {
+    background: linear-gradient(145deg, rgb(23 24 82), rgb(46 8 50));
+    border: 3px solid var(--oro);
+    border-radius: 32px;
+    padding: 40px 30px;
+    box-shadow: 0 0 60px rgba(245,200,66,0.3), 0 20px 60px rgba(0,0,0,0.5);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .reward-card::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: conic-gradient(transparent, rgba(245,200,66,0.08), transparent 30%);
+    animation: rotateSweep 6s linear infinite;
+  }
+
+  @keyframes rotateSweep {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .reward-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    color: var(--oro);
+    margin-bottom: 8px;
+    position: relative;
+  }
+
+  .reward-subtitle {
+    color: var(--celeste);
+    font-size: 0.95rem;
+    margin-bottom: 30px;
+    position: relative;
+  }
+
+  .badge-fragment-wrapper {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 24px;
+  }
+
+  .badge-fragment {
+    width: 130px;
+    height: 130px;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .badge-piece {
+    width: 120px;
+    height: 120px;
+    background: conic-gradient(
+      var(--oro) 0deg, #f5c842 60deg,
+      var(--celeste) 60deg, #a4c2c4 150deg,
+      transparent 150deg
+    );
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    border-radius: 4px;
+    box-shadow: 0 0 30px rgba(245,200,66,0.5);
+    animation: badgeSpin 8s linear infinite;
+    position: relative;
+  }
+
+  .badge-piece::after {
+    content: '⭐';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2rem;
+  }
+
+  @keyframes badgeSpin {
+    0%,100% { transform: rotate(0deg) scale(1); box-shadow: 0 0 20px rgba(245,200,66,0.4); }
+    50% { transform: rotate(5deg) scale(1.05); box-shadow: 0 0 40px rgba(245,200,66,0.7); }
+  }
+
+  .badge-img {
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+    filter: drop-shadow(0 0 20px rgba(245,200,66,0.6));
+    animation: badgeSpin 8s ease-in-out infinite;
+  }
+
+  .badge-lock-msg {
+    background: rgba(245,200,66,0.12);
+    border: 1.5px dashed var(--oro);
+    border-radius: 14px;
+    padding: 14px 24px;
+    color: rgba(239,237,228,0.85);
+    font-size: 0.92rem;
+    margin-top: 10px;
+    position: relative;
+  }
+
+  .badge-lock-msg strong { color: var(--oro); }
+
+  .luna-reward {
+    width: 80px;
+    position: absolute;
+    right: -20px; bottom: -10px;
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.4));
+    animation: float 4s ease-in-out infinite reverse;
+  }
+
+  /* ─── PROGRESS BAR ─── */
+  .progress-area {
+    margin-bottom: 30px;
+  }
+
+  .progress-label {
+    color: var(--celeste);
+    font-size: 0.88rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .progress-bar-outer {
+    background: rgba(29,22,59,0.5);
+    border-radius: 50px;
+    height: 10px;
+    border: 1px solid rgba(164,194,196,0.3);
+    overflow: hidden;
+  }
+
+  .progress-bar-inner {
+    height: 100%;
+    background: linear-gradient(90deg, var(--coral), var(--celeste));
+    border-radius: 50px;
+    transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 0 10px rgba(164,194,196,0.5);
+    width: 0%;
+  }
+
+  /* decorative luna top-right */
+  .deco-luna {
+    position: fixed;
+    right: 20px; top: 20px;
+    width: clamp(70px, 10vw, 110px);
+    z-index: 2;
+    filter: drop-shadow(0 6px 20px rgba(92,52,90,0.6));
+    animation: float 5s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  .deco-bottom-left {
+    position: fixed;
+    left: 10px; bottom: 60px;
+    width: clamp(50px, 8vw, 90px);
+    z-index: 2;
+    opacity: 0.7;
+    pointer-events: none;
+    animation: float 6s ease-in-out infinite reverse;
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 680px) {
+    .intro-card {
+      grid-template-columns: 1fr;
+      padding: 26px 22px;
+    }
+    .intro-ceci { width: 90px; margin: 0 auto; }
+    .mirrors-zone { grid-template-columns: 1fr; }
+    .feedback-toast { font-size: 0.95rem; padding: 12px 20px; white-space: normal; max-width: 90vw; text-align: center; }
+  }
+
+  /* drag ghost */
+  .drag-ghost {
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.85;
+    transform: scale(1.05) rotate(3deg);
+    box-shadow: 0 12px 36px rgba(0,0,0,0.5);
+  }
+
+  .count-badge {
+    display: inline-block;
+    background: var(--coral);
+    color: white;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    padding: 2px 10px;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+
+  .mirror-count {
+    font-size: 0.82rem;
+    color: rgba(164,194,196,0.7);
+    margin-top: 6px;
+    margin-bottom: 10px;
+  }
+
+  .all-correct-banner {
+    background: linear-gradient(135deg, #1a5e3a, #2e7d52);
+    border: 2px solid #4caf7a;
+    border-radius: 20px;
+    padding: 18px 28px;
+    color: white;
+    text-align: center;
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    display: none;
+    animation: fadeInDown 0.6s ease;
+    box-shadow: 0 6px 24px rgba(76,175,122,0.4);
+  }
+
+  .all-correct-banner.visible { display: block; }
+</style>
+</head>
+<body>
+
+<!-- Decorative characters -->
+<img src="img/luna.png" alt="Luna" class="deco-luna" onerror="this.style.display='none'">
+<img src="img/estrella.png" alt="" class="deco-bottom-left" onerror="this.style.display='none'">
+
+<!-- Toast feedback -->
+<div class="feedback-toast" id="feedback-toast">✨ ¡Lo descubriste!</div>
+
+<div class="page-wrapper">
+
+  <!-- LEVEL BADGE -->
+  <div class="level-badge">✨ Nivel 1 · El espejo de Pandora</div>
+
+  <!-- INTRO CARD -->
+  <div class="intro-card">
+    <div>
+      <h1>Lo que vamos a hacer ahora</h1>
+      <p>A veces escuchamos comentarios que parecen normales, pero en realidad pueden hacernos daño o hacernos dudar de quiénes somos.<br><br>
+      El espejo de Pandora quiere ayudarte a descubrir cuáles palabras te alejan de tu autenticidad… y cuáles te acercan a tu poder.</p>
+    </div>
+    <img src="img/ceci_curious.png" alt="Ceci con celular" class="intro-ceci" onerror="this.style.display='none'">
+    <!-- Sparkles decorativas -->
+    <div class="sparkle" style="top:15%;right:38%;animation-delay:0s;"></div>
+    <div class="sparkle" style="top:60%;right:30%;animation-delay:1.2s;"></div>
+    <div class="sparkle" style="top:30%;right:25%;animation-delay:0.7s;"></div>
+  </div>
+
+  <!-- INSTRUCTION BLOCK -->
+  <div class="instruction-block">
+    <span class="instruction-icon">🌟</span>
+    <p><strong>¿Cómo jugar?</strong> Arrastra cada tarjeta hacia el espejo que corresponde.<br>
+    ¿Esa frase intenta cambiarte… o respeta quién eres?</p>
+  </div>
+
+  <!-- PROGRESS -->
+  <div class="progress-area">
+    <div class="progress-label">Tu progreso <span id="progress-text">0 / 10</span></div>
+    <div class="progress-bar-outer"><div class="progress-bar-inner" id="progress-bar"></div></div>
+  </div>
+
+  <!-- HINT CARD -->
+  <div class="hint-card" id="hint-card">
+    <h3>Pista del espejo</h3>
+    <p>Pregúntate algo importante:<br>
+    ¿esa frase <strong>intenta cambiar quién eres</strong><br>
+    o <strong>respeta tu forma de ser</strong>?<br><br>
+    Intenta nuevamente. ¡Tú puedes! ✨</p>
+  </div>
+
+  <!-- CARDS POOL -->
+  <div class="cards-section">
+    <h2>🃏 Arrastra las tarjetas hacia el espejo correcto</h2>
+    <div id="cards-pool" ondragover="onPoolDragOver(event)" ondrop="onPoolDrop(event)">
+      <!-- Cards rendered by JS -->
+    </div>
+  </div>
+
+  <!-- ALL CORRECT BANNER -->
+  <div class="all-correct-banner" id="all-correct-banner">
+    🎉 ¡Clasificaste todas las frases correctamente! ¡Increíble!
+  </div>
+
+  <!-- MIRRORS ZONE -->
+  <div class="mirrors-zone">
+    <!-- MIRROR 1 -->
+    <div class="mirror-panel" id="mirror-1" ondragover="onMirrorDragOver(event,1)" ondragleave="onMirrorDragLeave(event,1)" ondrop="onMirrorDrop(event,1)">
+      <div class="mirror-reflection"></div>
+      <div class="mirror-title">🟦 Espejo 1</div>
+      <div class="mirror-subtitle">Esto intenta cambiarme</div>
+      <div class="mirror-count" id="count-1">0 / 5 frases</div>
+      <div class="mirror-drop-zone" id="drop-zone-1" ondragover="onMirrorDragOver(event,1)" ondragleave="onMirrorDragLeave(event,1)" ondrop="onMirrorDrop(event,1)">
+        <span style="color:rgba(164,194,196,0.4);font-size:0.85rem;align-self:center;">Suelta aquí las tarjetas</span>
+      </div>
+    </div>
+
+    <!-- MIRROR 2 -->
+    <div class="mirror-panel" id="mirror-2" ondragover="onMirrorDragOver(event,2)" ondragleave="onMirrorDragLeave(event,2)" ondrop="onMirrorDrop(event,2)">
+      <div class="mirror-reflection"></div>
+      <div class="mirror-title">🟦 Espejo 2</div>
+      <div class="mirror-subtitle">Esto respeta quién soy</div>
+      <div class="mirror-count" id="count-2">0 / 5 frases</div>
+      <div class="mirror-drop-zone" id="drop-zone-2" ondragover="onMirrorDragOver(event,2)" ondragleave="onMirrorDragLeave(event,2)" ondrop="onMirrorDrop(event,2)">
+        <span style="color:rgba(164,194,196,0.4);font-size:0.85rem;align-self:center;">Suelta aquí las tarjetas</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- BONUS TRIGGER -->
+  <div id="bonus-trigger-zone">
+    <p class="bonus-ready-msg">✨ ¡Te has ganado un bonus! Toca la palabra BONUS ✨</p>
+    <div class="bonus-box" onclick="openBonus()">
+      <div class="bonus-chest">
+        <div class="chest-lid">🔓</div>
+        <div class="chest-body">
+          <span class="bonus-label">Bonus</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BONUS CONTENT -->
+  <div id="bonus-content">
+    <div class="bonus-intro-card">
+      <h2>💙 Algo de lo que casi no se habla…</h2>
+      <p>Así como existen comentarios que intentan decirle a las niñas cómo deberían ser, también hay estereotipos que afectan a los niños.</p>
+      <img src="img/libro.png" alt="Ceci" style="position:absolute;right:20px;bottom:0;width:80px;filter:drop-shadow(0 4px 12px rgba(0,0,0,0.4));" onerror="this.style.display='none'">
+    </div>
+
+    <div class="bonus-cards-grid" id="bonus-cards-grid"></div>
+
+    <div class="bonus-reflection">
+      <strong>💜 La verdad es…</strong>
+      La verdad es que todas las personas sentimos emociones.<br>
+      Cuando respetamos las emociones de niñas y niños,<br>
+      construimos relaciones más sanas y respetuosas. 🌱
+    </div>
+
+    <div style="text-align:center;margin-top:24px;">
+      <button onclick="showReward()" style="background:linear-gradient(135deg,var(--coral),var(--rosado));color:white;border:none;padding:16px 40px;border-radius:50px;font-size:1.05rem;font-weight:800;cursor:pointer;box-shadow:0 6px 24px rgba(228,79,96,0.4);transition:transform 0.2s;font-family:Nunito,sans-serif;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+        ✨ Continuar y recibir mi recompensa
+      </button>
+    </div>
+  </div>
+
+  <!-- REWARD SECTION -->
+  <div id="reward-section">
+    <div class="reward-card">
+      <div class="reward-title">🏆 ¡Pedazo de insignia desbloqueado!</div>
+      <div class="reward-subtitle">Has completado la actividad del Espejo de Pandora + Bonus</div>
+
+      <div class="badge-fragment-wrapper">
+        <div class="badge-fragment">
+          <img src="img/badge1.png" alt="Fragmento de insignia" class="badge-img" onerror="this.innerHTML='<div class=\'badge-piece\'></div>';this.outerHTML=this.innerHTML">
+        </div>
+      </div>
+
+      <div class="badge-lock-msg">
+        🔒 Esto es solo <strong>una parte</strong> de la insignia.<br>
+        Continúa con las siguientes lecciones del Nivel 1 para completarla. ¡Sigue adelante! 🚀
+      </div>
+
+      <img src="img/estrella.png" alt="Luna" class="luna-reward" onerror="this.style.display='none'">
+    </div>
+  </div>
+
+</div><!-- end page-wrapper -->
+
+<script>
+  // ── DATA ──────────────────────────────────────────────────────────────────
+  const allCards = [
+    { id: 'c1',  text: 'Las niñas deben verse siempre bonitas.',       mirror: 1 },
+    { id: 'c2',  text: 'Eso no es para niñas.',                        mirror: 1 },
+    { id: 'c3',  text: 'Las niñas deben ser calladas.',                 mirror: 1 },
+    { id: 'c4',  text: 'Deberías comportarte como una señorita.',       mirror: 1 },
+    { id: 'c5',  text: 'Ese deporte es solo para niños.',               mirror: 1 },
+    { id: 'c6',  text: 'Puedes ser quien quieras ser.',                 mirror: 2 },
+    { id: 'c7',  text: 'Tus ideas también son importantes.',            mirror: 2 },
+    { id: 'c8',  text: 'Las niñas pueden aprender cualquier cosa.',     mirror: 2 },
+    { id: 'c9',  text: 'Puedes elegir lo que te gusta.',                mirror: 2 },
+    { id: 'c10', text: 'Tu forma de ser es valiosa.',                   mirror: 2 },
+  ];
+
+  const bonusPhrases = [
+    'Los niños no lloran.',
+    'Los niños deben ser fuertes todo el tiempo.',
+    'Los niños no deben mostrar sus emociones.',
+    'Los niños siempre deben saber pelear o defenderse.',
+    'Los niños no pueden ser sensibles.',
+  ];
+
+  const successMessages = ['✨ ¡Lo descubriste!', '✨ ¡Así es!', '✨ ¡Exacto!'];
+
+  // ── STATE ─────────────────────────────────────────────────────────────────
+  let draggedId = null;
+  let correctCount = { 1: 0, 2: 0 };
+  let placedCards = {};   // id → mirrirNum (only correct ones)
+  let isDraggingTouch = false;
+  let touchCard = null;
+  let touchGhost = null;
+
+  // ── INIT ──────────────────────────────────────────────────────────────────
+  function shuffle(arr) {
+    return arr.slice().sort(() => Math.random() - 0.5);
+  }
+
+  function renderCards() {
+    const pool = document.getElementById('cards-pool');
+    pool.innerHTML = '';
+    const shuffled = shuffle(allCards);
+    shuffled.forEach(card => {
+      const el = createCardEl(card);
+      pool.appendChild(el);
+    });
+  }
+
+  function createCardEl(card) {
+    const el = document.createElement('div');
+    el.className = 'phrase-card';
+    el.id = 'card-' + card.id;
+    el.textContent = card.text;
+    el.draggable = true;
+    el.dataset.cardId = card.id;
+
+    // Desktop drag
+    el.addEventListener('dragstart', e => {
+      draggedId = card.id;
+      setTimeout(() => el.classList.add('dragging'), 0);
+    });
+    el.addEventListener('dragend', () => {
+      el.classList.remove('dragging');
+      draggedId = null;
+    });
+
+    // Touch drag
+    el.addEventListener('touchstart', onTouchStart, { passive: false });
+    el.addEventListener('touchmove',  onTouchMove,  { passive: false });
+    el.addEventListener('touchend',   onTouchEnd,   { passive: false });
+
+    return el;
+  }
+
+  function renderBonusCards() {
+    const grid = document.getElementById('bonus-cards-grid');
+    grid.innerHTML = '';
+    bonusPhrases.forEach((phrase, i) => {
+      const el = document.createElement('div');
+      el.className = 'bonus-phrase-card';
+      el.textContent = phrase;
+      el.style.animationDelay = (i * 0.1) + 's';
+      grid.appendChild(el);
+    });
+  }
+
+  // ── DRAG & DROP (DESKTOP) ─────────────────────────────────────────────────
+  function onMirrorDragOver(e, mirrorNum) {
+    e.preventDefault();
+    const zone = document.getElementById('drop-zone-' + mirrorNum);
+    zone.classList.add('drag-over');
+  }
+
+  function onMirrorDragLeave(e, mirrorNum) {
+    const zone = document.getElementById('drop-zone-' + mirrorNum);
+    zone.classList.remove('drag-over');
+  }
+
+  function onMirrorDrop(e, mirrorNum) {
+    e.preventDefault();
+    const zone = document.getElementById('drop-zone-' + mirrorNum);
+    zone.classList.remove('drag-over');
+    if (!draggedId) return;
+    handleDrop(draggedId, mirrorNum);
+  }
+
+  function onPoolDragOver(e) {
+    e.preventDefault();
+    document.getElementById('cards-pool').classList.add('drag-over');
+  }
+
+  function onPoolDrop(e) {
+    e.preventDefault();
+    document.getElementById('cards-pool').classList.remove('drag-over');
+  }
+
+  // ── TOUCH DRAG ────────────────────────────────────────────────────────────
+  function onTouchStart(e) {
+    if (e.target.classList.contains('correct')) return;
+    touchCard = e.target;
+    const touch = e.touches[0];
+    touchGhost = touchCard.cloneNode(true);
+    touchGhost.className = 'phrase-card drag-ghost';
+    touchGhost.style.width = touchCard.offsetWidth + 'px';
+    touchGhost.style.left = (touch.clientX - touchCard.offsetWidth / 2) + 'px';
+    touchGhost.style.top  = (touch.clientY - touchCard.offsetHeight / 2) + 'px';
+    document.body.appendChild(touchGhost);
+    touchCard.style.opacity = '0.4';
+    e.preventDefault();
+  }
+
+  function onTouchMove(e) {
+    if (!touchGhost) return;
+    const touch = e.touches[0];
+    touchGhost.style.left = (touch.clientX - touchGhost.offsetWidth / 2) + 'px';
+    touchGhost.style.top  = (touch.clientY - touchGhost.offsetHeight / 2) + 'px';
+    e.preventDefault();
+  }
+
+  function onTouchEnd(e) {
+    if (!touchCard || !touchGhost) return;
+    const touch = e.changedTouches[0];
+    touchCard.style.opacity = '1';
+    document.body.removeChild(touchGhost);
+    touchGhost = null;
+
+    const el = document.elementFromPoint(touch.clientX, touch.clientY);
+    const mirrorEl = el ? el.closest('.mirror-panel') : null;
+
+    if (mirrorEl) {
+      const mirrorNum = parseInt(mirrorEl.id.replace('mirror-', ''));
+      draggedId = touchCard.dataset.cardId;
+      handleDrop(draggedId, mirrorNum);
+    }
+    touchCard = null;
+    draggedId = null;
+    e.preventDefault();
+  }
+
+  // ── GAME LOGIC ────────────────────────────────────────────────────────────
+  function handleDrop(cardId, mirrorNum) {
+    const card = allCards.find(c => c.id === cardId);
+    if (!card || placedCards[cardId]) return;
+
+    const el = document.getElementById('card-' + cardId);
+    if (!el) return;
+
+    if (card.mirror === mirrorNum) {
+      // CORRECT
+      placedCards[cardId] = mirrorNum;
+      correctCount[mirrorNum]++;
+
+      el.draggable = false;
+      el.classList.add('correct');
+      el.style.fontSize = '0.82rem';
+      el.style.padding = '8px 14px';
+
+      // Move to drop zone (remove placeholder text)
+      const zone = document.getElementById('drop-zone-' + mirrorNum);
+      const placeholder = zone.querySelector('span');
+      if (placeholder) placeholder.remove();
+      zone.appendChild(el);
+
+      // Glow mirror
+      const mirror = document.getElementById('mirror-' + mirrorNum);
+      mirror.classList.add('glow');
+      setTimeout(() => mirror.classList.remove('glow'), 1200);
+
+      // Star burst
+      burstStars(mirror);
+
+      // Update count
+      updateCount(mirrorNum);
+      updateProgress();
+
+      // Toast
+      showToast(successMessages[Math.floor(Math.random() * successMessages.length)]);
+
+      // Play sound
+      playCorrectSound();
+
+      // Hide hint
+      document.getElementById('hint-card').classList.remove('visible');
+
+      // Check completion
+      checkCompletion();
+
+    } else {
+      // WRONG
+      el.classList.add('incorrect-flash');
+      setTimeout(() => el.classList.remove('incorrect-flash'), 600);
+
+      const mirror = document.getElementById('mirror-' + mirrorNum);
+      mirror.classList.add('blur-error');
+      setTimeout(() => mirror.classList.remove('blur-error'), 900);
+
+      // Show hint
+      document.getElementById('hint-card').classList.add('visible');
+
+      // Error sound
+      playErrorSound();
+    }
+  }
+
+  function updateCount(mirrorNum) {
+    const cnt = document.getElementById('count-' + mirrorNum);
+    cnt.textContent = correctCount[mirrorNum] + ' / 5 frases';
+  }
+
+  function updateProgress() {
+    const total = Object.keys(placedCards).length;
+    const pct = (total / 10) * 100;
+    document.getElementById('progress-bar').style.width = pct + '%';
+    document.getElementById('progress-text').textContent = total + ' / 10';
+  }
+
+  function checkCompletion() {
+    if (Object.keys(placedCards).length === 10) {
+      // All correct!
+      document.getElementById('all-correct-banner').classList.add('visible');
+      setTimeout(() => {
+        document.getElementById('bonus-trigger-zone').classList.add('visible');
+        document.getElementById('bonus-trigger-zone').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 800);
+    }
+  }
+
+  // ── BONUS ─────────────────────────────────────────────────────────────────
+  function openBonus() {
+    const trigger = document.getElementById('bonus-trigger-zone');
+    trigger.style.display = 'none';
+
+    renderBonusCards();
+    const bonusContent = document.getElementById('bonus-content');
+    bonusContent.classList.add('visible');
+    bonusContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function showReward() {
+    const reward = document.getElementById('reward-section');
+    reward.classList.add('visible');
+    reward.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    burstStarsCenter();
+  }
+
+  // ── VISUAL EFFECTS ────────────────────────────────────────────────────────
+  function burstStars(container) {
+    const burst = document.createElement('div');
+    burst.className = 'star-burst';
+    burst.style.top = '50%'; burst.style.left = '50%';
+    const angles = [0, 45, 90, 135, 180, 225, 270, 315];
+    angles.forEach(angle => {
+      const s = document.createElement('span');
+      const rad = angle * Math.PI / 180;
+      const dist = 40 + Math.random() * 30;
+      s.style.setProperty('--tx', Math.cos(rad) * dist + 'px');
+      s.style.setProperty('--ty', Math.sin(rad) * dist + 'px');
+      s.style.animationDelay = Math.random() * 0.2 + 's';
+      burst.appendChild(s);
+    });
+    container.appendChild(burst);
+    setTimeout(() => burst.remove(), 1000);
+  }
+
+  function burstStarsCenter() {
+    for (let i = 0; i < 5; i++) {
+      setTimeout(() => {
+        const s = document.createElement('div');
+        s.style.cssText = `
+          position:fixed; z-index:9999; pointer-events:none;
+          font-size:${1.5 + Math.random()}rem;
+          left:${30 + Math.random()*40}vw;
+          top:${20 + Math.random()*60}vh;
+          animation: twinkle 1.5s ease-out forwards;
+        `;
+        s.textContent = ['✨','⭐','🌟','💫'][Math.floor(Math.random()*4)];
+        document.body.appendChild(s);
+        setTimeout(() => s.remove(), 1600);
+      }, i * 200);
+    }
+  }
+
+  function showToast(msg) {
+    const toast = document.getElementById('feedback-toast');
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2200);
+  }
+
+  // ── SOUNDS (Web Audio API) ────────────────────────────────────────────────
+  let audioCtx = null;
+  function getAudioCtx() {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    return audioCtx;
+  }
+
+  function playCorrectSound() {
+    try {
+      const ctx = getAudioCtx();
+      [523, 659, 784].forEach((freq, i) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.value = freq;
+        gain.gain.setValueAtTime(0.15, ctx.currentTime + i * 0.1);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i * 0.1 + 0.25);
+        osc.connect(gain); gain.connect(ctx.destination);
+        osc.start(ctx.currentTime + i * 0.1);
+        osc.stop(ctx.currentTime + i * 0.1 + 0.3);
+      });
+    } catch(e) {}
+  }
+
+  function playErrorSound() {
+    try {
+      const ctx = getAudioCtx();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(200, ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(100, ctx.currentTime + 0.3);
+      gain.gain.setValueAtTime(0.08, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.35);
+      osc.connect(gain); gain.connect(ctx.destination);
+      osc.start(); osc.stop(ctx.currentTime + 0.4);
+    } catch(e) {}
+  }
+
+  // ── BOOT ──────────────────────────────────────────────────────────────────
+  renderCards();
+</script>
+</body>
+</html>

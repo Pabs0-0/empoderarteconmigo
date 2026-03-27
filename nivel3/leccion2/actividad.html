@@ -1,0 +1,1340 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Explora tu cuerpo – Actividad Interactiva</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Quicksand:wght@400;500;600;700&display=swap');
+
+  :root {
+    --rojo: #C51722;
+    --coral: #E95A5F;
+    --rosa-intenso: #E5537B;
+    --rosa-suave: #F2B8B2;
+    --crema: #F1EEE7;
+    --gris-calido: #E4E1DA;
+    --vino: #7E1322;
+    --lavanda: #D7D4E0;
+    --dorado: #F4B24A;
+    --cafe: #8B5837;
+    --blanco: #FFFAF8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Quicksand', sans-serif;
+    background-color: var(--crema);
+    background-image:
+      radial-gradient(circle at 20% 20%, rgba(229,83,123,0.08) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, rgba(197,23,34,0.06) 0%, transparent 50%),
+      radial-gradient(circle at 50% 50%, rgba(244,178,74,0.04) 0%, transparent 60%);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* Decorative background pattern */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Ccircle cx='30' cy='30' r='2' fill='%23E5537B' fill-opacity='0.06'/%3E%3Ccircle cx='10' cy='10' r='1.5' fill='%23F4B24A' fill-opacity='0.08'/%3E%3Ccircle cx='50' cy='10' r='1' fill='%23C51722' fill-opacity='0.05'/%3E%3Ccircle cx='10' cy='50' r='1' fill='%23E95A5F' fill-opacity='0.07'/%3E%3C/g%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .page-wrapper {
+    position: relative;
+    z-index: 1;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 24px 16px 60px;
+  }
+
+  /* ─── HEADER ─────────────────────────────────── */
+  .header-card {
+    background: linear-gradient(135deg, var(--vino) 0%, #A31B28 50%, var(--coral) 100%);
+    border-radius: 28px;
+    padding: 36px 40px 32px;
+    margin-bottom: 28px;
+    box-shadow: 0 12px 40px rgba(126,19,34,0.35), 0 4px 12px rgba(0,0,0,0.1);
+    position: relative;
+    overflow: hidden;
+    color: white;
+  }
+
+  .header-card::before {
+    content: '';
+    position: absolute;
+    top: -30px; right: -30px;
+    width: 180px; height: 180px;
+    background: rgba(244,178,74,0.15);
+    border-radius: 50%;
+  }
+  .header-card::after {
+    content: '';
+    position: absolute;
+    bottom: -20px; left: -20px;
+    width: 120px; height: 120px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 50%;
+  }
+
+  .header-top {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .header-badge {
+    background: rgba(244,178,74,0.25);
+    border: 2px solid rgba(244,178,74,0.5);
+    border-radius: 16px;
+    padding: 8px 16px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: var(--dorado);
+    margin-bottom: 12px;
+    display: inline-block;
+  }
+
+  .header-title {
+    font-family: 'Nunito', sans-serif;
+    font-size: clamp(26px, 5vw, 38px);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 8px;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  }
+
+  .header-title span {
+    color: var(--dorado);
+  }
+
+  .header-subtitle {
+    font-size: 15px;
+    opacity: 0.9;
+    line-height: 1.6;
+    max-width: 600px;
+    margin-bottom: 20px;
+  }
+
+  .mission-box {
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 16px;
+    padding: 16px 20px;
+    backdrop-filter: blur(4px);
+    max-width: 560px;
+  }
+
+  .mission-box h3 {
+    font-family: 'Nunito', sans-serif;
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+    color: var(--dorado);
+  }
+
+  .mission-items {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .mission-items li {
+    font-size: 13.5px;
+    opacity: 0.95;
+  }
+
+  .ceci-header {
+    position: absolute;
+    right: 24px;
+    bottom: 0;
+    width: 100px;
+    opacity: 0.85;
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.3));
+  }
+
+  /* ─── TABS ─────────────────────────────────────── */
+  .tabs-container {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+  }
+
+  .tab-btn {
+    flex: 1;
+    min-width: 160px;
+    padding: 14px 24px;
+    border: 2px solid transparent;
+    border-radius: 18px;
+    cursor: pointer;
+    font-family: 'Nunito', sans-serif;
+    font-size: 15px;
+    font-weight: 800;
+    transition: all 0.3s ease;
+    background: white;
+    color: var(--vino);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .tab-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--coral), var(--rosa-intenso));
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .tab-btn.active {
+    color: white;
+    border-color: transparent;
+    box-shadow: 0 6px 24px rgba(229,83,123,0.4);
+    transform: translateY(-2px);
+  }
+
+  .tab-btn.active::before { opacity: 1; }
+
+  .tab-btn span {
+    position: relative;
+    z-index: 1;
+  }
+
+  .tab-btn .tab-check {
+    display: inline-block;
+    margin-left: 6px;
+    font-size: 14px;
+  }
+
+  /* ─── MAIN ACTIVITY AREA ──────────────────────── */
+  .activity-panel {
+    background: white;
+    border-radius: 28px;
+    padding: 28px;
+    box-shadow: 0 8px 32px rgba(126,19,34,0.1), 0 2px 8px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+  }
+
+  .view-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid var(--gris-calido);
+  }
+
+  .view-dot {
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--coral), var(--vino));
+    flex-shrink: 0;
+  }
+
+  .view-title {
+    font-family: 'Nunito', sans-serif;
+    font-size: 17px;
+    font-weight: 800;
+    color: var(--vino);
+  }
+
+  .view-hint {
+    font-size: 12.5px;
+    color: #999;
+    margin-left: auto;
+    font-style: italic;
+  }
+
+  /* ─── DRAG DROP LAYOUT ─────────────────────────── */
+  .drag-layout {
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: 24px;
+    align-items: start;
+  }
+
+  @media (max-width: 700px) {
+    .drag-layout { grid-template-columns: 1fr; }
+  }
+
+  /* Image container */
+  .img-zone {
+    position: relative;
+    background: var(--crema);
+    border-radius: 20px;
+    overflow: visible;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 380px;
+  }
+
+  .body-img {
+    max-width: 100%;
+    max-height: 420px;
+    object-fit: contain;
+    border-radius: 16px;
+    display: block;
+    margin: 0 auto;
+    filter: drop-shadow(0 4px 16px rgba(126,19,34,0.15));
+  }
+
+  /* Drop targets on image */
+  .drop-target {
+    position: absolute;
+    border: 2.5px dashed rgba(229,83,123,0.4);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    background: rgba(229,83,123,0.05);
+  }
+
+  .drop-target:hover, .drop-target.drag-over {
+    border-color: var(--coral);
+    background: rgba(229,83,123,0.18);
+    transform: scale(1.05);
+  }
+
+  .drop-target.correct {
+    border-color: transparent;
+    background: transparent;
+  }
+
+  .drop-target.correct .target-label {
+    display: flex;
+  }
+
+  .target-label {
+    display: none;
+    background: linear-gradient(135deg, var(--vino), var(--coral));
+    color: white;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    font-family: 'Nunito', sans-serif;
+    white-space: nowrap;
+    box-shadow: 0 3px 10px rgba(126,19,34,0.35);
+    animation: popIn 0.4s cubic-bezier(0.175,0.885,0.32,1.275);
+  }
+
+  @keyframes popIn {
+    0% { transform: scale(0); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  /* Sparkle effect on correct */
+  .sparkle {
+    position: absolute;
+    pointer-events: none;
+    font-size: 18px;
+    animation: sparkleAnim 1s ease-out forwards;
+  }
+
+  @keyframes sparkleAnim {
+    0% { transform: translateY(0) scale(1); opacity: 1; }
+    100% { transform: translateY(-40px) scale(0.5); opacity: 0; }
+  }
+
+  /* ─── LABELS PANEL ─────────────────────────────── */
+  .labels-panel {
+    background: var(--crema);
+    border-radius: 20px;
+    padding: 20px;
+  }
+
+  .labels-title {
+    font-family: 'Nunito', sans-serif;
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--vino);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .labels-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .drag-label {
+    background: white;
+    border: 2px solid var(--rosa-suave);
+    border-radius: 14px;
+    padding: 10px 16px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--vino);
+    cursor: grab;
+    transition: all 0.25s ease;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    user-select: none;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .drag-label::before {
+    content: '⠿';
+    margin-right: 8px;
+    opacity: 0.3;
+    font-size: 12px;
+  }
+
+  .drag-label:hover {
+    border-color: var(--coral);
+    background: linear-gradient(135deg, #fff 0%, #fff5f5 100%);
+    transform: translateX(3px);
+    box-shadow: 0 4px 16px rgba(229,83,123,0.2);
+  }
+
+  .drag-label.dragging {
+    opacity: 0.4;
+    transform: scale(0.95);
+  }
+
+  .drag-label.placed {
+    opacity: 0.35;
+    pointer-events: none;
+    background: var(--gris-calido);
+    border-color: var(--gris-calido);
+  }
+
+  /* Touch drag ghost */
+  .drag-ghost {
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    background: linear-gradient(135deg, var(--coral), var(--rosa-intenso));
+    color: white;
+    border-radius: 14px;
+    padding: 10px 18px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    box-shadow: 0 8px 24px rgba(229,83,123,0.5);
+    transform: translate(-50%, -50%);
+    transition: none;
+  }
+
+  /* ─── INFO PANEL ───────────────────────────────── */
+  .info-panel {
+    background: linear-gradient(135deg, var(--lavanda) 0%, #EDE9F5 100%);
+    border-radius: 20px;
+    padding: 20px 24px;
+    margin-top: 24px;
+    border-left: 4px solid var(--rosa-intenso);
+    animation: slideDown 0.4s ease;
+    min-height: 100px;
+  }
+
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .info-panel.hidden { display: none; }
+
+  .info-name {
+    font-family: 'Nunito', sans-serif;
+    font-size: 18px;
+    font-weight: 900;
+    color: var(--vino);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .info-name::before { content: '✨'; }
+
+  .info-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  @media (max-width: 600px) { .info-body { grid-template-columns: 1fr; } }
+
+  .info-card {
+    background: white;
+    border-radius: 14px;
+    padding: 12px 14px;
+    box-shadow: 0 2px 8px rgba(126,19,34,0.06);
+  }
+
+  .info-card h4 {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--coral);
+    margin-bottom: 5px;
+  }
+
+  .info-card p {
+    font-size: 13px;
+    color: #4a3040;
+    line-height: 1.5;
+  }
+
+  /* ─── PROGRESS ─────────────────────────────────── */
+  .progress-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 20px;
+    padding: 14px 18px;
+    background: var(--gris-calido);
+    border-radius: 16px;
+  }
+
+  .progress-bar-wrap {
+    flex: 1;
+    height: 10px;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--coral), var(--dorado));
+    border-radius: 8px;
+    transition: width 0.5s ease;
+    width: 0%;
+  }
+
+  .progress-text {
+    font-family: 'Nunito', sans-serif;
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--vino);
+    white-space: nowrap;
+  }
+
+  /* ─── TOAST ────────────────────────────────────── */
+  .toast {
+    position: fixed;
+    top: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-80px);
+    background: linear-gradient(135deg, var(--vino), var(--rosa-intenso));
+    color: white;
+    padding: 14px 28px;
+    border-radius: 50px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 16px;
+    z-index: 9999;
+    box-shadow: 0 8px 32px rgba(126,19,34,0.4);
+    transition: transform 0.4s cubic-bezier(0.175,0.885,0.32,1.275);
+    white-space: nowrap;
+  }
+
+  .toast.show {
+    transform: translateX(-50%) translateY(0);
+  }
+
+  .toast.error {
+    background: linear-gradient(135deg, #666, #888);
+  }
+
+  /* ─── FINAL MODAL ──────────────────────────────── */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(126,19,34,0.6);
+    backdrop-filter: blur(6px);
+    z-index: 9000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+  }
+
+  .modal-overlay.visible {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .modal-card {
+    background: white;
+    border-radius: 32px;
+    padding: 48px 40px;
+    max-width: 520px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 24px 80px rgba(126,19,34,0.4);
+    position: relative;
+    transform: scale(0.8);
+    transition: transform 0.4s cubic-bezier(0.175,0.885,0.32,1.275);
+    overflow: hidden;
+  }
+
+  .modal-overlay.visible .modal-card { transform: scale(1); }
+
+  .modal-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 6px;
+    background: linear-gradient(90deg, var(--vino), var(--coral), var(--dorado), var(--coral), var(--vino));
+  }
+
+  .modal-confetti {
+    font-size: 40px;
+    margin-bottom: 16px;
+    animation: bounce 0.8s ease infinite alternate;
+  }
+
+  @keyframes bounce {
+    from { transform: translateY(0); }
+    to { transform: translateY(-8px); }
+  }
+
+  .modal-title {
+    font-family: 'Nunito', sans-serif;
+    font-size: 30px;
+    font-weight: 900;
+    color: var(--vino);
+    margin-bottom: 16px;
+    line-height: 1.2;
+  }
+
+  .modal-title span { color: var(--dorado); }
+
+  .modal-text {
+    font-size: 15.5px;
+    color: #4a3040;
+    line-height: 1.7;
+    margin-bottom: 24px;
+  }
+
+  .modal-stars {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 24px;
+    font-size: 28px;
+  }
+
+  .modal-star {
+    animation: starPop 0.5s ease backwards;
+  }
+  .modal-star:nth-child(1) { animation-delay: 0.1s; }
+  .modal-star:nth-child(2) { animation-delay: 0.2s; }
+  .modal-star:nth-child(3) { animation-delay: 0.3s; }
+  .modal-star:nth-child(4) { animation-delay: 0.4s; }
+  .modal-star:nth-child(5) { animation-delay: 0.5s; }
+
+  @keyframes starPop {
+    0% { transform: scale(0) rotate(-30deg); opacity: 0; }
+    100% { transform: scale(1) rotate(0); opacity: 1; }
+  }
+
+  .modal-btn {
+    background: linear-gradient(135deg, var(--coral), var(--vino));
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 14px 36px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 16px;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: 0 6px 24px rgba(197,23,34,0.4);
+    transition: all 0.2s ease;
+  }
+
+  .modal-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 32px rgba(197,23,34,0.5);
+  }
+
+  .modal-characters {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    margin-top: 20px;
+  }
+
+  .modal-char {
+    width: 70px;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));
+    animation: floatChar 3s ease-in-out infinite;
+  }
+
+  .modal-char:nth-child(2) { animation-delay: 1.5s; }
+
+  @keyframes floatChar {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+
+  /* ─── DECORATIVE ELEMENTS ─────────────────────── */
+  .deco-float {
+    position: fixed;
+    pointer-events: none;
+    opacity: 0.08;
+    z-index: 0;
+    font-size: 60px;
+    animation: floatDeco 8s ease-in-out infinite;
+  }
+
+  @keyframes floatDeco {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(5deg); }
+  }
+
+  /* Responsive */
+  @media (max-width: 500px) {
+    .activity-panel { padding: 16px; }
+    .header-card { padding: 24px 20px; }
+  }
+
+  /* Correct glow on drop target */
+  @keyframes correctGlow {
+    0% { box-shadow: 0 0 0 0 rgba(229,83,123,0.6); }
+    50% { box-shadow: 0 0 0 12px rgba(229,83,123,0); }
+    100% { box-shadow: 0 0 0 0 rgba(229,83,123,0); }
+  }
+
+  .drop-target.glow {
+    animation: correctGlow 0.7s ease-out;
+  }
+
+  /* Wrong shake */
+  @keyframes shakeIt {
+    0%,100% { transform: translateX(0); }
+    20% { transform: translateX(-6px); }
+    40% { transform: translateX(6px); }
+    60% { transform: translateX(-4px); }
+    80% { transform: translateX(4px); }
+  }
+
+  .shake { animation: shakeIt 0.4s ease; }
+</style>
+</head>
+<body>
+
+<!-- Floating decorative elements -->
+<div class="deco-float" style="top:10%;left:2%;animation-delay:0s">🌸</div>
+<div class="deco-float" style="top:40%;right:1%;animation-delay:2s;font-size:40px">✨</div>
+<div class="deco-float" style="bottom:20%;left:1%;animation-delay:4s;font-size:35px">💛</div>
+<div class="deco-float" style="top:70%;right:2%;animation-delay:1s;font-size:45px">🌿</div>
+
+<!-- Toast notification -->
+<div class="toast" id="toast"></div>
+
+<!-- ─── HEADER ─────────────────────────────────── -->
+<div class="page-wrapper">
+  <div class="header-card">
+    <div class="header-badge">🎮 Actividad Interactiva</div>
+    <h1 class="header-title">Explora tu cuerpo <span>en 3D</span></h1>
+    <p class="header-subtitle">
+      Ahora vas a explorar un modelo interactivo donde podrás conocer tu cuerpo de forma respetuosa y clara.
+    </p>
+    <div class="mission-box">
+      <h3>🎯 Tu misión</h3>
+      <ul class="mission-items">
+        <li>Arrastra los nombres hacia el lugar correcto del cuerpo.</li>
+        <li>Cuando aciertes, descubrirás:</li>
+        <li>✨ el nombre correcto</li>
+        <li>✨ qué función cumple</li>
+        <li>✨ por qué es importante</li>
+      </ul>
+    </div>
+    <!-- Ceci character placeholder -->
+    <img src="img/ceci.png" alt="Ceci" class="ceci-header"
+         onerror="this.style.display='none'">
+  </div>
+
+  <!-- ─── TABS ─────────────────────────────────── -->
+  <div class="tabs-container">
+    <button class="tab-btn active" id="tab-ext" onclick="switchView('external')">
+      <span>🔹 Vista 1: Externa (Vulva) <span class="tab-check" id="check-ext"></span></span>
+    </button>
+    <button class="tab-btn" id="tab-int" onclick="switchView('internal')">
+      <span>🔹 Vista 2: Interna <span class="tab-check" id="check-int"></span></span>
+    </button>
+  </div>
+
+  <!-- ─── ACTIVITY PANEL ─────────────────────── -->
+  <div class="activity-panel">
+
+    <!-- View title -->
+    <div class="view-header">
+      <div class="view-dot"></div>
+      <div class="view-title" id="view-title">Vista Externa – Vulva</div>
+      <div class="view-hint" id="view-hint">Arrastra cada nombre a la flecha que le corresponde</div>
+    </div>
+
+    <!-- Drag layout -->
+    <div class="drag-layout">
+
+      <!-- Image zone with drop targets -->
+      <div class="img-zone" id="img-zone">
+        <!-- External view -->
+        <div id="view-external" style="position:relative;width:100%;display:flex;justify-content:center;">
+          <img src="img/v.png" alt="Vista externa del cuerpo" class="body-img" id="vulva-img"
+               onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'320\' height=\'380\' viewBox=\'0 0 320 380\'%3E%3Crect width=\'320\' height=\'380\' fill=\'%23F2B8B2\' rx=\'20\'/%3E%3Cellipse cx=\'160\' cy=\'190\' rx=\'110\' ry=\'150\' fill=\'%23E95A5F\' opacity=\'.3\'/%3E%3Ctext x=\'160\' y=\'200\' text-anchor=\'middle\' font-family=\'sans-serif\' font-size=\'14\' fill=\'%237E1322\'%3EVista Externa%3C/text%3E%3C/svg%3E'">
+
+          <!-- Drop targets for external view — positioned relative to vulva image -->
+          <!-- labios exteriores: top-right outer -->
+          <div class="drop-target" id="dt-labios-ext" data-label="labios exteriores"
+               style="width:54px;height:34px;top:8%;right:6%;border-radius:12px;">
+            <span class="target-label">Labios exteriores</span>
+          </div>
+          <!-- clitoris: top-center -->
+          <div class="drop-target" id="dt-clitoris" data-label="clítoris"
+               style="width:40px;height:40px;top:17%;left:50%;transform:translateX(-50%);">
+            <span class="target-label">Clítoris</span>
+          </div>
+          <!-- labios interiores: middle inner right -->
+          <div class="drop-target" id="dt-labios-int" data-label="labios interiores"
+               style="width:54px;height:34px;top:36%;right:6%;border-radius:12px;">
+            <span class="target-label">Labios interiores</span>
+          </div>
+          <!-- uretra: upper middle -->
+          <div class="drop-target" id="dt-uretra" data-label="uretra"
+               style="width:40px;height:40px;top:30%;left:50%;transform:translateX(-50%);">
+            <span class="target-label">Uretra</span>
+          </div>
+          <!-- vagina: center -->
+          <div class="drop-target" id="dt-vagina-ext" data-label="vagina"
+               style="width:50px;height:50px;top:50%;left:50%;transform:translate(-50%,-50%);">
+            <span class="target-label">Vagina</span>
+          </div>
+          <!-- ano: bottom center -->
+          <div class="drop-target" id="dt-ano" data-label="ano"
+               style="width:38px;height:38px;bottom:8%;left:50%;transform:translateX(-50%);">
+            <span class="target-label">Ano</span>
+          </div>
+        </div>
+
+        <!-- Internal view (hidden initially) -->
+        <div id="view-internal" style="position:relative;width:100%;display:none;justify-content:center;">
+          <img src="img/uterus.png" alt="Vista interna del cuerpo" class="body-img" id="utero-img"
+               onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'380\' height=\'320\' viewBox=\'0 0 380 320\'%3E%3Crect width=\'380\' height=\'320\' fill=\'%23F2B8B2\' rx=\'20\'/%3E%3Cellipse cx=\'190\' cy=\'160\' rx=\'150\' ry=\'110\' fill=\'%23E95A5F\' opacity=\'.3\'/%3E%3Ctext x=\'190\' y=\'170\' text-anchor=\'middle\' font-family=\'sans-serif\' font-size=\'14\' fill=\'%237E1322\'%3EVista Interna%3C/text%3E%3C/svg%3E'">
+
+          <!-- Drop targets for internal view -->
+          <!-- ovarios izq -->
+          <div class="drop-target" id="dt-ovarios" data-label="ovarios"
+               style="width:50px;height:50px;top:30%;left:8%;">
+            <span class="target-label">Ovarios</span>
+          </div>
+          <!-- trompas -->
+          <div class="drop-target" id="dt-trompas" data-label="trompas uterinas"
+               style="width:60px;height:36px;top:18%;left:50%;transform:translateX(-50%);border-radius:12px;">
+            <span class="target-label">Trompas uterinas</span>
+          </div>
+          <!-- utero center -->
+          <div class="drop-target" id="dt-utero" data-label="útero"
+               style="width:56px;height:56px;top:40%;left:50%;transform:translate(-50%,-50%);">
+            <span class="target-label">Útero</span>
+          </div>
+          <!-- vagina int: bottom center -->
+          <div class="drop-target" id="dt-vagina-int" data-label="vagina"
+               style="width:48px;height:48px;bottom:12%;left:50%;transform:translateX(-50%);">
+            <span class="target-label">Vagina</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Labels panel -->
+      <div class="labels-panel">
+        <div class="labels-title">🏷️ Arrastra los nombres</div>
+        <div class="labels-grid" id="labels-grid">
+          <!-- filled by JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Info panel -->
+    <div class="info-panel hidden" id="info-panel">
+      <div class="info-name" id="info-name">Nombre</div>
+      <div class="info-body" id="info-body"></div>
+    </div>
+
+    <!-- Progress -->
+    <div class="progress-row">
+      <div class="progress-text" id="progress-text">0 / 6 ubicados</div>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" id="progress-bar"></div>
+      </div>
+      <div style="font-size:20px" id="progress-emoji">🌱</div>
+    </div>
+
+  </div><!-- /activity-panel -->
+
+  <!-- Luna decoration -->
+  <div style="text-align:right;margin-top:-10px;margin-bottom:16px;padding-right:16px;">
+    <img src="img/luna.png" alt="Luna" style="width:80px;opacity:0.85;filter:drop-shadow(0 4px 8px rgba(0,0,0,0.1))"
+         onerror="this.style.display='none'">
+  </div>
+
+</div><!-- /page-wrapper -->
+
+<!-- ─── FINAL MODAL ──────────────────────────────── -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal-card">
+    <div class="modal-confetti">🌸</div>
+    <div class="modal-stars">
+      <span class="modal-star">⭐</span>
+      <span class="modal-star">✨</span>
+      <span class="modal-star">💛</span>
+      <span class="modal-star">✨</span>
+      <span class="modal-star">⭐</span>
+    </div>
+    <h2 class="modal-title">Gran<span>Diosa</span> 💫</h2>
+    <p class="modal-text">
+      Conocer tu cuerpo es una forma de <strong>cuidado, respeto y protección</strong>.<br><br>
+      Aprender sus nombres correctos te ayuda a comprenderlo mejor, expresarte con claridad y reconocer que tu cuerpo merece ser tratado con respeto.
+    </p>
+    <div class="modal-characters">
+      <img src="img/ceci.png" alt="Ceci" class="modal-char" onerror="this.style.display='none'">
+      <img src="img/luna.png" alt="Luna" class="modal-char" onerror="this.style.display='none'">
+    </div>
+    <button class="modal-btn" onclick="closeModal()">¡Continuar explorando! 🌿</button>
+  </div>
+</div>
+
+<script>
+// ─── DATA ─────────────────────────────────────────────────────────────────
+
+const DATA = {
+  external: {
+    labels: ['labios exteriores', 'labios interiores', 'clítoris', 'uretra', 'vagina', 'ano'],
+    targets: {
+      'labios exteriores': 'dt-labios-ext',
+      'labios interiores': 'dt-labios-int',
+      'clítoris': 'dt-clitoris',
+      'uretra': 'dt-uretra',
+      'vagina': 'dt-vagina-ext',
+      'ano': 'dt-ano',
+    },
+    info: {
+      'labios exteriores': {
+        nombre: 'Labios exteriores',
+        que: 'Son los pliegues de piel más externos de la vulva, cubiertos de vello púbico.',
+        funcion: 'Protegen los tejidos más delicados que se encuentran en el interior de la vulva.',
+        importancia: 'Conocerlos te ayuda a identificar cambios y cuidar tu salud de manera consciente.'
+      },
+      'labios interiores': {
+        nombre: 'Labios interiores',
+        que: 'Son pliegues de piel más delicados, sin vello, ubicados dentro de los labios exteriores.',
+        funcion: 'Protegen la uretra y la entrada de la vagina. Pueden variar mucho en tamaño y color.',
+        importancia: 'La variedad en su forma es completamente normal. Conocerlos evita comparaciones innecesarias.'
+      },
+      'clítoris': {
+        nombre: 'Clítoris',
+        que: 'Es un órgano pequeño y muy sensible ubicado en la parte superior de la vulva.',
+        funcion: 'Es el único órgano del cuerpo humano cuya función es exclusivamente proporcionar sensaciones placenteras.',
+        importancia: 'Nombrarlo correctamente es importante para hablar del cuerpo con claridad y respeto.'
+      },
+      'uretra': {
+        nombre: 'Uretra',
+        que: 'Es la pequeña abertura por donde sale la orina de la vejiga hacia el exterior.',
+        funcion: 'Permite la eliminación de orina del cuerpo. Es diferente de la vagina.',
+        importancia: 'Conocer su ubicación ayuda a prevenir e identificar infecciones urinarias.'
+      },
+      'vagina': {
+        nombre: 'Vagina',
+        que: 'Es un canal muscular que conecta la vulva con el útero.',
+        funcion: 'Es el canal por donde fluye la menstruación y donde, en el parto, puede nacer un bebé.',
+        importancia: 'Saber que la uretra y la vagina son aberturas separadas es fundamental para tu salud.'
+      },
+      'ano': {
+        nombre: 'Ano',
+        que: 'Es la abertura al final del sistema digestivo, por donde se eliminan los desechos sólidos.',
+        funcion: 'Permite la evacuación de los desechos del cuerpo.',
+        importancia: 'Conocer su ubicación ayuda a identificar su cuidado e higiene correctamente.'
+      }
+    }
+  },
+  internal: {
+    labels: ['vagina', 'útero', 'trompas uterinas', 'ovarios'],
+    targets: {
+      'vagina': 'dt-vagina-int',
+      'útero': 'dt-utero',
+      'trompas uterinas': 'dt-trompas',
+      'ovarios': 'dt-ovarios',
+    },
+    info: {
+      'vagina': {
+        nombre: 'Vagina',
+        que: 'Canal muscular elástico que conecta el exterior del cuerpo con el útero.',
+        funcion: 'Es el canal menstrual, de parto y parte del sistema reproductivo.',
+        importancia: 'Entender su función interna ayuda a comprender el ciclo menstrual y la salud reproductiva.'
+      },
+      'útero': {
+        nombre: 'Útero',
+        que: 'Órgano muscular hueco, con forma de pera invertida, ubicado en la pelvis.',
+        funcion: 'Es donde se desarrolla el bebé durante el embarazo. También es responsable de la menstruación.',
+        importancia: 'Conocerlo ayuda a entender los cambios del ciclo menstrual y cómo funciona el cuerpo.'
+      },
+      'trompas uterinas': {
+        nombre: 'Trompas uterinas',
+        que: 'Son dos tubos delgados que conectan los ovarios con el útero.',
+        funcion: 'Transportan el óvulo desde el ovario hacia el útero. Es donde suele ocurrir la fecundación.',
+        importancia: 'Su funcionamiento es esencial en el proceso reproductivo del cuerpo.'
+      },
+      'ovarios': {
+        nombre: 'Ovarios',
+        que: 'Son dos glándulas pequeñas ubicadas a cada lado del útero.',
+        funcion: 'Producen óvulos y también hormonas como el estrógeno y la progesterona.',
+        importancia: 'Las hormonas que producen son responsables de muchos de los cambios que vives durante la pubertad.'
+      }
+    }
+  }
+};
+
+// ─── STATE ────────────────────────────────────────────────────────────────
+
+let currentView = 'external';
+let viewState = {
+  external: { placed: {}, total: 6, done: false },
+  internal: { placed: {}, total: 4, done: false }
+};
+
+let dragLabel = null; // currently dragged label text
+let ghostEl = null;   // touch ghost element
+
+// ─── INIT ─────────────────────────────────────────────────────────────────
+
+function init() {
+  renderLabels();
+  setupDropTargets();
+  updateProgress();
+}
+
+function renderLabels() {
+  const grid = document.getElementById('labels-grid');
+  grid.innerHTML = '';
+  const viewData = DATA[currentView];
+  const shuffled = [...viewData.labels].sort(() => Math.random() - 0.5);
+
+  shuffled.forEach(label => {
+    const el = document.createElement('div');
+    el.className = 'drag-label';
+    el.dataset.label = label;
+    el.textContent = label.charAt(0).toUpperCase() + label.slice(1);
+    el.id = 'lbl-' + label.replace(/\s+/g, '-');
+
+    if (viewState[currentView].placed[label]) {
+      el.classList.add('placed');
+    }
+
+    // Mouse drag
+    el.draggable = true;
+    el.addEventListener('dragstart', onDragStart);
+    el.addEventListener('dragend', onDragEnd);
+
+    // Touch drag
+    el.addEventListener('touchstart', onTouchStart, { passive: false });
+    el.addEventListener('touchmove', onTouchMove, { passive: false });
+    el.addEventListener('touchend', onTouchEnd);
+
+    grid.appendChild(el);
+  });
+}
+
+function setupDropTargets() {
+  document.querySelectorAll('.drop-target').forEach(dt => {
+    dt.addEventListener('dragover', e => {
+      e.preventDefault();
+      dt.classList.add('drag-over');
+    });
+    dt.addEventListener('dragleave', () => dt.classList.remove('drag-over'));
+    dt.addEventListener('drop', e => {
+      e.preventDefault();
+      dt.classList.remove('drag-over');
+      handleDrop(dt);
+    });
+  });
+}
+
+// ─── MOUSE DRAG ───────────────────────────────────────────────────────────
+
+function onDragStart(e) {
+  dragLabel = e.currentTarget.dataset.label;
+  e.currentTarget.classList.add('dragging');
+  e.dataTransfer.effectAllowed = 'move';
+}
+
+function onDragEnd(e) {
+  e.currentTarget.classList.remove('dragging');
+  dragLabel = null;
+}
+
+// ─── TOUCH DRAG ───────────────────────────────────────────────────────────
+
+let touchOffsetX = 0, touchOffsetY = 0;
+
+function onTouchStart(e) {
+  const el = e.currentTarget;
+  dragLabel = el.dataset.label;
+  el.classList.add('dragging');
+
+  const touch = e.touches[0];
+  const rect = el.getBoundingClientRect();
+  touchOffsetX = touch.clientX - rect.left - rect.width / 2;
+  touchOffsetY = touch.clientY - rect.top - rect.height / 2;
+
+  ghostEl = document.createElement('div');
+  ghostEl.className = 'drag-ghost';
+  ghostEl.textContent = el.textContent;
+  ghostEl.style.left = touch.clientX + 'px';
+  ghostEl.style.top = touch.clientY + 'px';
+  document.body.appendChild(ghostEl);
+}
+
+function onTouchMove(e) {
+  e.preventDefault();
+  if (!ghostEl) return;
+  const touch = e.touches[0];
+  ghostEl.style.left = touch.clientX + 'px';
+  ghostEl.style.top = touch.clientY + 'px';
+
+  // Highlight drop target under finger
+  ghostEl.style.display = 'none';
+  const el = document.elementFromPoint(touch.clientX, touch.clientY);
+  ghostEl.style.display = '';
+  document.querySelectorAll('.drop-target').forEach(dt => dt.classList.remove('drag-over'));
+  if (el) {
+    const dt = el.closest('.drop-target');
+    if (dt) dt.classList.add('drag-over');
+  }
+}
+
+function onTouchEnd(e) {
+  if (!ghostEl) return;
+  const touch = e.changedTouches[0];
+  ghostEl.remove();
+  ghostEl = null;
+
+  // Find element under finger
+  const el = document.elementFromPoint(touch.clientX, touch.clientY);
+  document.querySelectorAll('.drop-target').forEach(dt => dt.classList.remove('drag-over'));
+
+  if (el) {
+    const dt = el.closest('.drop-target');
+    if (dt) handleDrop(dt);
+    else showToast('Intenta otra vez 🌸', true);
+  }
+
+  // Reset source label
+  const srcEl = document.querySelector('[data-label="' + dragLabel + '"]');
+  if (srcEl) srcEl.classList.remove('dragging');
+  dragLabel = null;
+}
+
+// ─── DROP LOGIC ───────────────────────────────────────────────────────────
+
+function handleDrop(targetEl) {
+  if (!dragLabel) return;
+  const viewData = DATA[currentView];
+  const correctTargetId = viewData.targets[dragLabel];
+
+  if (targetEl.id === correctTargetId) {
+    // ✅ Correct!
+    viewState[currentView].placed[dragLabel] = true;
+    targetEl.classList.add('correct', 'glow');
+    targetEl.querySelector('.target-label').style.display = 'flex';
+
+    // Mark label as placed
+    const srcLabel = document.getElementById('lbl-' + dragLabel.replace(/\s+/g, '-'));
+    if (srcLabel) srcLabel.classList.add('placed');
+
+    // Sparkle
+    spawnSparkle(targetEl);
+
+    // Toast
+    const toasts = ['✨ ¡Muy bien!', '✨ ¡Exacto!', '✨ ¡Lo descubriste!', '✨ ¡Genial!'];
+    showToast(toasts[Math.floor(Math.random() * toasts.length)]);
+
+    // Show info
+    showInfo(dragLabel);
+
+    updateProgress();
+    checkViewComplete();
+  } else {
+    // ❌ Wrong
+    const srcLabel = document.getElementById('lbl-' + dragLabel.replace(/\s+/g, '-'));
+    if (srcLabel) srcLabel.classList.add('shake');
+    setTimeout(() => srcLabel && srcLabel.classList.remove('shake'), 500);
+
+    const hints = [
+      'Intenta otra vez 🌿',
+      'Observa con calma la forma y la posición 💛',
+      'Vas muy bien, sigue explorando ✨',
+      '¡Casi! Prueba otra zona 🌸'
+    ];
+    showToast(hints[Math.floor(Math.random() * hints.length)], true);
+  }
+}
+
+// ─── SPARKLE ─────────────────────────────────────────────────────────────
+
+function spawnSparkle(el) {
+  const rect = el.getBoundingClientRect();
+  const emojis = ['✨', '💛', '🌸', '⭐', '💫'];
+  for (let i = 0; i < 3; i++) {
+    const sp = document.createElement('div');
+    sp.className = 'sparkle';
+    sp.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    sp.style.left = (rect.left + rect.width / 2 + (Math.random() - 0.5) * 40) + 'px';
+    sp.style.top = (rect.top + window.scrollY) + 'px';
+    sp.style.position = 'absolute';
+    sp.style.zIndex = 9999;
+    document.body.appendChild(sp);
+    setTimeout(() => sp.remove(), 1100);
+  }
+}
+
+// ─── INFO PANEL ───────────────────────────────────────────────────────────
+
+function showInfo(label) {
+  const info = DATA[currentView].info[label];
+  if (!info) return;
+  const panel = document.getElementById('info-panel');
+  panel.classList.remove('hidden');
+  document.getElementById('info-name').textContent = info.nombre;
+  document.getElementById('info-body').innerHTML = `
+    <div class="info-card">
+      <h4>¿Qué es?</h4>
+      <p>${info.que}</p>
+    </div>
+    <div class="info-card">
+      <h4>¿Qué función cumple?</h4>
+      <p>${info.funcion}</p>
+    </div>
+    <div class="info-card" style="grid-column:1/-1">
+      <h4>¿Por qué es importante conocerla?</h4>
+      <p>${info.importancia}</p>
+    </div>
+  `;
+  panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+// ─── PROGRESS ─────────────────────────────────────────────────────────────
+
+function updateProgress() {
+  const state = viewState[currentView];
+  const placed = Object.keys(state.placed).length;
+  const total = state.total;
+  const pct = Math.round((placed / total) * 100);
+
+  document.getElementById('progress-text').textContent = `${placed} / ${total} ubicados`;
+  document.getElementById('progress-bar').style.width = pct + '%';
+
+  const emojis = ['🌱', '🌿', '🌸', '⭐', '💛', '✨', '🌟'];
+  document.getElementById('progress-emoji').textContent = emojis[Math.min(placed, emojis.length - 1)];
+}
+
+// ─── CHECK COMPLETE ───────────────────────────────────────────────────────
+
+function checkViewComplete() {
+  const state = viewState[currentView];
+  const placed = Object.keys(state.placed).length;
+  if (placed >= state.total) {
+    state.done = true;
+    const checkId = currentView === 'external' ? 'check-ext' : 'check-int';
+    document.getElementById(checkId).textContent = '✅';
+
+    // Check if both done
+    if (viewState.external.done && viewState.internal.done) {
+      setTimeout(() => showFinalModal(), 800);
+    } else {
+      // Prompt to switch view
+      setTimeout(() => {
+        const other = currentView === 'external' ? 'interna' : 'externa';
+        showToast(`🌟 ¡Vista completada! Ahora prueba la vista ${other}`, false, 3500);
+      }, 600);
+    }
+  }
+}
+
+// ─── SWITCH VIEW ──────────────────────────────────────────────────────────
+
+function switchView(view) {
+  currentView = view;
+
+  document.getElementById('view-external').style.display = view === 'external' ? 'flex' : 'none';
+  document.getElementById('view-internal').style.display = view === 'internal' ? 'flex' : 'none';
+
+  document.getElementById('tab-ext').classList.toggle('active', view === 'external');
+  document.getElementById('tab-int').classList.toggle('active', view === 'internal');
+
+  document.getElementById('view-title').textContent =
+    view === 'external' ? 'Vista Externa – Vulva' : 'Vista Interna';
+
+  document.getElementById('info-panel').classList.add('hidden');
+
+  renderLabels();
+  updateProgress();
+
+  // Restore placed labels visual state
+  const state = viewState[view];
+  Object.keys(state.placed).forEach(label => {
+    const targetId = DATA[view].targets[label];
+    const target = document.getElementById(targetId);
+    if (target) {
+      target.classList.add('correct');
+      target.querySelector('.target-label').style.display = 'flex';
+    }
+  });
+}
+
+// ─── TOAST ────────────────────────────────────────────────────────────────
+
+let toastTimeout;
+function showToast(msg, isError = false, duration = 2200) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = 'toast show' + (isError ? ' error' : '');
+  clearTimeout(toastTimeout);
+  toastTimeout = setTimeout(() => el.classList.remove('show'), duration);
+}
+
+// ─── MODAL ────────────────────────────────────────────────────────────────
+
+function showFinalModal() {
+  document.getElementById('modal-overlay').classList.add('visible');
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('visible');
+}
+
+// ─── KICK OFF ─────────────────────────────────────────────────────────────
+init();
+</script>
+</body>
+</html>

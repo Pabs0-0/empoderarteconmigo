@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>El Ciclo Mágico de Ceci · Pandora Nivel 3</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Nunito:wght@400;600;700;800;900&display=swap');
+
+  :root {
+    --rojo: #C51722;
+    --coral: #E95A5F;
+    --rosa: #E5537B;
+    --rosa-suave: #F2B8B2;
+    --crema: #F1EEE7;
+    --gris-calido: #E4E1DA;
+    --vino: #7E1322;
+    --lavanda: #D7D4E0;
+    --dorado: #F4B24A;
+    --cafe: #8B5837;
+
+    --fase1: #C51722;
+    --fase2: #E5537B;
+    --fase3: #E95A5F;
+    --fase4: #7E1322;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    min-height: 100vh;
+    background-color: #F1EEE7;
+    background-image:
+      radial-gradient(ellipse at 10% 20%, rgba(229,83,123,0.12) 0%, transparent 50%),
+      radial-gradient(ellipse at 90% 80%, rgba(197,23,34,0.10) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 50%, rgba(244,178,74,0.06) 0%, transparent 60%),
+      url("img/background.png");
+    background-size: cover;
+    background-attachment: fixed;
+    overflow-x: hidden;
+    cursor: default;
+  }
+
+  /* ── SPARKLES ── */
+  .sparkle {
+    position: fixed;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.5;
+    animation: floatSpark linear infinite;
+  }
+  @keyframes floatSpark {
+    0%   { transform: translateY(0) rotate(0deg); opacity: 0.4; }
+    50%  { opacity: 0.8; }
+    100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+  }
+
+  /* ── DECORATIVES ── */
+  .deco {
+    position: fixed;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.18;
+    filter: drop-shadow(0 4px 16px rgba(197,23,34,0.2));
+    animation: decoFloat 6s ease-in-out infinite;
+  }
+  @keyframes decoFloat {
+    0%,100% { transform: translateY(0) rotate(-3deg); }
+    50%      { transform: translateY(-12px) rotate(3deg); }
+  }
+
+  /* ── HEADER ── */
+  header {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    padding: 48px 24px 32px;
+  }
+  .badge-nivel {
+    display: inline-block;
+    background: var(--vino);
+    color: var(--crema);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 6px 18px;
+    border-radius: 20px;
+    margin-bottom: 14px;
+    box-shadow: 0 4px 16px rgba(126,19,34,0.3);
+  }
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.6rem);
+    color: var(--vino);
+    line-height: 1.1;
+    text-shadow: 0 2px 8px rgba(126,19,34,0.15);
+  }
+  header h1 span { color: var(--rosa); }
+  .header-sub {
+    font-size: 14px;
+    color: var(--cafe);
+    font-weight: 600;
+    margin-top: 8px;
+    letter-spacing: 1px;
+  }
+
+  /* ── CECI HEADER ── */
+  .ceci-header {
+    position: absolute;
+    right: max(24px, 5%);
+    top: 10px;
+    width: clamp(100px, 12vw, 190px);
+    filter: drop-shadow(0 8px 24px rgba(197,23,34,0.25));
+    animation: decoFloat 5s ease-in-out infinite;
+    z-index: 12;
+  }
+
+  /* ── INSTRUCCIONES ── */
+  .instrucciones-wrap {
+    position: relative;
+    z-index: 10;
+    max-width: 780px;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+  }
+  .instrucciones-card {
+    background: rgba(241,238,231,0.92);
+    border: 2px solid rgba(229,83,123,0.25);
+    border-radius: 28px;
+    padding: 32px 36px;
+    box-shadow:
+      0 8px 40px rgba(126,19,34,0.10),
+      inset 0 1px 0 rgba(255,255,255,0.8);
+    backdrop-filter: blur(8px);
+    position: relative;
+    overflow: hidden;
+  }
+  .instrucciones-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 5px;
+    background: linear-gradient(90deg, var(--rojo), var(--rosa), var(--dorado), var(--rosa), var(--rojo));
+    border-radius: 28px 28px 0 0;
+  }
+  .instrucciones-card .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--rosa);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 800;
+    padding: 5px 14px;
+    border-radius: 20px;
+    margin-bottom: 14px;
+    letter-spacing: 1px;
+  }
+  .instrucciones-card h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    color: var(--vino);
+    margin-bottom: 14px;
+  }
+  .instrucciones-card p {
+    color: #5a3640;
+    font-size: 15px;
+    line-height: 1.7;
+    margin-bottom: 10px;
+  }
+  .instrucciones-card ul {
+    list-style: none;
+    margin: 8px 0 14px 0;
+  }
+  .instrucciones-card ul li {
+    color: #5a3640;
+    font-size: 15px;
+    padding: 4px 0 4px 24px;
+    position: relative;
+  }
+  .instrucciones-card ul li::before {
+    content: '✦';
+    position: absolute;
+    left: 0;
+    color: var(--dorado);
+    font-size: 12px;
+    top: 6px;
+  }
+  .instrucciones-card .highlight-box {
+    background: linear-gradient(135deg, rgba(229,83,123,0.10), rgba(244,178,74,0.10));
+    border-left: 4px solid var(--rosa);
+    border-radius: 0 16px 16px 0;
+    padding: 14px 18px;
+    margin-top: 14px;
+  }
+  .instrucciones-card .highlight-box p {
+    margin: 0;
+    font-weight: 700;
+    color: var(--vino);
+    font-size: 15px;
+  }
+
+  /* ── PALABRAS FLOTANTES ── */
+  #palabras-pool {
+    position: relative;
+    z-index: 10;
+    max-width: 900px;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+  }
+  .pool-label {
+    text-align: center;
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--cafe);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .pool-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    background: rgba(241,238,231,0.7);
+    border: 2px dashed rgba(229,83,123,0.3);
+    border-radius: 24px;
+    padding: 24px;
+    min-height: 80px;
+    backdrop-filter: blur(4px);
+  }
+
+  .word-card {
+    background: linear-gradient(135deg, #fff 0%, var(--crema) 100%);
+    border: 2px solid rgba(229,83,123,0.35);
+    border-radius: 50px;
+    padding: 10px 22px;
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--vino);
+    cursor: grab;
+    user-select: none;
+    box-shadow:
+      0 4px 16px rgba(126,19,34,0.12),
+      0 1px 0 rgba(255,255,255,0.9) inset;
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+    position: relative;
+    overflow: hidden;
+    touch-action: none;
+  }
+  .word-card::before {
+    content: '✦';
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--dorado);
+    font-size: 10px;
+    opacity: 0.6;
+  }
+  .word-card.dragging {
+    cursor: grabbing;
+    transform: scale(1.08) rotate(2deg);
+    box-shadow: 0 12px 32px rgba(126,19,34,0.25);
+    z-index: 9999;
+    border-color: var(--rosa);
+  }
+  .word-card.correct {
+    background: linear-gradient(135deg, rgba(244,178,74,0.25), rgba(229,83,123,0.15));
+    border-color: var(--dorado);
+    cursor: default;
+    pointer-events: none;
+    animation: popIn 0.4s cubic-bezier(0.34,1.56,0.64,1) forwards;
+  }
+  .word-card.wrong-flash {
+    animation: shakeBack 0.5s ease forwards;
+    border-color: var(--rojo);
+  }
+  @keyframes popIn {
+    0%   { transform: scale(0.8); opacity: 0.5; }
+    60%  { transform: scale(1.12); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  @keyframes shakeBack {
+    0%   { transform: translateX(0); }
+    20%  { transform: translateX(-8px) rotate(-2deg); }
+    40%  { transform: translateX(8px) rotate(2deg); }
+    60%  { transform: translateX(-5px); }
+    80%  { transform: translateX(5px); }
+    100% { transform: translateX(0); }
+  }
+
+  /* ── CÍRCULO PRINCIPAL ── */
+  #actividad-central {
+    position: relative;
+    z-index: 10;
+    max-width: 1100px;
+    margin: 0 auto 60px;
+    padding: 0 16px;
+  }
+
+  .ciclo-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 20px;
+    position: relative;
+  }
+
+  /* Centro del círculo */
+  .ciclo-grid::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100px;
+    height: 100px;
+    background: radial-gradient(circle, var(--crema) 40%, rgba(244,178,74,0.3) 100%);
+    border-radius: 50%;
+    border: 3px solid rgba(244,178,74,0.5);
+    box-shadow:
+      0 0 0 6px rgba(241,238,231,0.8),
+      0 0 0 8px rgba(244,178,74,0.2),
+      0 8px 32px rgba(244,178,74,0.3);
+    z-index: 20;
+    animation: pulseCenter 3s ease-in-out infinite;
+  }
+  .ciclo-grid::after {
+    content: '♻';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 28px;
+    z-index: 21;
+    animation: spinSlow 12s linear infinite;
+    filter: drop-shadow(0 2px 4px rgba(126,19,34,0.3));
+  }
+  @keyframes pulseCenter {
+    0%,100% { box-shadow: 0 0 0 6px rgba(241,238,231,0.8), 0 0 0 8px rgba(244,178,74,0.2), 0 8px 32px rgba(244,178,74,0.3); }
+    50%      { box-shadow: 0 0 0 8px rgba(241,238,231,0.8), 0 0 0 12px rgba(244,178,74,0.3), 0 8px 48px rgba(244,178,74,0.5); }
+  }
+  @keyframes spinSlow {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to   { transform: translate(-50%, -50%) rotate(360deg); }
+  }
+
+  /* ── FASE CARD ── */
+  .fase-card {
+    background: rgba(241,238,231,0.93);
+    border-radius: 28px;
+    padding: 24px 20px 20px;
+    position: relative;
+    overflow: hidden;
+    box-shadow:
+      0 6px 28px rgba(126,19,34,0.12),
+      inset 0 1px 0 rgba(255,255,255,0.9);
+    transition: box-shadow 0.3s, transform 0.2s;
+    border: 2px solid transparent;
+  }
+  .fase-card.drag-over {
+    transform: scale(1.02);
+    border-color: var(--dorado);
+    box-shadow: 0 8px 36px rgba(244,178,74,0.35), inset 0 1px 0 rgba(255,255,255,0.9);
+  }
+  .fase-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 6px;
+    border-radius: 28px 28px 0 0;
+  }
+  .fase-card:nth-child(1) { --fase-color: #C51722; }
+  .fase-card:nth-child(2) { --fase-color: #E5537B; }
+  .fase-card:nth-child(3) { --fase-color: #E95A5F; }
+  .fase-card:nth-child(4) { --fase-color: #7E1322; }
+  .fase-card::before { background: var(--fase-color); }
+
+  .fase-card .corner-deco {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    background: rgba(255,255,255,0.7);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+  .fase-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+    color: var(--vino);
+    margin-bottom: 8px;
+    padding-right: 50px;
+  }
+  .fase-card .fase-badge {
+    display: inline-block;
+    background: var(--fase-color);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+  }
+  .fase-card p.desc {
+    font-size: 13px;
+    color: #6a404a;
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+
+  /* Drop zone dentro de la fase */
+  .drop-zone {
+    min-height: 56px;
+    background: rgba(255,255,255,0.5);
+    border: 2px dashed rgba(0,0,0,0.12);
+    border-radius: 16px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 10px 12px;
+    transition: background 0.3s, border-color 0.3s;
+    position: relative;
+    align-items: center;
+  }
+  .drop-zone.drag-over {
+    background: rgba(244,178,74,0.15);
+    border-color: var(--dorado);
+  }
+  .drop-zone .placeholder {
+    font-size: 12px;
+    color: #aaa;
+    font-style: italic;
+    pointer-events: none;
+    width: 100%;
+    text-align: center;
+  }
+
+  /* ── FEEDBACK TOAST ── */
+  #toast {
+    position: fixed;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: rgba(241,238,231,0.97);
+    border: 2px solid var(--rosa);
+    border-radius: 50px;
+    padding: 12px 28px;
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--vino);
+    box-shadow: 0 8px 32px rgba(126,19,34,0.2);
+    z-index: 9000;
+    transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+    pointer-events: none;
+  }
+  #toast.show { transform: translateX(-50%) translateY(0); }
+
+  /* ── SPARKLE burst on correct ── */
+  .burst {
+    position: fixed;
+    pointer-events: none;
+    z-index: 8000;
+    font-size: 20px;
+    animation: burstAnim 0.8s ease forwards;
+  }
+  @keyframes burstAnim {
+    0%   { transform: scale(0) rotate(0deg); opacity: 1; }
+    60%  { transform: scale(1.4) rotate(20deg); opacity: 1; }
+    100% { transform: scale(2) rotate(40deg) translateY(-30px); opacity: 0; }
+  }
+
+  /* ── PROGRESS ── */
+  .progress-wrap {
+    position: relative;
+    z-index: 10;
+    max-width: 500px;
+    margin: -20px auto 40px;
+    padding: 0 20px;
+    text-align: center;
+  }
+  .progress-label {
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--cafe);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .progress-bar-bg {
+    background: rgba(228,225,218,0.7);
+    border-radius: 20px;
+    height: 10px;
+    overflow: hidden;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.08);
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--rosa), var(--dorado));
+    border-radius: 20px;
+    width: 0%;
+    transition: width 0.6s cubic-bezier(0.34,1.56,0.64,1);
+    box-shadow: 0 0 8px rgba(244,178,74,0.5);
+  }
+  .progress-count {
+    margin-top: 6px;
+    font-size: 13px;
+    color: var(--vino);
+    font-weight: 700;
+  }
+
+  /* ── LUNA DECO ── */
+  .luna-deco {
+    position: fixed;
+    left: max(16px, 3%);
+    bottom: 80px;
+    width: clamp(80px, 10vw, 120px);
+    filter: drop-shadow(0 8px 24px rgba(229,83,123,0.3));
+    animation: decoFloat 7s ease-in-out infinite;
+    z-index: 5;
+    opacity: 0.85;
+  }
+
+  /* ── MODAL FINAL ── */
+  #modal-final {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    background: rgba(126,19,34,0.55);
+    backdrop-filter: blur(8px);
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  #modal-final.show { display: flex; }
+
+  .modal-card {
+    background: linear-gradient(145deg, var(--crema) 0%, rgba(242,184,178,0.4) 100%);
+    border-radius: 36px;
+    padding: 48px 40px 40px;
+    max-width: 560px;
+    width: 100%;
+    text-align: center;
+    position: relative;
+    box-shadow:
+      0 24px 80px rgba(126,19,34,0.3),
+      inset 0 1px 0 rgba(255,255,255,0.9);
+    border: 2px solid rgba(244,178,74,0.4);
+    animation: modalIn 0.6s cubic-bezier(0.34,1.56,0.64,1) forwards;
+    overflow: hidden;
+  }
+  @keyframes modalIn {
+    0%   { transform: scale(0.7) translateY(40px); opacity: 0; }
+    100% { transform: scale(1) translateY(0); opacity: 1; }
+  }
+  .modal-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 8px;
+    background: linear-gradient(90deg, var(--rojo), var(--rosa), var(--dorado), var(--rosa), var(--rojo));
+    border-radius: 36px 36px 0 0;
+  }
+  .modal-stars {
+    font-size: 28px;
+    margin-bottom: 16px;
+    animation: twinkle 1.5s ease-in-out infinite;
+  }
+  @keyframes twinkle {
+    0%,100% { transform: scale(1); }
+    50%      { transform: scale(1.1); }
+  }
+  .modal-card h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    color: var(--vino);
+    margin-bottom: 20px;
+    line-height: 1.1;
+  }
+  .modal-card h2 span { color: var(--rosa); }
+  .modal-card p {
+    font-size: 16px;
+    color: #5a3640;
+    line-height: 1.8;
+    margin-bottom: 12px;
+  }
+  .modal-ceci {
+    width: clamp(100px, 20vw, 150px);
+    margin: 20px auto 0;
+    display: block;
+    filter: drop-shadow(0 8px 24px rgba(229,83,123,0.4));
+    animation: decoFloat 4s ease-in-out infinite;
+  }
+  .modal-btn {
+    display: inline-block;
+    margin-top: 28px;
+    background: linear-gradient(135deg, var(--rosa), var(--rojo));
+    color: #fff;
+    font-size: 15px;
+    font-weight: 900;
+    padding: 14px 36px;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 6px 24px rgba(197,23,34,0.3);
+    letter-spacing: 1px;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .modal-btn:hover {
+    transform: translateY(-2px) scale(1.04);
+    box-shadow: 0 10px 32px rgba(197,23,34,0.4);
+  }
+
+  /* ── CONFETTI ── */
+  .confetti-piece {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    pointer-events: none;
+    z-index: 9999;
+    animation: confettiFall linear forwards;
+  }
+  @keyframes confettiFall {
+    0%   { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 640px) {
+    .ciclo-grid {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto;
+    }
+    .ciclo-grid::before, .ciclo-grid::after { display: none; }
+    .fase-card { border-radius: 20px; }
+    .ceci-header { width: 70px; top: 16px; }
+    .luna-deco { display: none; }
+    .instrucciones-card { padding: 24px 20px; }
+  }
+  @media (max-width: 900px) {
+    .ceci-header { width: 90px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Sparkles decorativos -->
+<div class="sparkle" style="left:5%;top:10%;font-size:16px;animation-duration:8s;animation-delay:0s;">✦</div>
+<div class="sparkle" style="left:15%;top:40%;font-size:10px;animation-duration:10s;animation-delay:2s;">✧</div>
+<div class="sparkle" style="left:80%;top:20%;font-size:14px;animation-duration:7s;animation-delay:1s;">✦</div>
+<div class="sparkle" style="left:92%;top:60%;font-size:8px;animation-duration:9s;animation-delay:3s;">✦</div>
+<div class="sparkle" style="left:50%;top:5%;font-size:12px;animation-duration:11s;animation-delay:0.5s;">✧</div>
+<div class="sparkle" style="left:30%;top:80%;font-size:10px;animation-duration:8s;animation-delay:4s;">✦</div>
+<div class="sparkle" style="left:70%;top:90%;font-size:14px;animation-duration:9s;animation-delay:1.5s;">✧</div>
+
+<!-- Luna personaje -->
+<img src="img/luna_side.png" class="luna-deco" alt="Luna">
+
+<!-- ══ HEADER ══ -->
+<header>
+  <img src="img/ceci_amazed.png" class="ceci-header" alt="Ceci">
+  <div class="badge-nivel">✦ Nivel 3 · Lección 1✦</div>
+  <h1>El ciclo <span>mágico</span> de Ceci</h1>
+  <p class="header-sub">Actividad interactiva · Fases del ciclo menstrual</p>
+</header>
+
+<!-- ══ INSTRUCCIONES ══ -->
+<div class="instrucciones-wrap">
+  <div class="instrucciones-card">
+    <div class="tag">🎮 Instrucciones</div>
+    <h2>¿Cómo jugar?</h2>
+    <p>En pantalla verás un círculo dividido en <strong>4 partes</strong>, que representa las fases del ciclo menstrual. Cada sección incluye:</p>
+    <ul>
+      <li>el nombre de la fase</li>
+      <li>una descripción corta</li>
+      <li>y una zona para recibir sus palabras</li>
+    </ul>
+    <div class="highlight-box">
+      <p>✨ Arrastra cada palabra flotante hacia la fase que creas que le corresponde. Cuando todas estén en su lugar, ¡podrás descubrir cómo funciona el ciclo de tu cuerpo!</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══ POOL DE PALABRAS ══ -->
+<div id="palabras-pool">
+  <p class="pool-label">✦ Palabras para ubicar ✦</p>
+  <div class="pool-container" id="pool" data-zone="pool">
+    <!-- palabras insertadas por JS -->
+  </div>
+</div>
+
+<!-- ══ PROGRESO ══ -->
+<div class="progress-wrap">
+  <p class="progress-label">Tu progreso</p>
+  <div class="progress-bar-bg"><div class="progress-bar-fill" id="progress-bar"></div></div>
+  <p class="progress-count" id="progress-count">0 de 12 palabras ubicadas</p>
+</div>
+
+<!-- ══ CÍRCULO / FASES ══ -->
+<div id="actividad-central">
+  <div class="ciclo-grid">
+
+    <!-- FASE 1: Menstrual (arriba-izq) -->
+    <div class="fase-card" id="card-menstrual">
+      <div class="corner-deco">🩸</div>
+      <span class="fase-badge">Fase 1</span>
+      <h3>Fase Menstrual</h3>
+      <p class="desc">Es el momento en el que aparece el sangrado y el cuerpo inicia un nuevo ciclo.</p>
+      <div class="drop-zone" id="zone-menstrual" data-fase="menstrual">
+        <span class="placeholder">Arrastra las palabras aquí</span>
+      </div>
+    </div>
+
+    <!-- FASE 2: Folicular (arriba-der) -->
+    <div class="fase-card" id="card-folicular">
+      <div class="corner-deco">🌱</div>
+      <span class="fase-badge">Fase 2</span>
+      <h3>Fase Folicular</h3>
+      <p class="desc">Después de la menstruación, el cuerpo empieza a recuperar energía.</p>
+      <div class="drop-zone" id="zone-folicular" data-fase="folicular">
+        <span class="placeholder">Arrastra las palabras aquí</span>
+      </div>
+    </div>
+
+    <!-- FASE 3: Ovulación (abajo-izq) -->
+    <div class="fase-card" id="card-ovulacion">
+      <div class="corner-deco">🌸</div>
+      <span class="fase-badge">Fase 3</span>
+      <h3>Fase de Ovulación</h3>
+      <p class="desc">Es el momento del ciclo en el que el cuerpo tiene más energía y se siente más activo.</p>
+      <div class="drop-zone" id="zone-ovulacion" data-fase="ovulacion">
+        <span class="placeholder">Arrastra las palabras aquí</span>
+      </div>
+    </div>
+
+    <!-- FASE 4: Lútea (abajo-der) -->
+    <div class="fase-card" id="card-lutea">
+      <div class="corner-deco">🌙</div>
+      <span class="fase-badge">Fase 4</span>
+      <h3>Fase Lútea</h3>
+      <p class="desc">El cuerpo comienza a disminuir su energía y se prepara para iniciar un nuevo ciclo.</p>
+      <div class="drop-zone" id="zone-lutea" data-fase="lutea">
+        <span class="placeholder">Arrastra las palabras aquí</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ TOAST ══ -->
+<div id="toast"></div>
+
+<!-- ══ MODAL FINAL ══ -->
+<div id="modal-final">
+  <div class="modal-card">
+    <div class="modal-stars">🌟✨💫⭐✨🌟</div>
+    <h2>Gran<span>Diosa</span> ✦</h2>
+    <p>Tu cuerpo vive ciclos naturales que cambian con el tiempo.</p>
+    <p>Aprender a reconocerlos te ayuda a <strong>entenderte, respetarte y cuidarte mejor</strong>.</p>
+    <p style="font-size:13px;color:#9a6a70;margin-top:8px;">¡Completaste la actividad con toda tu magia! 💕</p>
+    <img src="img/ceci_satisfecha.png" class="modal-ceci" alt="Ceci celebra">
+    <br>
+    <button class="modal-btn" onclick="cerrarModal()">✦ ¡Seguir explorando! ✦</button>
+  </div>
+</div>
+
+<script>
+// ── DATOS DE PALABRAS ──
+const palabrasData = [
+  { id: 'p1',  texto: 'descanso',               fase: 'menstrual' },
+  { id: 'p2',  texto: 'renovación',             fase: 'menstrual' },
+  { id: 'p3',  texto: 'sangrado',               fase: 'menstrual' },
+  { id: 'p4',  texto: 'más energía',            fase: 'folicular' },
+  { id: 'p5',  texto: 'ganas de aprender',      fase: 'folicular' },
+  { id: 'p6',  texto: 'mayor concentración',    fase: 'folicular' },
+  { id: 'p7',  texto: 'confianza',              fase: 'ovulacion' },
+  { id: 'p8',  texto: 'energía alta',           fase: 'ovulacion' },
+  { id: 'p9',  texto: 'sociabilidad',           fase: 'ovulacion' },
+  { id: 'p10', texto: 'sensibilidad',           fase: 'lutea'     },
+  { id: 'p11', texto: 'cansancio',              fase: 'lutea'     },
+  { id: 'p12', texto: 'necesidad de descanso',  fase: 'lutea'     },
+];
+
+// Mezclar palabras
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+const mezcladas = shuffle([...palabrasData]);
+let correctas = 0;
+const totalPalabras = palabrasData.length;
+
+// Estado de dónde está cada palabra
+const ubicacion = {};
+mezcladas.forEach(p => ubicacion[p.id] = 'pool');
+
+// ── CREAR TARJETAS ──
+function crearTarjeta(p) {
+  const card = document.createElement('div');
+  card.className = 'word-card';
+  card.id = 'word-' + p.id;
+  card.dataset.id = p.id;
+  card.dataset.fase = p.fase;
+  card.textContent = p.texto;
+  card.draggable = true;
+
+  // Desktop drag events
+  card.addEventListener('dragstart', onDragStart);
+  card.addEventListener('dragend', onDragEnd);
+
+  // Touch events
+  card.addEventListener('touchstart', onTouchStart, { passive: false });
+  card.addEventListener('touchmove', onTouchMove, { passive: false });
+  card.addEventListener('touchend', onTouchEnd);
+
+  return card;
+}
+
+// Renderizar pool
+const pool = document.getElementById('pool');
+mezcladas.forEach(p => {
+  pool.appendChild(crearTarjeta(p));
+});
+
+// ── DRAG & DROP DESKTOP ──
+let draggedId = null;
+let draggedEl = null;
+
+function onDragStart(e) {
+  draggedId = this.dataset.id;
+  draggedEl = this;
+  this.classList.add('dragging');
+  e.dataTransfer.effectAllowed = 'move';
+  e.dataTransfer.setData('text/plain', draggedId);
+}
+
+function onDragEnd(e) {
+  this.classList.remove('dragging');
+  document.querySelectorAll('.drop-zone').forEach(z => z.classList.remove('drag-over'));
+  document.getElementById('pool').classList.remove('drag-over');
+}
+
+// Zonas de destino
+document.querySelectorAll('.drop-zone').forEach(zone => {
+  zone.addEventListener('dragover', e => {
+    e.preventDefault();
+    zone.classList.add('drag-over');
+    const faseCard = zone.closest('.fase-card');
+    if (faseCard) faseCard.classList.add('drag-over');
+  });
+  zone.addEventListener('dragleave', e => {
+    zone.classList.remove('drag-over');
+    const faseCard = zone.closest('.fase-card');
+    if (faseCard) faseCard.classList.remove('drag-over');
+  });
+  zone.addEventListener('drop', e => {
+    e.preventDefault();
+    zone.classList.remove('drag-over');
+    const faseCard = zone.closest('.fase-card');
+    if (faseCard) faseCard.classList.remove('drag-over');
+    const id = e.dataTransfer.getData('text/plain');
+    procesarDrop(id, zone);
+  });
+});
+
+// Pool también acepta devolver
+pool.addEventListener('dragover', e => { e.preventDefault(); pool.classList.add('drag-over'); });
+pool.addEventListener('dragleave', () => pool.classList.remove('drag-over'));
+pool.addEventListener('drop', e => {
+  e.preventDefault();
+  pool.classList.remove('drag-over');
+  const id = e.dataTransfer.getData('text/plain');
+  const card = document.getElementById('word-' + id);
+  if (card && !card.classList.contains('correct')) {
+    pool.appendChild(card);
+    ubicacion[id] = 'pool';
+  }
+});
+
+// ── TOUCH DRAG ──
+let touchCard = null;
+let touchClone = null;
+let touchOffX = 0, touchOffY = 0;
+
+function onTouchStart(e) {
+  if (this.classList.contains('correct')) return;
+  touchCard = this;
+  const t = e.touches[0];
+  const rect = this.getBoundingClientRect();
+  touchOffX = t.clientX - rect.left;
+  touchOffY = t.clientY - rect.top;
+
+  touchClone = this.cloneNode(true);
+  touchClone.style.cssText = `
+    position:fixed; pointer-events:none; z-index:9999;
+    width:${rect.width}px; opacity:0.9;
+    left:${rect.left}px; top:${rect.top}px;
+    transform: scale(1.08) rotate(2deg);
+    transition: none;
+    font-family: 'Nunito', sans-serif;
+    font-size:14px; font-weight:800;
+    background: linear-gradient(135deg,#fff,#F1EEE7);
+    border: 2px solid #E5537B;
+    border-radius: 50px; padding: 10px 22px;
+    box-shadow: 0 12px 32px rgba(126,19,34,0.25);
+    color: #7E1322;
+  `;
+  document.body.appendChild(touchClone);
+  this.style.opacity = '0.3';
+  e.preventDefault();
+}
+
+function onTouchMove(e) {
+  if (!touchClone) return;
+  const t = e.touches[0];
+  touchClone.style.left = (t.clientX - touchOffX) + 'px';
+  touchClone.style.top  = (t.clientY - touchOffY) + 'px';
+  e.preventDefault();
+
+  // highlight zone under finger
+  touchClone.style.display = 'none';
+  const el = document.elementFromPoint(t.clientX, t.clientY);
+  touchClone.style.display = '';
+  document.querySelectorAll('.drop-zone').forEach(z => z.classList.remove('drag-over'));
+  if (el) {
+    const zone = el.closest('.drop-zone');
+    if (zone) zone.classList.add('drag-over');
+  }
+}
+
+function onTouchEnd(e) {
+  if (!touchClone || !touchCard) return;
+  const t = e.changedTouches[0];
+  touchClone.style.display = 'none';
+  const el = document.elementFromPoint(t.clientX, t.clientY);
+  touchClone.style.display = '';
+  touchClone.remove();
+  touchClone = null;
+  touchCard.style.opacity = '1';
+  document.querySelectorAll('.drop-zone').forEach(z => z.classList.remove('drag-over'));
+
+  if (el) {
+    const zone = el.closest('.drop-zone');
+    if (zone) {
+      procesarDrop(touchCard.dataset.id, zone);
+    }
+  }
+  touchCard = null;
+}
+
+// ── LÓGICA DE DROP ──
+function procesarDrop(id, zone) {
+  const card = document.getElementById('word-' + id);
+  if (!card || card.classList.contains('correct')) return;
+
+  const faseDestino = zone.dataset.fase;
+  const fasePalabra = card.dataset.fase;
+
+  if (faseDestino === fasePalabra) {
+    // ✅ Correcto
+    card.classList.remove('wrong-flash');
+    void card.offsetWidth;
+    card.classList.add('correct');
+    card.draggable = false;
+
+    // Remover placeholder si existe
+    const ph = zone.querySelector('.placeholder');
+    if (ph) ph.remove();
+
+    zone.appendChild(card);
+    ubicacion[id] = faseDestino;
+    correctas++;
+
+    actualizarProgreso();
+    mostrarBurst(card);
+    showToast(mensajesCorrectos[Math.floor(Math.random() * mensajesCorrectos.length)]);
+
+    if (correctas === totalPalabras) {
+      setTimeout(mostrarFinal, 800);
+    }
+  } else {
+    // ❌ Incorrecto
+    card.classList.add('wrong-flash');
+    setTimeout(() => card.classList.remove('wrong-flash'), 600);
+    showToast(mensajesIncorrectos[Math.floor(Math.random() * mensajesIncorrectos.length)]);
+  }
+}
+
+// ── MENSAJES ──
+const mensajesCorrectos = [
+  '✨ Muy bien, ¡lo descubriste!',
+  '✨ ¡Exacto! Vas increíble',
+  '✨ ¡Correcto! Sigues brillando',
+  '✦ ¡Así es! Muy bien',
+  '💫 ¡Perfecto! Sigue así',
+];
+const mensajesIncorrectos = [
+  '🌸 Intenta otra vez',
+  '💭 Piensa en cómo se siente el cuerpo en esta fase',
+  '✨ Vas muy bien, ¡tú puedes!',
+  '🩷 Casi… ¡sigue intentando!',
+  '💫 No te rindas, ¡casi lo tienes!',
+];
+
+// ── TOAST ──
+let toastTimer = null;
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove('show'), 2200);
+}
+
+// ── BURST VISUAL ──
+function mostrarBurst(card) {
+  const rect = card.getBoundingClientRect();
+  const cx = rect.left + rect.width / 2;
+  const cy = rect.top + rect.height / 2;
+  const emojis = ['✨','⭐','💫','✦','🌟','💕'];
+  for (let i = 0; i < 6; i++) {
+    const b = document.createElement('div');
+    b.className = 'burst';
+    b.textContent = emojis[i % emojis.length];
+    b.style.left = (cx + (Math.random()-0.5)*60) + 'px';
+    b.style.top  = (cy + (Math.random()-0.5)*60) + 'px';
+    b.style.animationDelay = (i * 0.07) + 's';
+    document.body.appendChild(b);
+    setTimeout(() => b.remove(), 900);
+  }
+}
+
+// ── PROGRESO ──
+function actualizarProgreso() {
+  const pct = (correctas / totalPalabras) * 100;
+  document.getElementById('progress-bar').style.width = pct + '%';
+  document.getElementById('progress-count').textContent =
+    correctas + ' de ' + totalPalabras + ' palabras ubicadas' +
+    (correctas === totalPalabras ? ' 🎉' : '');
+}
+
+// ── FINAL ──
+function mostrarFinal() {
+  document.getElementById('modal-final').classList.add('show');
+  lanzarConfetti();
+}
+
+function cerrarModal() {
+  document.getElementById('modal-final').classList.remove('show');
+}
+
+function lanzarConfetti() {
+  const colors = ['#C51722','#E95A5F','#E5537B','#F2B8B2','#F4B24A','#D7D4E0','#7E1322'];
+  for (let i = 0; i < 80; i++) {
+    const c = document.createElement('div');
+    c.className = 'confetti-piece';
+    c.style.left = Math.random() * 100 + 'vw';
+    c.style.top = '-20px';
+    c.style.background = colors[Math.floor(Math.random() * colors.length)];
+    c.style.width = (6 + Math.random() * 10) + 'px';
+    c.style.height = (6 + Math.random() * 10) + 'px';
+    c.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+    c.style.animationDuration = (1.5 + Math.random() * 2.5) + 's';
+    c.style.animationDelay = (Math.random() * 1.5) + 's';
+    document.body.appendChild(c);
+    setTimeout(() => c.remove(), 5000);
+  }
+}
+</script>
+</body>
+</html>

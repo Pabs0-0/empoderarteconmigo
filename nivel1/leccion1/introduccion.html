@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Pandora – Nivel 1: Ser Auténtica</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Nunito:wght@400;600;700;800&family=Dancing+Script:wght@700&display=swap" rel="stylesheet" />
+
+<style>
+  :root {
+    --bg-deep:       #1B1531;
+    --bg-mid:        #2F3055;
+    --accent-teal:   #5A99A0;
+    --accent-coral:  #E2555E;
+    --accent-fuchsia:#E04F6F;
+    --card-cream:    #EAE7E1;
+    --shadow-mauve:  #57365B;
+    --glow-teal:     rgba(90,153,160,0.35);
+    --glow-coral:    rgba(226,85,94,0.35);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg-deep);
+    color: #f0eaf8;
+    font-family: 'Nunito', sans-serif;
+    overflow-x: hidden;
+    cursor: default;
+  }
+
+  /* ── STARFIELD CANVAS ── */
+  #stars-canvas {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  /* ── FLOATING PARTICLES ── */
+  .particles {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .particle {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0;
+    animation: floatParticle linear infinite;
+  }
+
+  @keyframes floatParticle {
+    0%   { transform: translateY(110vh) scale(0); opacity: 0; }
+    10%  { opacity: 1; }
+    90%  { opacity: 0.6; }
+    100% { transform: translateY(-10vh) scale(1.3); opacity: 0; }
+  }
+
+  /* ── WRAPPER ── */
+  .wrapper {
+    position: relative;
+    z-index: 1;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px 80px;
+  }
+
+  /* ── FLOATING PNG UTIL ── */
+  .float-png {
+    position: absolute;
+    pointer-events: none;
+    animation: gentleFloat 4s ease-in-out infinite;
+  }
+  .float-png.delay1 { animation-delay: -1.2s; }
+  .float-png.delay2 { animation-delay: -2.5s; }
+  .float-png.delay3 { animation-delay: -0.7s; }
+  .float-png.delay4 { animation-delay: -3.1s; }
+
+  @keyframes gentleFloat {
+    0%,100% { transform: translateY(0px) rotate(0deg); }
+    50%      { transform: translateY(-14px) rotate(3deg); }
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 80px 20px 60px;
+    overflow: hidden;
+  }
+
+  .hero-nebula {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 40%, rgba(90,153,160,0.18) 0%, transparent 70%),
+      radial-gradient(ellipse 60% 50% at 20% 80%, rgba(87,54,91,0.5) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 40% at 80% 20%, rgba(226,85,94,0.15) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .hero-ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 1.5px solid rgba(90,153,160,0.2);
+    animation: pulseRing 6s ease-in-out infinite;
+    pointer-events: none;
+  }
+  .hero-ring:nth-child(1) { width: 420px; height: 420px; top: 50%; left: 50%; transform: translate(-50%,-50%); animation-delay: 0s; }
+  .hero-ring:nth-child(2) { width: 640px; height: 640px; top: 50%; left: 50%; transform: translate(-50%,-50%); animation-delay: 1.5s; border-color: rgba(224,79,111,0.12); }
+  .hero-ring:nth-child(3) { width: 860px; height: 860px; top: 50%; left: 50%; transform: translate(-50%,-50%); animation-delay: 3s; border-color: rgba(90,153,160,0.08); }
+
+  @keyframes pulseRing {
+    0%,100% { opacity: 0.4; transform: translate(-50%,-50%) scale(1); }
+    50%      { opacity: 1; transform: translate(-50%,-50%) scale(1.04); }
+  }
+
+  .hero-level-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(90,153,160,0.15);
+    border: 1.5px solid var(--accent-teal);
+    border-radius: 40px;
+    padding: 8px 22px;
+    font-size: 0.82rem;
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent-teal);
+    margin-bottom: 28px;
+    backdrop-filter: blur(6px);
+    animation: fadeSlideUp 0.8s ease both;
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 8vw, 6rem);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -1px;
+    background: linear-gradient(135deg, #f0eaf8 30%, var(--accent-teal) 60%, var(--accent-coral) 90%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 18px;
+    animation: fadeSlideUp 0.9s ease 0.15s both;
+  }
+
+  .hero-subtitle {
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(1.4rem, 3.5vw, 2.2rem);
+    color: var(--accent-fuchsia);
+    margin-bottom: 30px;
+    animation: fadeSlideUp 0.9s ease 0.3s both;
+  }
+
+  .hero-desc {
+    max-width: 580px;
+    font-size: 1.05rem;
+    line-height: 1.75;
+    color: rgba(240,234,248,0.8);
+    margin-bottom: 40px;
+    animation: fadeSlideUp 0.9s ease 0.45s both;
+  }
+
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(135deg, var(--accent-coral), var(--accent-fuchsia));
+    color: #fff;
+    font-weight: 800;
+    font-size: 1rem;
+    padding: 16px 36px;
+    border-radius: 50px;
+    text-decoration: none;
+    box-shadow: 0 8px 30px rgba(226,85,94,0.4);
+    animation: fadeSlideUp 0.9s ease 0.6s both;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .hero-cta:hover { transform: translateY(-3px) scale(1.03); box-shadow: 0 14px 40px rgba(226,85,94,0.55); }
+
+  /* characters floating in hero */
+  .hero-chars {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .hero-char {
+    position: absolute;
+    animation: gentleFloat 5s ease-in-out infinite;
+    filter: drop-shadow(0 0 18px rgba(90,153,160,0.5));
+  }
+  .hero-char.ceci { bottom: 5%; left: 3%; width: clamp(110px,14vw,180px); animation-delay: -1s; }
+  .hero-char.luna { bottom: 5%; right: 3%; width: clamp(100px,13vw,165px); animation-delay: -2.4s; }
+
+  @keyframes fadeSlideUp {
+    from { opacity:0; transform: translateY(30px); }
+    to   { opacity:1; transform: translateY(0); }
+  }
+
+  /* ── SECTION SHARED ── */
+  section { position: relative; padding: 70px 0 50px; }
+
+  .section-label {
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--accent-teal);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-label::before {
+    content: '';
+    display: block;
+    width: 28px;
+    height: 2px;
+    background: var(--accent-teal);
+    border-radius: 2px;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.7rem, 4vw, 2.8rem);
+    font-weight: 900;
+    line-height: 1.15;
+    color: #f0eaf8;
+    margin-bottom: 28px;
+  }
+  .section-title span { color: var(--accent-coral); }
+
+  /* ── CARD BASE ── */
+  .card {
+    background: linear-gradient(135deg, rgba(47,48,85,0.8) 0%, rgba(87,54,91,0.5) 100%);
+    border: 1px solid rgba(90,153,160,0.2);
+    border-radius: 28px;
+    padding: 36px 40px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .card:hover { transform: translateY(-4px); box-shadow: 0 18px 55px rgba(0,0,0,0.5); }
+
+  /* ── DISCOVER SECTION ── */
+  .discover-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    position: relative;
+  }
+  @media(max-width:700px){ .discover-grid { grid-template-columns: 1fr; } }
+
+  .discover-card {
+    border-radius: 28px;
+    padding: 36px 32px;
+    position: relative;
+    overflow: hidden;
+  }
+  .discover-card.card-a {
+    background: linear-gradient(140deg, rgba(90,153,160,0.18) 0%, rgba(47,48,85,0.9) 100%);
+    border: 1px solid rgba(90,153,160,0.35);
+  }
+  .discover-card.card-b {
+    background: linear-gradient(140deg, rgba(226,85,94,0.15) 0%, rgba(47,48,85,0.9) 100%);
+    border: 1px solid rgba(226,85,94,0.25);
+  }
+  .discover-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.45rem;
+    font-weight: 700;
+    margin-bottom: 14px;
+    color: #f0eaf8;
+  }
+  .discover-card h3 .icon { font-size: 1.6rem; margin-right: 8px; }
+  .discover-card p { font-size: 0.98rem; line-height: 1.75; color: rgba(240,234,248,0.82); }
+  .card-deco-img {
+    position: absolute;
+    opacity: 0.18;
+    pointer-events: none;
+  }
+
+  /* ── LEARN / OBJECTIVE ── */
+  .learn-wrap {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 28px;
+    align-items: center;
+  }
+  @media(max-width:780px){ .learn-wrap { grid-template-columns: 1fr; } }
+
+  .learn-items { display: flex; flex-direction: column; gap: 16px; }
+
+  .learn-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    background: rgba(47,48,85,0.6);
+    border: 1px solid rgba(90,153,160,0.15);
+    border-radius: 18px;
+    padding: 18px 22px;
+    transition: border-color 0.3s, background 0.3s;
+  }
+  .learn-item:hover {
+    border-color: rgba(90,153,160,0.45);
+    background: rgba(90,153,160,0.08);
+  }
+  .learn-item-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, var(--accent-teal), var(--accent-fuchsia));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    flex-shrink: 0;
+  }
+  .learn-item p { font-size: 0.95rem; line-height: 1.65; color: rgba(240,234,248,0.85); margin: 0; }
+
+  .char-float-right {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    position: relative;
+  }
+  .char-float-right img {
+    width: clamp(130px, 20vw, 500px);
+    filter: drop-shadow(0 0 22px rgba(90,153,160,0.5));
+    animation: gentleFloat 5.5s ease-in-out infinite;
+  }
+
+  /* ── OBJECTIVE ── */
+  .objective-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 32px;
+    padding: 50px 48px;
+    background: linear-gradient(135deg, rgba(224,79,111,0.12) 0%, rgba(87,54,91,0.6) 40%, rgba(47,48,85,0.95) 100%);
+    border: 1.5px solid rgba(224,79,111,0.3);
+    text-align: center;
+  }
+  .objective-glow {
+    position: absolute;
+    top: -60px; left: 50%;
+    transform: translateX(-50%);
+    width: 400px; height: 200px;
+    background: radial-gradient(ellipse, rgba(224,79,111,0.25) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .objective-card p {
+    font-size: clamp(1.05rem, 2vw, 1.25rem);
+    line-height: 1.8;
+    color: rgba(240,234,248,0.9);
+    max-width: 680px;
+    margin: 0 auto;
+  }
+  .objective-card p strong { color: var(--accent-coral); font-weight: 800; }
+
+  /* ── WHAT WE'LL DO ── */
+  .activities-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+  }
+  .activity-card {
+    text-align: center;
+    padding: 32px 22px 28px;
+    border-radius: 24px;
+    background: rgba(47,48,85,0.65);
+    border: 1px solid rgba(90,153,160,0.18);
+    transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+    cursor: default;
+  }
+  .activity-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 40px rgba(90,153,160,0.2);
+    border-color: rgba(90,153,160,0.45);
+  }
+  .activity-icon {
+    font-size: 2.4rem;
+    margin-bottom: 14px;
+    display: block;
+  }
+  .activity-card h4 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #f0eaf8;
+    line-height: 1.4;
+  }
+
+  /* ── BEFORE START ── */
+  .before-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    align-items: center;
+  }
+  @media(max-width:700px){ .before-wrap { grid-template-columns: 1fr; } }
+
+  .before-text p {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: rgba(240,234,248,0.85);
+    margin-bottom: 20px;
+  }
+
+  /* ── BADGE ── */
+  .badge-showcase {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    text-align: center;
+  }
+  .badge-glow-ring {
+    position: relative;
+    width: 170px;
+    height: 170px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .badge-glow-ring::before,
+  .badge-glow-ring::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    animation: badgePulse 3s ease-in-out infinite;
+  }
+  .badge-glow-ring::before {
+    inset: -12px;
+    border: 2px solid rgba(226,85,94,0.4);
+  }
+  .badge-glow-ring::after {
+    inset: -26px;
+    border: 1.5px solid rgba(226,85,94,0.18);
+    animation-delay: 1s;
+  }
+  @keyframes badgePulse {
+    0%,100% { opacity:0.5; transform: scale(1); }
+    50%      { opacity:1; transform: scale(1.06); }
+  }
+  .badge-img {
+    width: 140px;
+    height: 140px;
+    object-fit: contain;
+    filter: drop-shadow(0 0 24px rgba(226,85,94,0.55)) drop-shadow(0 0 50px rgba(90,153,160,0.3));
+    animation: badgeSpin 12s linear infinite, gentleFloat 4s ease-in-out infinite;
+  }
+  @keyframes badgeSpin {
+    0%   { filter: drop-shadow(0 0 24px rgba(226,85,94,0.55)) drop-shadow(0 0 50px rgba(90,153,160,0.3)) hue-rotate(0deg); }
+    100% { filter: drop-shadow(0 0 24px rgba(226,85,94,0.55)) drop-shadow(0 0 50px rgba(90,153,160,0.3)) hue-rotate(360deg); }
+  }
+  .badge-label {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.6rem;
+    color: var(--accent-coral);
+    text-shadow: 0 0 20px rgba(226,85,94,0.5);
+  }
+  .badge-sublabel {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(240,234,248,0.5);
+  }
+
+  /* ── STORY SECTION ── */
+  .story-section {
+    position: relative;
+    overflow: hidden;
+    border-radius: 40px;
+    padding: 60px 50px;
+    background: linear-gradient(160deg, rgba(27,21,49,0.97) 0%, rgba(87,54,91,0.5) 50%, rgba(47,48,85,0.9) 100%);
+    border: 1px solid rgba(90,153,160,0.2);
+  }
+  @media(max-width:600px){ .story-section { padding: 40px 24px; } }
+
+  .story-nebula-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 70% 50% at 80% 20%, rgba(90,153,160,0.12) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 60% at 10% 80%, rgba(87,54,91,0.4) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .story-inner {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    align-items: center;
+  }
+  @media(max-width:760px){ .story-inner { grid-template-columns: 1fr; } }
+
+  .story-text h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+    font-weight: 900;
+    color: #f0eaf8;
+    margin-bottom: 10px;
+  }
+  .story-text .question {
+    color: var(--accent-teal);
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 24px;
+    font-style: italic;
+  }
+
+  .story-paragraph {
+    font-size: 1rem;
+    line-height: 1.85;
+    color: rgba(240,234,248,0.82);
+    margin-bottom: 14px;
+  }
+  .story-paragraph.emphasis {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.35rem;
+    color: var(--accent-fuchsia);
+    text-shadow: 0 0 16px rgba(224,79,111,0.4);
+    line-height: 1.5;
+  }
+  .story-sound {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-style: italic;
+    color: var(--accent-teal);
+    letter-spacing: 4px;
+    margin: 10px 0;
+    animation: soundPulse 2s ease-in-out infinite;
+    display: block;
+  }
+  @keyframes soundPulse {
+    0%,100% { opacity:0.6; letter-spacing: 4px; }
+    50%      { opacity:1;   letter-spacing: 8px; }
+  }
+
+  .story-chars {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 16px;
+    min-height: 260px;
+  }
+  .story-char {
+    width: clamp(110px, 16vw, 480px);
+    filter: drop-shadow(0 0 20px rgba(90,153,160,0.45));
+    animation: gentleFloat 4.5s ease-in-out infinite;
+  }
+  .story-char:nth-child(2) { animation-delay: -2s; }
+
+  /* ── TEACHER SECTION ── */
+  .teacher-wrap { margin-top: 70px; }
+
+  .teacher-toggle {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: rgba(47,48,85,0.5);
+    border: 1px solid rgba(90,153,160,0.15);
+    border-radius: 16px;
+    padding: 18px 26px;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+    color: rgba(240,234,248,0.6);
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    transition: background 0.25s, border-color 0.25s;
+    user-select: none;
+  }
+  .teacher-toggle:hover {
+    background: rgba(47,48,85,0.8);
+    border-color: rgba(90,153,160,0.3);
+    color: rgba(240,234,248,0.85);
+  }
+  .teacher-toggle-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+    background: rgba(90,153,160,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+  .teacher-toggle-arrow {
+    margin-left: auto;
+    transition: transform 0.3s;
+  }
+  .teacher-toggle.open .teacher-toggle-arrow { transform: rotate(180deg); }
+
+  .teacher-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.45s ease;
+  }
+  .teacher-body.open { max-height: 600px; }
+
+  .teacher-content {
+    background: rgba(27,21,49,0.7);
+    border: 1px solid rgba(90,153,160,0.12);
+    border-top: none;
+    border-radius: 0 0 16px 16px;
+    padding: 28px 30px 30px;
+  }
+  .teacher-content h4 {
+    font-size: 0.82rem;
+    font-weight: 800;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--accent-teal);
+    margin-bottom: 16px;
+  }
+  .teacher-content ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .teacher-content ul li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.9rem;
+    color: rgb(7 1 14);
+    line-height: 1.5;
+}
+
+  .teacher-content ul li::before {
+    content: '◆';
+    color: rgba(90,153,160,0.5);
+    font-size: 0.5rem;
+    flex-shrink: 0;
+  }
+
+  /* ── DIVIDER ── */
+  .section-divider {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(90,153,160,0.3), transparent);
+    margin: 10px 0 40px;
+  }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── DECORATIVE DRIFTERS ── */
+  .drifter {
+    position: absolute;
+    pointer-events: none;
+    animation: gentleFloat 6s ease-in-out infinite;
+    opacity: 0.55;
+  }
+
+  /* ── IMG FALLBACK (shows colored shape if png missing) ── */
+  img { display: block; }
+  img[src*="img/"]::after {
+    content: '';
+    display: block;
+    background: rgba(90,153,160,0.15);
+    border-radius: 50%;
+    width: 100%; height: 100%;
+  }
+</style>
+</head>
+
+<body>
+
+<!-- STARFIELD -->
+<canvas id="stars-canvas"></canvas>
+
+<!-- PARTICLES -->
+<div class="particles" id="particles-container"></div>
+
+<div class="wrapper">
+
+  <!-- ══════════════════════════════
+       HERO
+  ══════════════════════════════ -->
+  <section class="hero" id="hero">
+    <div class="hero-nebula"></div>
+    <div class="hero-ring"></div>
+    <div class="hero-ring"></div>
+    <div class="hero-ring"></div>
+
+    <!-- floating decorative PNGs -->
+    <img src="img/libro.png"       class="float-png delay1" style="top:10%;left:5%;width:70px;opacity:0.6;" alt="" />
+    <img src="img/BOMBILLO.png"  class="float-png delay2" style="top:8%;right:8%;width:90px;opacity:0.5;" alt="" />
+    <img src="img/estrella.png"      class="float-png delay3" style="top:25%;left:12%;width:36px;opacity:0.7;" alt="" />
+    <img src="img/estrella.png"      class="float-png delay4" style="top:18%;right:20%;width:24px;opacity:0.6;" alt="" />
+    <img src="img/corazon.png"      class="float-png delay3" style="top:35%;right:3%;width:40px;opacity:0.4;" alt="" />
+    <img src="img/corazon.png"       class="float-png delay2" style="top:60%;left:18%;width:30px;opacity:0.65;" alt="" />
+    <img src="img/estrella.png" class="float-png delay4" style="top:55%;right:18%;width:38px;opacity:0.6;" alt="" />
+    <img src="img/CHOCOLATE.png"    class="float-png delay1" style="top:72%;left:6%;width:44px;opacity:0.45;" alt="" />
+    <img src="img/celular.png"  class="float-png delay2" style="top:68%;right:6%;width:48px;opacity:0.45;" alt="" />
+    <img src="img/MUSICA.png"  class="float-png delay3" style="bottom:18%;left:25%;width:34px;opacity:0.5;" alt="" />
+    <img src="img/estrella.png"        class="float-png delay4" style="bottom:22%;right:24%;width:28px;opacity:0.6;" alt="" />
+
+    <div class="hero-chars">
+      <img src="img/ceci.png" class="hero-char ceci" alt="Ceci" />
+      <img src="img/luna.png" class="hero-char luna" alt="Luna" />
+    </div>
+
+    <div style="position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;">
+      <div class="hero-level-badge">✦ &nbsp; Nivel 1 · Lección 1 &nbsp; ✦</div>
+      <h1 class="hero-title">¡Bienvenida a Pandora!</h1>
+      <p class="hero-subtitle">El universo que llevas dentro</p>
+      <p class="hero-desc">
+        Bienvenida a tu primera aventura. Aquí comenzarás a descubrir quién eres,
+        qué te hace única y cómo navegar un mundo lleno de voces que intentan
+        decirte cómo debes ser.
+      </p>
+      <a href="#descubrir" class="hero-cta">
+        <span>✦</span> Comenzar aventura <span>✦</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════
+       QUÉ DESCUBRIRÁS
+  ══════════════════════════════ -->
+  <section id="descubrir">
+    <div class="section-divider"></div>
+    <div class="reveal">
+      <div class="section-label">Exploración</div>
+      <h2 class="section-title">Qué <span>descubrirás</span> aquí</h2>
+    </div>
+
+    <div class="discover-grid reveal" style="transition-delay:0.15s">
+
+      <div class="discover-card card-a">
+        <img src="img/libro.png" class="card-deco-img" style="width:110px;bottom:-10px;right:-10px;transform:rotate(15deg);" alt="" />
+        <img src="img/estrella.png" class="card-deco-img" style="width:55px;top:16px;right:18px;opacity:0.3;" alt="" />
+        <h3><span class="icon">🌌</span>Tu viaje</h3>
+        <p>En este primer nivel comenzarás tu viaje en Pandora junto a <strong>Ceci</strong> y <strong>Luna</strong>.</p>
+        <div style="margin-top:20px;display:flex;gap:14px;align-items:flex-end;">
+          <img src="img/ceci1.png" style="width:70px;filter:drop-shadow(0 0 10px rgba(90,153,160,0.5));" alt="Ceci" />
+        </div>
+      </div>
+
+      <div class="discover-card card-b">
+        <img src="img/corazon.png" class="card-deco-img" style="width:90px;bottom:-8px;right:10px;opacity:0.2;" alt="" />
+        <img src="img/CHOCOLATE.png" class="card-deco-img" style="width:48px;top:14px;right:20px;opacity:0.28;" alt="" />
+        <h3><span class="icon">💬</span>Las voces del mundo</h3>
+        <p>Descubrirás cómo algunos comentarios en redes sociales o en tu entorno pueden influir en cómo piensas sobre <strong>ti misma</strong>.</p>
+        <div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap;">
+          <img src="img/ceci2.png" style="width:38px;opacity:0.85;" alt="" />
+          <img src="img/ceci3.png" style="width:38px;opacity:0.85;" alt="" />
+          <img src="img/ceci5.png" style="width:36px;opacity:0.8;" alt="" />
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════
+       QUÉ APRENDERÁS
+  ══════════════════════════════ -->
+  <section id="aprender">
+    <div class="section-divider"></div>
+    <div class="reveal">
+      <div class="section-label">Aprendizaje</div>
+      <h2 class="section-title">Qué <span>aprenderás</span></h2>
+    </div>
+
+    <div class="learn-wrap reveal" style="transition-delay:0.1s">
+      <div class="learn-items">
+
+        <div class="learn-item">
+          <div class="learn-item-icon">🔍</div>
+          <p><strong>Reconocer estereotipos:</strong> ideas que dicen cómo "debería ser" una niña.</p>
+        </div>
+
+        <div class="learn-item">
+          <div class="learn-item-icon">🌟</div>
+          <p><strong>Descubrir</strong> que no existe una sola forma de ser, pensar o soñar.</p>
+        </div>
+
+        <div class="learn-item">
+          <div class="learn-item-icon">💡</div>
+          <p><strong>Cuestionar</strong> los mensajes que te rodean y fortalecer tu voz interior.</p>
+        </div>
+
+        <div class="learn-item">
+          <div class="learn-item-icon">💬</div>
+          <p><strong>Identificar</strong> la diferencia entre una opinión y una violencia simbólica.</p>
+        </div>
+
+      </div>
+
+      <div class="char-float-right reveal" style="transition-delay:0.25s">
+        <img src="img/espejo.png" alt="Ceci acompañándote" />
+        <img src="img/estrella.png" style="position:absolute;top:0;right:0;width:36px;opacity:0.7;animation:gentleFloat 3.5s ease-in-out infinite;" alt="" />
+        <img src="img/estrella.png" style="position:absolute;bottom:10px;left:-10px;width:28px;opacity:0.6;animation:gentleFloat 4s ease-in-out infinite -1.5s;" alt="" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════
+       OBJETIVO DEL NIVEL
+  ══════════════════════════════ -->
+  <section id="objetivo">
+    <div class="section-divider"></div>
+    <div class="reveal">
+      <div class="section-label">Propósito</div>
+      <h2 class="section-title">Objetivo del <span>nivel</span></h2>
+    </div>
+
+    <div class="objective-card reveal" style="transition-delay:0.1s">
+      <div class="objective-glow"></div>
+      <img src="img/libro.png" class="drifter" style="width:52px;top:18px;left:22px;opacity:0.35;" alt="" />
+      <img src="img/BOMBILLO.png" class="drifter delay2" style="width:38px;top:18px;right:26px;opacity:0.4;" alt="" />
+      <p>
+        Que <strong>tú identifiques</strong> comentarios, creencias o estereotipos que pueden afectar
+        tu autoestima y aprendas a <strong>cuestionarlos</strong> para fortalecer
+        tu <strong>autenticidad</strong>.
+      </p>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════
+       QUÉ HAREMOS
+  ══════════════════════════════ -->
+  <section id="haremos">
+    <div class="section-divider"></div>
+    <div class="reveal">
+      <div class="section-label">Actividades</div>
+      <h2 class="section-title">Qué <span>haremos</span></h2>
+    </div>
+
+    <div class="activities-grid reveal" style="transition-delay:0.1s">
+
+      <div class="activity-card">
+        <span class="activity-icon">📖</span>
+        <h4>Ten tu cartilla<br/>a la mano</h4>
+        <img src="img/chocolate.png" style="width:38px;margin:14px auto 0;opacity:0.6;" alt="" />
+      </div>
+
+      <div class="activity-card">
+        <span class="activity-icon">🎮</span>
+        <h4>Juegos interactivos<br/>con bonus extra</h4>
+        <img src="img/estrella.png" style="width:34px;margin:14px auto 0;opacity:0.65;" alt="" />
+      </div>
+
+      <div class="activity-card">
+        <span class="activity-icon">💭</span>
+        <h4>Preguntas para<br/>reflexionar</h4>
+        <img src="img/libro.png" style="width:36px;margin:14px auto 0;opacity:0.7;" alt="" />
+      </div>
+
+      <div class="activity-card">
+        <span class="activity-icon">🎬</span>
+        <h4>Un video<br/>corto</h4>
+        <img src="img/corazon.png" style="width:36px;margin:14px auto 0;opacity:0.55;" alt="" />
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════
+       ANTES DE COMENZAR + INSIGNIA
+  ══════════════════════════════ -->
+  <section id="antes">
+    <div class="section-divider"></div>
+    <div class="reveal">
+      <div class="section-label">Tu reto</div>
+      <h2 class="section-title">Antes de <span>comenzar</span></h2>
+    </div>
+
+    <div class="before-wrap reveal" style="transition-delay:0.1s">
+
+      <div class="before-text card">
+        <img src="img/ceci4.png" style="width:80px;margin-bottom:18px;filter:drop-shadow(0 0 12px rgba(224,79,111,0.4));" alt="Luna" />
+        <p>
+          En este nivel encontrarás instrucciones, actividades interactivas
+          y pequeños retos que te ayudarán a <strong>pensar, descubrir y aprender</strong>
+          mientras avanzas en esta aventura.
+        </p>
+        <p>
+          Tu reto en este nivel será lograr tu insignia:
+        </p>
+        <div style="display:flex;align-items:center;gap:10px;margin-top:6px;">
+          <span style="font-size:1.4rem;">🌟</span>
+          <span style="font-family:'Dancing Script',cursive;font-size:1.5rem;color:var(--accent-coral);">ser auténtica</span>
+        </div>
+        <div style="margin-top:18px;display:flex;gap:10px;">
+          <img src="img/corazon.png" style="width:28px;opacity:0.75;" alt="" />
+          <img src="img/corazon.png" style="width:30px;opacity:0.7;" alt="" />
+          <img src="img/corazon.png" style="width:26px;opacity:0.65;" alt="" />
+        </div>
+      </div>
+
+      <div class="badge-showcase">
+        <div class="badge-glow-ring">
+          <img src="img/badge1.png" class="badge-img" alt="Insignia Ser Auténtica" />
+        </div>
+        <div class="badge-label">Ser auténtica</div>
+        <div class="badge-sublabel">Tu insignia de este nivel</div>
+        <img src="img/copa_menstrual.png" style="width:44px;margin-top:10px;opacity:0.5;animation:gentleFloat 4s ease-in-out infinite;" alt="" />
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════
+       CONECTEMOS CON LA HISTORIA
+  ══════════════════════════════ -->
+  <section id="historia" style="padding-bottom:80px;">
+    <div class="section-divider"></div>
+    <div class="reveal">
+      <div class="section-label">Narrativa</div>
+      <h2 class="section-title">Conectemos con <span>la historia</span></h2>
+    </div>
+
+    <div class="story-section reveal" style="transition-delay:0.1s">
+      <div class="story-nebula-bg"></div>
+
+      <!-- deco imgs inside story -->
+      <img src="img/planeta.png"   class="drifter delay1" style="width:60px;top:14px;right:40px;opacity:0.25;" alt="" />
+      <img src="img/estrella.png"  class="drifter delay3" style="width:28px;bottom:20px;left:20px;opacity:0.4;" alt="" />
+      <img src="img/destello.png"  class="drifter delay2" style="width:40px;top:30%;right:8px;opacity:0.3;" alt="" />
+
+      <div class="story-inner">
+        <div class="story-text">
+          <h2>Ceci no podía dormir…</h2>
+          <p class="question">¿Ya terminaste de leer las páginas 7 a 12 de tu cartilla?</p>
+
+          <p class="story-paragraph">Allí descubrimos que <strong>Ceci</strong> no podía dormir.</p>
+          <p class="story-paragraph">Era su primer día de menstruación y no entendía muy bien lo que estaba pasando en su cuerpo.</p>
+          <p class="story-paragraph">Mientras intentaba descansar escuchó un sonido extraño…</p>
+
+          <span class="story-sound">Tuc… tuc… tuc…</span>
+
+          <p class="story-paragraph">Ese sonido parecía un <em>llamado</em>.</p>
+          <p class="story-paragraph">Lo que parecía una noche normal…</p>
+          <p class="story-paragraph emphasis">terminó convirtiéndose en el inicio de una aventura.</p>
+
+          <p class="story-paragraph" style="margin-top:18px;color:rgba(240,234,248,0.9);font-weight:700;">
+            Y ahora tú también acabas de entrar al <strong style="color:var(--accent-teal);">Nivel 1</strong> del mundo de Pandora.
+          </p>
+
+          <div style="margin-top:22px;display:flex;gap:12px;flex-wrap:wrap;">
+            <img src="img/corazon.png" style="width:36px;" alt="" />
+            <img src="img/corazon.png"   style="width:34px;opacity:0.8;" alt="" />
+            <img src="img/corazon.png"         style="width:32px;opacity:0.85;" alt="" />
+          </div>
+        </div>
+
+        <div class="story-chars">
+          <img src="img/ceci1.png" class="story-char" alt="Ceci" />
+          <img src="img/estrella.png" style="position:absolute;bottom:0;right:-10px;width:48px;opacity:0.5;animation:gentleFloat 3.5s ease-in-out infinite -1s;" alt="" />
+          <img src="img/estrella.png"         style="position:absolute;top:10px;left:10px;width:32px;opacity:0.55;animation:gentleFloat 5s ease-in-out infinite;" alt="" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════
+       DOCENTES (ACORDEÓN)
+  ══════════════════════════════ -->
+  <div class="teacher-wrap reveal">
+    <button class="teacher-toggle" id="teacher-btn" aria-expanded="false">
+      <div class="teacher-toggle-icon">📋</div>
+      <span>Información pedagógica — Para docentes</span>
+      <svg class="teacher-toggle-arrow" width="18" height="18" viewBox="0 0 18 18" fill="none">
+        <path d="M4 7l5 5 5-5" stroke="rgba(240,234,248,0.5)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+    <div class="teacher-body" id="teacher-body">
+      <div class="teacher-content">
+        <h4>Valor académico de esta actividad</h4>
+        <p style="font-size:0.88rem;color:rgba(240,234,248,0.55);margin-bottom:16px;line-height:1.6;">
+          Esta actividad trabaja los siguientes contenidos pedagógicos de forma experiencial y narrativa:
+        </p>
+        <ul>
+          <li>Identificación de estereotipos de género</li>
+          <li>Desarrollo del pensamiento crítico</li>
+          <li>Comprensión de mensajes dañinos en entornos digitales</li>
+          <li>Diferenciación entre opinión y violencia simbólica</li>
+          <li>Validación y fortalecimiento de la autenticidad personal</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /wrapper -->
+
+<!-- ══════════════════════════════
+     SCRIPTS
+══════════════════════════════ -->
+<script>
+// ── STARFIELD ──────────────────────────────────────────────────────────
+(function(){
+  const canvas = document.getElementById('stars-canvas');
+  const ctx    = canvas.getContext('2d');
+  let W, H, stars = [];
+
+  function resize(){
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+
+  function initStars(){
+    stars = [];
+    const count = Math.floor((W * H) / 3200);
+    for(let i = 0; i < count; i++){
+      stars.push({
+        x: Math.random() * W,
+        y: Math.random() * H,
+        r: Math.random() * 1.6 + 0.3,
+        a: Math.random(),
+        da: (Math.random() - 0.5) * 0.008,
+        speed: Math.random() * 0.12 + 0.02
+      });
+    }
+  }
+
+  function draw(){
+    ctx.clearRect(0, 0, W, H);
+    stars.forEach(s => {
+      s.a += s.da;
+      if(s.a <= 0 || s.a >= 1) s.da *= -1;
+      s.y += s.speed;
+      if(s.y > H) { s.y = 0; s.x = Math.random() * W; }
+
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(220,215,255,${s.a})`;
+      ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', () => { resize(); initStars(); });
+  resize(); initStars(); draw();
+})();
+
+// ── PARTICLES ──────────────────────────────────────────────────────────
+(function(){
+  const container = document.getElementById('particles-container');
+  const colors = ['#5A99A0','#E2555E','#E04F6F','#c8a0d0','#f0eaf8'];
+  const total = 28;
+
+  for(let i = 0; i < total; i++){
+    const p  = document.createElement('div');
+    p.classList.add('particle');
+    const size  = Math.random() * 6 + 2;
+    const color = colors[Math.floor(Math.random() * colors.length)];
+    const left  = Math.random() * 100;
+    const dur   = Math.random() * 12 + 10;
+    const delay = Math.random() * -15;
+    Object.assign(p.style, {
+      width:    size + 'px',
+      height:   size + 'px',
+      left:     left + '%',
+      background: color,
+      animationDuration:  dur + 's',
+      animationDelay:     delay + 's'
+    });
+    container.appendChild(p);
+  }
+})();
+
+// ── SCROLL REVEAL ──────────────────────────────────────────────────────
+(function(){
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+})();
+
+// ── TEACHER ACCORDION ──────────────────────────────────────────────────
+(function(){
+  const btn  = document.getElementById('teacher-btn');
+  const body = document.getElementById('teacher-body');
+  btn.addEventListener('click', () => {
+    const open = body.classList.toggle('open');
+    btn.classList.toggle('open', open);
+    btn.setAttribute('aria-expanded', open);
+  });
+})();
+</script>
+</body>
+</html>

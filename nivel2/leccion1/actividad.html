@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- ===================== TIPOGRAFÍA ===================== -->
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@400;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ============================================================
+       VARIABLES GLOBALES
+    ============================================================ */
+    :root {
+      /* Paleta Nivel 2 */
+      --naranja:       #FF8C42;
+      --durazno:       #FFB347;
+      --coral:         #FF6B6B;
+      --fucsia:        #E8408A;
+      --rosa-claro:    #FFB5D8;
+      --crema:         #FFF5E6;
+      --beige:         #FAE8CE;
+      --verde-menta:   #7FD8A8;
+      --azul-suave:    #82C9E8;
+      --lila:          #B88FD8;
+      --morado:        #9B59B6;
+      --blanco:        #FFFFFF;
+      --texto-oscuro:  #3D2B1F;
+
+      /* Tamaños de PNG – ajusta solo aquí */
+      --png-xs:         40px;
+      --png-sm:         70px;
+      --png-md:        110px;
+      --png-lg:        160px;
+      --png-xl:        220px;
+      --ceci-main-size:190px;
+      --luna-size:     180px;
+
+      /* Tipografía */
+      --font-display: 'Baloo 2', cursive;
+      --font-body:    'Nunito', sans-serif;
+    }
+
+    /* ============================================================
+       RESET Y BASE
+    ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background-color: var(--crema);
+      color: var(--texto-oscuro);
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* ============================================================
+       FONDO + FORMAS ORGÁNICAS DECORATIVAS
+    ============================================================ */
+    .page-background {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background: url('img/background.png') center center / cover no-repeat;
+    }
+
+    /* Manchas decorativas de fondo */
+    .blob { display: none; }
+
+    /* ============================================================
+       CONTENEDOR PRINCIPAL
+    ============================================================ */
+    .page-wrapper {
+      position: relative;
+      z-index: 1;
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 24px 16px 60px;
+    }
+
+    /* ============================================================
+       UTILIDADES DE IMÁGENES PNG
+    ============================================================ */
+    .png-xs   { width: var(--png-xs);   height: auto; }
+    .png-sm   { width: var(--png-sm);   height: auto; }
+    .png-md   { width: var(--png-md);   height: auto; }
+    .png-lg   { width: var(--png-lg);   height: auto; }
+    .png-xl   { width: var(--png-xl);   height: auto; }
+    .ceci-main{ width: var(--ceci-main-size); height: auto; }
+    .luna-img { width: var(--luna-size); height: auto; }
+
+    .deco-img {
+      position: absolute;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    /* ============================================================
+       BLOQUES GENERALES
+    ============================================================ */
+    .card {
+      background: var(--blanco);
+      border-radius: 28px;
+      padding: 28px 24px;
+      margin-bottom: 28px;
+      box-shadow: 0 6px 28px rgba(61,43,31,.09);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-naranja  { background: #FFF0E2; border: 3px solid var(--naranja); }
+    .card-fucsia   { background: #FFF0F7; border: 3px solid var(--fucsia); }
+    .card-verde    { background: #EDFAF3; border: 3px solid var(--verde-menta); }
+    .card-azul     { background: #E8F6FD; border: 3px solid var(--azul-suave); }
+    .card-lila     { background: #F5EEFB; border: 3px solid var(--lila); }
+    .card-crema    { background: var(--beige); border: 3px solid var(--durazno); }
+
+    /* ============================================================
+       ETIQUETAS DE NIVEL / SECCIÓN
+    ============================================================ */
+    .badge {
+      display: inline-block;
+      background: var(--fucsia);
+      color: #fff;
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 0.82rem;
+      letter-spacing: .06em;
+      padding: 5px 14px;
+      border-radius: 50px;
+      margin-bottom: 12px;
+    }
+    .badge-naranja { background: var(--naranja); }
+    .badge-verde   { background: var(--verde-menta); color: var(--texto-oscuro); }
+    .badge-azul    { background: var(--azul-suave);  color: var(--texto-oscuro); }
+    .badge-lila    { background: var(--lila); }
+
+    /* ============================================================
+       TIPOGRAFÍA
+    ============================================================ */
+    h1 {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: clamp(1.7rem, 5vw, 2.6rem);
+      line-height: 1.2;
+      color: var(--fucsia);
+    }
+    h2 {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: clamp(1.25rem, 3.5vw, 1.75rem);
+      line-height: 1.25;
+      margin-bottom: 10px;
+    }
+    h3 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+    }
+    p {
+      font-size: 1.05rem;
+      line-height: 1.65;
+      margin-bottom: 10px;
+    }
+    .text-naranja { color: var(--naranja); }
+    .text-fucsia  { color: var(--fucsia); }
+    .text-verde   { color: #2f9e60; }
+    .text-lila    { color: var(--morado); }
+
+    /* ============================================================
+       PÁRRAFOS DENTRO DE RECUADROS
+    ============================================================ */
+    .text-box {
+      background: rgba(255,255,255,.7);
+      border-radius: 18px;
+      padding: 16px 18px;
+      margin-bottom: 12px;
+    }
+    .text-box ul {
+      padding-left: 20px;
+    }
+    .text-box ul li {
+      font-size: 1rem;
+      line-height: 1.7;
+    }
+
+    /* ============================================================
+       SECCIÓN HERO – BLOQUE SUPERIOR PRINCIPAL
+    ============================================================ */
+    .hero-card {
+      background: linear-gradient(135deg, var(--naranja) 0%, var(--coral) 45%, var(--fucsia) 100%);
+      border-radius: 32px;
+      padding: 36px 28px 40px;
+      margin-bottom: 32px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 40px rgba(232,64,138,.22);
+    }
+    .hero-card h1 { color: #fff; text-shadow: 0 2px 8px rgba(0,0,0,.15); }
+    .hero-card .text-box { background: rgba(255,255,255,.2); }
+    .hero-card .text-box p,
+    .hero-card .text-box li { color: #fff; }
+    .hero-card .text-box ul { list-style: none; padding: 0; }
+    .hero-card .text-box ul li::before { content: "✦ "; }
+
+    /* Ondas decorativas en hero */
+    .hero-wave-bottom {
+      position: absolute;
+      bottom: -2px; left: 0; right: 0;
+      height: 36px;
+      overflow: hidden;
+    }
+    .hero-wave-bottom svg { display: block; }
+
+    /* ============================================================
+       CHIP DE EMOCIÓN SELECCIONADA
+    ============================================================ */
+    .emocion-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, var(--fucsia), var(--lila));
+      color: #fff;
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 1.15rem;
+      padding: 10px 22px;
+      border-radius: 50px;
+      margin: 10px 0 20px;
+      box-shadow: 0 4px 18px rgba(155,89,182,.28);
+    }
+    .emocion-chip .emoji { font-size: 1.4rem; }
+
+    /* ============================================================
+       TARJETAS DE SÍNTOMAS
+    ============================================================ */
+    .sintomas-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+    }
+    .sintoma-chip {
+      background: var(--blanco);
+      border-radius: 18px;
+      padding: 14px 12px;
+      text-align: center;
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--texto-oscuro);
+      box-shadow: 0 3px 14px rgba(61,43,31,.09);
+      border: 2.5px solid var(--rosa-claro);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      animation: popIn .4s ease both;
+    }
+    .sintoma-chip .sintoma-icon { font-size: 1.8rem; }
+
+    @keyframes popIn {
+      from { transform: scale(.7); opacity: 0; }
+      to   { transform: scale(1);  opacity: 1; }
+    }
+
+    /* ============================================================
+       BLOQUE 2 – BOTONES BUENA / MALA
+    ============================================================ */
+    .opciones-row {
+      display: flex;
+      gap: 16px;
+      margin: 18px 0;
+      flex-wrap: wrap;
+    }
+    .btn-opcion {
+      flex: 1;
+      min-width: 120px;
+      padding: 18px 12px;
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 1.15rem;
+      border: 3px solid transparent;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: transform .18s, box-shadow .18s, background .18s;
+      background: var(--blanco);
+      color: var(--texto-oscuro);
+      box-shadow: 0 4px 16px rgba(61,43,31,.1);
+    }
+    .btn-opcion:hover { transform: translateY(-4px) scale(1.04); box-shadow: 0 8px 24px rgba(61,43,31,.16); }
+    .btn-opcion.buena   { border-color: var(--verde-menta); }
+    .btn-opcion.mala    { border-color: var(--coral); }
+    .btn-opcion.active.buena { background: var(--verde-menta); color: var(--texto-oscuro); }
+    .btn-opcion.active.mala  { background: var(--coral);       color: #fff; }
+
+    .respuesta-box {
+      display: none;
+      background: var(--blanco);
+      border-radius: 20px;
+      padding: 18px 20px;
+      margin-top: 12px;
+      border-left: 5px solid var(--verde-menta);
+      animation: fadeInUp .4s ease;
+    }
+    .respuesta-box.show { display: block; }
+    .respuesta-box.mala-resp { border-left-color: var(--coral); }
+
+    .mensaje-final-emociones {
+      display: none;
+      background: linear-gradient(135deg, var(--lila), var(--fucsia));
+      color: #fff;
+      border-radius: 22px;
+      padding: 20px 22px;
+      margin-top: 18px;
+      font-weight: 700;
+      font-size: 1rem;
+      line-height: 1.7;
+      animation: fadeInUp .5s ease .15s both;
+    }
+    .mensaje-final-emociones.show { display: block; }
+    .mensaje-final-emociones p { color: #fff; margin-bottom: 6px; }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ============================================================
+       BLOQUE 3 – CANVAS DE DIBUJO
+    ============================================================ */
+    .canvas-wrapper {
+      background: var(--blanco);
+      border-radius: 24px;
+      padding: 16px;
+      box-shadow: 0 4px 20px rgba(61,43,31,.1);
+      margin: 18px 0;
+    }
+    #drawing-canvas {
+      display: block;
+      width: 100%;
+      border-radius: 16px;
+      background: #FFFAF4;
+      cursor: crosshair;
+      touch-action: none;
+      border: 2.5px dashed var(--durazno);
+    }
+
+    /* Barra de herramientas del canvas */
+    .canvas-toolbar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+    }
+    .color-swatch {
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 3px solid transparent;
+      transition: transform .15s, border-color .15s;
+      flex-shrink: 0;
+    }
+    .color-swatch:hover, .color-swatch.active { transform: scale(1.22); border-color: var(--texto-oscuro); }
+
+    .size-btn {
+      background: var(--beige);
+      border: 2px solid var(--durazno);
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background .15s, transform .15s;
+      flex-shrink: 0;
+    }
+    .size-btn:hover, .size-btn.active { background: var(--durazno); transform: scale(1.1); }
+    .size-btn.sm-brush  { width: 28px; height: 28px; }
+    .size-btn.md-brush  { width: 36px; height: 36px; }
+    .size-btn.lg-brush  { width: 44px; height: 44px; }
+    .size-btn .dot { background: var(--texto-oscuro); border-radius: 50%; pointer-events: none; }
+    .size-btn.sm-brush .dot { width: 5px;  height: 5px;  }
+    .size-btn.md-brush .dot { width: 9px;  height: 9px;  }
+    .size-btn.lg-brush .dot { width: 14px; height: 14px; }
+
+    .btn-eraser, .btn-clear {
+      padding: 8px 16px;
+      border-radius: 50px;
+      border: 2.5px solid;
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: background .15s, transform .15s;
+    }
+    .btn-eraser {
+      border-color: var(--azul-suave);
+      background: var(--blanco);
+      color: var(--texto-oscuro);
+    }
+    .btn-eraser:hover, .btn-eraser.active { background: var(--azul-suave); }
+    .btn-clear {
+      border-color: var(--coral);
+      background: var(--blanco);
+      color: var(--coral);
+    }
+    .btn-clear:hover { background: var(--coral); color: #fff; }
+
+    /* Separator en toolbar */
+    .toolbar-sep { width: 1px; height: 30px; background: var(--beige); flex-shrink: 0; }
+
+    /* Ejemplo de objetos por emoción */
+    .objeto-tag {
+      display: inline-block;
+      background: var(--beige);
+      border-radius: 50px;
+      padding: 5px 13px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      margin: 4px 3px;
+      border: 2px solid var(--durazno);
+    }
+
+    /* ============================================================
+       SELECTOR DE EMOCIÓN
+    ============================================================ */
+
+    /* Tarjeta contenedora del selector */
+    .card-selector {
+      background: linear-gradient(145deg, #fff8f0, #fff0fa);
+      border: 3px solid var(--durazno);
+      border-radius: 28px;
+      padding: 28px 24px 32px;
+      margin-bottom: 28px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 6px 28px rgba(61,43,31,.09);
+      text-align: center;
+    }
+    .card-selector h2 { color: var(--naranja); margin-bottom: 6px; }
+
+    /* Grid de botones de emoción */
+    .emociones-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 20px;
+    }
+    @media (max-width: 420px) {
+      .emociones-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (min-width: 600px) {
+      .emociones-grid { grid-template-columns: repeat(6, 1fr); gap: 14px; }
+    }
+
+    /* Botón individual de emoción */
+    .btn-emocion {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 14px 8px 12px;
+      border-radius: 22px;
+      border: 3px solid transparent;
+      background: var(--blanco);
+      cursor: pointer;
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 0.82rem;
+      color: var(--texto-oscuro);
+      box-shadow: 0 3px 14px rgba(61,43,31,.08);
+      transition: transform .2s, box-shadow .2s, border-color .2s, background .2s;
+      line-height: 1.2;
+    }
+    .btn-emocion:hover {
+      transform: translateY(-5px) scale(1.06);
+      box-shadow: 0 8px 22px rgba(61,43,31,.16);
+    }
+    .btn-emocion .emocion-btn-emoji {
+      font-size: 2rem;
+      line-height: 1;
+      display: block;
+    }
+
+    /* Estados activo por emoción */
+    .btn-emocion[data-emocion="Alegría"].active   { background:#FFF9E0; border-color:#FFD600; color:#856a00; }
+    .btn-emocion[data-emocion="Tristeza"].active  { background:#E5F0FF; border-color:#82C9E8; color:#1a5680; }
+    .btn-emocion[data-emocion="Enojo"].active     { background:#FFE8E8; border-color:#FF6B6B; color:#a82020; }
+    .btn-emocion[data-emocion="Miedo"].active     { background:#F0E8FF; border-color:#B88FD8; color:#5a2d82; }
+    .btn-emocion[data-emocion="Calma"].active     { background:#EDFAF3; border-color:#7FD8A8; color:#1d7a4b; }
+    .btn-emocion[data-emocion="Frustración"].active { background:#FFE8F3; border-color:#E8408A; color:#9b1760; }
+
+    /* Ring animado en activo */
+    .btn-emocion.active {
+      transform: translateY(-4px) scale(1.08);
+      box-shadow: 0 8px 24px rgba(61,43,31,.18);
+    }
+
+    /* Estado vacío – mensaje "elige una emoción" */
+    .sintomas-vacio {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      padding: 22px 16px;
+      text-align: center;
+      color: #b8986a;
+      animation: fadeInUp .4s ease;
+    }
+    .sintomas-vacio .vacio-emoji { font-size: 2.4rem; }
+    .sintomas-vacio p { font-size: 1rem; font-weight: 700; color: #b8986a; margin: 0; }
+
+    /* Chip de emoción — estado vacío */
+    .emocion-chip.vacio {
+      background: var(--beige);
+      color: #b8986a;
+      box-shadow: none;
+      border: 2.5px dashed var(--durazno);
+    }
+
+    /* ============================================================
+       PERSONAJES FLOTANTES
+    ============================================================ */
+    .char-float {
+      position: absolute;
+      pointer-events: none;
+      user-select: none;
+      z-index: 2;
+    }
+    .char-float img { display: block; }
+
+    /* ============================================================
+       SEPARADOR DECORATIVO
+    ============================================================ */
+    .deco-sep {
+      text-align: center;
+      font-size: 1.6rem;
+      margin: 6px 0 20px;
+      opacity: .6;
+    }
+
+    /* ============================================================
+       FOOTER DECORATIVO
+    ============================================================ */
+    .page-footer {
+      text-align: center;
+      padding: 24px 0 8px;
+      font-size: 0.88rem;
+      color: #aa8870;
+      font-weight: 600;
+    }
+
+    /* ============================================================
+       RESPONSIVE – ESCRITORIO
+    ============================================================ */
+    @media (min-width: 600px) {
+      .page-wrapper { padding: 32px 28px 80px; }
+      .hero-card { padding: 44px 40px 52px; }
+      .card { padding: 36px 32px; }
+      .sintomas-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (min-width: 860px) {
+      .sintomas-grid { grid-template-columns: repeat(4, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- FONDO Y MANCHAS -->
+  <div class="page-background" aria-hidden="true"></div>
+  <div class="blob blob-1" aria-hidden="true"></div>
+  <div class="blob blob-2" aria-hidden="true"></div>
+  <div class="blob blob-3" aria-hidden="true"></div>
+  <div class="blob blob-4" aria-hidden="true"></div>
+  <div class="blob blob-5" aria-hidden="true"></div>
+
+  <!-- =========================================================
+       CONTENEDOR PRINCIPAL
+  ========================================================== -->
+  <main class="page-wrapper" role="main">
+
+    <!-- =====================================================
+         BLOQUE HERO – INTRODUCCIÓN
+    ====================================================== -->
+    <section class="hero-card" aria-labelledby="hero-title">
+
+      <!-- Decoraciones en esquinas del hero -->
+      <img src="img/ceci2.png"
+           alt="Ceci, personaje de la cartilla"
+           class="char-float ceci-main"
+           style="bottom:0; right:12px; transform:scaleX(-1);"
+           onerror="this.style.display='none'" />
+
+      <img src="img/estrella.png"
+           alt=""
+           class="char-float png-sm"
+           style="top:14px; right:180px;"
+           onerror="this.style.display='none'" />
+
+      <img src="img/estrella.png"
+           alt=""
+           class="char-float png-xs"
+           style="top:18px; left:14px;"
+           onerror="this.style.display='none'" />
+
+      <span class="badge">Nivel 2 · Lección 1</span>
+
+      <h1 id="hero-title">¿Cómo se siente esta emoción en mi cuerpo?</h1>
+
+      <div class="text-box" style="margin-top:18px;">
+        <p><strong>GranDiosa</strong>, las emociones no solo se sienten en la mente…<br>también se sienten en el <em>cuerpo</em>.</p>
+        <p>Dependiendo de la emoción que elegiste antes, tu cuerpo puede reaccionar de diferentes maneras.</p>
+        <p>Ahora vamos a descubrir:</p>
+        <ul>
+          <li>cómo se siente esta emoción en tu cuerpo</li>
+          <li>qué significa sentirla</li>
+          <li>y cómo puedes representarla</li>
+        </ul>
+      </div>
+
+      <!-- Ola decorativa inferior -->
+      <div class="hero-wave-bottom" aria-hidden="true">
+        <svg viewBox="0 0 780 36" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+          <path d="M0,20 C130,40 260,0 390,20 C520,40 650,0 780,20 L780,36 L0,36 Z"
+                fill="#FFF5E6" opacity="0.35"/>
+        </svg>
+      </div>
+    </section>
+
+    <!-- =====================================================
+         SELECTOR DE EMOCIÓN
+    ====================================================== -->
+    <section class="card-selector" aria-labelledby="selector-title">
+
+      <!-- Decoración esquina -->
+      <img src="img/ceci_side_laugh.png"
+           alt=""
+           class="char-float png-sm"
+           style="bottom:-4px; left:-4px; transform:scaleX(-1);"
+           onerror="this.style.display='none'" />
+      <img src="img/chocolate.png"
+           alt=""
+           class="char-float png-xs"
+           style="top:14px; right:18px;"
+           onerror="this.style.display='none'" />
+
+      <span class="badge badge-naranja">💛 Elige tu emoción</span>
+      <h2 id="selector-title">¿Qué emoción sientes hoy?</h2>
+
+      <div class="text-box" style="display:inline-block; text-align:left; margin-top:4px; margin-bottom:0;">
+        <p style="margin:0;">Toca la emoción que quieres explorar y vamos a descubrir juntas qué pasa en tu cuerpo. 🌸</p>
+      </div>
+
+      <!-- Botones de emoción -->
+      <div class="emociones-grid" role="group" aria-label="Selecciona una emoción">
+
+        <button class="btn-emocion"
+                data-emocion="Alegría"
+                onclick="seleccionarEmocion('Alegría')"
+                aria-pressed="false">
+          <span class="emocion-btn-emoji">😄</span>
+          Alegría
+        </button>
+
+        <button class="btn-emocion"
+                data-emocion="Tristeza"
+                onclick="seleccionarEmocion('Tristeza')"
+                aria-pressed="false">
+          <span class="emocion-btn-emoji">😢</span>
+          Tristeza
+        </button>
+
+        <button class="btn-emocion"
+                data-emocion="Enojo"
+                onclick="seleccionarEmocion('Enojo')"
+                aria-pressed="false">
+          <span class="emocion-btn-emoji">😠</span>
+          Enojo
+        </button>
+
+        <button class="btn-emocion"
+                data-emocion="Miedo"
+                onclick="seleccionarEmocion('Miedo')"
+                aria-pressed="false">
+          <span class="emocion-btn-emoji">😨</span>
+          Miedo
+        </button>
+
+        <button class="btn-emocion"
+                data-emocion="Calma"
+                onclick="seleccionarEmocion('Calma')"
+                aria-pressed="false">
+          <span class="emocion-btn-emoji">😌</span>
+          Calma
+        </button>
+
+        <button class="btn-emocion"
+                data-emocion="Frustración"
+                onclick="seleccionarEmocion('Frustración')"
+                aria-pressed="false">
+          <span class="emocion-btn-emoji">😤</span>
+          Frustración
+        </button>
+
+      </div>
+    </section>
+
+    <!-- =====================================================
+         BLOQUE 1 – SÍNTOMAS FÍSICOS
+    ====================================================== -->
+    <section class="card card-naranja" aria-labelledby="bloque1-title">
+
+      <!-- Personaje decorativo -->
+      <img src="img/luna.png"
+           alt="Luna, personaje de la cartilla"
+           class="char-float luna-img"
+           style="top:-18px; right:-10px; opacity:.9;"
+           onerror="this.style.display='none'" />
+
+      <img src="img/audifonos.png"
+           alt=""
+           class="char-float png-xs"
+           style="bottom:10px; left:10px;"
+           onerror="this.style.display='none'" />
+
+      <span class="badge badge-naranja">🫀 Bloque 1</span>
+      <h2 id="bloque1-title" class="text-naranja">¿Cómo reacciona tu cuerpo?</h2>
+
+      <div class="text-box">
+        <p>Aquí te mostramos qué pasa en tu cuerpo cuando sientes esta emoción.</p>
+      </div>
+
+      <!-- Chip de emoción elegida -->
+      <div>
+        <p style="font-weight:700; margin-bottom:4px;">Hoy elegiste sentir:</p>
+        <div class="emocion-chip vacio" id="emocion-display" role="status" aria-live="polite">
+          <span class="emoji" id="emocion-emoji">🌸</span>
+          <span id="emocion-nombre">Elige una emoción para comenzar</span>
+        </div>
+      </div>
+
+      <!-- Grid de síntomas -->
+      <div class="sintomas-grid" id="sintomas-container" aria-label="Síntomas físicos de la emoción">
+        <!-- Estado vacío inicial -->
+        <div class="sintomas-vacio" id="sintomas-vacio" style="grid-column:1/-1;">
+          <span class="vacio-emoji">👆</span>
+          <p>Selecciona una emoción arriba para ver cómo reacciona tu cuerpo</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="deco-sep" aria-hidden="true">🌸 ✦ 🌿</div>
+
+    <!-- =====================================================
+         BLOQUE 2 – ¿BUENA O MALA?
+    ====================================================== -->
+    <section class="card card-fucsia" aria-labelledby="bloque2-title">
+
+      <img src="img/bombillo.png"
+           alt="Ceci sonriendo"
+           class="char-float png-md"
+           style="top:-24px; left:-10px; transform:rotate(-8deg);"
+           onerror="this.style.display='none'" />
+
+      <span class="badge">💬 Bloque 2</span>
+      <h2 id="bloque2-title" class="text-fucsia">¿Las emociones son buenas o malas?</h2>
+
+      <div class="text-box">
+        <h3>¿Crees que esta emoción es…?</h3>
+      </div>
+
+      <!-- Botones de opción -->
+      <div class="opciones-row" role="group" aria-label="Elige si la emoción es buena o mala">
+        <button class="btn-opcion buena" id="btn-buena" onclick="responderEmocion('buena')" aria-pressed="false">
+          😊 Buena
+        </button>
+        <button class="btn-opcion mala" id="btn-mala" onclick="responderEmocion('mala')" aria-pressed="false">
+          😟 Mala
+        </button>
+      </div>
+
+      <!-- Respuesta si elige BUENA -->
+      <div class="respuesta-box" id="resp-buena" role="alert">
+        <p>A veces algunas emociones nos hacen sentir muy bien, como la alegría o la calma.</p>
+        <p>Pero algo muy importante que debes saber es que <strong>las emociones no son buenas ni malas</strong>.</p>
+        <p>Todas aparecen para decirnos algo importante sobre lo que estamos viviendo.</p>
+      </div>
+
+      <!-- Respuesta si elige MALA -->
+      <div class="respuesta-box mala-resp" id="resp-mala" role="alert">
+        <p>A veces algunas emociones pueden hacernos sentir incómodas, como el miedo o el enojo.</p>
+        <p>Pero algo muy importante es que <strong>las emociones no son buenas ni malas</strong>.</p>
+        <p>Todas las emociones nos ayudan a entender lo que sentimos y lo que necesitamos.</p>
+      </div>
+
+      <!-- Mensaje final destacado (aparece tras cualquier respuesta) -->
+      <div class="mensaje-final-emociones" id="mensaje-final-bloque2" aria-live="polite">
+        <p>✨ Las emociones son como mensajeras.</p>
+        <p>Nos ayudan a comprender lo que pasa dentro de nosotras.</p>
+        <p>Aprender a escucharlas es una forma de conocerte mejor. 💛</p>
+      </div>
+    </section>
+
+    <div class="deco-sep" aria-hidden="true">🌟 ✦ 🌼</div>
+
+    <!-- =====================================================
+         BLOQUE 3 – DIBUJO
+    ====================================================== -->
+    <section class="card card-lila" aria-labelledby="bloque3-title">
+
+      <img src="img/cohete.png"
+           alt="Luna con lápiz"
+           class="char-float png-md"
+           style="top:-16px; right:-6px; transform:scaleX(-1) rotate(5deg);"
+           onerror="this.style.display='none'" />
+
+      <span class="badge badge-lila">🎨 Bloque 3</span>
+      <h2 id="bloque3-title" class="text-lila">¿A qué objeto se parece tu emoción?</h2>
+
+      <div class="text-box">
+        <p>Ahora vamos a usar la imaginación y dibujar.</p>
+        <p>A veces las emociones se parecen a objetos o elementos de la naturaleza.</p>
+      </div>
+
+      <!-- Ejemplos de objetos -->
+      <div class="text-box">
+        <h3>Algunos ejemplos:</h3>
+        <div style="margin-top:8px; line-height:2.2;">
+          <span class="objeto-tag">☀️ Alegría → un sol</span>
+          <span class="objeto-tag">🌧️ Tristeza → una nube con lluvia</span>
+          <span class="objeto-tag">🌋 Enojo → un volcán</span>
+          <span class="objeto-tag">👤 Miedo → una sombra</span>
+          <span class="objeto-tag">☁️ Calma → una nube suave</span>
+          <span class="objeto-tag">🔀 Frustración → un nudo</span>
+          <span class="objeto-tag">🍂 Decepción → una hoja cayendo</span>
+        </div>
+      </div>
+
+      <div class="text-box">
+        <p><strong>Dibuja un objeto que represente la emoción que elegiste.</strong></p>
+        <p>Puedes dibujar: un objeto, un elemento de la naturaleza, una forma o un color.</p>
+      </div>
+
+      <!-- Canvas de dibujo -->
+      <div class="canvas-wrapper">
+        <canvas id="drawing-canvas"
+                height="340"
+                role="img"
+                aria-label="Área de dibujo libre"></canvas>
+
+        <!-- Barra de herramientas -->
+        <div class="canvas-toolbar" role="toolbar" aria-label="Herramientas de dibujo">
+
+          <!-- Colores -->
+          <div class="color-swatch active" style="background:#FF8C42;" data-color="#FF8C42" onclick="setColor(this)" title="Naranja" role="button" tabindex="0" aria-label="Color naranja"></div>
+          <div class="color-swatch" style="background:#E8408A;" data-color="#E8408A" onclick="setColor(this)" title="Fucsia" role="button" tabindex="0" aria-label="Color fucsia"></div>
+          <div class="color-swatch" style="background:#7FD8A8;" data-color="#7FD8A8" onclick="setColor(this)" title="Verde menta" role="button" tabindex="0" aria-label="Color verde menta"></div>
+          <div class="color-swatch" style="background:#82C9E8;" data-color="#82C9E8" onclick="setColor(this)" title="Azul suave" role="button" tabindex="0" aria-label="Color azul suave"></div>
+          <div class="color-swatch" style="background:#B88FD8;" data-color="#B88FD8" onclick="setColor(this)" title="Lila" role="button" tabindex="0" aria-label="Color lila"></div>
+          <div class="color-swatch" style="background:#FF6B6B;" data-color="#FF6B6B" onclick="setColor(this)" title="Coral" role="button" tabindex="0" aria-label="Color coral"></div>
+          <div class="color-swatch" style="background:#FFB347;" data-color="#FFB347" onclick="setColor(this)" title="Durazno" role="button" tabindex="0" aria-label="Color durazno"></div>
+          <div class="color-swatch" style="background:#3D2B1F;" data-color="#3D2B1F" onclick="setColor(this)" title="Oscuro" role="button" tabindex="0" aria-label="Color oscuro"></div>
+
+          <div class="toolbar-sep" aria-hidden="true"></div>
+
+          <!-- Tamaños de pincel -->
+          <button class="size-btn sm-brush" onclick="setSize(3, this)" title="Pincel pequeño" aria-label="Pincel pequeño">
+            <div class="dot"></div>
+          </button>
+          <button class="size-btn md-brush active" onclick="setSize(7, this)" title="Pincel mediano" aria-label="Pincel mediano">
+            <div class="dot"></div>
+          </button>
+          <button class="size-btn lg-brush" onclick="setSize(14, this)" title="Pincel grande" aria-label="Pincel grande">
+            <div class="dot"></div>
+          </button>
+
+          <div class="toolbar-sep" aria-hidden="true"></div>
+
+          <!-- Borrador y limpiar -->
+          <button class="btn-eraser" id="btn-eraser" onclick="toggleEraser()" aria-pressed="false">
+            🧹 Borrador
+          </button>
+          <button class="btn-clear" onclick="clearCanvas()" aria-label="Limpiar todo el dibujo">
+            🗑️ Limpiar
+          </button>
+        </div>
+      </div>
+
+      <!-- Mensaje final Bloque 3 -->
+      <div class="text-box" style="background: linear-gradient(135deg,#f5eefb,#fff0f7); border-radius:18px; margin-top:6px;">
+        <p style="text-align:center; font-weight:700; color:var(--morado); font-size:1.05rem;">
+          🌈 No existe una respuesta correcta.<br>
+          Tu dibujo representa cómo se siente esa emoción <em>para ti</em>.
+        </p>
+      </div>
+    </section>
+
+    <!-- =====================================================
+         PIE DE PÁGINA
+    ====================================================== -->
+    <footer class="page-footer" role="contentinfo">
+      <img src="img/estrella.png" alt="" class="png-xs" style="vertical-align:middle; margin-right:6px;" onerror="this.style.display='none'" />
+      Nivel 2 · El árbol de las emociones
+      <img src="img/corazon.png" alt="" class="png-xs" style="vertical-align:middle; margin-left:6px;" onerror="this.style.display='none'" />
+    </footer>
+
+  </main><!-- /page-wrapper -->
+
+
+  <!-- =========================================================
+       JAVASCRIPT
+  ========================================================== -->
+  <script>
+    /* ============================================================
+       CONFIGURACIÓN DE EMOCIONES
+       Edita fácilmente aquí los síntomas y emojis de cada emoción
+    ============================================================ */
+    const EMOCIONES = {
+      "Alegría": {
+        emoji: "😄",
+        sintomas: [
+          { icono: "😊", texto: "Sonrisa natural" },
+          { icono: "⚡", texto: "Energía en el cuerpo" },
+          { icono: "😂", texto: "Ganas de reír" },
+          { icono: "☁️", texto: "Sensación ligera en el pecho" },
+        ]
+      },
+      "Tristeza": {
+        emoji: "😢",
+        sintomas: [
+          { icono: "🥺", texto: "Nudo en la garganta" },
+          { icono: "💧", texto: "Ganas de llorar" },
+          { icono: "🌩️", texto: "Pesadez en el pecho" },
+          { icono: "🔋", texto: "Poca energía" },
+        ]
+      },
+      "Enojo": {
+        emoji: "😠",
+        sintomas: [
+          { icono: "💥", texto: "Tensión en el cuerpo" },
+          { icono: "🔥", texto: "Calor en la cara" },
+          { icono: "✊", texto: "Manos apretadas" },
+          { icono: "💨", texto: "Respiración fuerte" },
+        ]
+      },
+      "Miedo": {
+        emoji: "😨",
+        sintomas: [
+          { icono: "💓", texto: "Latidos rápidos" },
+          { icono: "💦", texto: "Sudor en las manos" },
+          { icono: "🌨", texto: "Presión en el pecho" },
+          { icono: "👀", texto: "Sensación de alerta" },
+        ]
+      },
+      "Calma": {
+        emoji: "😌",
+        sintomas: [
+          { icono: "🌬️", texto: "Respiración lenta" },
+          { icono: "🌿", texto: "Cuerpo relajado" },
+          { icono: "☮️", texto: "Tranquilidad en el pecho" },
+          { icono: "🧘", texto: "Mente en paz" },
+        ]
+      },
+      "Frustración": {
+        emoji: "😤",
+        sintomas: [
+          { icono: "😮‍💨", texto: "Tensión en los hombros" },
+          { icono: "🏳️", texto: "Ganas de rendirse" },
+          { icono: "🔄", texto: "Inquietud en el cuerpo" },
+          { icono: "💨", texto: "Respiración corta" },
+        ]
+      }
+    };
+
+    /* ============================================================
+       ESTADO GLOBAL
+       emocionActual = null significa que aún no se ha elegido ninguna
+    ============================================================ */
+    let emocionActual = null;
+
+    /* ============================================================
+       SELECCIONAR EMOCIÓN (llamada desde los botones del selector)
+    ============================================================ */
+    function seleccionarEmocion(emocion) {
+      emocionActual = emocion;
+
+      // Guardar en localStorage para persistencia
+      try { localStorage.setItem('emocionSeleccionada', emocion); } catch(e) {}
+
+      // Marcar botón activo y desmarcar el resto
+      document.querySelectorAll('.btn-emocion').forEach(btn => {
+        const esEste = btn.dataset.emocion === emocion;
+        btn.classList.toggle('active', esEste);
+        btn.setAttribute('aria-pressed', esEste ? 'true' : 'false');
+      });
+
+      // Actualizar bloque 1
+      renderizarBloque1();
+
+      // Scroll suave al bloque 1
+      document.getElementById('bloque1-title')
+              .closest('section')
+              .scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    /* ============================================================
+       RENDERIZAR BLOQUE 1
+       Si emocionActual es null → muestra estado vacío
+    ============================================================ */
+    function renderizarBloque1() {
+      const chipDisplay = document.getElementById('emocion-display');
+      const chipNombre  = document.getElementById('emocion-nombre');
+      const chipEmoji   = document.getElementById('emocion-emoji');
+      const container   = document.getElementById('sintomas-container');
+
+      if (!emocionActual || !EMOCIONES[emocionActual]) {
+        // Estado vacío
+        chipDisplay.classList.add('vacio');
+        chipEmoji.textContent  = '🌸';
+        chipNombre.textContent = 'Elige una emoción para comenzar';
+        container.innerHTML = `
+          <div class="sintomas-vacio" style="grid-column:1/-1;">
+            <span class="vacio-emoji">👆</span>
+            <p>Selecciona una emoción arriba para ver cómo reacciona tu cuerpo</p>
+          </div>`;
+        return;
+      }
+
+      const datos = EMOCIONES[emocionActual];
+
+      // Chip activo
+      chipDisplay.classList.remove('vacio');
+      chipEmoji.textContent  = datos.emoji;
+      chipNombre.textContent = emocionActual;
+
+      // Tarjetas de síntomas con animación escalonada
+      container.innerHTML = '';
+      datos.sintomas.forEach((s, i) => {
+        const chip = document.createElement('div');
+        chip.className = 'sintoma-chip';
+        chip.style.animationDelay = `${i * 0.1}s`;
+        chip.innerHTML = `
+          <span class="sintoma-icon" aria-hidden="true">${s.icono}</span>
+          <span>${s.texto}</span>
+        `;
+        container.appendChild(chip);
+      });
+    }
+
+    /* ============================================================
+       BLOQUE 2 – INTERACCIÓN BUENA / MALA
+    ============================================================ */
+    function responderEmocion(tipo) {
+      const btnBuena  = document.getElementById('btn-buena');
+      const btnMala   = document.getElementById('btn-mala');
+      const respBuena = document.getElementById('resp-buena');
+      const respMala  = document.getElementById('resp-mala');
+      const msgFinal  = document.getElementById('mensaje-final-bloque2');
+
+      // Reset
+      btnBuena.classList.remove('active');
+      btnMala.classList.remove('active');
+      respBuena.classList.remove('show');
+      respMala.classList.remove('show');
+      btnBuena.setAttribute('aria-pressed', 'false');
+      btnMala.setAttribute('aria-pressed',  'false');
+
+      // Activar
+      if (tipo === 'buena') {
+        btnBuena.classList.add('active');
+        btnBuena.setAttribute('aria-pressed', 'true');
+        respBuena.classList.add('show');
+      } else {
+        btnMala.classList.add('active');
+        btnMala.setAttribute('aria-pressed', 'true');
+        respMala.classList.add('show');
+      }
+
+      // Mensaje final siempre
+      msgFinal.classList.add('show');
+    }
+
+    /* ============================================================
+       BLOQUE 3 – CANVAS DE DIBUJO
+    ============================================================ */
+    const canvas  = document.getElementById('drawing-canvas');
+    const ctx     = canvas.getContext('2d');
+    let painting  = false;
+    let lastX     = 0;
+    let lastY     = 0;
+    let currentColor = '#FF8C42';
+    let currentSize  = 7;
+    let eraserMode   = false;
+
+    // Ajustar resolución del canvas al tamaño real en pantalla
+    function resizeCanvas() {
+      const rect = canvas.getBoundingClientRect();
+      const ratio = window.devicePixelRatio || 1;
+      // Guardar imagen actual
+      const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      canvas.width  = rect.width  * ratio;
+      canvas.height = 340        * ratio; // altura fija
+      ctx.scale(ratio, ratio);
+      ctx.putImageData(imgData, 0, 0);
+    }
+
+    // Obtener posición relativa al canvas (mouse o touch)
+    function getPos(e) {
+      const rect = canvas.getBoundingClientRect();
+      const ratio = window.devicePixelRatio || 1;
+      if (e.touches) {
+        return {
+          x: (e.touches[0].clientX - rect.left),
+          y: (e.touches[0].clientY - rect.top)
+        };
+      }
+      return {
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top
+      };
+    }
+
+    function startDraw(e) {
+      e.preventDefault();
+      painting = true;
+      const pos = getPos(e);
+      lastX = pos.x;
+      lastY = pos.y;
+      // Punto al hacer clic sin mover
+      ctx.beginPath();
+      ctx.arc(lastX, lastY, (eraserMode ? currentSize * 2 : currentSize) / 2, 0, Math.PI * 2);
+      ctx.fillStyle = eraserMode ? '#FFFAF4' : currentColor;
+      ctx.fill();
+    }
+
+    function draw(e) {
+      if (!painting) return;
+      e.preventDefault();
+      const pos = getPos(e);
+      ctx.beginPath();
+      ctx.moveTo(lastX, lastY);
+      ctx.lineTo(pos.x, pos.y);
+      ctx.strokeStyle = eraserMode ? '#FFFAF4' : currentColor;
+      ctx.lineWidth   = eraserMode ? currentSize * 3 : currentSize;
+      ctx.lineCap     = 'round';
+      ctx.lineJoin    = 'round';
+      ctx.stroke();
+      lastX = pos.x;
+      lastY = pos.y;
+    }
+
+    function stopDraw() { painting = false; }
+
+    // Eventos mouse
+    canvas.addEventListener('mousedown',  startDraw);
+    canvas.addEventListener('mousemove',  draw);
+    canvas.addEventListener('mouseup',    stopDraw);
+    canvas.addEventListener('mouseleave', stopDraw);
+
+    // Eventos touch
+    canvas.addEventListener('touchstart', startDraw,  { passive: false });
+    canvas.addEventListener('touchmove',  draw,       { passive: false });
+    canvas.addEventListener('touchend',   stopDraw);
+
+    // Cambiar color
+    function setColor(el) {
+      currentColor = el.dataset.color;
+      eraserMode   = false;
+      document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('active'));
+      el.classList.add('active');
+      document.getElementById('btn-eraser').classList.remove('active');
+      document.getElementById('btn-eraser').setAttribute('aria-pressed','false');
+    }
+
+    // Cambiar tamaño
+    function setSize(size, btn) {
+      currentSize = size;
+      document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    }
+
+    // Borrador
+    function toggleEraser() {
+      eraserMode = !eraserMode;
+      const btn = document.getElementById('btn-eraser');
+      btn.classList.toggle('active', eraserMode);
+      btn.setAttribute('aria-pressed', eraserMode.toString());
+      if (eraserMode) {
+        document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('active'));
+      }
+    }
+
+    // Limpiar canvas
+    function clearCanvas() {
+      const rect = canvas.getBoundingClientRect();
+      ctx.clearRect(0, 0, rect.width * (window.devicePixelRatio||1), 340 * (window.devicePixelRatio||1));
+    }
+
+    // Teclado en swatches
+    document.querySelectorAll('.color-swatch').forEach(el => {
+      el.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setColor(el); }
+      });
+    });
+
+    /* ============================================================
+       INIT
+    ============================================================ */
+    window.addEventListener('load', () => {
+      resizeCanvas();
+
+      // Restaurar emoción guardada en localStorage (si existe)
+      try {
+        const guardada = localStorage.getItem('emocionSeleccionada');
+        if (guardada && EMOCIONES[guardada]) {
+          emocionActual = guardada;
+          // Marcar el botón correspondiente como activo
+          const btnGuardado = document.querySelector(`.btn-emocion[data-emocion="${guardada}"]`);
+          if (btnGuardado) {
+            btnGuardado.classList.add('active');
+            btnGuardado.setAttribute('aria-pressed', 'true');
+          }
+        }
+      } catch(e) {}
+
+      // Renderizar bloque 1 (con emoción guardada o vacío)
+      renderizarBloque1();
+    });
+    window.addEventListener('resize', resizeCanvas);
+  </script>
+</body>
+</html>

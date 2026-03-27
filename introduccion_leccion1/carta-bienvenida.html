@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Carta de Bienvenida · GranDiosa</title>
+
+  <!-- ====================================================
+       FUENTES: Pacifico (título manuscrito), Nunito (cuerpo)
+       ==================================================== -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* =====================================================
+       VARIABLES GLOBALES DE COLOR Y TIPOGRAFÍA
+       ===================================================== */
+    :root {
+      --space-deep:    #0B0F2F;
+      --space-mid:     #1B1F5A;
+      --space-light:   #2C2F85;
+      --star-color:    #FFFFFF;
+      --paper-bg:      #FFF9F0;
+      --paper-shadow:  rgba(0, 0, 0, 0.28);
+      --ink-dark:      #2A1F5A;
+      --ink-mid:       #3D3570;
+      --accent-warm:   #FF8FAB;
+      --accent-gold:   #FFD166;
+      --ring-color:    #C0C8FF;
+    }
+
+    /* =====================================================
+       RESET Y BASE
+       ===================================================== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      width: 100%; height: 100%;
+      overflow-x: hidden;
+      background: var(--space-deep);
+      font-family: 'Nunito', sans-serif;
+      color: var(--star-color);
+    }
+
+    /* =====================================================
+       FONDO: GRADIENTE DE ESPACIO + NEBULOSAS
+       ===================================================== */
+    .universe {
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 20% 30%,  rgba(44,47,133,0.55) 0%, transparent 70%),
+        radial-gradient(ellipse 60% 50% at 80% 70%,  rgba(27,31,90,0.7)  0%, transparent 65%),
+        radial-gradient(ellipse 100% 80% at 50% 50%, rgba(11,15,47,1)    0%, transparent 100%);
+      background-color: var(--space-deep);
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    /* Nebulosa suave izquierda */
+    .universe::before {
+      content: '';
+      position: absolute;
+      top: -10%; left: -10%;
+      width: 55%; height: 55%;
+      background: radial-gradient(ellipse, rgba(100,80,200,0.18) 0%, transparent 70%);
+      animation: nebulaDrift 18s ease-in-out infinite alternate;
+    }
+    /* Nebulosa suave derecha */
+    .universe::after {
+      content: '';
+      position: absolute;
+      bottom: -5%; right: -5%;
+      width: 50%; height: 50%;
+      background: radial-gradient(ellipse, rgba(255,143,171,0.12) 0%, transparent 70%);
+      animation: nebulaDrift 22s ease-in-out infinite alternate-reverse;
+    }
+
+    @keyframes nebulaDrift {
+      from { transform: translate(0, 0) scale(1); }
+      to   { transform: translate(4%, 3%) scale(1.08); }
+    }
+
+    /* =====================================================
+       CANVAS DE ESTRELLAS (generadas por JS)
+       ===================================================== */
+    #starsCanvas {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* =====================================================
+       CONTENEDOR PRINCIPAL (centra todo)
+       ===================================================== */
+    .scene {
+      position: relative;
+      z-index: 10;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 16px 60px;
+    }
+
+    /* =====================================================
+       TEXTO INTERACTIVO ENCIMA DE LA CARTA  "Lee la carta ^"
+       ===================================================== */
+    .hint {
+      font-family: 'Nunito', sans-serif;
+      font-size: clamp(0.85rem, 2.2vw, 1rem);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: rgba(255,255,255,0.75);
+      text-transform: uppercase;
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      animation: hintPulse 2.5s ease-in-out infinite;
+      cursor: default;
+      user-select: none;
+    }
+    .hint .arrow {
+      display: inline-block;
+      animation: arrowBounce 1.6s ease-in-out infinite;
+      font-size: 1.1em;
+    }
+
+    @keyframes hintPulse {
+      0%, 100% { opacity: 0.75; }
+      50%       { opacity: 1;    }
+    }
+    @keyframes arrowBounce {
+      0%, 100% { transform: translateY(0);    }
+      50%       { transform: translateY(5px); }
+    }
+
+    /* =====================================================
+       CARTA: CONTENEDOR EXTERIOR (anillado + hoja)
+       ===================================================== */
+    .letter-wrapper {
+      position: relative;
+      width: min(620px, 94vw);
+
+      /* Animación de entrada: invisible, abajo → visible, posición normal */
+      opacity: 0;
+      transform: translateY(40px) scale(0.97);
+      animation: letterReveal 1.2s cubic-bezier(0.22, 1, 0.36, 1) 0.4s forwards,
+                 letterFloat  5s ease-in-out 1.7s infinite;
+      transition: filter 0.3s ease, transform 0.3s ease;
+      cursor: pointer;
+    }
+
+    /* Hover: la carta se eleva */
+    .letter-wrapper:hover {
+      filter: drop-shadow(0 28px 48px rgba(0,0,0,0.45));
+    }
+    .letter-wrapper:hover .letter-paper {
+      transform: translateY(-10px) scale(1.012);
+      box-shadow:
+        0 32px 64px var(--paper-shadow),
+        0 0 0 1px rgba(255,255,255,0.06),
+        inset 0 0 60px rgba(255,249,240,0.3);
+    }
+
+    @keyframes letterReveal {
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    @keyframes letterFloat {
+      0%, 100% { transform: translateY(0px);   }
+      50%       { transform: translateY(-10px); }
+    }
+
+    /* =====================================================
+       BARRA DE ANILLOS (izquierda)
+       ===================================================== */
+    .rings-bar {
+      position: absolute;
+      left: -22px;
+      top: 20px;
+      bottom: 20px;
+      width: 22px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-evenly;
+      z-index: 3;
+      gap: 0;
+    }
+
+    .ring {
+      width: 18px;
+      height: 22px;
+      border: 3px solid var(--ring-color);
+      border-radius: 50%;
+      background: var(--space-deep);
+      box-shadow:
+        0 0 6px rgba(192,200,255,0.5),
+        inset 0 2px 4px rgba(0,0,0,0.4);
+      flex-shrink: 0;
+    }
+
+    /* =====================================================
+       HOJA DE LA CARTA
+       ===================================================== */
+    .letter-paper {
+      background: var(--paper-bg);
+      border-radius: 4px 16px 16px 4px;
+      padding: 44px 44px 44px 48px;
+      box-shadow:
+        0 18px 48px var(--paper-shadow),
+        0 0 0 1px rgba(255,255,255,0.04),
+        inset 0 0 40px rgba(255,249,240,0.15);
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+                  box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    /* Franja izquierda para encuadernación */
+    .letter-paper::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 38px;
+      background: linear-gradient(
+        to right,
+        rgba(192,200,255,0.18) 0%,
+        rgba(192,200,255,0.06) 60%,
+        transparent 100%
+      );
+      border-right: 2px dashed rgba(192,200,255,0.35);
+    }
+
+    /* =====================================================
+       PATRÓN DECORATIVO DE FONDO DE LA HOJA
+       (estrellas y luna tenue — sin renglones)
+       ===================================================== */
+    .letter-paper::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      /* SVG inline: pequeñas estrellitas y una luna muy suave */
+      background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Ccircle cx='12' cy='14' r='1' fill='%23c8b8f8' opacity='0.35'/%3E%3Ccircle cx='56' cy='8'  r='1.3' fill='%23c8b8f8' opacity='0.28'/%3E%3Ccircle cx='70' cy='40' r='0.9' fill='%23f4c2d4' opacity='0.3'/%3E%3Ccircle cx='24' cy='58' r='1.1' fill='%23c8b8f8' opacity='0.25'/%3E%3Ccircle cx='65' cy='65' r='1.4' fill='%23ffd166' opacity='0.22'/%3E%3Cpath d='M38 22 a8 8 0 1 0 8 8 6 6 0 1 1-8-8z' fill='%23c8b8f8' opacity='0.08'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 80px 80px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Todo el texto debe quedar encima del patrón */
+    .letter-content { position: relative; z-index: 1; }
+
+    /* =====================================================
+       TÍTULO DE LA CARTA
+       ===================================================== */
+    .letter-title {
+      font-family: 'Pacifico', cursive;
+      font-size: clamp(1.3rem, 3.5vw, 1.75rem);
+      color: var(--ink-dark);
+      margin-bottom: 26px;
+      line-height: 1.3;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* =====================================================
+       CUERPO DEL TEXTO
+       ===================================================== */
+    .letter-body {
+      font-family: 'Nunito', sans-serif;
+      font-size: clamp(0.88rem, 2.2vw, 0.97rem);
+      font-weight: 600;
+      color: var(--ink-mid);
+      line-height: 1.82;
+    }
+
+    /* Saludo "Querida GranDiosa" en estilo manuscrito y cálido */
+    .salutation {
+      font-family: 'Pacifico', cursive;
+      font-size: clamp(1rem, 2.8vw, 1.2rem);
+      color: var(--ink-dark);
+      margin-bottom: 16px;
+    }
+
+    /* Párrafos con separación suave */
+    .letter-body p { margin-bottom: 12px; }
+    .letter-body p:last-child { margin-bottom: 0; }
+
+    /* Firma */
+    .signature {
+      margin-top: 28px;
+      font-family: 'Pacifico', cursive;
+      font-size: clamp(0.9rem, 2.4vw, 1.05rem);
+      color: var(--ink-dark);
+      text-align: right;
+    }
+
+    /* Destacado especial para palabras clave */
+    .highlight {
+      color: #6A3FC8;
+      font-weight: 700;
+    }
+
+    /* =====================================================
+       PARTÍCULAS DE DESTELLOS FLOTANTES (JS las crea)
+       ===================================================== */
+    .sparkle {
+      position: fixed;
+      pointer-events: none;
+      z-index: 5;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,255,255,0.9) 0%, rgba(255,209,102,0.6) 50%, transparent 100%);
+      animation: sparkleFade var(--dur, 3s) ease-out forwards;
+    }
+    @keyframes sparkleFade {
+      0%   { opacity: 0; transform: scale(0) translateY(0); }
+      20%  { opacity: 1; transform: scale(1) translateY(-8px); }
+      100% { opacity: 0; transform: scale(0.5) translateY(-40px); }
+    }
+
+    /* =====================================================
+       ESTRELLAS BRILLANTES ANIMADAS (fijas en el fondo)
+       ===================================================== */
+    .star-twinkle {
+      position: fixed;
+      border-radius: 50%;
+      background: white;
+      z-index: 2;
+      pointer-events: none;
+      animation: twinkle var(--t, 3s) ease-in-out infinite var(--d, 0s);
+    }
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.2; transform: scale(1); }
+      50%       { opacity: 1;   transform: scale(1.6); }
+    }
+
+    /* =====================================================
+       RESPONSIVE: pantallas muy pequeñas
+       ===================================================== */
+    @media (max-width: 400px) {
+      .letter-paper { padding: 32px 24px 32px 34px; }
+      .rings-bar    { left: -16px; width: 16px; }
+      .ring         { width: 13px; height: 17px; border-width: 2px; }
+    }
+
+    /* =====================================================
+       INSIGNIAS FLOTANTES ALREDEDOR DE LA CARTA
+       ===================================================== */
+
+    /* Contenedor relativo que envuelve carta + insignias */
+    .letter-stage {
+      position: relative;
+      /* Espacio extra para que las insignias no se corten */
+      padding: 90px 110px;
+      /* En pantallas pequeñas reducimos el padding */
+    }
+
+    /* Grupo de todas las insignias */
+    .badges {
+      position: absolute;
+      inset: 0;
+      pointer-events: none; /* no interfieren con el hover de la carta */
+      z-index: 20;
+    }
+
+    /* Estilos base de cada insignia */
+    .badge {
+      position: absolute;
+      width: 78px;
+      height: 78px;
+      border-radius: 50%;
+      object-fit: cover;
+      /* Borde con glow mágico */
+      border: 3px solid rgba(192, 200, 255, 0.55);
+      box-shadow:
+        0 0 14px 4px rgba(150, 130, 255, 0.45),
+        0 6px 18px rgba(0, 0, 0, 0.45);
+      /* Aparición suave al cargar */
+      opacity: 0;
+      animation-fill-mode: forwards;
+      animation-timing-function: ease-in-out;
+      animation-iteration-count: infinite;
+      /* Placeholder mientras no hay imagen real */
+      background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.15), rgba(80,60,160,0.6));
+    }
+
+    /* ── Keyframes de flotación ──────────────────────── */
+
+    /* Flotación vertical principal */
+    @keyframes floatingBadge {
+      0%   { transform: translateY(0px)   rotate(0deg);   }
+      50%  { transform: translateY(-12px) rotate(2deg);   }
+      100% { transform: translateY(0px)   rotate(0deg);   }
+    }
+    /* Flotación con más movimiento en X */
+    @keyframes floatingBadgeX {
+      0%   { transform: translate(0px, 0px)    rotate(-1deg); }
+      50%  { transform: translate(-8px, -10px) rotate(2deg);  }
+      100% { transform: translate(0px, 0px)    rotate(-1deg); }
+    }
+    /* Flotación con giro sutil */
+    @keyframes floatingBadgeSpin {
+      0%   { transform: translate(0px, 0px)   rotate(0deg);  }
+      50%  { transform: translate(6px, -14px) rotate(-3deg); }
+      100% { transform: translate(0px, 0px)   rotate(0deg);  }
+    }
+    /* Entrada fade-in de cada insignia */
+    @keyframes badgeReveal {
+      from { opacity: 0; transform: scale(0.6); }
+      to   { opacity: 1; transform: scale(1);   }
+    }
+
+    /* ── Posiciones y animaciones individuales ────────
+       El contenedor .letter-stage tiene padding: 90px 110px
+       Las posiciones son relativas a ese contenedor.
+       top/left/right/bottom = distancia desde el borde del stage.
+    ─────────────────────────────────────────────────── */
+
+    /* FILA SUPERIOR — 3 insignias */
+    .badge1 {
+      top: 8px; left: 60px;
+      animation: badgeReveal 0.6s 0.8s ease-out forwards,
+                 floatingBadge 4.8s 1.4s ease-in-out infinite;
+    }
+    .badge2 {
+      top: 2px; left: 50%;
+      transform: translateX(-50%);
+      animation: badgeReveal 0.6s 1.0s ease-out forwards,
+                 floatingBadgeSpin 5.5s 1.6s ease-in-out infinite;
+    }
+    .badge3 {
+      top: 8px; right: 60px;
+      animation: badgeReveal 0.6s 1.2s ease-out forwards,
+                 floatingBadgeX 5.0s 1.8s ease-in-out infinite;
+    }
+
+    /* FILA MEDIA — 2 insignias (lados) */
+    .badge4 {
+      top: 20%; transform: translateY(-50%);
+      left: 10px;
+      animation: badgeReveal 0.6s 1.4s ease-out forwards,
+                 floatingBadge 6.2s 2.0s ease-in-out infinite;
+    }
+    .badge5 {
+      top: 25%; transform: translateY(-50%);
+      right: 10px;
+      animation: badgeReveal 0.6s 1.6s ease-out forwards,
+                 floatingBadgeSpin 5.8s 2.2s ease-in-out infinite;
+    }
+
+    /* FILA INFERIOR — 3 insignias */
+    .badge6 {
+      top: 40%; transform: translateY(-50%);
+      animation: badgeReveal 0.6s 1.8s ease-out forwards,
+                 floatingBadgeX 4.6s 2.4s ease-in-out infinite;
+    }
+    .badge7 {
+      top: 45%; transform: translateY(-50%);
+      right: 10px;
+      animation: badgeReveal 0.6s 1.6s ease-out forwards,
+                 floatingBadgeSpin 5.8s 2.2s ease-in-out infinite;
+    }
+    .badge8 {
+      top: 65%; transform: translateY(-50%);
+      right: 10px;
+      animation: badgeReveal 0.6s 1.6s ease-out forwards,
+                 floatingBadgeSpin 5.8s 2.2s ease-in-out infinite;
+    }
+
+    /* INSIGNIA EXTRA — debajo centrada */
+    .badge9 {
+      top: 70%; transform: translateY(-50%);
+      left: 10px;
+      animation: badgeReveal 0.6s 1.4s ease-out forwards,
+                 floatingBadge 6.2s 2.0s ease-in-out infinite;
+    }
+
+    /* Ocultar insignias en pantallas muy pequeñas donde no hay espacio */
+    @media (max-width: 560px) {
+      .letter-stage   { padding: 70px 70px; }
+      .badge          { width: 56px; height: 56px; border-width: 2px; }
+      .badge1         { left: 20px; }
+      .badge3         { right: 20px; }
+      .badge6         { left: 20px; }
+      .badge8         { right: 20px; }
+      .badge4, .badge5 { display: none; } /* evitar solapamiento */
+    }
+    @media (max-width: 420px) {
+      .letter-stage { padding: 60px 50px; }
+      .badge        { width: 46px; height: 46px; }
+    }
+
+    /* =====================================================
+       IMAGEN DEL PERSONAJE EN LA FIRMA
+       ===================================================== */
+
+    /* Reemplaza el <p class="signature"> por un flex row */
+    .signature {
+      margin-top: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end; /* alineada a la derecha como antes */
+      gap: 14px;
+    }
+
+    .signature-text {
+      font-family: 'Pacifico', cursive;
+      font-size: clamp(0.9rem, 2.4vw, 1.05rem);
+      color: var(--ink-dark);
+      text-align: right;
+      line-height: 1.5;
+    }
+
+    /* Imagen del personaje */
+    .character {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: top center;
+      border: 3px solid rgba(106, 63, 200, 0.35);
+      box-shadow:
+        0 4px 16px rgba(106, 63, 200, 0.25),
+        0 2px 8px rgba(0, 0, 0, 0.18);
+      /* Placeholder visual mientras no hay imagen */
+      background: radial-gradient(circle at 40% 30%, #e8d5ff, #c4a0f5);
+      /* Flotación suave sincronizada con la carta */
+      animation: charFloat 4s ease-in-out 2s infinite;
+      flex-shrink: 0;
+    }
+
+    @keyframes charFloat {
+      0%, 100% { transform: translateY(0px);  }
+      50%       { transform: translateY(-5px); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       UNIVERSO: gradiente de fondo + nebulosas (CSS ::before/after)
+       ============================================================ -->
+  <div class="universe" aria-hidden="true"></div>
+
+  <!-- Canvas para el campo de estrellas dinámico -->
+  <canvas id="starsCanvas" aria-hidden="true"></canvas>
+
+  <!-- ============================================================
+       ESCENA PRINCIPAL
+       ============================================================ -->
+  <main class="scene">
+
+    <!-- Texto interactivo encima de la carta -->
+    <p class="hint" aria-label="Pista: Lee la carta">
+      Lee la carta
+      <span class="arrow" aria-hidden="true">▼</span>
+    </p>
+
+    <!-- ===================================================
+         STAGE: contenedor que agrupa carta + insignias
+         Las insignias flotan absolutas dentro de este div.
+         =================================================== -->
+    <div class="letter-stage">
+
+      <!-- ─────────────────────────────────────────────
+           INSIGNIAS FLOTANTES ALREDEDOR DE LA CARTA
+           Para reemplazar imágenes: cambia cada src="badgeN.png"
+           por la ruta de tu PNG. Deben ser cuadradas o circulares.
+      ────────────────────────────────────────────────── -->
+      <div class="badges" aria-hidden="true">
+        <img src="badge1.png" class="badge badge1" alt="Insignia 1">
+        <img src="badge2.png" class="badge badge2" alt="Insignia 2">
+        <img src="badge3.png" class="badge badge3" alt="Insignia 3">
+        <img src="badge4.png" class="badge badge4" alt="Insignia 4">
+        <img src="badge5.png" class="badge badge5" alt="Insignia 5">
+        <img src="badge6.png" class="badge badge6" alt="Insignia 6">
+        <img src="badge7.png" class="badge badge7" alt="Insignia 7">
+        <img src="badge8.png" class="badge badge8" alt="Insignia 8">
+        <img src="badge9.png" class="badge badge9" alt="Insignia 9">
+      </div>
+
+      <!-- ─────────────────────────────────────────────
+           CARTA FLOTANTE
+      ────────────────────────────────────────────────── -->
+      <div class="letter-wrapper" id="letter" role="article" aria-label="Carta de bienvenida">
+
+        <!-- Anillos del cuaderno -->
+        <div class="rings-bar" aria-hidden="true">
+          <!-- Los anillos se generan con JS para ajustar la cantidad al tamaño -->
+        </div>
+
+        <!-- Hoja de papel -->
+        <div class="letter-paper">
+          <div class="letter-content">
+
+            <!-- Título -->
+            <h1 class="letter-title">💌 Carta de bienvenida</h1>
+
+            <!-- Saludo -->
+            <p class="salutation">Querida GranDiosa,</p>
+
+            <!-- Cuerpo -->
+            <div class="letter-body">
+              <p>Creamos este programa educativo especialmente para ti. Tu <span class="highlight">cartilla</span> será tu guía y la plataforma será el espacio donde la <span class="highlight">aventura continúa</span> con contenidos interactivos que te ayudarán a aprender mientras avanzas en cada nivel.</p>
+
+              <p>En cada nivel descubrirás algo que te hará <span class="highlight">pensar, sentir y reconocer</span> algo de ti.</p>
+
+              <p>En cada nivel encontrarás momentos únicos de <span class="highlight">Ceci, Luna, Pandora</span> y nuevas amigas.</p>
+
+              <p>Cuando finalices un nivel en tu cartilla, <span class="highlight">escanea el código QR</span> y sigue las instrucciones para continuar tu aventura aquí en la plataforma y en tu cartilla física.</p>
+
+              <p>Cada vez que ingreses a una lección, comienza por la <span class="highlight">Introducción</span>. Allí conocerás el objetivo del nivel.</p>
+
+              <p>En <span class="highlight">Contenido</span> encontrarás nuestro mundo interactivo con videos, imágenes y actividades para aprender mientras te diviertes.</p>
+
+              <p>También podrás explorar los <span class="highlight">juegos y retos</span> del nivel para seguir avanzando en esta aventura.</p>
+            </div>
+
+            <!-- ─────────────────────────────────────────
+                 FIRMA CON IMAGEN DEL PERSONAJE
+                 Reemplaza src="personaje.png" por tu PNG.
+            ──────────────────────────────────────────── -->
+            <div class="signature">
+              <div class="signature-text">
+                Atentamente:<br>Ceci y Luna ✨
+              </div>
+              <img
+                src="ceci.png"
+                class="character"
+                alt="Ceci y Luna"
+              >
+            </div>
+
+          </div><!-- /letter-content -->
+        </div><!-- /letter-paper -->
+
+      </div><!-- /letter-wrapper -->
+
+    </div><!-- /letter-stage -->
+
+  </main><!-- /scene -->
+
+
+  <!-- ============================================================
+       JAVASCRIPT: Estrellas · Anillos · Destellos · Interacción
+       ============================================================ -->
+  <script>
+    /* =========================================================
+       1. CAMPO DE ESTRELLAS ANIMADO EN CANVAS
+       ========================================================= */
+    (function initStars() {
+      const canvas = document.getElementById('starsCanvas');
+      const ctx    = canvas.getContext('2d');
+      let   W, H, stars = [];
+
+      /* Ajusta el canvas al viewport */
+      function resize() {
+        W = canvas.width  = window.innerWidth;
+        H = canvas.height = window.innerHeight;
+      }
+
+      /* Crea una estrella con propiedades aleatorias */
+      function createStar() {
+        return {
+          x:       Math.random() * W,
+          y:       Math.random() * H,
+          r:       Math.random() * 1.4 + 0.3,   // radio
+          alpha:   Math.random(),                  // opacidad actual
+          delta:   (Math.random() * 0.006 + 0.002) * (Math.random() < 0.5 ? 1 : -1), // velocidad parpadeo
+          speed:   Math.random() * 0.06 + 0.01,  // deriva lenta
+        };
+      }
+
+      /* Inicializa las estrellas */
+      function buildStars() {
+        const count = Math.floor((W * H) / 5000); // densidad adaptiva
+        stars = Array.from({ length: Math.min(count, 320) }, createStar);
+      }
+
+      /* Dibuja cada frame */
+      function draw() {
+        ctx.clearRect(0, 0, W, H);
+        stars.forEach(s => {
+          s.alpha += s.delta;
+          if (s.alpha >= 1) { s.alpha = 1; s.delta *= -1; }
+          if (s.alpha <= 0) { s.alpha = 0; s.delta *= -1; }
+
+          s.y -= s.speed; // deriva muy suave hacia arriba
+          if (s.y < -2) { s.y = H + 2; s.x = Math.random() * W; }
+
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(255,255,255,${s.alpha.toFixed(2)})`;
+          ctx.fill();
+        });
+        requestAnimationFrame(draw);
+      }
+
+      window.addEventListener('resize', () => { resize(); buildStars(); });
+      resize();
+      buildStars();
+      draw();
+    })();
+
+
+    /* =========================================================
+       2. GENERACIÓN DINÁMICA DE ANILLOS
+          Llena la barra de anillos según la altura de la carta
+       ========================================================= */
+    (function buildRings() {
+      const bar    = document.querySelector('.rings-bar');
+      const paper  = document.querySelector('.letter-paper');
+
+      function fillRings() {
+        bar.innerHTML = ''; // limpia anillos previos
+        const height    = paper.offsetHeight - 40; // alto disponible
+        const ringH     = 28;  // altura de cada anillo (px)
+        const count     = Math.floor(height / ringH);
+        for (let i = 0; i < count; i++) {
+          const ring = document.createElement('div');
+          ring.className = 'ring';
+          bar.appendChild(ring);
+        }
+      }
+
+      /* Espera a que el DOM esté pintado */
+      window.addEventListener('load',   fillRings);
+      window.addEventListener('resize', fillRings);
+    })();
+
+
+    /* =========================================================
+       3. DESTELLOS MÁGICOS AL HACER HOVER EN LA CARTA
+       ========================================================= */
+    (function initSparkles() {
+      const letter = document.getElementById('letter');
+      let   sparkleTimer = null;
+
+      function spawnSparkle(x, y) {
+        const s    = document.createElement('div');
+        s.className = 'sparkle';
+        const size  = Math.random() * 8 + 4;
+        const dur   = (Math.random() * 1.5 + 1.8).toFixed(1) + 's';
+        s.style.cssText = `
+          left: ${x + (Math.random() * 40 - 20)}px;
+          top:  ${y + (Math.random() * 40 - 20)}px;
+          width:  ${size}px;
+          height: ${size}px;
+          --dur: ${dur};
+        `;
+        document.body.appendChild(s);
+        setTimeout(() => s.remove(), parseFloat(dur) * 1000);
+      }
+
+      letter.addEventListener('mouseenter', (e) => {
+        sparkleTimer = setInterval(() => {
+          spawnSparkle(
+            e.clientX + (Math.random() * 80 - 40),
+            e.clientY + (Math.random() * 80 - 40)
+          );
+        }, 250);
+      });
+
+      letter.addEventListener('mousemove', (e) => {
+        /* actualiza posición de origen de destellos */
+        letter._mx = e.clientX;
+        letter._my = e.clientY;
+      });
+
+      letter.addEventListener('mouseleave', () => {
+        clearInterval(sparkleTimer);
+      });
+    })();
+
+
+    /* =========================================================
+       4. PLACEHOLDERS VISUALES PARA INSIGNIAS SIN IMAGEN
+          Cuando badge1.png … badge9.png no existen, muestra
+          un círculo degradado con un emoji representativo.
+       ========================================================= */
+    (function badgeFallbacks() {
+      /* Emojis decorativos para cada insignia */
+      const emojis = ['⭐','🌙','✨','🔮','🌟','💫','🎯','🌈','💎'];
+
+      /* Paletas de color para cada insignia */
+      const palettes = [
+        ['#7B4FD4','#C084FC'], ['#2563EB','#93C5FD'], ['#DB2777','#F9A8D4'],
+        ['#D97706','#FCD34D'], ['#059669','#6EE7B7'], ['#7C3AED','#C4B5FD'],
+        ['#DC2626','#FCA5A5'], ['#0891B2','#67E8F9'], ['#9333EA','#E879F9'],
+      ];
+
+      document.querySelectorAll('.badge').forEach((img, i) => {
+        img.addEventListener('error', function() {
+          /* Crea un canvas circular como placeholder */
+          const size = 78;
+          const c    = document.createElement('canvas');
+          c.width    = size; c.height = size;
+          const ctx  = c.getContext('2d');
+
+          /* Degradado de fondo */
+          const grad = ctx.createRadialGradient(size*0.4, size*0.35, 4, size/2, size/2, size/2);
+          grad.addColorStop(0, palettes[i][1]);
+          grad.addColorStop(1, palettes[i][0]);
+          ctx.arc(size/2, size/2, size/2, 0, Math.PI*2);
+          ctx.fillStyle = grad;
+          ctx.fill();
+
+          /* Emoji centrado */
+          ctx.font = `${size * 0.42}px serif`;
+          ctx.textAlign    = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText(emojis[i] || '✦', size/2, size/2 + 2);
+
+          /* Reemplaza el <img> roto por el canvas */
+          this.style.display = 'none';
+          const wrapper = this.parentNode;
+          c.className    = this.className;
+          c.style.cssText = this.style.cssText;
+          /* Hereda la misma posición y animación */
+          c.style.position  = 'absolute';
+          c.style.borderRadius = '50%';
+          wrapper.insertBefore(c, this);
+        });
+      });
+    })();
+
+
+    /* =========================================================
+       5. PLACEHOLDER VISUAL PARA EL PERSONAJE SIN IMAGEN
+       ========================================================= */
+    (function characterFallback() {
+      const char = document.querySelector('.character');
+      if (!char) return;
+      char.addEventListener('error', function() {
+        /* Canvas circular con silueta de personaje simple */
+        const size = 72;
+        const c    = document.createElement('canvas');
+        c.width    = size; c.height = size;
+        const ctx  = c.getContext('2d');
+
+        /* Fondo degradado suave */
+        const grad = ctx.createRadialGradient(size*0.4, size*0.3, 4, size/2, size/2, size/2);
+        grad.addColorStop(0, '#F3E8FF');
+        grad.addColorStop(1, '#C084FC');
+        ctx.arc(size/2, size/2, size/2, 0, Math.PI*2);
+        ctx.fillStyle = grad;
+        ctx.fill();
+
+        /* Emoji de personaje */
+        ctx.font = `${size * 0.48}px serif`;
+        ctx.textAlign    = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('🧚', size/2, size/2 + 2);
+
+        this.style.display = 'none';
+        c.className = this.className;
+        this.parentNode.insertBefore(c, this);
+      });
+    })();
+
+
+    /* =========================================================
+       7. ESTRELLAS FIJAS BRILLANTES (generadas en el DOM)
+          Complementan el canvas con destellos más grandes
+       ========================================================= */
+    (function addTwinkleStars() {
+      const NUM = 18;
+      for (let i = 0; i < NUM; i++) {
+        const star       = document.createElement('div');
+        star.className   = 'star-twinkle';
+        const size       = Math.random() * 3 + 1.5;
+        const dur        = (Math.random() * 3 + 2).toFixed(1) + 's';
+        const delay      = (Math.random() * 4).toFixed(1) + 's';
+        star.style.cssText = `
+          width:  ${size}px;
+          height: ${size}px;
+          left:   ${Math.random() * 100}vw;
+          top:    ${Math.random() * 100}vh;
+          --t: ${dur};
+          --d: ${delay};
+          box-shadow: 0 0 ${size * 3}px ${size}px rgba(255,255,255,0.5);
+        `;
+        document.body.appendChild(star);
+      }
+    })();
+  </script>
+
+</body>
+</html>

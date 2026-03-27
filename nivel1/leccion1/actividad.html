@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nivel 01 – Actividad de Reflexión</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --purple-deep:   #1a0a2e;
+      --purple-mid:    #2d1054;
+      --purple-card:   rgba(45, 16, 84, 0.72);
+      --neon-blue:     #00e5ff;
+      --neon-pink:     #ff4fdb;
+      --neon-purple:   #b94fff;
+      --white:         #ffffff;
+      --soft-white:    rgba(255,255,255,0.88);
+      --text-muted:    rgba(255,255,255,0.55);
+      --glow-blue:     0 0 14px #00e5ff88, 0 0 40px #00e5ff33;
+      --glow-pink:     0 0 14px #ff4fdb88, 0 0 40px #ff4fdb33;
+      --glow-purple:   0 0 14px #b94fff88, 0 0 40px #b94fff33;
+      --radius-card:   20px;
+      --radius-btn:    50px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      min-height: 100vh;
+      font-family: 'Nunito', sans-serif;
+      background-color: var(--purple-deep);
+      background-image: url('img/background.png');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      color: var(--white);
+      overflow-x: hidden;
+    }
+
+    /* ── dark overlay ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── floating particles ── */
+    .particles { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0;
+      animation: floatParticle var(--dur, 6s) ease-in-out infinite var(--delay, 0s);
+    }
+    @keyframes floatParticle {
+      0%   { transform: translateY(110vh) scale(0); opacity: 0; }
+      10%  { opacity: 0.6; }
+      90%  { opacity: 0.3; }
+      100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+    }
+
+    /* ── page wrapper ── */
+    .page {
+      position: relative;
+      z-index: 1;
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 32px 20px 60px;
+    }
+
+    /* ── decorative characters ── */
+    .char {
+      position: fixed;
+      width: 150px;
+      opacity: 0;
+      animation: fadeInChar 1s ease forwards, floatChar 4s ease-in-out infinite;
+      pointer-events: none;
+      z-index: 2;
+    }
+    .char-ceci { bottom: 40px; left: 16px; animation-delay: 0.8s, 1s; }
+    .char-luna { bottom: 40px; right: 16px; animation-delay: 1.2s, 1.5s; }
+    @keyframes fadeInChar { to { opacity: 0.9; } }
+    @keyframes floatChar {
+      0%, 100% { transform: translateY(0px) rotate(-1deg); }
+      50%       { transform: translateY(-14px) rotate(1deg); }
+    }
+
+    /* ── header card ── */
+    .header-card {
+      background: rgba(46, 14, 88, 0.918);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(0, 229, 255, 0.582);
+      border-radius: var(--radius-card);
+      padding: 36px 36px 28px;
+      margin-bottom: 36px;
+      text-align: center;
+      box-shadow: var(--glow-blue), 0 8px 40px rgba(0,0,0,0.45);
+      opacity: 0;
+      transform: translateY(30px);
+      animation: slideUp 0.8s ease 0.2s forwards;
+    }
+
+    .header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+      border-radius: 50px;
+      padding: 6px 18px;
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      box-shadow: var(--glow-blue);
+    }
+
+    .header-card h1 {
+      font-family: 'Baloo 2', cursive;
+      font-size: clamp(1.4rem, 4vw, 2rem);
+      font-weight: 800;
+      color: var(--white);
+      line-height: 1.2;
+      margin-bottom: 14px;
+    }
+    .header-card h1 span { color: var(--neon-pink); text-shadow: var(--glow-pink); }
+
+    .header-card p {
+      font-size: 1rem;
+      color: var(--soft-white);
+      line-height: 1.65;
+      margin-bottom: 10px;
+    }
+
+    .tip-box {
+      margin-top: 18px;
+      background: rgba(0,229,255,0.08);
+      border: 1px solid rgba(0,229,255,0.3);
+      border-radius: 14px;
+      padding: 12px 18px;
+      font-size: 0.9rem;
+      color: var(--neon-blue);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-shadow: 0 0 8px #00e5ff66;
+    }
+    .tip-box .tip-icon { font-size: 1.3rem; flex-shrink: 0; }
+
+    /* ── activity section title ── */
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 22px;
+      opacity: 0;
+      animation: slideUp 0.7s ease 0.6s forwards;
+    }
+    .section-label::before,
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(185,79,255,0.5), transparent);
+    }
+    .section-label span {
+      font-size: 0.8rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--neon-purple);
+      white-space: nowrap;
+      text-shadow: var(--glow-purple);
+    }
+
+    /* ── question card ── */
+    .q-card {
+      background: var(--purple-card);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(60, 12, 92, 0.39);
+      border-radius: var(--radius-card);
+      padding: 24px 24px 20px;
+      margin-bottom: 20px;
+      transition: border-color 0.4s, box-shadow 0.4s, background 0.4s;
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    .q-card.visible { animation: slideUp 0.6s ease forwards; }
+    .q-card.correct {
+      border-color: rgba(51, 255, 0, 0.6);
+      box-shadow: var(--glow-blue), 0 6px 30px rgba(0,0,0,0.35);
+      background: rgb(1, 129, 23);
+    }
+    .q-card.wrong {
+      border-color: rgba(255, 0, 0, 0.5);
+      box-shadow: var(--glow-pink), 0 6px 30px rgba(0,0,0,0.35);
+      background: rgb(180, 17, 6);
+    
+    }
+
+    .q-inner {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .q-num {
+      min-width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--neon-pink), var(--neon-purple));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Baloo 2', cursive;
+      font-weight: 800;
+      font-size: 1.1rem;
+      box-shadow: var(--glow-purple);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .q-text {
+      flex: 1;
+      font-size: 1rem;
+      font-weight: 600;
+      line-height: 1.55;
+      color: var(--soft-white);
+    }
+
+    .q-btns {
+      display: flex;
+      gap: 10px;
+      margin-top: 16px;
+      margin-left: 58px;
+      flex-wrap: wrap;
+    }
+
+    .vf-btn {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: 2px solid;
+      font-family: 'Baloo 2', cursive;
+      font-weight: 800;
+      font-size: 1.15rem;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s, background 0.25s;
+      position: relative;
+      background: transparent;
+    }
+    .vf-btn.btn-v {
+      border-color: rgba(216, 214, 214, 0.753);
+      color: #dbdfdf;
+    }
+    .vf-btn.btn-f {
+      border-color:  rgba(216, 214, 214, 0.753);
+      color: #dbdfdf;
+    }
+    .vf-btn:hover {
+      transform: scale(1.12);
+    }
+    .vf-btn.btn-v:hover { box-shadow: var(--glow-pink); background: rgba(255, 79, 220, 0.767); }
+    .vf-btn.btn-f:hover { box-shadow: var(--glow-blue); background: rgba(0, 229, 255, 0.651); }
+    .vf-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+    .vf-btn.selected-correct {
+      background: var(--neon-blue);
+      color: var(--purple-deep);
+      border-color: var(--neon-blue);
+      box-shadow: var(--glow-blue);
+    }
+
+    /* ── hint box ── */
+    .hint-box {
+      margin: 14px 0 4px 58px;
+      background: rgba(255,79,219,0.1);
+      border: 1px solid rgba(211, 66, 182, 0.35);
+      border-radius: 14px;
+      padding: 12px 16px;
+      font-size: 0.88rem;
+      color: var(--neon-pink);
+      display: none;
+      align-items: flex-start;
+      gap: 10px;
+      animation: fadeIn 0.4s ease;
+    }
+    .hint-box.show { display: flex; }
+    .hint-box .mirror { font-size: 1.3rem; flex-shrink: 0; }
+
+    /* ── explanation box ── */
+    .explain-box {
+      margin: 14px 0 4px 58px;
+      background: rgba(9, 44, 48, 0.438);
+      border: 1px solid rgba(0, 255, 34, 0.966);
+      border-radius: 14px;
+      padding: 14px 18px;
+      font-size: 0.9rem;
+      color: var(--neon-blue);
+      display: none;
+      align-items: flex-start;
+      gap: 10px;
+      animation: slideDown 0.5s ease;
+    }
+    .explain-box.show { display: flex; }
+    .explain-box .star { font-size: 1.2rem; flex-shrink: 0; }
+
+    /* ── success banner ── */
+    .success-banner {
+      display: none;
+      text-align: center;
+      background: rgba(122, 4, 107, 0.726);
+      border: 1px solid rgba(0,229,255,0.4);
+      border-radius: var(--radius-card);
+      padding: 36px 28px;
+      margin-top: 32px;
+      box-shadow: var(--glow-blue), var(--glow-pink);
+      animation: popIn 0.6s ease;
+    }
+    .success-banner.show { display: block; }
+    .success-banner .trophy { font-size: 3.5rem; display: block; margin-bottom: 12px; }
+    .success-banner h2 {
+      font-family: 'Baloo 2', cursive;
+      font-size: clamp(1.4rem, 4vw, 2rem);
+      font-weight: 800;
+      color: var(--neon-blue);
+      text-shadow: var(--glow-blue);
+      margin-bottom: 10px;
+    }
+    .success-banner p { color: var(--soft-white); font-size: 1rem; line-height: 1.6; }
+
+    /* ── animations ── */
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; } to { opacity: 1; }
+    }
+    @keyframes shake {
+      0%,100% { transform: translateX(0); }
+      20%      { transform: translateX(-8px); }
+      40%      { transform: translateX(8px); }
+      60%      { transform: translateX(-5px); }
+      80%      { transform: translateX(5px); }
+    }
+    @keyframes popIn {
+      0%   { opacity: 0; transform: scale(0.88); }
+      70%  { transform: scale(1.03); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    /* ── responsive ── */
+    @media (max-width: 520px) {
+      .page { padding: 20px 14px 80px; }
+      .header-card { padding: 26px 18px 20px; }
+      .q-card { padding: 18px 16px 14px; }
+      .q-num { min-width: 36px; height: 36px; font-size: 0.95rem; }
+      .q-btns { margin-left: 52px; }
+      .hint-box, .explain-box { margin-left: 0; }
+      .char { width: 80px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Particles -->
+<div class="particles" id="particles"></div>
+
+<!-- Characters -->
+<img src="img/ceci_amazed.png" alt="Ceci" class="char char-ceci" onerror="this.style.display='none'" />
+<img src="img/luna_front.png" alt="Luna" class="char char-luna" onerror="this.style.display='none'" />
+
+<div class="page">
+
+  <!-- Header -->
+  <div class="header-card">
+    <div class="header-badge">✨ Nivel 01 · Página 21</div>
+    <h1>Revisemos lo que<br/>respondiste en tu cartilla</h1>
+    <p>
+      <strong>GranDiosa</strong>, en tu cartilla leíste algunas frases que escuchamos muchas veces sobre las niñas.<br/>
+      Ahora vamos a revisarlas juntas.
+    </p>
+    <p>Escribe <strong>V</strong> si crees que es <em>Verdadero</em> o <strong>F</strong> si crees que es <em>Falso</em>.</p>
+    <div class="tip-box">
+      <span class="tip-icon">💡</span>
+      <span>Recuerda: algunos comentarios parecen normales, pero en realidad son <strong>estereotipos</strong>.</span>
+    </div>
+  </div>
+
+  <!-- Section label -->
+  <div class="section-label"><span>✏️ Tu actividad</span></div>
+
+  <!-- Questions container -->
+  <div id="questions"></div>
+
+  <!-- Success -->
+  <div class="success-banner" id="successBanner">
+    <span class="trophy">🏆</span>
+    <h2>¡Lo lograste, GranDiosa!</h2>
+    <p>Respondiste todas las frases correctamente.<br/>
+    Recuerda siempre: tu valor no está en tu apariencia, sino en <strong>quién eres, lo que piensas y todo lo que puedes lograr</strong>. ✨</p>
+  </div>
+
+</div>
+
+<script>
+  // ── Data ──────────────────────────────────────────────────────────────────
+  const questions = [
+    {
+      text: "Las niñas deben ser obedientes y cuestionar poco lo que se les dice. Nunca alzan la voz.",
+      correct: "F",
+      explanation: "Las niñas tienen derecho a opinar, preguntar y expresar lo que piensan."
+    },
+    {
+      text: "En una niña lo más importante es su imagen. Debe ser delgada, muy femenina y estar siempre muy bien peinada.",
+      correct: "F",
+      explanation: "El valor de una niña no depende de su apariencia, sino de quién es, lo que piensa y lo que sueña."
+    },
+    {
+      text: "Todas las niñas sueñan con convertirse en mamás.",
+      correct: "F",
+      explanation: "Cada niña puede soñar con muchas cosas diferentes: profesiones, proyectos, viajes o metas personales."
+    },
+    {
+      text: "Las niñas no sueñan con conquistar metas difíciles porque no son competitivas.",
+      correct: "F",
+      explanation: "Las niñas pueden proponerse metas grandes y alcanzarlas, igual que cualquier persona."
+    },
+    {
+      text: "Las niñas no son buenas en deportes, matemáticas, ciencias o tecnología.",
+      correct: "F",
+      explanation: "Las niñas pueden aprender ciencia, matemáticas, tecnología y deportes y destacarse en cualquier área."
+    }
+  ];
+
+  // Track state
+  const state = questions.map(() => ({ done: false }));
+
+  // ── Build Questions ───────────────────────────────────────────────────────
+  const container = document.getElementById('questions');
+
+  questions.forEach((q, i) => {
+    const card = document.createElement('div');
+    card.className = 'q-card';
+    card.id = `card-${i}`;
+
+    card.innerHTML = `
+      <div class="q-inner">
+        <div class="q-num">${i + 1}</div>
+        <div class="q-text">${q.text}</div>
+      </div>
+      <div class="q-btns">
+        <button class="vf-btn btn-v" data-q="${i}" data-ans="V" aria-label="Verdadero">V</button>
+        <button class="vf-btn btn-f" data-q="${i}" data-ans="F" aria-label="Falso">F</button>
+      </div>
+      <div class="hint-box" id="hint-${i}">
+        <span class="mirror">🪞</span>
+        <span><strong>Pista del espejo:</strong> ¿Esta frase intenta decir cómo <em>deberían ser</em> las niñas? Piénsalo de nuevo y vuelve a intentarlo. 💫</span>
+      </div>
+      <div class="explain-box" id="explain-${i}">
+        <span class="star">🌟</span>
+        <span>${q.explanation}</span>
+      </div>
+    `;
+
+    container.appendChild(card);
+
+    // Staggered appearance
+    setTimeout(() => {
+      card.classList.add('visible');
+    }, 400 + i * 160);
+  });
+
+  // ── Handle Answers ────────────────────────────────────────────────────────
+  container.addEventListener('click', (e) => {
+    const btn = e.target.closest('.vf-btn');
+    if (!btn) return;
+
+    const qi = parseInt(btn.dataset.q);
+    const ans = btn.dataset.ans;
+    if (state[qi].done) return;
+
+    const card    = document.getElementById(`card-${qi}`);
+    const hint    = document.getElementById(`hint-${qi}`);
+    const explain = document.getElementById(`explain-${qi}`);
+
+    if (ans === questions[qi].correct) {
+      // ✅ Correct
+      state[qi].done = true;
+      card.classList.remove('wrong');
+      card.classList.add('correct');
+      hint.classList.remove('show');
+      explain.classList.add('show');
+      btn.classList.add('selected-correct');
+
+      // Disable buttons
+      card.querySelectorAll('.vf-btn').forEach(b => b.disabled = true);
+
+      // Check if all done
+      if (state.every(s => s.done)) {
+        setTimeout(() => {
+          const banner = document.getElementById('successBanner');
+          banner.classList.add('show');
+          banner.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 600);
+      }
+    } else {
+      // ❌ Wrong
+      card.classList.remove('correct');
+      card.classList.add('wrong');
+      hint.classList.add('show');
+      explain.classList.remove('show');
+
+      // Reset wrong class after shake
+      setTimeout(() => card.classList.remove('wrong'), 500);
+    }
+  });
+
+  // ── Particles ─────────────────────────────────────────────────────────────
+  const pColors = ['#00e5ff', '#ff4fdb', '#b94fff', '#ffffff'];
+  const pContainer = document.getElementById('particles');
+
+  for (let i = 0; i < 30; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    const size = Math.random() * 5 + 2;
+    const color = pColors[Math.floor(Math.random() * pColors.length)];
+    p.style.cssText = `
+      width: ${size}px;
+      height: ${size}px;
+      left: ${Math.random() * 100}%;
+      background: ${color};
+      box-shadow: 0 0 ${size * 3}px ${color};
+      --dur: ${Math.random() * 8 + 5}s;
+      --delay: -${Math.random() * 12}s;
+    `;
+    pContainer.appendChild(p);
+  }
+</script>
+</body>
+</html>

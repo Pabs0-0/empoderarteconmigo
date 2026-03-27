@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Pandora · Nivel 1 · Lección 2</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg-deep: #1B1531;
+    --bg-mid: #2F3055;
+    --accent-teal: #5A99A0;
+    --accent-coral: #E2555E;
+    --accent-fuchsia: #E04F6F;
+    --card-cream: #EAE7E1;
+    --shadow-mauve: #57365B;
+    --text-light: #f5f0ff;
+    --text-cream: #EAE7E1;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg-deep);
+    font-family: 'Nunito', sans-serif;
+    color: var(--text-light);
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  /* ─── STARFIELD CANVAS ─── */
+  #stars-canvas {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  /* ─── FLOATING PARTICLES ─── */
+  .particles {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .particle {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0;
+    animation: floatParticle linear infinite;
+  }
+
+  @keyframes floatParticle {
+    0%   { transform: translateY(110vh) scale(0); opacity: 0; }
+    10%  { opacity: 1; }
+    90%  { opacity: 0.6; }
+    100% { transform: translateY(-10vh) scale(1.3); opacity: 0; }
+  }
+
+  /* ─── WRAPPER GLOBAL ─── */
+  .page-wrapper {
+    position: relative;
+    z-index: 1;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px 80px;
+  }
+
+  /* ─── ETIQUETA NIVEL ─── */
+  .level-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(90,153,160,0.18);
+    border: 1px solid rgba(90,153,160,0.45);
+    border-radius: 50px;
+    padding: 6px 18px;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent-teal);
+    margin: 40px 0 0;
+  }
+  .level-tag span { font-size: 1rem; }
+
+  /* ─── HERO ─── */
+  .hero {
+    position: relative;
+    padding: 20px 0 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    align-items: end;
+    min-height: 420px;
+  }
+
+  .hero-left {
+    position: relative;
+    z-index: 2;
+    padding-bottom: 40px;
+  }
+
+  .lesson-eyebrow {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--accent-fuchsia);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.2s forwards;
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 5vw, 3.6rem);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 18px;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.4s forwards;
+  }
+
+  .hero-title .line-accent {
+    display: block;
+    background: linear-gradient(90deg, var(--accent-coral), var(--accent-fuchsia));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
+    font-weight: 600;
+    color: rgba(234,231,225,0.7);
+    max-width: 380px;
+    line-height: 1.6;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.6s forwards;
+  }
+
+  /* Orbe energético detrás de los personajes */
+  .hero-orb {
+    position: absolute;
+    right: -30px;
+    bottom: 0;
+    width: 460px;
+    height: 460px;
+    border-radius: 50%;
+    background: radial-gradient(ellipse at center, rgba(90,153,160,0.22) 0%, rgba(87,54,91,0.18) 50%, transparent 75%);
+    filter: blur(28px);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .hero-right {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    height: 420px;
+  }
+
+  .hero-characters {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  .hero-characters img.ceci-hero {
+    position: absolute;
+    bottom: 0;
+    right: 60px;
+    height: 360px;
+    object-fit: contain;
+    animation: floatSlow 5s ease-in-out infinite;
+    filter: drop-shadow(0 0 30px rgba(226,85,94,0.35));
+    opacity: 0;
+    animation: floatSlowIn 0.8s 0.8s forwards, floatSlow 5s 1.6s ease-in-out infinite;
+  }
+
+  .hero-characters img.luna-hero {
+    position: absolute;
+    bottom: 20px;
+    right: 0;
+    height: 280px;
+    object-fit: contain;
+    opacity: 0;
+    animation: floatSlowIn 0.8s 1s forwards, floatSlow 5s 1.8s ease-in-out infinite alternate-reverse;
+    filter: drop-shadow(0 0 24px rgba(90,153,160,0.4));
+  }
+
+  /* floating decorative PNGs near hero */
+  .deco-float {
+    position: absolute;
+    pointer-events: none;
+    opacity: 0;
+    animation: floatSlowIn 1s var(--delay, 1s) forwards, floatSlow var(--dur, 4s) calc(var(--delay, 1s) + 1s) ease-in-out infinite;
+  }
+
+  /* ─── SEPARADOR NARRATIVO ─── */
+  .section-divider {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 48px 0 32px;
+    opacity: 0;
+    animation: fadeUp 0.7s 1.2s forwards;
+  }
+  .section-divider::before,
+  .section-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(90,153,160,0.4), transparent);
+  }
+  .section-divider-icon {
+    font-size: 1.3rem;
+  }
+
+  /* ─── MAIN NARRATIVE CARD ─── */
+  .narrative-section {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 28px;
+    align-items: start;
+    margin-bottom: 32px;
+  }
+
+  .narrative-card {
+    background: linear-gradient(145deg, rgba(47,48,85,0.9), rgba(87,54,91,0.5));
+    border: 1px solid rgba(90,153,160,0.25);
+    border-radius: 28px;
+    padding: 40px 44px;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(12px);
+    opacity: 0;
+    animation: fadeUp 0.8s 1.4s forwards;
+  }
+
+  .narrative-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--accent-coral), var(--accent-teal), var(--accent-fuchsia));
+    border-radius: 28px 28px 0 0;
+  }
+
+  .narrative-card::after {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 250px; height: 250px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(90,153,160,0.12), transparent 70%);
+    pointer-events: none;
+  }
+
+  .narrative-greeting {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.55rem;
+    font-weight: 700;
+    font-style: italic;
+    color: var(--accent-coral);
+    margin-bottom: 20px;
+    line-height: 1.3;
+  }
+
+  .narrative-text {
+    font-size: 1.02rem;
+    line-height: 1.85;
+    color: var(--text-cream);
+    font-weight: 600;
+  }
+
+  .narrative-text p {
+    margin-bottom: 16px;
+  }
+
+  .narrative-text p:last-child { margin-bottom: 0; }
+
+  .highlight-power {
+    display: inline;
+    background: linear-gradient(90deg, var(--accent-coral), var(--accent-fuchsia));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 900;
+  }
+
+  .narrative-cta-line {
+    margin-top: 24px;
+    background: rgba(90,153,160,0.12);
+    border-left: 3px solid var(--accent-teal);
+    border-radius: 0 12px 12px 0;
+    padding: 14px 18px;
+    font-size: 0.97rem;
+    color: var(--accent-teal);
+    font-weight: 700;
+  }
+
+  /* ─── SIDE STACK ─── */
+  .side-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    opacity: 0;
+    animation: fadeUp 0.8s 1.6s forwards;
+  }
+
+  /* Mini floating chat bubbles */
+  .bubble-card {
+    background: var(--card-cream);
+    color: #2a2040;
+    border-radius: 20px 20px 20px 4px;
+    padding: 16px 20px;
+    font-size: 0.88rem;
+    font-weight: 700;
+    line-height: 1.4;
+    position: relative;
+    box-shadow: 0 8px 30px rgba(27,21,49,0.4);
+  }
+
+  .bubble-card.right {
+    border-radius: 20px 20px 4px 20px;
+    background: linear-gradient(135deg, #E2555E, #E04F6F);
+    color: #fff;
+    align-self: flex-end;
+  }
+
+  .bubble-card .bubble-icon {
+    font-size: 1.4rem;
+    margin-bottom: 6px;
+    display: block;
+  }
+
+  .mini-badge-teaser {
+    background: linear-gradient(145deg, rgba(87,54,91,0.85), rgba(47,48,85,0.85));
+    border: 1.5px solid rgba(226,85,94,0.5);
+    border-radius: 20px;
+    padding: 18px 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .mini-badge-teaser img {
+    width: 72px;
+    height: 72px;
+    object-fit: contain;
+    filter: grayscale(0.3) drop-shadow(0 0 12px rgba(226,85,94,0.6));
+    animation: pulseGlow 2.5s ease-in-out infinite;
+    margin-bottom: 8px;
+  }
+
+  .mini-badge-label {
+    font-size: 0.78rem;
+    font-weight: 800;
+    color: var(--accent-coral);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .mini-badge-name {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text-cream);
+    line-height: 1.2;
+  }
+
+  .lock-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    background: rgba(27,21,49,0.35);
+    border-radius: 20px;
+    backdrop-filter: blur(1px);
+  }
+
+  /* ─── VIDEO SECTION ─── */
+  .video-section {
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 0.8s 1.8s forwards;
+  }
+
+  .video-card {
+    background: linear-gradient(135deg, rgba(27,21,49,0.95), rgba(47,48,85,0.9));
+    border: 1.5px solid rgba(90,153,160,0.4);
+    border-radius: 28px;
+    padding: 36px 44px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 36px;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .video-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 80% 50%, rgba(90,153,160,0.1), transparent 60%);
+    pointer-events: none;
+  }
+
+  .video-play-container {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    flex-shrink: 0;
+  }
+
+  .video-ring {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 2px solid rgba(90,153,160,0.5);
+    animation: ringPulse 2s ease-in-out infinite;
+  }
+
+  .video-ring:nth-child(2) {
+    inset: -10px;
+    border-color: rgba(90,153,160,0.25);
+    animation-delay: 0.5s;
+  }
+
+  .video-ring:nth-child(3) {
+    inset: -22px;
+    border-color: rgba(90,153,160,0.1);
+    animation-delay: 1s;
+  }
+
+  .video-play-btn {
+    position: relative;
+    z-index: 2;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent-teal), #3d7a82);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 40px rgba(90,153,160,0.5);
+  }
+
+  .video-play-btn img {
+    width: 44px;
+    height: 44px;
+    object-fit: contain;
+    filter: brightness(10);
+    margin-left: 5px;
+  }
+
+  .video-info-tag {
+    display: inline-block;
+    background: rgba(90,153,160,0.2);
+    border: 1px solid rgba(90,153,160,0.4);
+    border-radius: 50px;
+    padding: 4px 14px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: var(--accent-teal);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 10px;
+  }
+
+  .video-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    line-height: 1.25;
+    color: var(--text-cream);
+  }
+
+  .video-desc {
+    font-size: 0.92rem;
+    color: rgba(234,231,225,0.65);
+    font-weight: 600;
+    line-height: 1.6;
+  }
+
+  /* ─── RETO + INSIGNIA ─── */
+  .reto-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 40px;
+    opacity: 0;
+    animation: fadeUp 0.8s 2s forwards;
+  }
+
+  .reto-card {
+    background: linear-gradient(145deg, rgba(226,85,94,0.18), rgba(224,79,111,0.1));
+    border: 1.5px solid rgba(226,85,94,0.4);
+    border-radius: 24px;
+    padding: 32px 32px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .reto-card::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; right: -40px;
+    width: 180px; height: 180px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(226,85,94,0.15), transparent 70%);
+  }
+
+  .reto-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(226,85,94,0.2);
+    border-radius: 50px;
+    padding: 4px 14px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: var(--accent-coral);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 14px;
+  }
+
+  .reto-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    line-height: 1.25;
+  }
+
+  .reto-desc {
+    font-size: 0.9rem;
+    color: rgba(234,231,225,0.7);
+    font-weight: 600;
+    line-height: 1.65;
+  }
+
+  .reto-steps {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .reto-step {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--text-cream);
+  }
+
+  .step-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--accent-teal);
+    flex-shrink: 0;
+    box-shadow: 0 0 8px rgba(90,153,160,0.6);
+  }
+
+  /* Insignia grande */
+  .badge-card {
+    background: linear-gradient(145deg, rgba(87,54,91,0.6), rgba(27,21,49,0.9));
+    border: 1.5px solid rgba(226,85,94,0.5);
+    border-radius: 24px;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .badge-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 40%, rgba(226,85,94,0.15), transparent 65%);
+  }
+
+  .badge-locked-text {
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: rgba(234,231,225,0.45);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .badge-img-wrapper {
+    position: relative;
+    width: 140px;
+    height: 140px;
+    margin: 0 auto 16px;
+  }
+
+  .badge-img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    animation: pulseGlow 3s ease-in-out infinite;
+    filter: drop-shadow(0 0 20px rgba(226,85,94,0.7)) saturate(0.8) brightness(0.85);
+  }
+
+  .badge-shimmer {
+    position: absolute;
+    inset: -10px;
+    border-radius: 50%;
+    background: conic-gradient(
+      from 0deg,
+      transparent 30%,
+      rgba(226,85,94,0.3) 50%,
+      transparent 70%
+    );
+    animation: spin 4s linear infinite;
+  }
+
+  .badge-lock-icon {
+    position: absolute;
+    bottom: -4px;
+    right: -4px;
+    width: 40px;
+    height: 40px;
+    background: var(--bg-deep);
+    border: 2px solid rgba(226,85,94,0.5);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+  }
+
+  .badge-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    font-style: italic;
+    color: var(--text-cream);
+    margin-bottom: 6px;
+  }
+
+  .badge-unlock-hint {
+    font-size: 0.83rem;
+    color: rgba(234,231,225,0.5);
+    font-weight: 600;
+    line-height: 1.5;
+  }
+
+  .badge-spark {
+    margin-top: 16px;
+    background: linear-gradient(90deg, var(--accent-coral), var(--accent-fuchsia));
+    border: none;
+    border-radius: 50px;
+    padding: 10px 24px;
+    color: #fff;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    cursor: default;
+    box-shadow: 0 4px 20px rgba(226,85,94,0.4);
+    opacity: 0.7;
+  }
+
+  /* ─── COMPANIONS ROW ─── */
+  .companions-row {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 40px;
+    padding: 20px 0 0;
+    position: relative;
+    opacity: 0;
+    animation: fadeUp 0.8s 2.2s forwards;
+  }
+
+  .companion-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    position: relative;
+  }
+
+  .companion-speech {
+    background: var(--card-cream);
+    color: #2a2040;
+    border-radius: 16px 16px 16px 4px;
+    padding: 10px 16px;
+    font-size: 0.82rem;
+    font-weight: 800;
+    max-width: 180px;
+    text-align: center;
+    line-height: 1.4;
+    margin-bottom: 8px;
+    box-shadow: 0 4px 20px rgba(27,21,49,0.4);
+    position: relative;
+  }
+
+  .companion-speech::after {
+    content: '';
+    position: absolute;
+    bottom: -10px; left: 20px;
+    border: 10px solid transparent;
+    border-top-color: var(--card-cream);
+    border-bottom: 0;
+  }
+
+  .companion-block.right .companion-speech {
+    border-radius: 16px 16px 4px 16px;
+    background: linear-gradient(135deg, #E2555E, #E04F6F);
+    color: #fff;
+  }
+
+  .companion-block.right .companion-speech::after {
+    left: auto; right: 20px;
+    border-top-color: #E04F6F;
+  }
+
+  .companion-img {
+    height: 200px;
+    object-fit: contain;
+    animation: floatSlow 4.5s ease-in-out infinite;
+    filter: drop-shadow(0 0 16px rgba(90,153,160,0.3));
+  }
+
+  .companion-block.right .companion-img {
+    animation-delay: 1s;
+    filter: drop-shadow(0 0 16px rgba(226,85,94,0.3));
+  }
+
+  /* ─── DECORATIVOS FLOTANTES ─── */
+  .deco-layer {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  .deco-layer img {
+    position: absolute;
+    opacity: 0.55;
+    pointer-events: none;
+  }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes floatSlowIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes floatSlow {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-14px); }
+  }
+
+  @keyframes pulseGlow {
+    0%, 100% { filter: drop-shadow(0 0 20px rgba(226,85,94,0.6)) saturate(0.8) brightness(0.85); }
+    50% { filter: drop-shadow(0 0 36px rgba(226,85,94,0.9)) saturate(1) brightness(1.05); }
+  }
+
+  @keyframes ringPulse {
+    0%, 100% { transform: scale(1); opacity: 0.8; }
+    50% { transform: scale(1.08); opacity: 0.4; }
+  }
+
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.3; transform: scale(0.8); }
+    50% { opacity: 1; transform: scale(1.1); }
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 860px) {
+    .hero {
+      grid-template-columns: 1fr;
+      min-height: auto;
+    }
+    .hero-right { display: none; }
+    .narrative-section {
+      grid-template-columns: 1fr;
+    }
+    .reto-section {
+      grid-template-columns: 1fr;
+    }
+    .video-card {
+      grid-template-columns: 1fr;
+      text-align: center;
+      gap: 20px;
+    }
+    .video-play-container {
+      margin: 0 auto;
+    }
+    .companions-row {
+      gap: 16px;
+    }
+    .narrative-card { padding: 28px 24px; }
+    .video-card { padding: 28px 24px; }
+  }
+
+  @media (max-width: 480px) {
+    .hero-title { font-size: 2rem; }
+    .companion-img { height: 140px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- STARFIELD -->
+<canvas id="stars-canvas"></canvas>
+
+<!-- PARTICLES -->
+<div class="particles" id="particles-container"></div>
+
+<!-- Capa decorativa fija -->
+<div class="deco-layer" aria-hidden="true">
+  <img src="img/estrella.png" style="width:32px; top:8%; left:5%; animation: twinkle 3s 0.2s ease-in-out infinite; opacity:0.5;" alt="">
+  <img src="img/estrella.png" style="width:20px; top:15%; left:18%; animation: twinkle 3.5s 1s ease-in-out infinite;" alt="">
+  <img src="img/estrella.png" style="width:44px; top:22%; right:8%; animation: twinkle 2.8s 0.5s ease-in-out infinite;" alt="">
+  <img src="img/estrella.png" style="width:28px; top:40%; left:3%; animation: twinkle 4s 1.5s ease-in-out infinite;" alt="">
+  <img src="img/corazon.png" style="width:80px; top:55%; right:2%; animation: floatSlow 8s ease-in-out infinite; opacity:0.3;" alt="">
+  <img src="img/estrella.png" style="width:120px; bottom:20%; left:2%; opacity:0.2; animation: floatSlow 10s ease-in-out infinite;" alt="">
+  <img src="img/estrella.png" style="width:36px; bottom:35%; right:6%; animation: twinkle 3.2s 0.8s ease-in-out infinite;" alt="">
+  <img src="img/corazon.png" style="width:26px; top:70%; left:12%; animation: twinkle 3.8s 1.2s ease-in-out infinite;" alt="">
+  <img src="img/corazon.png" style="width:50px; bottom:10%; right:15%; animation: floatSlow 6s 2s ease-in-out infinite; opacity:0.35;" alt="">
+</div>
+
+<!-- ═══ CONTENIDO PRINCIPAL ═══ -->
+<div class="page-wrapper">
+
+  <!-- Etiqueta de nivel -->
+  <div class="level-tag">
+    <span>✦</span> Nivel 1 · Lección 2
+  </div>
+
+  <!-- ─── HERO ─── -->
+  <section class="hero" aria-label="Bienvenida">
+    <div class="hero-left">
+      <p class="lesson-eyebrow">Sigue tu camino, GranDiosa</p>
+      <h1 class="hero-title">
+        Tu autenticidad
+        <span class="line-accent">es tu mayor poder</span>
+      </h1>
+      <p class="hero-subtitle">
+        En esta lección descubrirás algo importante sobre ti y el mundo que te rodea. Prepárate para avanzar.
+      </p>
+    </div>
+
+    <div class="hero-right" aria-hidden="true">
+      <div class="hero-orb"></div>
+      <div class="hero-characters">
+        <img class="ceci-hero" src="img/ceci_luna_calm.png" alt="Ceci, tu guía" />
+      
+      </div>
+    </div>
+  </section>
+
+  <!-- Divisor -->
+  <div class="section-divider" aria-hidden="true">
+    <span class="section-divider-icon">✨</span>
+  </div>
+
+  <!-- ─── BLOQUE NARRATIVO + SIDE ─── -->
+  <section class="narrative-section" aria-label="Introducción narrativa">
+    <!-- Tarjeta principal -->
+    <div class="narrative-card">
+      <p class="narrative-greeting">GranDiosa,</p>
+      <div class="narrative-text">
+        <p>
+          En este nivel estás aprendiendo a reconocer los <span class="highlight-power">estereotipos</span>, 
+          esas ideas que a veces intentan decirnos cómo deberían ser las niñas o los niños.
+        </p>
+        <p>
+          También estás descubriendo que tu autenticidad es uno de tus 
+          <span class="highlight-power">mayores poderes</span>.
+        </p>
+        <p>
+          Ahora verás un video muy interesante que te ayudará a entender mejor este tema.
+          Después llegará el reto del nivel.
+        </p>
+      </div>
+      <div class="narrative-cta-line">
+        ✨ Cuando completes el reto, podrás <strong>desbloquear tu insignia</strong> y seguir avanzando en Pandora.
+      </div>
+      <!-- Decorativos dentro de la tarjeta -->
+      <img src="img/celular.png" style="position:absolute; bottom:16px; right:20px; width:36px; opacity:0.25; pointer-events:none;" alt="">
+    </div>
+
+    <!-- Columna lateral -->
+    <div class="side-stack">
+      <!-- Burbuja pensando -->
+      <div class="bubble-card">
+        <span class="bubble-icon">🤔</span>
+        ¿Alguna vez sentiste que alguien te dijo cómo deberías ser?
+      </div>
+
+      <!-- Burbuja respuesta -->
+      <div class="bubble-card right">
+        <span class="bubble-icon">💫</span>
+        Tú decides quién eres. ¡Eso es autenticidad!
+      </div>
+
+      <!-- Mini teaser de insignia -->
+      <div class="mini-badge-teaser">
+        <img src="img/badge1.png" alt="Insignia Ser Auténtica" />
+        <span class="mini-badge-label">Tu próxima insignia</span>
+        <span class="mini-badge-name">Ser Auténtica</span>
+        <div class="lock-overlay" aria-hidden="true">🔒</div>
+      </div>
+
+      <!-- Decorativo emoji -->
+      <div style="text-align:center; opacity:0.6;">
+        <img src="img/ceci_thinking.png" style="width:40px; animation: twinkle 3s ease-in-out infinite;" alt="">
+        <img src="img/ceci_thinking.png" style="width:36px; animation: twinkle 3.5s 1s ease-in-out infinite; margin-left:12px;" alt="">
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── SECCIÓN VIDEO ─── -->
+  <section class="video-section" aria-label="Próximo video">
+    <div class="video-card">
+      <div class="video-play-container" aria-hidden="true">
+        <div class="video-ring"></div>
+        <div class="video-ring"></div>
+        <div class="video-ring"></div>
+        <div class="video-play-btn">
+          <img src="img/ceci_amazed.png" alt="Reproducir" />
+        </div>
+      </div>
+      <div>
+        <span class="video-info-tag">▶ Próximamente</span>
+        <h2 class="video-title">Un video que cambiará tu perspectiva</h2>
+        <p class="video-desc">
+          Muy pronto verás un video que te ayudará a entender mejor qué son los estereotipos 
+          y cómo afectan nuestra forma de vernos a nosotras mismas.
+          ¡Prepárate para descubrir algo nuevo!
+        </p>
+      </div>
+      <!-- Deco extra -->
+      <img src="img/estrella.png" style="position:absolute; top:18px; right:24px; width:36px; opacity:0.3; pointer-events:none;" alt="">
+    </div>
+  </section>
+
+  <!-- ─── RETO + INSIGNIA ─── -->
+  <section class="reto-section" aria-label="Reto e insignia">
+    <!-- Tarjeta del reto -->
+    <div class="reto-card">
+      <div class="reto-tag">
+        <span>⚡</span> El Reto del Nivel
+      </div>
+      <h3 class="reto-title">¿Estás lista para el desafío?</h3>
+      <p class="reto-desc">
+        Después del video llegará tu momento de demostrar lo que aprendiste.
+        El reto está diseñado para que reflexiones y pongas en práctica tu pensamiento crítico.
+      </p>
+      <div class="reto-steps">
+        <div class="reto-step">
+          <span class="step-dot"></span> Mira el video con atención
+        </div>
+        <div class="reto-step">
+          <span class="step-dot"></span> Reflexiona sobre los estereotipos
+        </div>
+        <div class="reto-step">
+          <span class="step-dot"></span> Completa el reto del nivel
+        </div>
+        <div class="reto-step">
+          <span class="step-dot"></span> ¡Desbloquea tu insignia!
+        </div>
+      </div>
+      <!-- Decorativo -->
+      <img src="img/luna.png" style="position:absolute; bottom:20px; right:20px; width:50px; opacity:0.2; pointer-events:none;" alt="">
+    </div>
+
+    <!-- Insignia grande -->
+    <div class="badge-card">
+      <p class="badge-locked-text">🔒 Pendiente de desbloqueo</p>
+      <div class="badge-img-wrapper">
+        <div class="badge-shimmer"></div>
+        <img src="img/badge1.png" alt="Insignia Ser Auténtica" />
+        <div class="badge-lock-icon">🔒</div>
+      </div>
+      <p class="badge-name">"Ser Auténtica"</p>
+      <p class="badge-unlock-hint">
+        Completa el reto del nivel para desbloquear esta insignia y seguir avanzando en Pandora.
+      </p>
+      <div class="badge-spark">✨ Pronto será tuya</div>
+    </div>
+  </section>
+
+  <!-- ─── ACOMPAÑANTES ─── -->
+  <section class="companions-row" aria-label="Ceci y Luna te acompañan">
+    <div class="companion-block">
+      <div class="companion-speech">
+        ¡Vas súper bien! Cada lección te hace más tú misma 💫
+      </div>
+      <img class="companion-img" src="img/ceci.png" alt="Ceci" />
+    </div>
+
+
+    <div class="companion-block right">
+      <div class="companion-speech">
+        Reconocer quién eres de verdad es el inicio de todo 🌙
+      </div>
+      <img class="companion-img" src="img/luna.png" alt="Luna" />
+    </div>
+  </section>
+
+</div><!-- /page-wrapper -->
+
+<!-- ═══ SCRIPTS ═══ -->
+<script>
+// ── STARFIELD ──────────────────────────────────────────────────────────
+(function(){
+  const canvas = document.getElementById('stars-canvas');
+  const ctx    = canvas.getContext('2d');
+  let W, H, stars = [];
+
+  function resize(){
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+
+  function initStars(){
+    stars = [];
+    const count = Math.floor((W * H) / 3200);
+    for(let i = 0; i < count; i++){
+      stars.push({
+        x: Math.random() * W,
+        y: Math.random() * H,
+        r: Math.random() * 1.6 + 0.3,
+        a: Math.random(),
+        da: (Math.random() - 0.5) * 0.008,
+        speed: Math.random() * 0.12 + 0.02
+      });
+    }
+  }
+
+  function draw(){
+    ctx.clearRect(0, 0, W, H);
+    stars.forEach(s => {
+      s.a += s.da;
+      if(s.a <= 0 || s.a >= 1) s.da *= -1;
+      s.y += s.speed;
+      if(s.y > H) { s.y = 0; s.x = Math.random() * W; }
+
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(220,215,255,${s.a})`;
+      ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', () => { resize(); initStars(); });
+  resize(); initStars(); draw();
+})();
+
+// ── PARTICLES ──────────────────────────────────────────────────────────
+(function(){
+  const container = document.getElementById('particles-container');
+  const colors = ['#5A99A0','#E2555E','#E04F6F','#c8a0d0','#f0eaf8'];
+  const total = 28;
+
+  for(let i = 0; i < total; i++){
+    const p  = document.createElement('div');
+    p.classList.add('particle');
+    const size  = Math.random() * 6 + 2;
+    const color = colors[Math.floor(Math.random() * colors.length)];
+    const left  = Math.random() * 100;
+    const dur   = Math.random() * 12 + 10;
+    const delay = Math.random() * -15;
+    Object.assign(p.style, {
+      width:    size + 'px',
+      height:   size + 'px',
+      left:     left + '%',
+      background: color,
+      animationDuration:  dur + 's',
+      animationDelay:     delay + 's'
+    });
+    container.appendChild(p);
+  }
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>¡Bonus Extra! – Primeros Auxilios Emocionales</title>
+
+  <!-- Google Fonts: Fredoka One (títulos) + Nunito (cuerpo) -->
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* =============================================
+       VARIABLES GLOBALES
+    ============================================= */
+    :root {
+      /* Paleta Nivel 2 */
+      --naranja:    #FF7043;
+      --coral:      #FF8A65;
+      --fucsia:     #E91E8C;
+      --rosa:       #F06292;
+      --beige:      #FFF8F0;
+      --crema:      #FFF3E0;
+      --menta:      #A8E6CF;
+      --azul:       #90CAF9;
+      --lila:       #CE93D8;
+      --morado:     #AB47BC;
+      --amarillo:   #FFD54F;
+      --blanco:     #FFFFFF;
+
+      /* Sombras */
+      --sombra-s:   0 2px 10px rgba(0,0,0,.10);
+      --sombra-m:   0 6px 24px rgba(0,0,0,.14);
+      --sombra-l:   0 12px 40px rgba(0,0,0,.18);
+
+      /* Tamaños de PNG – cambia aquí para ajustar en toda la página */
+      --png-xs:     40px;
+      --png-sm:     64px;
+      --png-md:     96px;
+      --png-lg:     140px;
+      --png-xl:     200px;
+
+      --ceci-size:  200px;
+      --luna-size:  180px;
+      --icon-size:  52px;
+
+      /* Tipografía */
+      --font-titulo:  'Fredoka One', cursive;
+      --font-cuerpo:  'Nunito', sans-serif;
+
+      /* Radio */
+      --r-s:  12px;
+      --r-m:  24px;
+      --r-l:  40px;
+      --r-xl: 60px;
+    }
+
+    /* =============================================
+       RESET + BASE
+    ============================================= */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-cuerpo);
+      background-color: var(--beige);
+      background-image: url('img/background.png');
+      background-size: cover;
+      background-attachment: fixed;
+      background-position: center top;
+      min-height: 100vh;
+      overflow-x: hidden;
+      color: #3a2a1e;
+    }
+
+    /* =============================================
+       CAPA DECORATIVA DE FONDO (formas orgánicas CSS)
+    ============================================= */
+    .bg-shapes {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .bg-shapes::before {
+      content: '';
+      position: absolute;
+      top: -80px; left: -80px;
+      width: 340px; height: 340px;
+      background: radial-gradient(circle, rgba(255,112,67,.30) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .bg-shapes::after {
+      content: '';
+      position: absolute;
+      bottom: -60px; right: -60px;
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(233,30,140,.25) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .shape-menta {
+      position: absolute;
+      top: 30%; left: -40px;
+      width: 180px; height: 180px;
+      background: radial-gradient(circle, rgba(168,230,207,.40) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .shape-azul {
+      position: absolute;
+      top: 60%; right: -30px;
+      width: 160px; height: 160px;
+      background: radial-gradient(circle, rgba(144,202,249,.35) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .shape-lila {
+      position: absolute;
+      top: 15%; right: 5%;
+      width: 120px; height: 120px;
+      background: radial-gradient(circle, rgba(206,147,216,.30) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    /* =============================================
+       CONTENEDOR PRINCIPAL
+    ============================================= */
+    .main-wrapper {
+      position: relative;
+      z-index: 1;
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 0 16px 60px;
+    }
+
+    /* =============================================
+       HERO / CABECERA
+    ============================================= */
+    .hero {
+      position: relative;
+      text-align: center;
+      padding: 40px 20px 36px;
+    }
+
+    /* Onda superior decorativa */
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -16px; right: -16px;
+      height: 120px;
+      background: linear-gradient(135deg, var(--naranja) 0%, var(--fucsia) 100%);
+      border-radius: 0 0 60% 60% / 0 0 50px 50px;
+      z-index: -1;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: var(--amarillo);
+      color: #7B4F00;
+      font-family: var(--font-titulo);
+      font-size: 1rem;
+      padding: 6px 22px;
+      border-radius: 999px;
+      margin-bottom: 12px;
+      box-shadow: var(--sombra-s);
+      letter-spacing: .5px;
+      animation: pop .6s ease both;
+    }
+
+    .hero-title {
+      font-family: var(--font-titulo);
+      font-size: clamp(2.6rem, 8vw, 4rem);
+      color: var(--blanco);
+      text-shadow: 0 3px 0 rgba(0,0,0,.15), 0 6px 20px rgba(0,0,0,.18);
+      line-height: 1.1;
+      animation: slideDown .7s ease both .1s;
+      letter-spacing: 1px;
+    }
+
+    .hero-sparkles {
+      font-size: 2rem;
+      display: inline;
+      animation: spin 3s linear infinite;
+    }
+
+    .hero-sub {
+      font-size: 1.05rem;
+      color: rgba(255,255,255,.92);
+      font-weight: 700;
+      margin-top: 6px;
+      animation: slideDown .7s ease both .2s;
+    }
+
+    /* Personajes en el hero */
+    .hero-chars {
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      gap: 12px;
+      margin-top: 24px;
+      animation: slideUp .8s ease both .3s;
+    }
+
+    .char-img {
+      width: var(--ceci-size);
+      height: auto;
+      filter: drop-shadow(0 6px 12px rgba(0,0,0,.18));
+    }
+    .char-img.luna { width: var(--luna-size); }
+
+    /* Destellos flotantes en el hero */
+    .hero-deco {
+      position: absolute;
+      pointer-events: none;
+    }
+    .deco-tl { top: 110px; left: 10px; width: var(--icon-size); animation: float 4s ease-in-out infinite; }
+    .deco-tr { top: 90px; right: 10px; width: var(--icon-size); animation: float 4s ease-in-out infinite 1s; }
+    .deco-bl { bottom: 30px; left: 20px; width: var(--png-sm); animation: float 5s ease-in-out infinite .5s; }
+    .deco-br { bottom: 20px; right: 20px; width: var(--png-sm); animation: float 5s ease-in-out infinite 1.5s; }
+
+    /* =============================================
+       BOTÓN PRINCIPAL "ACTIVAR BONUS"
+    ============================================= */
+    .btn-activar-wrap {
+      text-align: center;
+      margin: 28px 0 10px;
+    }
+
+    .btn-activar {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(135deg, var(--fucsia) 0%, var(--naranja) 100%);
+      color: var(--blanco);
+      font-family: var(--font-titulo);
+      font-size: 1.4rem;
+      padding: 16px 40px;
+      border: none;
+      border-radius: 999px;
+      cursor: pointer;
+      box-shadow: 0 6px 0 #b81565, 0 10px 30px rgba(233,30,140,.35);
+      transition: transform .15s ease, box-shadow .15s ease;
+      letter-spacing: .5px;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    .btn-activar:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 9px 0 #b81565, 0 14px 36px rgba(233,30,140,.45);
+    }
+
+    .btn-activar:active {
+      transform: translateY(2px);
+      box-shadow: 0 3px 0 #b81565, 0 6px 16px rgba(233,30,140,.3);
+    }
+
+    .btn-activar .btn-icon { font-size: 1.6rem; }
+
+    /* Estado: ocultar botón cuando activado */
+    .btn-activar.hidden { display: none; }
+
+    /* =============================================
+       SECCIÓN DE CONTENIDO (oculta inicialmente)
+    ============================================= */
+    .content-section {
+      display: none;
+      animation: fadeIn .5s ease both;
+    }
+    .content-section.visible { display: block; }
+
+    /* Intro del contenido */
+    .content-intro {
+      background: linear-gradient(135deg, var(--fucsia) 0%, var(--morado) 100%);
+      border-radius: var(--r-l);
+      padding: 28px 28px 24px;
+      text-align: center;
+      color: var(--blanco);
+      margin-bottom: 24px;
+      box-shadow: var(--sombra-m);
+      position: relative;
+      overflow: hidden;
+    }
+    .content-intro::after {
+      content: '';
+      position: absolute;
+      bottom: -20px; right: -20px;
+      width: 100px; height: 100px;
+      background: rgba(255,255,255,.12);
+      border-radius: 50%;
+    }
+
+    .content-titulo {
+      font-family: var(--font-titulo);
+      font-size: clamp(1.6rem, 5vw, 2.2rem);
+      margin-bottom: 4px;
+      text-shadow: 0 2px 8px rgba(0,0,0,.2);
+    }
+    .content-subtitulo {
+      font-size: 1rem;
+      font-weight: 700;
+      opacity: .9;
+      margin-bottom: 14px;
+    }
+    .content-intro-txt {
+      font-size: 1.05rem;
+      font-weight: 600;
+      background: rgba(255,255,255,.18);
+      border-radius: var(--r-s);
+      padding: 12px 18px;
+      backdrop-filter: blur(4px);
+    }
+
+    /* =============================================
+       BARRA DE PROGRESO
+    ============================================= */
+    .progress-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+      padding: 0 4px;
+    }
+    .progress-label {
+      font-size: .85rem;
+      font-weight: 800;
+      color: var(--fucsia);
+      white-space: nowrap;
+    }
+    .progress-bar-outer {
+      flex: 1;
+      height: 14px;
+      background: rgba(0,0,0,.08);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .progress-bar-inner {
+      height: 100%;
+      background: linear-gradient(90deg, var(--fucsia), var(--naranja));
+      border-radius: 999px;
+      width: 0%;
+      transition: width .5s cubic-bezier(.4,0,.2,1);
+    }
+
+    /* =============================================
+       TARJETAS DE PASOS
+    ============================================= */
+    .steps-container { display: flex; flex-direction: column; gap: 18px; }
+
+    .step-card {
+      border-radius: var(--r-l);
+      padding: 24px 24px 22px;
+      box-shadow: var(--sombra-m);
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity .5s ease, transform .5s ease;
+    }
+    .step-card.revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Colores alternados por paso */
+    .step-card:nth-child(1) { background: linear-gradient(135deg, var(--menta) 0%, #d4f5e7 100%); }
+    .step-card:nth-child(2) { background: linear-gradient(135deg, var(--azul) 0%, #ddeeff 100%); }
+    .step-card:nth-child(3) { background: linear-gradient(135deg, var(--amarillo) 0%, #fff8c8 100%); }
+    .step-card:nth-child(4) { background: linear-gradient(135deg, var(--coral) 0%, #ffd5c5 100%); }
+    .step-card:nth-child(5) { background: linear-gradient(135deg, var(--lila) 0%, #f2dcf8 100%); }
+
+    /* Badge con número */
+    .step-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.65);
+      backdrop-filter: blur(6px);
+      font-family: var(--font-titulo);
+      font-size: 1.2rem;
+      color: #3a2a1e;
+      box-shadow: var(--sombra-s);
+      flex-shrink: 0;
+    }
+
+    .step-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .step-title {
+      font-family: var(--font-titulo);
+      font-size: 1.25rem;
+      color: #2e1f10;
+      line-height: 1.2;
+    }
+
+    .step-text {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #3a2a1e;
+      line-height: 1.55;
+      padding-left: 50px;
+    }
+
+    /* Bubbles de frases para el Paso 2 */
+    .phrase-bubbles {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 10px;
+      padding-left: 50px;
+    }
+    .phrase-bubble {
+      display: inline-block;
+      background: rgba(255,255,255,.70);
+      border-radius: 999px;
+      padding: 8px 18px;
+      font-size: .95rem;
+      font-weight: 700;
+      color: #2a3a7e;
+      backdrop-filter: blur(4px);
+      box-shadow: var(--sombra-s);
+      width: fit-content;
+    }
+
+    /* Decoración pequeña en la esquina de cada tarjeta */
+    .step-deco-img {
+      position: absolute;
+      bottom: 12px; right: 14px;
+      width: var(--png-xs);
+      opacity: .55;
+      pointer-events: none;
+    }
+
+    /* =============================================
+       BOTÓN SIGUIENTE PASO
+    ============================================= */
+    .btn-next-wrap {
+      text-align: center;
+      margin-top: 22px;
+    }
+    .btn-next {
+      background: var(--blanco);
+      color: var(--fucsia);
+      border: 3px solid var(--fucsia);
+      font-family: var(--font-titulo);
+      font-size: 1.1rem;
+      padding: 12px 34px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: background .2s ease, color .2s ease, transform .15s ease;
+      box-shadow: var(--sombra-s);
+    }
+    .btn-next:hover {
+      background: var(--fucsia);
+      color: var(--blanco);
+      transform: scale(1.04);
+    }
+    .btn-next:active { transform: scale(.97); }
+    .btn-next.hidden { display: none; }
+
+    /* =============================================
+       BLOQUE CIERRE FINAL
+    ============================================= */
+    .closing-card {
+      background: linear-gradient(135deg, var(--naranja) 0%, var(--fucsia) 100%);
+      border-radius: var(--r-l);
+      padding: 30px 28px;
+      text-align: center;
+      color: var(--blanco);
+      box-shadow: var(--sombra-l);
+      margin-top: 24px;
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+    .closing-card.revealed { opacity: 1; transform: translateY(0); }
+
+    .closing-card::before {
+      content: '';
+      position: absolute;
+      top: -30px; left: -30px;
+      width: 120px; height: 120px;
+      background: rgba(255,255,255,.15);
+      border-radius: 50%;
+    }
+    .closing-card::after {
+      content: '';
+      position: absolute;
+      bottom: -20px; right: -20px;
+      width: 90px; height: 90px;
+      background: rgba(255,255,255,.12);
+      border-radius: 50%;
+    }
+
+    .closing-emoji { font-size: 2.2rem; margin-bottom: 8px; display: block; }
+
+    .closing-text {
+      font-size: 1.1rem;
+      font-weight: 700;
+      line-height: 1.55;
+      position: relative;
+      z-index: 1;
+    }
+
+    .closing-text strong {
+      font-family: var(--font-titulo);
+      font-size: 1.25rem;
+      display: block;
+      margin-top: 6px;
+      text-shadow: 0 2px 8px rgba(0,0,0,.15);
+    }
+
+    /* Personaje al final */
+    .closing-chars {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 18px;
+    }
+    .closing-char { width: var(--png-lg); filter: drop-shadow(0 6px 14px rgba(0,0,0,.22)); }
+
+    /* =============================================
+       CLASES UTILITARIAS DE TAMAÑO PARA PNGs
+    ============================================= */
+    .img-xs  { width: var(--png-xs);  height: auto; }
+    .img-sm  { width: var(--png-sm);  height: auto; }
+    .img-md  { width: var(--png-md);  height: auto; }
+    .img-lg  { width: var(--png-lg);  height: auto; }
+    .img-xl  { width: var(--png-xl);  height: auto; }
+    .img-icon { width: var(--icon-size); height: auto; }
+
+    /* =============================================
+       ANIMACIONES
+    ============================================= */
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    @keyframes pop {
+      0%   { transform: scale(.7); opacity: 0; }
+      70%  { transform: scale(1.08); }
+      100% { transform: scale(1);  opacity: 1; }
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50%       { transform: translateY(-10px) rotate(5deg); }
+    }
+    @keyframes spin {
+      from { display: inline-block; transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50%       { transform: scale(1.04); }
+    }
+
+    /* =============================================
+       RESPONSIVE — DESKTOP
+    ============================================= */
+    @media (min-width: 600px) {
+      :root {
+        --ceci-size: 220px;
+        --luna-size: 200px;
+        --png-lg: 160px;
+      }
+      .hero::before { height: 210px; }
+      .hero { padding: 50px 32px 40px; }
+      .step-text, .phrase-bubbles { padding-left: 54px; }
+    }
+
+    @media (min-width: 960px) {
+      :root {
+        --ceci-size: 260px;
+        --luna-size: 230px;
+      }
+      .main-wrapper { padding-bottom: 80px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==========================================
+       CAPA DECORATIVA DE FONDO
+  =========================================== -->
+  <div class="bg-shapes" aria-hidden="true">
+    <div class="shape-menta"></div>
+    <div class="shape-azul"></div>
+    <div class="shape-lila"></div>
+  </div>
+
+  <!-- ==========================================
+       CONTENEDOR PRINCIPAL
+  =========================================== -->
+  <div class="main-wrapper">
+
+    <!-- ======== HERO ======== -->
+    <header class="hero" role="banner">
+
+      <!-- Destellos decorativos PNG flotantes -->
+      <img src="img/estrella.png" alt="" class="hero-deco deco-tl img-icon" aria-hidden="true" onerror="this.style.display='none'" />
+      <img src="img/estrella.png"  alt="" class="hero-deco deco-tr img-icon" aria-hidden="true" onerror="this.style.display='none'" />
+      <img src="img/estrella.png"      alt="" class="hero-deco deco-bl img-sm"  aria-hidden="true" onerror="this.style.display='none'" />
+      <img src="img/estrella.png" alt="" class="hero-deco deco-br img-sm"  aria-hidden="true" onerror="this.style.display='none'" />
+
+      <!-- Badge -->
+      <div class="hero-badge">✨ Momento especial ✨</div>
+
+      <!-- Título -->
+      <h1 class="hero-title">
+        ¡Bonus Extra!
+      </h1>
+      <p class="hero-sub">¡Activa tu Bonus! 🎉</p>
+
+      <!-- Personajes -->
+      <div class="hero-chars">
+        <img src="img/ceci1.png"  alt="Ceci, la protagonista de la cartilla"  class="char-img"      onerror="this.style.display='none'" />
+       
+      </div>
+
+    </header><!-- /hero -->
+
+    <!-- ======== BOTÓN ACTIVAR ======== -->
+    <div class="btn-activar-wrap">
+      <button class="btn-activar" id="btnActivar" aria-label="Activar el Bonus Extra">
+        <span class="btn-icon">🌟</span>
+        ¡Activar Bonus!
+        <span class="btn-icon">🌟</span>
+      </button>
+    </div>
+
+    <!-- ======== SECCIÓN DE CONTENIDO (oculta hasta activar) ======== -->
+    <section class="content-section" id="contentSection" aria-label="Primeros auxilios emocionales">
+
+      <!-- Intro -->
+      <div class="content-intro">
+        <h2 class="content-titulo">💛 Primeros auxilios emocionales</h2>
+        <p class="content-subtitulo">Explicado para niñas</p>
+        <p class="content-intro-txt">Cuando alguien cercano se siente mal, puedes ayudar de esta forma:</p>
+      </div>
+
+      <!-- Barra de progreso -->
+      <div class="progress-wrap" aria-label="Progreso de los pasos">
+        <span class="progress-label" id="progressLabel">Paso 0 de 5</span>
+        <div class="progress-bar-outer" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="5">
+          <div class="progress-bar-inner" id="progressBar"></div>
+        </div>
+      </div>
+
+      <!-- Contenedor de tarjetas -->
+      <div class="steps-container" id="stepsContainer">
+
+        <!-- PASO 1 -->
+        <article class="step-card" id="step-1" aria-label="Paso 1">
+          <div class="step-header">
+            <span class="step-badge">1</span>
+            <h3 class="step-title">Escucha con atención</h3>
+          </div>
+          <p class="step-text">A veces lo más importante es escuchar sin interrumpir.</p>
+          <img src="img/corazon.png" alt="" class="step-deco-img" aria-hidden="true" onerror="this.style.display='none'" />
+        </article>
+
+        <!-- PASO 2 -->
+        <article class="step-card" id="step-2" aria-label="Paso 2">
+          <div class="step-header">
+            <span class="step-badge">2</span>
+            <h3 class="step-title">Habla con calma</h3>
+          </div>
+          <p class="step-text">Puedes decir frases como:</p>
+          <div class="phrase-bubbles">
+            <span class="phrase-bubble">💬 "Estoy aquí contigo"</span>
+            <span class="phrase-bubble">💬 "Si quieres, puedes contarme qué pasó."</span>
+          </div>
+          <img src="img/corazon.png" alt="" class="step-deco-img" aria-hidden="true" onerror="this.style.display='none'" />
+        </article>
+
+        <!-- PASO 3 -->
+        <article class="step-card" id="step-3" aria-label="Paso 3">
+          <div class="step-header">
+            <span class="step-badge">3</span>
+            <h3 class="step-title">Respiren juntos 🌬️</h3>
+          </div>
+          <p class="step-text">Respirar lento ayuda al cuerpo a relajarse.</p>
+          <img src="img/chocolate.png" alt="" class="step-deco-img" aria-hidden="true" onerror="this.style.display='none'" />
+        </article>
+
+        <!-- PASO 4 -->
+        <article class="step-card" id="step-4" aria-label="Paso 4">
+          <div class="step-header">
+            <span class="step-badge">4</span>
+            <h3 class="step-title">No juzgues lo que siente 💛</h3>
+          </div>
+          <p class="step-text">Cada emoción es válida.</p>
+          <img src="img/estrella.png" alt="" class="step-deco-img" aria-hidden="true" onerror="this.style.display='none'" />
+        </article>
+
+        <!-- PASO 5 -->
+        <article class="step-card" id="step-5" aria-label="Paso 5">
+          <div class="step-header">
+            <span class="step-badge">5</span>
+            <h3 class="step-title">Busca ayuda de un adulto 🤝</h3>
+          </div>
+          <p class="step-text">Si la situación es muy difícil, lo mejor es contarle a un adulto de confianza.</p>
+          <img src="img/corazon.png" alt="" class="step-deco-img" aria-hidden="true" onerror="this.style.display='none'" />
+        </article>
+
+      </div><!-- /steps-container -->
+
+      <!-- Botón siguiente paso -->
+      <div class="btn-next-wrap">
+        <button class="btn-next" id="btnNext" aria-label="Revelar siguiente paso">
+          ¡Siguiente paso! →
+        </button>
+      </div>
+
+      <!-- Cierre final -->
+      <div class="closing-card" id="closingCard" aria-label="Mensaje de cierre">
+        <span class="closing-emoji">🌸</span>
+        <p class="closing-text">
+          Acompañar a alguien con respeto y cariño también es una forma de ser una
+          <strong>GranDiosa que cuida a los demás. 💜</strong>
+        </p>
+        <!-- Personajes al cierre -->
+        <div class="closing-chars">
+          <img src="img/ceci.png" alt="Ceci feliz celebrando" class="closing-char" onerror="this.style.display='none'" />
+        </div>
+      </div>
+
+    </section><!-- /content-section -->
+
+  </div><!-- /main-wrapper -->
+
+  <!-- ==========================================
+       JAVASCRIPT – INTERACCIÓN POR PASOS
+  =========================================== -->
+  <script>
+    // =============================================
+    // Estado de la actividad
+    // =============================================
+    const TOTAL_STEPS = 5;
+    let currentStep = 0;        // cuántos pasos revelados
+    let activated = false;      // si ya se activó el bonus
+
+    // Referencias DOM
+    const btnActivar    = document.getElementById('btnActivar');
+    const contentSection = document.getElementById('contentSection');
+    const stepsContainer = document.getElementById('stepsContainer');
+    const btnNext        = document.getElementById('btnNext');
+    const closingCard    = document.getElementById('closingCard');
+    const progressBar    = document.getElementById('progressBar');
+    const progressLabel  = document.getElementById('progressLabel');
+
+    // Todas las tarjetas de pasos
+    const stepCards = stepsContainer.querySelectorAll('.step-card');
+
+    // =============================================
+    // Función: actualizar barra de progreso
+    // =============================================
+    function updateProgress(step) {
+      const pct = (step / TOTAL_STEPS) * 100;
+      progressBar.style.width = pct + '%';
+      progressLabel.textContent = `Paso ${step} de ${TOTAL_STEPS}`;
+      progressBar.parentElement.setAttribute('aria-valuenow', step);
+    }
+
+    // =============================================
+    // Función: revelar el siguiente paso
+    // =============================================
+    function revealNextStep() {
+      if (currentStep >= TOTAL_STEPS) return;
+
+      const card = stepCards[currentStep];
+      currentStep++;
+
+      // Pequeño delay para que la animación se vea bien
+      setTimeout(() => {
+        card.classList.add('revealed');
+        card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }, 60);
+
+      // Actualizar progreso
+      updateProgress(currentStep);
+
+      // Si se revelaron todos los pasos → mostrar cierre, ocultar botón
+      if (currentStep === TOTAL_STEPS) {
+        btnNext.classList.add('hidden');
+
+        setTimeout(() => {
+          closingCard.classList.add('revealed');
+          closingCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }, 400);
+      }
+    }
+
+    // =============================================
+    // Evento: Activar Bonus
+    // =============================================
+    btnActivar.addEventListener('click', function () {
+      if (activated) return;
+      activated = true;
+
+      // Ocultar botón principal
+      btnActivar.classList.add('hidden');
+
+      // Mostrar sección de contenido
+      contentSection.classList.add('visible');
+
+      // Revelar el primer paso automáticamente
+      setTimeout(revealNextStep, 300);
+
+      // Scroll suave hacia el contenido
+      setTimeout(() => {
+        contentSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 200);
+    });
+
+    // =============================================
+    // Evento: Siguiente paso
+    // =============================================
+    btnNext.addEventListener('click', function () {
+      revealNextStep();
+    });
+
+    // =============================================
+    // Inicialización: asegurarse de que el progreso empiece en 0
+    // =============================================
+    updateProgress(0);
+  </script>
+
+</body>
+</html>

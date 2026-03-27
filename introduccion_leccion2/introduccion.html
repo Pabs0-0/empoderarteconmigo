@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pandora – Tu Aventura Mágica</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Nunito:wght@300;400;600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #0B0F2A;
+      --grad1: #1A1F4C;
+      --grad2: #3A2E6E;
+      --grad3: #6A4CCF;
+      --pink: #F6A6FF;
+      --blue: #A9E4FF;
+      --lilac: #FFD6F9;
+      --gold: #FFF3A8;
+      --white: #FAFAFF;
+      --card-bg: rgba(26, 31, 76, 0.65);
+      --glow-pink: rgba(246,166,255,0.5);
+      --glow-blue: rgba(169,228,255,0.4);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--bg);
+      font-family: 'Quicksand', sans-serif;
+      color: var(--white);
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    /* ===== CANVAS STARS ===== */
+    #starfield {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* ===== FLOATING PARTICLES ===== */
+    .particles {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      animation: floatUp linear infinite;
+      opacity: 0;
+    }
+
+    @keyframes floatUp {
+      0%   { transform: translateY(100vh) scale(0); opacity: 0; }
+      10%  { opacity: 0.6; }
+      90%  { opacity: 0.4; }
+      100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+    }
+
+    /* ===== NEBULA BACKGROUND ===== */
+    .nebula {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(80px);
+      pointer-events: none;
+      z-index: 0;
+      animation: nebulaPulse 8s ease-in-out infinite alternate;
+    }
+
+    .nebula-1 {
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(106,76,207,0.25) 0%, transparent 70%);
+      top: -100px; left: -100px;
+    }
+
+    .nebula-2 {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(246,166,255,0.15) 0%, transparent 70%);
+      bottom: 100px; right: -80px;
+      animation-delay: -4s;
+    }
+
+    .nebula-3 {
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(169,228,255,0.12) 0%, transparent 70%);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      animation-delay: -2s;
+    }
+
+    @keyframes nebulaPulse {
+      0%   { opacity: 0.6; transform: scale(1); }
+      100% { opacity: 1;   transform: scale(1.1); }
+    }
+
+    /* ===== WRAPPER ===== */
+    .wrapper {
+      position: relative;
+      z-index: 1;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 20px 80px;
+    }
+
+    /* ===== HEADER ===== */
+    header {
+      text-align: center;
+      padding: 70px 20px 20px;
+      position: relative;
+    }
+
+    .header-badge {
+      display: inline-block;
+      font-family: 'Cinzel Decorative', cursive;
+      font-size: 0.75rem;
+      letter-spacing: 0.3em;
+      color: var(--gold);
+      background: rgba(255,243,168,0.1);
+      border: 1px solid rgba(255,243,168,0.3);
+      border-radius: 50px;
+      padding: 6px 20px;
+      margin-bottom: 20px;
+      animation: fadeSlideDown 1s ease both;
+    }
+
+    .header-title {
+      font-family: 'Cinzel Decorative', cursive;
+      font-size: clamp(2.8rem, 8vw, 5.5rem);
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--pink) 0%, var(--blue) 50%, var(--gold) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.1;
+      animation: fadeSlideDown 1.2s ease both;
+      filter: drop-shadow(0 0 30px rgba(246,166,255,0.4));
+      text-shadow: none;
+    }
+
+    .header-stars-deco {
+      font-size: 1.4rem;
+      animation: fadeSlideDown 1.4s ease both;
+      margin: 10px 0;
+      letter-spacing: 0.5rem;
+    }
+
+    /* ===== INTRO SECTION ===== */
+    .intro-panel {
+      max-width: 700px;
+      margin: 50px auto 20px;
+      text-align: center;
+      background: linear-gradient(135deg, rgba(26,31,76,0.8), rgba(58,46,110,0.6));
+      border: 1px solid rgba(246,166,255,0.2);
+      border-radius: 30px;
+      padding: 45px 40px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 0 60px rgba(106,76,207,0.25), inset 0 0 40px rgba(246,166,255,0.03);
+      animation: fadeFloat 2s ease both;
+    }
+
+    .intro-saludo {
+      font-family: 'Cinzel Decorative', cursive;
+      font-size: 1.15rem;
+      color: var(--gold);
+      margin-bottom: 18px;
+      letter-spacing: 0.05em;
+    }
+
+    .intro-text {
+      font-size: 1.05rem;
+      line-height: 1.9;
+      color: rgba(255,255,255,0.88);
+      font-weight: 400;
+    }
+
+    .intro-text em {
+      color: var(--pink);
+      font-style: normal;
+      font-weight: 600;
+    }
+
+    .intro-divider {
+      width: 80px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--pink), transparent);
+      margin: 22px auto;
+      border-radius: 2px;
+    }
+
+    /* ===== SECTION TITLE ===== */
+    .section-title {
+      font-family: 'Cinzel Decorative', cursive;
+      text-align: center;
+      font-size: clamp(1.3rem, 3.5vw, 2rem);
+      margin: 70px 0 50px;
+      background: linear-gradient(90deg, var(--pink), var(--blue));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      position: relative;
+    }
+
+    .section-title::after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--pink), var(--blue));
+      margin: 14px auto 0;
+      border-radius: 2px;
+    }
+
+    /* ===== CHARACTER CARDS ===== */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 36px;
+      margin-top: 20px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 28px;
+      overflow: hidden;
+      border: 1px solid rgba(246,166,255,0.15);
+      backdrop-filter: blur(16px);
+      box-shadow:
+        0 8px 40px rgba(0,0,0,0.4),
+        0 0 0 1px rgba(255,255,255,0.05) inset;
+      animation: floatCard 6s ease-in-out infinite;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      opacity: 0;
+      transform: translateY(40px);
+    }
+
+    .card.visible {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.7s ease, transform 0.7s ease, box-shadow 0.4s ease;
+    }
+
+    .card:nth-child(1) { animation-delay: 0s; }
+    .card:nth-child(2) { animation-delay: -2s; }
+    .card:nth-child(3) { animation-delay: -4s; }
+
+    .card:hover {
+      transform: translateY(-12px) scale(1.02) !important;
+      box-shadow:
+        0 20px 60px rgba(106,76,207,0.4),
+        0 0 30px var(--glow-pink),
+        0 0 0 1px rgba(246,166,255,0.3) inset;
+    }
+
+    @keyframes floatCard {
+      0%, 100% { transform: translateY(0px); }
+      50%       { transform: translateY(-8px); }
+    }
+
+    /* Card accent bar */
+    .card-accent {
+      height: 4px;
+      width: 100%;
+    }
+
+    .card:nth-child(1) .card-accent {
+      background: linear-gradient(90deg, #F6A6FF, #FFD6F9, #A9E4FF);
+    }
+    .card:nth-child(2) .card-accent {
+      background: linear-gradient(90deg, #A9E4FF, #FFD6F9, #FFF3A8);
+    }
+    .card:nth-child(3) .card-accent {
+      background: linear-gradient(90deg, #FFF3A8, #F6A6FF, #A9E4FF);
+    }
+
+    .card-img-wrap {
+      position: relative;
+      height: 280px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: radial-gradient(ellipse at center, rgba(106,76,207,0.25) 0%, transparent 70%);
+    }
+
+    .card-img-wrap::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 80%, rgba(246,166,255,0.12) 0%, transparent 60%);
+    }
+
+    .card-img-glow {
+      position: absolute;
+      width: 180px; height: 180px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(246,166,255,0.2) 0%, transparent 70%);
+      animation: glowPulse 3s ease-in-out infinite;
+    }
+
+    @keyframes glowPulse {
+      0%, 100% { transform: scale(1); opacity: 0.6; }
+      50%       { transform: scale(1.2); opacity: 1; }
+    }
+
+    .card-img-wrap img {
+      position: relative;
+      z-index: 1;
+      max-height: 240px;
+      max-width: 85%;
+      object-fit: contain;
+      filter: drop-shadow(0 0 20px rgba(246,166,255,0.4));
+      transition: transform 0.4s ease, filter 0.4s ease;
+    }
+
+    .card:hover .card-img-wrap img {
+      transform: scale(1.05);
+      filter: drop-shadow(0 0 35px rgba(246,166,255,0.7));
+    }
+
+    /* Tiny orbiting star */
+    .orbit-star {
+      position: absolute;
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--gold);
+      box-shadow: 0 0 10px var(--gold);
+      animation: orbit 4s linear infinite;
+      z-index: 2;
+    }
+
+    .orbit-star:nth-child(2) {
+      width: 5px; height: 5px;
+      background: var(--pink);
+      box-shadow: 0 0 8px var(--pink);
+      animation: orbit 6s linear infinite reverse;
+    }
+
+    @keyframes orbit {
+      from { transform: rotate(0deg) translateX(110px) rotate(0deg); }
+      to   { transform: rotate(360deg) translateX(110px) rotate(-360deg); }
+    }
+
+    .card-body {
+      padding: 28px 28px 32px;
+    }
+
+    .card-name {
+      font-family: 'Cinzel Decorative', cursive;
+      font-size: 1.35rem;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .card:nth-child(1) .card-name { color: var(--pink); }
+    .card:nth-child(2) .card-name { color: var(--blue); }
+    .card:nth-child(3) .card-name { color: var(--gold); }
+
+    .card-name-text {
+      filter: drop-shadow(0 0 8px currentColor);
+    }
+
+    .card-text {
+      font-size: 0.95rem;
+      line-height: 1.85;
+      color: rgba(255,255,255,0.82);
+      font-weight: 400;
+    }
+
+    .card-text strong {
+      color: var(--lilac);
+      font-weight: 600;
+    }
+
+    /* ===== FOUNDATION SECTION ===== */
+    .foundation-section {
+      margin-top: 90px;
+      text-align: center;
+    }
+
+    .foundation-panel {
+      position: relative;
+      background: linear-gradient(135deg,
+        rgba(106,76,207,0.3) 0%,
+        rgba(58,46,110,0.5) 50%,
+        rgba(26,31,76,0.7) 100%
+      );
+      border: 1px solid rgba(246,166,255,0.25);
+      border-radius: 36px;
+      padding: 60px 40px;
+      overflow: hidden;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 0 80px rgba(106,76,207,0.3), 0 0 0 1px rgba(255,255,255,0.04) inset;
+    }
+
+    .foundation-panel::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: conic-gradient(from 0deg at 50% 50%,
+        transparent 0%,
+        rgba(246,166,255,0.05) 25%,
+        transparent 50%,
+        rgba(169,228,255,0.05) 75%,
+        transparent 100%
+      );
+      animation: rotateConic 20s linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes rotateConic {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+
+    .foundation-icon {
+      font-size: 2.5rem;
+      margin-bottom: 16px;
+      display: block;
+      animation: bounce 2s ease-in-out infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-8px); }
+    }
+
+    .foundation-title {
+      font-family: 'Cinzel Decorative', cursive;
+      font-size: clamp(1.1rem, 3vw, 1.6rem);
+      background: linear-gradient(90deg, var(--gold), var(--pink));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 16px;
+    }
+
+    .foundation-text {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.82);
+      line-height: 1.8;
+      max-width: 500px;
+      margin: 0 auto 36px;
+    }
+
+    .social-btns {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .social-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .social-btn:hover { transform: translateY(-6px) scale(1.08); }
+
+    .social-btn-circle {
+      width: 80px; height: 80px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(26,31,76,0.9), rgba(58,46,110,0.8));
+      border: 2px solid rgba(246,166,255,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 0 0 rgba(246,166,255,0.4);
+      transition: box-shadow 0.3s ease, border-color 0.3s ease;
+      overflow: hidden;
+    }
+
+    .social-btn:hover .social-btn-circle {
+      box-shadow: 0 0 25px rgba(246,166,255,0.6), 0 0 50px rgba(246,166,255,0.3);
+      border-color: rgba(246,166,255,0.7);
+    }
+
+    .social-btn-circle img {
+      width: 46px; height: 46px;
+      object-fit: contain;
+    }
+
+    .social-btn-label {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.7);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      transition: color 0.3s ease;
+    }
+
+    .social-btn:hover .social-btn-label { color: var(--pink); }
+
+    /* Fotos button special */
+    .social-btn.fotos .social-btn-circle {
+      background: linear-gradient(135deg, rgba(106,76,207,0.5), rgba(246,166,255,0.2));
+      border-color: rgba(255,243,168,0.4);
+    }
+
+    .social-btn.fotos:hover .social-btn-circle {
+      box-shadow: 0 0 25px rgba(255,243,168,0.6), 0 0 50px rgba(255,243,168,0.3);
+      border-color: rgba(255,243,168,0.8);
+    }
+
+    .social-btn.fotos:hover .social-btn-label { color: var(--gold); }
+
+    /* ===== FOOTER ===== */
+    footer {
+      text-align: center;
+      padding: 40px 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .footer-text {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.35);
+      letter-spacing: 0.05em;
+    }
+
+    .footer-stars {
+      font-size: 1rem;
+      letter-spacing: 0.4rem;
+      margin-bottom: 10px;
+    }
+
+    /* ===== SCROLL REVEAL ===== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ===== KEYFRAMES ===== */
+    @keyframes fadeSlideDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeFloat {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ===== CUSTOM CURSOR ===== */
+    body { cursor: none; }
+
+    #cursor {
+      position: fixed;
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(246,166,255,0.9), rgba(169,228,255,0.5));
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.1s ease, width 0.2s ease, height 0.2s ease;
+      box-shadow: 0 0 12px rgba(246,166,255,0.6);
+      mix-blend-mode: screen;
+    }
+
+    #cursor-trail {
+      position: fixed;
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      border: 1px solid rgba(246,166,255,0.4);
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: transform 0.25s ease, left 0.25s ease, top 0.25s ease;
+    }
+
+    /* ===== SHOOTING STAR ===== */
+    .shooting-star {
+      position: fixed;
+      width: 3px;
+      height: 3px;
+      background: white;
+      border-radius: 50%;
+      box-shadow: 0 0 6px white;
+      pointer-events: none;
+      z-index: 0;
+      animation: shoot linear forwards;
+    }
+
+    @keyframes shoot {
+      from { transform: translateX(0) translateY(0); opacity: 1; }
+      to   { transform: translateX(300px) translateY(150px); opacity: 0; }
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .cards-grid { grid-template-columns: 1fr; gap: 28px; }
+      .intro-panel { padding: 30px 24px; }
+      .foundation-panel { padding: 40px 24px; }
+      .card-img-wrap { height: 220px; }
+      body { cursor: auto; }
+      #cursor, #cursor-trail { display: none; }
+    }
+
+    @media (max-width: 480px) {
+      header { padding-top: 50px; }
+      .section-title { margin: 50px 0 36px; }
+    }
+
+    /* ===== SCROLL INDICATOR ===== */
+    .scroll-indicator {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      margin-top: 40px;
+      animation: fadeFloat 2s ease 1.5s both;
+    }
+
+    .scroll-indicator span {
+      font-size: 0.78rem;
+      letter-spacing: 0.15em;
+      color: rgba(255,255,255,0.4);
+      text-transform: uppercase;
+    }
+
+    .scroll-dot {
+      width: 6px; height: 30px;
+      border: 2px solid rgba(246,166,255,0.3);
+      border-radius: 3px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .scroll-dot::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 40%;
+      background: var(--pink);
+      border-radius: 3px;
+      animation: scrollDot 1.8s ease-in-out infinite;
+    }
+
+    @keyframes scrollDot {
+      0%   { top: 0; opacity: 1; }
+      80%  { top: 65%; opacity: 0.5; }
+      100% { top: 65%; opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Custom cursor -->
+  <div id="cursor"></div>
+  <div id="cursor-trail"></div>
+
+  <!-- Canvas for stars -->
+  <canvas id="starfield"></canvas>
+
+  <!-- Nebula overlays -->
+  <div class="nebula nebula-1"></div>
+  <div class="nebula nebula-2"></div>
+  <div class="nebula nebula-3"></div>
+
+  <!-- Floating particles -->
+  <div class="particles" id="particles"></div>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <div class="wrapper">
+
+    <!-- HEADER -->
+    <header>
+      <div class="header-badge">✦ Fundación Empoderarte ✦</div>
+      <h1 class="header-title">Pandora</h1>
+      <p class="header-stars-deco">✨ ⭐ ✨</p>
+
+      <div class="scroll-indicator">
+        <div class="scroll-dot"></div>
+        <span>descubre</span>
+      </div>
+    </header>
+
+    <!-- INTRO PANEL -->
+    <div class="intro-panel reveal">
+      <p class="intro-saludo">✦ Querida GranDiosa ✦</p>
+      <div class="intro-divider"></div>
+      <p class="intro-text">
+        Te presentamos a quienes te acompañarán en esta
+        <em>aventura por el mundo de Pandora</em>.<br><br>
+        Ellas estarán contigo en cada paso del camino,
+        guiándote mientras descubres cosas nuevas sobre ti.
+      </p>
+    </div>
+
+    <!-- CHARACTERS SECTION -->
+    <h2 class="section-title reveal">Tus Compañeras de Aventura</h2>
+
+    <div class="cards-grid">
+
+      <!-- CARD 1: CECI -->
+      <div class="card">
+        <div class="card-accent"></div>
+        <div class="card-img-wrap">
+          <div class="card-img-glow"></div>
+          <div class="orbit-star"></div>
+          <div class="orbit-star"></div>
+          <img src="img/ceci.png" alt="Ceci – tu guía en la aventura" loading="lazy" />
+        </div>
+        <div class="card-body">
+          <h3 class="card-name">
+            <span>🌟</span>
+            <span class="card-name-text">Ceci</span>
+          </h3>
+          <p class="card-text">
+            ¡Hola! Soy Ceci. Tengo 13 años y, como tú, estoy descubriendo quién soy.<br><br>
+            A veces tengo preguntas, emociones nuevas y momentos en los que quiero entender mejor lo que me pasa.<br><br>
+            Si alguna vez te has sentido así… <strong>entonces tenemos mucho en común</strong>.<br><br>
+            En esta aventura estaré contigo para que descubramos juntas el poder que vive dentro de ti.
+          </p>
+        </div>
+      </div>
+
+      <!-- CARD 2: LUNA -->
+      <div class="card">
+        <div class="card-accent"></div>
+        <div class="card-img-wrap">
+          <div class="card-img-glow"></div>
+          <div class="orbit-star"></div>
+          <div class="orbit-star"></div>
+          <img src="img/luna.png" alt="Luna – la perrita loba" loading="lazy" />
+        </div>
+        <div class="card-body">
+          <h3 class="card-name">
+            <span>🐺</span>
+            <span class="card-name-text">Luna</span>
+          </h3>
+          <p class="card-text">
+            ¡Hola! Soy Luna. Soy una perrita loba y la mejor amiga de Ceci.<br><br>
+            Aparezco cuando aprendemos a escucharnos por dentro.<br><br>
+            Me gusta recordarte que tu intuición, tu calma y tu amor propio también son una <strong>gran fuerza</strong>.<br><br>
+            En este viaje caminaré a tu lado.
+          </p>
+        </div>
+      </div>
+
+      <!-- CARD 3: PANDORA -->
+      <div class="card">
+        <div class="card-accent"></div>
+        <div class="card-img-wrap">
+          <div class="card-img-glow"></div>
+          <div class="orbit-star"></div>
+          <div class="orbit-star"></div>
+          <img src="img/pandora.png" alt="Pandora – el mundo mágico" loading="lazy" />
+        </div>
+        <div class="card-body">
+          <h3 class="card-name">
+            <span>🌀</span>
+            <span class="card-name-text">Pandora</span>
+          </h3>
+          <p class="card-text">
+            Hola, soy Pandora. Soy el mundo donde comienza tu aventura.<br><br>
+            Tengo <strong>8 niveles</strong> que irás recorriendo paso a paso. Cada vez que avances me irás llenando de color, porque cada paso que das hace que este mundo cobre vida.<br><br>
+            Yo seré la voz que te guía en el camino y en cada nivel recibirás una <strong>insignia</strong> que te acercará a descubrir tu poder.
+          </p>
+        </div>
+      </div>
+
+    </div><!-- /cards-grid -->
+
+    <!-- FOUNDATION SECTION -->
+    <div class="foundation-section reveal">
+      <div class="foundation-panel">
+        <span class="foundation-icon">🌸</span>
+        <h2 class="foundation-title">GranDiosa, conoce sobre la<br>Fundación Empoderarte</h2>
+        <p class="foundation-text">
+          Queremos que conozcas más sobre la Fundación Empoderarte.<br>
+          Te invitamos a darle clic a los botones y conectar con nosotras.
+        </p>
+
+        <div class="social-btns">
+
+          <!-- Instagram -->
+          <a
+            href="https://www.instagram.com/empoderartefund?igsh=dDZ3azl0d2NkcWl5"
+            target="_blank"
+            rel="noopener"
+            class="social-btn"
+            aria-label="Instagram Empoderarte"
+          >
+            <div class="social-btn-circle">
+              <img src="img/instagram.png" alt="Instagram" />
+            </div>
+            <span class="social-btn-label">Instagram</span>
+          </a>
+
+          <!-- Facebook -->
+          <a
+            href="https://www.facebook.com/share/1CZw9kfbff/?mibextid=wwXIfr"
+            target="_blank"
+            rel="noopener"
+            class="social-btn"
+            aria-label="Facebook Empoderarte"
+          >
+            <div class="social-btn-circle">
+              <img src="img/facebook.png" alt="Facebook" />
+            </div>
+            <span class="social-btn-label">Facebook</span>
+          </a>
+
+          <!-- Fotos -->
+          <a
+            href="fotos.html"
+            class="social-btn fotos"
+            aria-label="Galería de fotos Empoderarte"
+          >
+            <div class="social-btn-circle">
+              <img src="img/fotos.png" alt="Galería Empoderarte" />
+            </div>
+            <span class="social-btn-label">Ingresa aquí</span>
+          </a>
+
+        </div>
+      </div>
+    </div><!-- /foundation-section -->
+
+  </div><!-- /wrapper -->
+
+  <!-- FOOTER -->
+  <footer>
+    <p class="footer-stars">✦ ✧ ✦ ✧ ✦</p>
+    <p class="footer-text">© Fundación Empoderarte · Hecho con amor para GranDiosas</p>
+  </footer>
+
+  <!-- ===== JAVASCRIPT ===== -->
+  <script>
+    // ── STARFIELD CANVAS ──────────────────────────────────
+    const canvas = document.getElementById('starfield');
+    const ctx = canvas.getContext('2d');
+    let stars = [];
+
+    function resize() {
+      canvas.width  = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
+    function initStars() {
+      stars = [];
+      const count = Math.floor((canvas.width * canvas.height) / 4000);
+      for (let i = 0; i < count; i++) {
+        stars.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          r: Math.random() * 1.6 + 0.2,
+          alpha: Math.random(),
+          delta: (Math.random() * 0.008 + 0.003) * (Math.random() < 0.5 ? 1 : -1),
+          color: ['#ffffff', '#F6A6FF', '#A9E4FF', '#FFF3A8'][Math.floor(Math.random() * 4)]
+        });
+      }
+    }
+
+    function drawStars() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      stars.forEach(s => {
+        s.alpha += s.delta;
+        if (s.alpha > 1 || s.alpha < 0) s.delta *= -1;
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fillStyle = s.color;
+        ctx.globalAlpha = Math.max(0, Math.min(1, s.alpha));
+        ctx.fill();
+        ctx.globalAlpha = 1;
+      });
+      requestAnimationFrame(drawStars);
+    }
+
+    window.addEventListener('resize', () => { resize(); initStars(); });
+    resize();
+    initStars();
+    drawStars();
+
+    // ── FLOATING PARTICLES ────────────────────────────────
+    const particlesEl = document.getElementById('particles');
+    const pColors = ['#F6A6FF', '#A9E4FF', '#FFD6F9', '#FFF3A8', '#ffffff'];
+
+    for (let i = 0; i < 30; i++) {
+      const p = document.createElement('div');
+      p.classList.add('particle');
+      const size = Math.random() * 5 + 2;
+      p.style.cssText = `
+        width: ${size}px;
+        height: ${size}px;
+        left: ${Math.random() * 100}%;
+        background: ${pColors[Math.floor(Math.random() * pColors.length)]};
+        animation-duration: ${Math.random() * 15 + 10}s;
+        animation-delay: ${Math.random() * 10}s;
+        filter: blur(${Math.random() > 0.5 ? '1px' : '0'});
+        box-shadow: 0 0 ${size * 2}px currentColor;
+      `;
+      particlesEl.appendChild(p);
+    }
+
+    // ── SHOOTING STARS ────────────────────────────────────
+    function spawnShootingStar() {
+      const star = document.createElement('div');
+      star.classList.add('shooting-star');
+      star.style.cssText = `
+        top: ${Math.random() * 60}%;
+        left: ${Math.random() * 60}%;
+        animation-duration: ${Math.random() * 1 + 0.8}s;
+      `;
+      document.body.appendChild(star);
+      setTimeout(() => star.remove(), 2000);
+    }
+
+    setInterval(spawnShootingStar, 3500);
+
+    // ── CUSTOM CURSOR ─────────────────────────────────────
+    const cursor      = document.getElementById('cursor');
+    const cursorTrail = document.getElementById('cursor-trail');
+
+    if (window.innerWidth > 768) {
+      let mx = 0, my = 0, tx = 0, ty = 0;
+
+      document.addEventListener('mousemove', e => {
+        mx = e.clientX; my = e.clientY;
+        cursor.style.left = mx + 'px';
+        cursor.style.top  = my + 'px';
+      });
+
+      function trailFollow() {
+        tx += (mx - tx) * 0.12;
+        ty += (my - ty) * 0.12;
+        cursorTrail.style.left = tx + 'px';
+        cursorTrail.style.top  = ty + 'px';
+        requestAnimationFrame(trailFollow);
+      }
+      trailFollow();
+
+      // Cursor grow on hover
+      document.querySelectorAll('a, button, .card').forEach(el => {
+        el.addEventListener('mouseenter', () => {
+          cursor.style.width = cursor.style.height = '26px';
+          cursor.style.background = 'radial-gradient(circle, rgba(255,243,168,0.9), rgba(246,166,255,0.6))';
+        });
+        el.addEventListener('mouseleave', () => {
+          cursor.style.width = cursor.style.height = '18px';
+          cursor.style.background = 'radial-gradient(circle, rgba(246,166,255,0.9), rgba(169,228,255,0.5))';
+        });
+      });
+    }
+
+    // ── SCROLL REVEAL ─────────────────────────────────────
+    const revealEls = document.querySelectorAll('.reveal, .card');
+
+    const revealObs = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          const delay = el.classList.contains('card')
+            ? Array.from(el.parentElement.children).indexOf(el) * 150
+            : 0;
+          setTimeout(() => el.classList.add('visible'), delay);
+          revealObs.unobserve(el);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    revealEls.forEach(el => revealObs.observe(el));
+
+    // ── PARALLAX NEBULA ───────────────────────────────────
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY;
+      document.querySelector('.nebula-1').style.transform = `translateY(${y * 0.08}px)`;
+      document.querySelector('.nebula-2').style.transform = `translateY(${-y * 0.05}px)`;
+    });
+  </script>
+
+</body>
+</html>

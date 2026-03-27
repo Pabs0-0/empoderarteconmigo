@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Pandora – Nivel 2 · Lección 2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --orange:   #F49A1C;
+    --orange2:  #F6AA4E;
+    --coral:    #F56C6C;
+    --fuchsia:  #E5488B;
+    --cream:    #F3EFE7;
+    --mint:     #9FD4C1;
+    --blue:     #6E92D8;
+    --plum:     #5A3B4F;
+    --white:    #FFFFFF;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background:
+      radial-gradient(circle at 20% 20%, rgba(228, 136, 7, 0.911) 0%, transparent 28%),
+      radial-gradient(circle at 80% 25%, rgba(229, 72, 98, 0.938) 0%, transparent 25%),
+      radial-gradient(circle at 50% 75%, rgba(240, 116, 1, 0.774) 0%, transparent 26%),
+      linear-gradient(180deg, #be4122 0%, #d16e1ce7 45%, #b31429 100%);
+    color: var(--plum);
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  /* ── CANVAS STARS ── */
+  #starsCanvas {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── FLOATING PARTICLES ── */
+  .particles {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .particle {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0;
+    animation: floatParticle linear infinite;
+  }
+
+  @keyframes floatParticle {
+    0%   { transform: translateY(110vh) scale(0); opacity: 0; }
+    10%  { opacity: 1; }
+    90%  { opacity: 0.6; }
+    100% { transform: translateY(-10vh) scale(1.3); opacity: 0; }
+  }
+
+  /* ── LAYOUT ── */
+  .page {
+    position: relative; z-index: 10;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 20px 80px;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    text-align: center;
+    padding: 60px 20px 40px;
+    overflow: visible;
+  }
+  .level-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, #F49A1C, #E5488B);
+    color: white;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 6px 18px;
+    border-radius: 50px;
+    margin-bottom: 28px;
+    box-shadow: 0 4px 20px rgba(244, 154, 28, 0.35);
+    animation: fadeDown 0.8s ease both;
+}
+
+  @keyframes badgePop {
+    from { opacity:0; transform: scale(0.6); }
+    to   { opacity:1; transform: scale(1); }
+  }
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.4rem, 8vw, 4.2rem);
+    line-height: 1.1;
+    color: var(--white);
+    text-shadow: 0 4px 30px #F49A1Ccc, 0 2px 8px #5A3B4F88;
+    animation: titleRise 1s ease both 0.2s;
+  }
+  .hero-title span { color: #F6AA4E; }
+  @keyframes titleRise {
+    from { opacity:0; transform: translateY(30px); }
+    to   { opacity:1; transform: translateY(0); }
+  }
+  .hero-subtitle {
+    font-size: 1.1rem;
+    color: #F3EFE7cc;
+    margin-top: 12px;
+    animation: titleRise 1s ease both 0.4s;
+  }
+  .hero-chars {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 10px;
+    margin-top: 30px;
+    animation: titleRise 1s ease both 0.5s;
+  }
+  .char-img {
+    width: clamp(100px, 20vw, 160px);
+    filter: drop-shadow(0 10px 30px #E5488B88);
+    animation: charFloat 4s ease-in-out infinite;
+  }
+  .char-img.luna { animation-delay: -2s; }
+  @keyframes charFloat {
+    0%,100% { transform: translateY(0px); }
+    50%      { transform: translateY(-14px); }
+  }
+  .insignia-hero {
+    width: clamp(80px,14vw,120px);
+    filter: drop-shadow(0 0 20px #F49A1Ccc);
+    animation: insigniaSpin 6s linear infinite, charFloat 3s ease-in-out infinite;
+  }
+
+  /* ── SECTION CARDS ── */
+  .card {
+    background: linear-gradient(135deg, #F3EFE7f5, #FFF8F2f5);
+    border-radius: 28px;
+    padding: 36px 40px;
+    margin-bottom: 28px;
+    box-shadow: 0 8px 40px #5A3B4F33, 0 2px 0 #F6AA4E55 inset;
+    position: relative;
+    overflow: hidden;
+    animation: cardIn 0.8s ease both;
+  }
+  .card::before {
+    content: '';
+    position: absolute; inset: 0;
+    border-radius: 28px;
+    border: 1.5px solid #F6AA4E44;
+    pointer-events: none;
+  }
+  @keyframes cardIn {
+    from { opacity:0; transform: translateY(40px); }
+    to   { opacity:1; transform: translateY(0); }
+  }
+  .card-accent {
+    background: linear-gradient(135deg, #F56C6Cf0, #E5488Bf0);
+    color: #fff;
+  }
+  .card-accent h2, .card-accent p, .card-accent li { color: #fff; }
+  .card-dark {
+    background: linear-gradient(135deg, #3d1220ee, #6b2035ee);
+    color: var(--cream);
+  }
+  .card-dark h2, .card-dark p { color: var(--cream); }
+
+  .card-label {
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--fuchsia);
+    margin-bottom: 8px;
+  }
+  .card-dark .card-label { color: #F6AA4E; }
+  .card-accent .card-label { color: #FFF3; }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.6rem, 5vw, 2.2rem);
+    line-height: 1.2;
+    margin-bottom: 14px;
+    color: #7d3d81;
+  }
+  p { font-size: 1.05rem; line-height: 1.75; margin-bottom: 10px; }
+  p:last-child { margin-bottom: 0; }
+
+  /* ── INSIGNIA BLOCK ── */
+  .insignia-block {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    background: linear-gradient(135deg, #F49A1C, #F56C6C, #E5488B);
+    border-radius: 24px;
+    padding: 30px 36px;
+    margin-bottom: 28px;
+    box-shadow: 0 8px 40px #F49A1C55;
+    color: #fff;
+    animation: cardIn 0.8s ease both 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .insignia-block::after {
+    content: '';
+    position: absolute;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+    top: -60px; right: -40px;
+  }
+  .insignia-img { width: 90px; flex-shrink: 0; filter: drop-shadow(0 0 16px #fff8); animation: charFloat 3s ease-in-out infinite; }
+  .insignia-text h2 { color: #fff; font-size: clamp(1.4rem, 4vw, 2rem); margin-bottom: 6px; }
+  .insignia-text p  { color: #ffffffdd; font-size: 1rem; line-height: 1.6; }
+
+  /* ── VIDEO CARD ── */
+  .video-card {
+    background: linear-gradient(135deg, #5A3B4F, #3d1220);
+    border-radius: 28px;
+    padding: 36px 40px;
+    margin-bottom: 28px;
+    box-shadow: 0 8px 40px #5A3B4F66;
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    animation: cardIn 0.8s ease both 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .video-card::before {
+    content: '';
+    position: absolute; inset: 0;
+    border-radius: 28px;
+    border: 1.5px solid #F49A1C44;
+  }
+
+  .video-card .card-label { color: #F6AA4E; }
+  .video-card h2 { color: var(--cream); font-size: clamp(1.3rem, 4vw, 1.8rem); }
+  .video-card p  { color: #F3EFE7bb; font-size: 0.98rem; }
+  .video-img-dec { position:absolute; right:16px; bottom:12px; width:70px; opacity:0.18; }
+
+  /* ── BUTTERFLY LIST ── */
+  .butterfly-list {
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-top: 18px;
+  }
+  @media(max-width:560px){ .butterfly-list { grid-template-columns: 1fr; } }
+  .butterfly-list li {
+    background: linear-gradient(135deg, #F49A1C18, #E5488B12);
+    border-radius: 16px;
+    padding: 14px 18px;
+    font-size: 0.97rem;
+    font-weight: 700;
+    color: var(--plum);
+    border: 1.5px solid #F49A1C44;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .bullet-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 1px; }
+
+  /* ── COMPANIONS CARD ── */
+  .companions {
+    display: flex;
+    gap: 24px;
+    align-items: flex-end;
+    background: linear-gradient(135deg, #F56C6C18, #E5488B14);
+    border-radius: 28px;
+    padding: 30px 36px;
+    margin-bottom: 28px;
+    border: 1.5px solid #F56C6C44;
+    animation: cardIn 0.8s ease both 0.4s;
+  }
+  .companions img.char { width: clamp(80px,16vw,130px); filter: drop-shadow(0 8px 20px #E5488B66); animation: charFloat 4s ease-in-out infinite; }
+  .companions img.char.c2 { animation-delay:-2s; }
+  .companions-text h2 { font-size: clamp(1.3rem, 4vw, 1.8rem); }
+  .companions-text p  { font-size: 0.98rem; }
+
+  /* ── DECORATIVE FLOATERS ── */
+  .floater {
+    position: absolute;
+    pointer-events: none;
+    animation: floatAround 6s ease-in-out infinite;
+    z-index: 5;
+    opacity: 0.75;
+  }
+  @keyframes floatAround {
+    0%,100% { transform: translateY(0) rotate(0deg); }
+    33%      { transform: translateY(-18px) rotate(8deg); }
+    66%      { transform: translateY(10px) rotate(-5deg); }
+  }
+
+  /* ── TEACHER ACCORDION ── */
+  .teacher-section {
+    margin-top: 50px;
+    border-top: 1px solid #F6AA4E33;
+    padding-top: 24px;
+  }
+  .teacher-toggle {
+    background: none; border: 1.5px solid #5A3B4F44;
+    border-radius: 12px; width: 100%;
+    padding: 14px 20px;
+    text-align: left;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.9rem; font-weight: 700;
+    color: #F3EFE7aa;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: space-between;
+    transition: background 0.2s;
+  }
+  .teacher-toggle:hover { background: #5A3B4F22; }
+  .teacher-toggle .arrow { transition: transform 0.3s; font-size: 1rem; }
+  .teacher-toggle.open .arrow { transform: rotate(180deg); }
+  .teacher-panel {
+    display: none;
+    background: #F3EFE7f5;
+    border-radius: 0 0 12px 12px;
+    padding: 24px 28px;
+    font-size: 0.95rem;
+    color: var(--plum);
+    line-height: 1.7;
+    border: 1.5px solid #5A3B4F22;
+    border-top: none;
+  }
+  .teacher-panel.open { display: block; }
+  .teacher-panel h3 { font-family:'Playfair Display', serif; font-size:1.2rem; margin-bottom: 8px; color: var(--fuchsia); }
+
+  /* scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: #1a0a0f; }
+  ::-webkit-scrollbar-thumb { background: #E5488B66; border-radius: 6px; }
+
+  /* responsive tweaks */
+  @media(max-width:600px){
+    .card, .video-card { padding: 24px 20px; }
+    .insignia-block { flex-direction: column; text-align: center; gap:16px; }
+    .video-card { flex-direction: column; }
+    .companions { flex-direction: column; align-items: center; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Stars canvas -->
+<canvas id="starsCanvas"></canvas>
+
+<!-- Particles -->
+<div class="particles" id="particles-container"></div>
+
+<div class="page">
+
+  <!-- ══ HERO ══ -->
+  <section class="hero">
+    <!-- floating decoratives around hero -->
+    <img src="img/estrella.png"     class="floater" style="width:36px;top:20px;left:8%;animation-duration:5s" alt=""/>
+    <img src="img/estrella.png"     class="floater" style="width:28px;top:55px;right:10%;animation-duration:4s;animation-delay:-1s" alt=""/>
+    <img src="img/estrella.png"      class="floater" style="width:48px;top:80px;left:3%;animation-duration:7s;animation-delay:-3s" alt=""/>
+    <img src="img/mariposa.png" class="floater" style="width:55px;top:10px;right:3%;animation-duration:6s;animation-delay:-2s" alt=""/>
+    <img src="img/mariposa.png"     class="floater" style="width:40px;top:140px;left:1%;animation-duration:6s;animation-delay:-1.5s" alt=""/>
+
+    <div class="level-badge"> Nivel 2 · Lección 2</div>
+    <h1 class="hero-title">El árbol de las<br/><span>emociones</span></h1>
+    <p class="hero-subtitle">Una experiencia mágica para reconocer y cuidar cómo te sientes</p>
+
+    <div class="hero-chars">
+      <img src="img/ceci_luna_calm.png" class="char-img" alt="Ceci"/>
+
+    </div>
+  </section>
+
+  <!-- ══ INSIGNIA BLOCK ══ -->
+  <div class="insignia-block">
+    <img src="img/badge2.png" class="insignia-img" alt="Insignia"/>
+    <div class="insignia-text">
+      <h2>🌟 ¡Estás cerca de tu insignia!</h2>
+      <p>GranDiosa, en este nivel has empezado a descubrir algo muy importante: reconocer tus emociones. Ya aprendiste que las emociones pueden sentirse en el cuerpo, que todas tienen algo que enseñarte y que escucharlas también es una forma de cuidarte.</p>
+      <p style="margin-top:10px;font-weight:800;">✨ Estás muy cerca de ganar tu insignia del Nivel 2.</p>
+    </div>
+  </div>
+
+  <!-- ══ INTRODUCCIÓN NARRATIVA ══ -->
+  <div class="card" style="animation-delay:0.1s">
+    <div class="card-label">Introducción</div>
+    <h2>Una nueva lección te espera 💛</h2>
+    <p>En esta nueva lección verás un video especial donde aprenderás a realizar el <strong>abrazo mariposa</strong>. Es una técnica sencilla y poderosa que puedes llevar contigo a todas partes.</p>
+    <p>Y también descubrirás cómo reaccionar cuando alguien cercano está pasando por un momento difícil. Porque cuidarte a ti misma y cuidar a quienes quieres son dos partes de la misma magia. 🦋</p>
+    <!-- decorative -->
+    <img src="img/cecifeliz.png" style="position:absolute;right:20px;bottom:16px;width:64px;opacity:0.18;pointer-events:none" alt=""/>
+    <img src="img/corazon.png" style="position:absolute;right:90px;top:20px;width:38px;opacity:0.14;pointer-events:none" alt=""/>
+  </div>
+
+  <!-- ══ VIDEO CARD ══ -->
+  <div class="video-card">
+    <div class="video-thumb" title="Ver video del abrazo mariposa">
+      <div class="play-btn"></div>
+    </div>
+    <div>
+      <div class="card-label">Video especial</div>
+      <h2>El abrazo mariposa 🦋</h2>
+      <p>Observa con atención y practica junto con el video. Después podrás usar esta técnica siempre que lo necesites.</p>
+    </div>
+    <img src="img/ceci_butterflies_around.png" class="video-img-dec" alt=""/>
+    <img src="img/mariposa.png" style="position:absolute;top:14px;right:18px;width:48px;opacity:0.22;pointer-events:none;animation:floatAround 5s ease-in-out infinite" alt=""/>
+  </div>
+
+  <!-- ══ BUTTERFLY USES ══ -->
+  <div class="card" style="animation-delay:0.2s;position:relative">
+    <img src="img/mariposa.png" style="position:absolute;top:30px;right:28px;width:72px;filter:drop-shadow(0 4px 12px #E5488B88);animation:floatAround 5s ease-in-out infinite" alt=""/>
+    <div class="card-label">El abrazo mariposa</div>
+    <h2>¿Cuándo puedes usarlo? 🤍</h2>
+    <p>El abrazo mariposa es una técnica que puedes usar para:</p>
+    <ul class="butterfly-list">
+      <li><span class="bullet-icon">🦋</span> Abrazarte a ti misma cuando te sientes triste o angustiada</li>
+      <li><span class="bullet-icon">💛</span> Calmar tu cuerpo cuando sientes muchas emociones</li>
+      <li><span class="bullet-icon">✨</span> Agradecer momentos que te hacen sentir bien</li>
+      <li><span class="bullet-icon">🌟</span> Recordarte que puedes cuidarte a ti misma</li>
+    </ul>
+  </div>
+
+  <!-- ══ EMOTIONS ROW ══ -->
+  <div class="card card-dark" style="animation-delay:0.25s">
+    <div class="card-label" style="color:#F6AA4E">Las emociones que ya conoces</div>
+    <h2 style="color:#F3EFE7">Todas las emociones importan 💖</h2>
+    <div style="display:flex;gap:18px;justify-content:center;flex-wrap:wrap;margin-top:18px">
+      <div style="text-align:center">
+        <img src="img/cecifeliz.png" style="width:62px;filter:drop-shadow(0 4px 12px #F49A1C88)" alt="Alegría"/>
+        <p style="color:#F6AA4E;font-size:0.8rem;margin-top:6px;font-weight:800">Alegría</p>
+      </div>
+      <div style="text-align:center">
+        <img src="img/ceci_crying.png" style="width:62px;filter:drop-shadow(0 4px 12px #6E92D888)" alt="Tristeza"/>
+        <p style="color:#9FD4C1;font-size:0.8rem;margin-top:6px;font-weight:800">Tristeza</p>
+      </div>
+      <div style="text-align:center">
+        <img src="img/ceci_stressed.png" style="width:62px;filter:drop-shadow(0 4px 12px #6E92D844)" alt="Miedo"/>
+        <p style="color:#6E92D8;font-size:0.8rem;margin-top:6px;font-weight:800">Miedo</p>
+      </div>
+      <div style="text-align:center">
+        <img src="img/ceci_upset.png" style="width:62px;filter:drop-shadow(0 4px 12px #F56C6C88)" alt="Enojo"/>
+        <p style="color:#F56C6C;font-size:0.8rem;margin-top:6px;font-weight:800">Enojo</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ ACOMPAÑAR ══ -->
+  <div class="companions">
+    <img src="img/ceci.png" class="char" alt="Ceci"/>
+    <div class="companions-text">
+      <div class="card-label" style="font-weight:700;color: #f5eff2">Acompañar a alguien</div>
+      <h2>¿Qué hago cuando alguien que quiero está mal?</h2>
+      <p>A veces una amiga, un familiar o alguien que quieres puede sentirse muy tenso, triste o preocupado. Aquí descubrirás algunas ideas sencillas para acompañar a esa persona desde el amor y la empatía.</p>
+      <p style="font-weight:700;color: #f5eff2;margin-top:10px">Cuidarte a ti y cuidar a quienes amas es parte de la magia del Nivel 2. ✨</p>
+    </div>
+    <img src="img/iconoluna.png" class="char c2" alt="Luna"/>
+  </div>
+
+  <!-- ══ CIERRE ══ -->
+  <div class="card card-accent" style="text-align:center;animation-delay:0.35s">
+    <img src="img/estrella.png" style="width:56px;margin-bottom:12px;filter:drop-shadow(0 0 12px #fff6)" alt=""/>
+    <h2 style="color:#fff;font-size:clamp(1.4rem,4vw,2rem)">¡Estás lista para empezar! 🌟</h2>
+    <p style="color:#ffffffdd">Este es un momento especial en tu viaje por el universo Pandora. Respira profundo, abre tu corazón y deja que la magia de las emociones te guíe.</p>
+    <div style="display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin-top:20px">
+      <img src="img/estrella.png" style="width:44px;filter:drop-shadow(0 0 8px #fff8)" alt=""/>
+      <img src="img/badge2.png"  style="width:52px;filter:drop-shadow(0 0 16px #fff8);animation:charFloat 3s ease-in-out infinite" alt=""/>
+      <img src="img/estrella.png" style="width:44px;filter:drop-shadow(0 0 8px #fff8);transform:scaleX(-1)" alt=""/>
+    </div>
+  </div>
+
+  <!-- ══ TEACHER SECTION ══ -->
+  <div class="teacher-section">
+    <button class="teacher-toggle" id="teacherBtn" onclick="toggleTeacher()">
+      <span>📚 Espacio para docentes – Valor académico de esta actividad</span>
+      <span class="arrow">▾</span>
+    </button>
+    <div class="teacher-panel" id="teacherPanel">
+      <h3>Valor pedagógico · Lección 2 · Nivel 2</h3>
+      <p>Esta introducción prepara a las estudiantes para una experiencia de aprendizaje socioemocional centrada en la autorregulación emocional y la empatía. El abrazo mariposa es una técnica validada dentro del enfoque EMDR y del trabajo de trauma sensoriomotor, adaptada aquí de forma lúdica y apropiada para la edad.</p>
+      <p style="margin-top:10px"><strong>Competencias trabajadas:</strong> reconocimiento emocional, autocuidado, empatía, regulación del sistema nervioso, habilidades de acompañamiento interpersonal.</p>
+    </div>
+  </div>
+
+</div><!-- /page -->
+
+<script>
+/* ─── STAR CANVAS ─── */
+(function(){
+  const canvas = document.getElementById('starsCanvas');
+  const ctx    = canvas.getContext('2d');
+  let W, H, stars = [];
+
+  function resize(){
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+
+  function initStars(){
+    stars = [];
+    const count = Math.floor((W * H) / 3200);
+    for(let i = 0; i < count; i++){
+      stars.push({
+        x: Math.random() * W,
+        y: Math.random() * H,
+        r: Math.random() * 1.6 + 0.3,
+        a: Math.random(),
+        da: (Math.random() - 0.5) * 0.008,
+        speed: Math.random() * 0.12 + 0.02
+      });
+    }
+  }
+
+  function draw(){
+    ctx.clearRect(0, 0, W, H);
+    stars.forEach(s => {
+      s.a += s.da;
+      if(s.a <= 0 || s.a >= 1) s.da *= -1;
+      s.y += s.speed;
+      if(s.y > H) { s.y = 0; s.x = Math.random() * W; }
+
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255,244,228,${s.a})`;
+      ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', () => { resize(); initStars(); });
+  resize(); initStars(); draw();
+})();
+
+/* ─── FLOATING PARTICLES ─── */
+(function(){
+  const container = document.getElementById('particles-container');
+  const colors = ['#F49A1C','#F56C6C','#E5488B','#9FD4C1','#F3EFE7'];
+  const total = 28;
+
+  for(let i = 0; i < total; i++){
+    const p  = document.createElement('div');
+    p.classList.add('particle');
+    const size  = Math.random() * 6 + 2;
+    const color = colors[Math.floor(Math.random() * colors.length)];
+    const left  = Math.random() * 100;
+    const dur   = Math.random() * 12 + 10;
+    const delay = Math.random() * -15;
+    Object.assign(p.style, {
+      width:    size + 'px',
+      height:   size + 'px',
+      left:     left + '%',
+      background: color,
+      animationDuration:  dur + 's',
+      animationDelay:     delay + 's'
+    });
+    container.appendChild(p);
+  }
+})();
+
+function toggleTeacher(){
+  const btn   = document.getElementById('teacherBtn');
+  const panel = document.getElementById('teacherPanel');
+  btn.classList.toggle('open');
+  panel.classList.toggle('open');
+}
+</script>
+</body>
+</html>

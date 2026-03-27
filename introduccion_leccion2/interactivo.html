@@ -1,0 +1,1291 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sopa de Letras - Empoderarte | Pandora</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --rose: #FF6B9D;
+    --rose-soft: #FFB3CC;
+    --violet: #C084FC;
+    --violet-soft: #E9D5FF;
+    --indigo: #818CF8;
+    --sky: #67E8F9;
+    --gold: #FCD34D;
+    --white: #FFFFFF;
+    --glass: rgba(255,255,255,0.12);
+    --glass-border: rgba(255,255,255,0.25);
+    --text-primary: #2D1B4E;
+    --text-white: rgba(255,255,255,0.95);
+    --shadow-float: 0 20px 60px rgba(192, 132, 252, 0.35);
+    --shadow-card: 0 8px 32px rgba(130,90,200,0.2);
+    --cell-size: clamp(38px, 6vw, 52px);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    min-height: 100vh;
+    font-family: 'Outfit', sans-serif;
+    background: #0d0520;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* ── BACKGROUND GALAXY ── */
+  .galaxy-bg {
+    position: fixed; inset: 0; z-index: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 20% 20%, rgba(139,92,246,0.35) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 80% at 80% 80%, rgba(236,72,153,0.25) 0%, transparent 60%),
+      radial-gradient(ellipse 100% 100% at 50% 50%, #1a0a35 0%, #0d0520 70%);
+  }
+
+  .stars-layer {
+    position: fixed; inset: 0; z-index: 0;
+    background-image:
+      radial-gradient(1px 1px at 10% 15%, rgba(255,255,255,0.9) 0%, transparent 100%),
+      radial-gradient(1px 1px at 25% 40%, rgba(255,255,255,0.7) 0%, transparent 100%),
+      radial-gradient(2px 2px at 35% 10%, rgba(255,220,255,0.8) 0%, transparent 100%),
+      radial-gradient(1px 1px at 50% 60%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 65% 25%, rgba(200,200,255,0.8) 0%, transparent 100%),
+      radial-gradient(2px 2px at 75% 70%, rgba(255,255,255,0.7) 0%, transparent 100%),
+      radial-gradient(1px 1px at 85% 45%, rgba(255,200,255,0.9) 0%, transparent 100%),
+      radial-gradient(1px 1px at 90% 85%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 15% 75%, rgba(255,255,255,0.8) 0%, transparent 100%),
+      radial-gradient(2px 2px at 45% 90%, rgba(200,180,255,0.7) 0%, transparent 100%),
+      radial-gradient(1px 1px at 55% 5%, rgba(255,255,255,0.9) 0%, transparent 100%),
+      radial-gradient(1px 1px at 70% 55%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 5% 50%, rgba(255,255,255,0.7) 0%, transparent 100%),
+      radial-gradient(2px 2px at 92% 15%, rgba(255,220,200,0.8) 0%, transparent 100%),
+      radial-gradient(1px 1px at 30% 85%, rgba(255,255,255,0.6) 0%, transparent 100%);
+  }
+
+  .nebula-1 {
+    position: fixed; width: 500px; height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(192,132,252,0.15) 0%, transparent 70%);
+    top: -100px; left: -100px; z-index: 0;
+    animation: nebulaDrift 18s ease-in-out infinite alternate;
+  }
+  .nebula-2 {
+    position: fixed; width: 400px; height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(236,72,153,0.12) 0%, transparent 70%);
+    bottom: -50px; right: -50px; z-index: 0;
+    animation: nebulaDrift 22s ease-in-out infinite alternate-reverse;
+  }
+
+  @keyframes nebulaDrift {
+    from { transform: scale(1) translate(0, 0); }
+    to   { transform: scale(1.15) translate(30px, -20px); }
+  }
+
+  /* ── LAYOUT ── */
+  .page-wrapper {
+    position: relative; z-index: 1;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 32px 20px 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 28px;
+  }
+
+  /* ── HEADER ── */
+  .header-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    animation: fadeSlideDown 0.7s ease both;
+  }
+  .header-logo span {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 900;
+    font-size: 1.4rem;
+    letter-spacing: 0.08em;
+    background: linear-gradient(135deg, #FF6B9D, #C084FC, #67E8F9);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-transform: uppercase;
+  }
+  .logo-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #FF6B9D, #C084FC);
+    box-shadow: 0 0 10px rgba(192,132,252,0.8);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.3); opacity: 0.7; }
+  }
+
+  /* ── INTRO CARD ── */
+  .intro-card {
+    width: 100%;
+    max-width: 780px;
+    background: linear-gradient(145deg, rgba(255,107,157,0.18), rgba(192,132,252,0.22), rgba(103,232,249,0.1));
+    border: 1.5px solid rgba(255,255,255,0.2);
+    border-radius: 32px;
+    padding: 32px 36px;
+    box-shadow: var(--shadow-float), inset 0 1px 0 rgba(255,255,255,0.15);
+    backdrop-filter: blur(20px);
+    position: relative;
+    overflow: hidden;
+    animation: fadeSlideDown 0.8s 0.1s ease both;
+  }
+
+  .intro-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #FF6B9D, #C084FC, #67E8F9, #FF6B9D);
+    background-size: 200% 100%;
+    animation: shimmer 3s linear infinite;
+    border-radius: 32px 32px 0 0;
+  }
+
+  @keyframes shimmer {
+    0% { background-position: 0% 0%; }
+    100% { background-position: 200% 0%; }
+  }
+
+  .intro-deco {
+    position: absolute;
+    top: -20px; right: -20px;
+    width: 100px; height: 100px;
+    opacity: 0.4;
+    pointer-events: none;
+  }
+
+  .intro-deco-2 {
+    position: absolute;
+    bottom: -15px; left: -10px;
+    width: 70px; height: 70px;
+    opacity: 0.3;
+    pointer-events: none;
+    transform: rotate(30deg);
+  }
+
+  .intro-hint {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,107,157,0.2);
+    border: 1px solid rgba(255,107,157,0.35);
+    border-radius: 50px;
+    padding: 6px 16px;
+    margin-bottom: 16px;
+  }
+  .intro-hint span {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    font-size: 0.78rem;
+    color: #FFB3CC;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .intro-hint-icon {
+    width: 16px; height: 16px;
+    background: linear-gradient(135deg, #FF6B9D, #C084FC);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 9px;
+    flex-shrink: 0;
+  }
+
+  .intro-text {
+    font-family: 'Nunito', sans-serif;
+    font-size: clamp(0.95rem, 2.2vw, 1.1rem);
+    font-weight: 600;
+    color: rgba(255,255,255,0.92);
+    line-height: 1.7;
+  }
+
+  .intro-text em {
+    font-style: normal;
+    color: #FCD34D;
+    font-weight: 800;
+  }
+
+  /* ── CECI CHARACTER ── */
+  .ceci-container {
+    position: absolute;
+    right: -10px;
+    bottom: -10px;
+    width: 110px;
+    pointer-events: none;
+    filter: drop-shadow(0 8px 20px rgba(192,132,252,0.5));
+    animation: ceciFloat 4s ease-in-out infinite;
+  }
+
+  @keyframes ceciFloat {
+    0%, 100% { transform: translateY(0) rotate(-2deg); }
+    50% { transform: translateY(-10px) rotate(2deg); }
+  }
+
+  /* ── GAME TITLE ── */
+  .game-title {
+    text-align: center;
+    animation: fadeSlideDown 0.9s 0.2s ease both;
+  }
+  .game-title h2 {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 900;
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    background: linear-gradient(135deg, #FCD34D 0%, #FF6B9D 40%, #C084FC 80%, #67E8F9 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -0.01em;
+    position: relative;
+  }
+  .game-title h2::after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, #FF6B9D, #C084FC);
+    border-radius: 2px;
+    margin: 8px auto 0;
+  }
+
+  /* ── GAME AREA ── */
+  .game-area {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    justify-content: center;
+    width: 100%;
+    animation: fadeSlideUp 1s 0.4s ease both;
+  }
+
+  /* ── GRID ── */
+  .grid-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .word-grid {
+    display: grid;
+    grid-template-columns: repeat(8, var(--cell-size));
+    gap: 4px;
+    padding: 20px;
+    background: rgba(255,255,255,0.06);
+    border: 1.5px solid rgba(255,255,255,0.14);
+    border-radius: 24px;
+    box-shadow: var(--shadow-card), inset 0 1px 0 rgba(255,255,255,0.08);
+    backdrop-filter: blur(10px);
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  .cell {
+    width: var(--cell-size);
+    height: var(--cell-size);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    font-size: clamp(0.9rem, 2vw, 1.15rem);
+    color: rgba(255,255,255,0.75);
+    cursor: pointer;
+    transition: all 0.18s ease;
+    background: rgba(255,255,255,0.04);
+    border: 1.5px solid rgba(255,255,255,0.07);
+    position: relative;
+    letter-spacing: 0.02em;
+  }
+
+  .cell:hover {
+    background: rgba(192,132,252,0.2);
+    border-color: rgba(192,132,252,0.5);
+    color: #fff;
+    transform: scale(1.08);
+    box-shadow: 0 0 12px rgba(192,132,252,0.4);
+  }
+
+  .cell.selected {
+    background: rgba(255,107,157,0.3);
+    border-color: rgba(255,107,157,0.7);
+    color: #fff;
+    transform: scale(1.06);
+    box-shadow: 0 0 14px rgba(255,107,157,0.5);
+  }
+
+  .cell.found-JULI   { background: linear-gradient(135deg,rgba(252,211,77,0.45),rgba(255,107,157,0.3)); border-color: #FCD34D; color: #FCD34D; cursor: default; animation: cellPop 0.4s ease; }
+  .cell.found-ROXI   { background: linear-gradient(135deg,rgba(255,107,157,0.45),rgba(192,132,252,0.3)); border-color: #FF6B9D; color: #FFB3CC; cursor: default; animation: cellPop 0.4s ease; }
+  .cell.found-TATI   { background: linear-gradient(135deg,rgba(103,232,249,0.4),rgba(129,140,248,0.3)); border-color: #67E8F9; color: #67E8F9; cursor: default; animation: cellPop 0.4s ease; }
+  .cell.found-LUNA   { background: linear-gradient(135deg,rgba(192,132,252,0.45),rgba(129,140,248,0.3)); border-color: #C084FC; color: #C084FC; cursor: default; animation: cellPop 0.4s ease; }
+
+  .cell.found-JULI:hover, .cell.found-ROXI:hover,
+  .cell.found-TATI:hover, .cell.found-LUNA:hover {
+    transform: none;
+  }
+
+  @keyframes cellPop {
+    0% { transform: scale(0.85); opacity: 0.5; }
+    60% { transform: scale(1.15); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    min-width: 200px;
+  }
+
+  /* Timer */
+  .timer-card {
+    background: linear-gradient(145deg, rgba(252,211,77,0.15), rgba(255,107,157,0.12));
+    border: 1.5px solid rgba(252,211,77,0.3);
+    border-radius: 20px;
+    padding: 18px 24px;
+    text-align: center;
+    box-shadow: 0 8px 24px rgba(252,211,77,0.15);
+    backdrop-filter: blur(10px);
+  }
+  .timer-label {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(252,211,77,0.75);
+    margin-bottom: 6px;
+  }
+  .timer-display {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 900;
+    font-size: 2.4rem;
+    color: #FCD34D;
+    letter-spacing: 0.05em;
+    text-shadow: 0 0 20px rgba(252,211,77,0.6);
+    line-height: 1;
+  }
+
+  /* Word list */
+  .wordlist-card {
+    background: rgba(255,255,255,0.06);
+    border: 1.5px solid rgba(255,255,255,0.12);
+    border-radius: 20px;
+    padding: 20px 22px;
+    backdrop-filter: blur(10px);
+    box-shadow: var(--shadow-card);
+  }
+  .wordlist-title {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: rgba(192,132,252,0.9);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .wordlist-title::before {
+    content: '';
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: #C084FC;
+    box-shadow: 0 0 8px rgba(192,132,252,0.8);
+    flex-shrink: 0;
+  }
+
+  .word-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 12px;
+    border-radius: 12px;
+    margin-bottom: 6px;
+    transition: all 0.3s ease;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .word-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+  }
+  .word-item[data-word="JULI"] .word-dot { background: #FCD34D; box-shadow: 0 0 6px rgba(252,211,77,0.6); }
+  .word-item[data-word="ROXI"] .word-dot { background: #FF6B9D; box-shadow: 0 0 6px rgba(255,107,157,0.6); }
+  .word-item[data-word="TATI"] .word-dot { background: #67E8F9; box-shadow: 0 0 6px rgba(103,232,249,0.6); }
+  .word-item[data-word="LUNA"] .word-dot { background: #C084FC; box-shadow: 0 0 6px rgba(192,132,252,0.6); }
+
+  .word-name {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: rgba(255,255,255,0.8);
+    letter-spacing: 0.06em;
+    transition: all 0.3s ease;
+  }
+
+  .word-check {
+    margin-left: auto;
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    border: 2px solid rgba(255,255,255,0.15);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px;
+    color: transparent;
+    transition: all 0.4s ease;
+    flex-shrink: 0;
+  }
+
+  .word-item.found .word-name {
+    text-decoration: line-through;
+    opacity: 0.55;
+  }
+  .word-item.found .word-check {
+    border-color: #a3e635;
+    background: rgba(163,230,53,0.2);
+    color: #a3e635;
+    content: '✓';
+  }
+  .word-item[data-word="JULI"].found { background: rgba(252,211,77,0.1); border-color: rgba(252,211,77,0.3); }
+  .word-item[data-word="ROXI"].found { background: rgba(255,107,157,0.1); border-color: rgba(255,107,157,0.3); }
+  .word-item[data-word="TATI"].found { background: rgba(103,232,249,0.1); border-color: rgba(103,232,249,0.3); }
+  .word-item[data-word="LUNA"].found { background: rgba(192,132,252,0.1); border-color: rgba(192,132,252,0.3); }
+
+  /* Progress bar */
+  .progress-bar-wrap {
+    background: rgba(255,255,255,0.08);
+    border-radius: 10px;
+    height: 8px;
+    margin-top: 16px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #FF6B9D, #C084FC, #67E8F9);
+    border-radius: 10px;
+    transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 0 10px rgba(192,132,252,0.6);
+  }
+  .progress-label {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-top: 8px;
+    text-align: center;
+  }
+
+  /* ── TIMEOUT OVERLAY ── */
+  .timeout-overlay {
+    position: fixed; inset: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(13, 5, 32, 0.88);
+    backdrop-filter: blur(8px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+  }
+  .timeout-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+  .timeout-card {
+    background: linear-gradient(145deg, rgba(129,140,248,0.25), rgba(192,132,252,0.3), rgba(103,232,249,0.12));
+    border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 36px;
+    padding: 48px 52px;
+    text-align: center;
+    box-shadow: 0 30px 80px rgba(129,140,248,0.4), inset 0 1px 0 rgba(255,255,255,0.15);
+    backdrop-filter: blur(20px);
+    max-width: 460px;
+    width: 90%;
+    transform: scale(0.8) translateY(30px);
+    transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    overflow: hidden;
+  }
+  .timeout-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #818CF8, #C084FC, #67E8F9, #818CF8);
+    background-size: 200% 100%;
+    animation: shimmer 2s linear infinite;
+    border-radius: 36px 36px 0 0;
+  }
+  .timeout-overlay.active .timeout-card {
+    transform: scale(1) translateY(0);
+  }
+  .timeout-icon {
+    width: 64px; height: 64px;
+    background: linear-gradient(135deg, rgba(129,140,248,0.3), rgba(192,132,252,0.3));
+    border: 2px solid rgba(129,140,248,0.5);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 20px;
+    box-shadow: 0 0 24px rgba(129,140,248,0.4);
+  }
+  .timeout-title {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 900;
+    font-size: clamp(1.4rem, 4vw, 2rem);
+    color: rgba(255,255,255,0.95);
+    line-height: 1.2;
+    margin-bottom: 12px;
+    letter-spacing: -0.01em;
+  }
+  .timeout-title span {
+    background: linear-gradient(135deg, #818CF8, #C084FC);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .timeout-sub {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: rgba(255,255,255,0.65);
+    margin-bottom: 28px;
+    line-height: 1.5;
+  }
+
+  /* Timer urgency state — turns red in last 30s */
+  .timer-display.urgent {
+    color: #f87171;
+    text-shadow: 0 0 20px rgba(248,113,113,0.7);
+    animation: timerPulse 1s ease-in-out infinite;
+  }
+  @keyframes timerPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+  }
+  .celebration-overlay {
+    position: fixed; inset: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(13, 5, 32, 0.82);
+    backdrop-filter: blur(8px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+  }
+  .celebration-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .celebration-card {
+    background: linear-gradient(145deg, rgba(255,107,157,0.25), rgba(192,132,252,0.3), rgba(103,232,249,0.15));
+    border: 2px solid rgba(255,255,255,0.25);
+    border-radius: 36px;
+    padding: 48px 52px;
+    text-align: center;
+    box-shadow: 0 30px 80px rgba(192,132,252,0.5), inset 0 1px 0 rgba(255,255,255,0.2);
+    backdrop-filter: blur(20px);
+    max-width: 480px;
+    width: 90%;
+    transform: scale(0.8) translateY(30px);
+    transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    overflow: hidden;
+  }
+  .celebration-overlay.active .celebration-card {
+    transform: scale(1) translateY(0);
+  }
+  .celebration-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #FCD34D, #FF6B9D, #C084FC, #67E8F9, #FCD34D);
+    background-size: 200% 100%;
+    animation: shimmer 2s linear infinite;
+    border-radius: 36px 36px 0 0;
+  }
+
+  .celebration-stars {
+    display: flex; gap: 8px; justify-content: center; margin-bottom: 20px;
+  }
+  .star-icon {
+    width: 36px; height: 36px;
+    background: linear-gradient(135deg, #FCD34D, #FF6B9D);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    box-shadow: 0 0 20px rgba(252,211,77,0.6);
+    animation: starSpin 3s linear infinite;
+  }
+  .star-icon:nth-child(2) { animation-delay: -1s; background: linear-gradient(135deg, #C084FC, #67E8F9); }
+  .star-icon:nth-child(3) { animation-delay: -2s; background: linear-gradient(135deg, #FF6B9D, #FCD34D); }
+
+  @keyframes starSpin {
+    0% { transform: rotate(0deg) scale(1); }
+    50% { transform: rotate(180deg) scale(1.15); }
+    100% { transform: rotate(360deg) scale(1); }
+  }
+
+  .celebration-title {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 900;
+    font-size: clamp(1.8rem, 5vw, 2.6rem);
+    background: linear-gradient(135deg, #FCD34D, #FF6B9D, #C084FC);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.1;
+    margin-bottom: 12px;
+    letter-spacing: -0.02em;
+  }
+
+  .celebration-sub {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: rgba(255,255,255,0.8);
+    margin-bottom: 24px;
+    line-height: 1.5;
+  }
+
+  .celebration-time {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(252,211,77,0.15);
+    border: 1px solid rgba(252,211,77,0.35);
+    border-radius: 50px;
+    padding: 8px 20px;
+    margin-bottom: 28px;
+  }
+  .celebration-time span {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    font-size: 0.9rem;
+    color: #FCD34D;
+    letter-spacing: 0.06em;
+  }
+
+  .btn-restart {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(135deg, #FF6B9D, #C084FC);
+    color: white;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    font-size: 1rem;
+    letter-spacing: 0.04em;
+    padding: 14px 32px;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 8px 24px rgba(255,107,157,0.4);
+  }
+  .btn-restart:hover {
+    transform: translateY(-3px) scale(1.04);
+    box-shadow: 0 12px 32px rgba(255,107,157,0.5);
+  }
+
+  /* ── CONFETTI PARTICLES ── */
+  .confetti-piece {
+    position: fixed;
+    width: 10px; height: 10px;
+    border-radius: 2px;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 101;
+    animation: confettiFall linear forwards;
+  }
+  @keyframes confettiFall {
+    0%   { opacity: 1; transform: translateY(-20px) rotate(0deg); }
+    100% { opacity: 0; transform: translateY(110vh) rotate(720deg); }
+  }
+
+  /* ── FLOATING STAR DECORATIONS ── */
+  .float-star {
+    position: fixed;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.18;
+    border-radius: 50%;
+  }
+  .float-star-1 {
+    width: 60px; height: 60px;
+    background: radial-gradient(circle, #FCD34D, transparent 70%);
+    top: 12%; left: 5%;
+    animation: starFloat 8s ease-in-out infinite;
+  }
+  .float-star-2 {
+    width: 40px; height: 40px;
+    background: radial-gradient(circle, #FF6B9D, transparent 70%);
+    top: 70%; left: 8%;
+    animation: starFloat 10s 2s ease-in-out infinite;
+  }
+  .float-star-3 {
+    width: 50px; height: 50px;
+    background: radial-gradient(circle, #67E8F9, transparent 70%);
+    top: 20%; right: 6%;
+    animation: starFloat 12s 1s ease-in-out infinite;
+  }
+  .float-star-4 {
+    width: 30px; height: 30px;
+    background: radial-gradient(circle, #C084FC, transparent 70%);
+    top: 80%; right: 10%;
+    animation: starFloat 9s 3s ease-in-out infinite;
+  }
+
+  @keyframes starFloat {
+    0%, 100% { transform: translateY(0) scale(1); opacity: 0.18; }
+    50% { transform: translateY(-20px) scale(1.2); opacity: 0.28; }
+  }
+
+  /* ── KEYFRAMES ── */
+  @keyframes fadeSlideDown {
+    from { opacity: 0; transform: translateY(-18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeSlideUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 680px) {
+    :root { --cell-size: 36px; }
+    .intro-card { padding: 24px 20px; }
+    .game-area { gap: 20px; }
+    .sidebar { flex-direction: row; flex-wrap: wrap; min-width: unset; width: 100%; }
+    .timer-card, .wordlist-card { flex: 1; min-width: 140px; }
+  }
+
+  /* ── CECI IMAGE — ajusta width/height aqui para cambiar el tamano ── */
+  .ceci {
+    width: 120px;   /* <-- cambia este valor para ajustar el ancho */
+    height: auto;   /* mantiene proporcion automaticamente */
+  }
+  .ceci-fallback {
+    width: 90px; height: 120px;
+    background: linear-gradient(135deg, rgba(255,107,157,0.4), rgba(192,132,252,0.4));
+    border-radius: 50% 50% 40% 40%;
+    display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
+    padding-bottom: 10px;
+    border: 2px solid rgba(255,255,255,0.2);
+  }
+
+  /* star decorative fallback */
+  .star-deco {
+    width: 80px; height: 80px;
+  }
+</style>
+</head>
+<body>
+
+<!-- BG LAYERS -->
+<div class="galaxy-bg"></div>
+<div class="stars-layer"></div>
+<div class="nebula-1"></div>
+<div class="nebula-2"></div>
+<div class="float-star float-star-1"></div>
+<div class="float-star float-star-2"></div>
+<div class="float-star float-star-3"></div>
+<div class="float-star float-star-4"></div>
+
+<div class="page-wrapper">
+
+  <!-- HEADER -->
+  <div class="header-logo">
+    <div class="logo-dot"></div>
+    <span>Empoderarte · Pandora</span>
+    <div class="logo-dot"></div>
+  </div>
+
+  <!-- INTRO CARD -->
+  <div class="intro-card">
+    <!-- Decorative stars (svg fallback if PNG not found) -->
+    <svg class="intro-deco star-deco" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M50 5 L61 35 L95 35 L68 57 L79 91 L50 70 L21 91 L32 57 L5 35 L39 35 Z"
+        fill="url(#starGrad1)" opacity="0.9"/>
+      <defs>
+        <linearGradient id="starGrad1" x1="0" y1="0" x2="100" y2="100">
+          <stop offset="0%" stop-color="#FCD34D"/>
+          <stop offset="100%" stop-color="#FF6B9D"/>
+        </linearGradient>
+      </defs>
+    </svg>
+
+    <svg class="intro-deco-2 star-deco" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M40 8 L46 28 L68 28 L51 42 L58 62 L40 50 L22 62 L29 42 L12 28 L34 28 Z"
+        fill="url(#starGrad2)" opacity="0.8"/>
+      <defs>
+        <linearGradient id="starGrad2" x1="0" y1="0" x2="80" y2="80">
+          <stop offset="0%" stop-color="#C084FC"/>
+          <stop offset="100%" stop-color="#67E8F9"/>
+        </linearGradient>
+      </defs>
+    </svg>
+
+    <div class="intro-hint">
+      <div class="intro-hint-icon">
+        <svg width="8" height="8" viewBox="0 0 8 8" fill="none"><circle cx="4" cy="4" r="4" fill="#fff"/></svg>
+      </div>
+      <span>Recuerda el chat de Ceci &mdash; Pagina 11</span>
+    </div>
+
+    <p class="intro-text">
+      Cuando <em>Ceci</em> descubrio que algo nuevo estaba pasando en su cuerpo, decidio escribirle a sus amigas.
+      Ahora encuentra en la sopa de letras los <em>nombres de quienes estaban en ese chat</em>
+      y el <em>nombre de su mascota</em>.
+    </p>
+
+    <!-- Ceci character -->
+    <div class="ceci-container">
+      <img src="/img/ceci.png" alt="Ceci" class="ceci"
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+      <div class="ceci-fallback" style="display:none">
+        <svg width="40" height="20" viewBox="0 0 40 20" fill="none">
+          <ellipse cx="20" cy="10" rx="18" ry="8" fill="rgba(255,107,157,0.6)"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- GAME TITLE -->
+  <div class="game-title">
+    <h2>Vamos a jugar Sopa de Letras</h2>
+  </div>
+
+  <!-- GAME AREA -->
+  <div class="game-area">
+
+    <!-- GRID -->
+    <div class="grid-wrapper">
+      <div class="word-grid" id="wordGrid"></div>
+    </div>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+
+      <!-- TIMER -->
+      <div class="timer-card">
+        <div class="timer-label">Tiempo restante</div>
+        <div class="timer-display" id="timerDisplay">05:00</div>
+      </div>
+
+      <!-- WORD LIST -->
+      <div class="wordlist-card">
+        <div class="wordlist-title">Encuentra</div>
+        <div id="wordList">
+          <div class="word-item" data-word="JULI">
+            <div class="word-dot"></div>
+            <span class="word-name">JULI</span>
+            <div class="word-check">
+              <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
+                <path d="M1 4L3.5 6.5L9 1.5" stroke="#a3e635" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </div>
+          <div class="word-item" data-word="ROXI">
+            <div class="word-dot"></div>
+            <span class="word-name">ROXI</span>
+            <div class="word-check">
+              <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
+                <path d="M1 4L3.5 6.5L9 1.5" stroke="#a3e635" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </div>
+          <div class="word-item" data-word="TATI">
+            <div class="word-dot"></div>
+            <span class="word-name">TATI</span>
+            <div class="word-check">
+              <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
+                <path d="M1 4L3.5 6.5L9 1.5" stroke="#a3e635" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </div>
+          <div class="word-item" data-word="LUNA">
+            <div class="word-dot"></div>
+            <span class="word-name">LUNA</span>
+            <div class="word-check">
+              <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
+                <path d="M1 4L3.5 6.5L9 1.5" stroke="#a3e635" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-fill" id="progressBar"></div>
+        </div>
+        <div class="progress-label" id="progressLabel">0 de 4 encontradas</div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<!-- TIMEOUT OVERLAY -->
+<div class="timeout-overlay" id="timeoutOverlay">
+  <div class="timeout-card">
+    <div class="timeout-icon">
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+        <circle cx="14" cy="14" r="12" stroke="#818CF8" stroke-width="2"/>
+        <path d="M14 8V14.5L17.5 18" stroke="#C084FC" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M11 3H17" stroke="#818CF8" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="timeout-title">Se acabo el tiempo<br><span>puedes intentarlo de nuevo</span></div>
+    <p class="timeout-sub">No te rindas, cada intento te acerca mas a encontrarlas todas</p>
+    <button class="btn-restart" onclick="restartGame()">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path d="M2 8C2 4.69 4.69 2 8 2C9.8 2 11.4 2.82 12.5 4.1" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+        <path d="M14 8C14 11.31 11.31 14 8 14C6.2 14 4.6 13.18 3.5 11.9" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+        <path d="M12.5 1.5L12.5 4.5L9.5 4.5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M3.5 11.5L3.5 14.5L6.5 14.5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Intentar de nuevo
+    </button>
+  </div>
+</div>
+
+<!-- CELEBRATION OVERLAY -->
+<div class="celebration-overlay" id="celebrationOverlay">
+  <div class="celebration-card">
+    <div class="celebration-stars">
+      <div class="star-icon">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+          <path d="M9 1L11.1 6.5H17L12.5 9.9L14.5 15.5L9 12L3.5 15.5L5.5 9.9L1 6.5H6.9L9 1Z" fill="white"/>
+        </svg>
+      </div>
+      <div class="star-icon">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+          <path d="M9 1L11.1 6.5H17L12.5 9.9L14.5 15.5L9 12L3.5 15.5L5.5 9.9L1 6.5H6.9L9 1Z" fill="white"/>
+        </svg>
+      </div>
+      <div class="star-icon">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+          <path d="M9 1L11.1 6.5H17L12.5 9.9L14.5 15.5L9 12L3.5 15.5L5.5 9.9L1 6.5H6.9L9 1Z" fill="white"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="celebration-title">Grandiosa<br>Lo lograste</div>
+    <p class="celebration-sub">
+      Encontraste a todas las amigas de Ceci y a su mascota<br>
+      Eres increible
+    </p>
+
+    <div class="celebration-time">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <circle cx="7" cy="7" r="6" stroke="#FCD34D" stroke-width="1.5"/>
+        <path d="M7 4V7.5L9 9" stroke="#FCD34D" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <span id="finalTime">Tu tiempo: 00:00</span>
+    </div>
+
+    <button class="btn-restart" onclick="restartGame()">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path d="M2 8C2 4.69 4.69 2 8 2C9.8 2 11.4 2.82 12.5 4.1" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+        <path d="M14 8C14 11.31 11.31 14 8 14C6.2 14 4.6 13.18 3.5 11.9" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+        <path d="M12.5 1.5L12.5 4.5L9.5 4.5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M3.5 11.5L3.5 14.5L6.5 14.5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Jugar de nuevo
+    </button>
+  </div>
+</div>
+
+<script>
+// ── GAME DATA ──
+const GRID = [
+  ['J','U','L','I','X','P','T','M'],
+  ['A','R','O','X','I','L','N','Q'],
+  ['L','T','V','K','A','M','U','S'],
+  ['H','I','T','A','T','A','R','D'],
+  ['P','N','O','L','U','N','A','E'],
+  ['C','M','R','S','Y','Q','B','F'],
+  ['I','G','H','J','K','L','P','O'],
+  ['Z','X','C','V','B','N','M','A']
+];
+
+const WORDS = {
+  JULI: { cells: [[0,0],[0,1],[0,2],[0,3]], found: false },
+  ROXI: { cells: [[1,1],[1,2],[1,3],[1,4]], found: false },
+  TATI: { cells: [[3,1],[3,2],[3,3],[3,4]], found: false },
+  LUNA: { cells: [[4,3],[4,4],[4,5],[4,6]], found: false }
+};
+
+// ── TIMER CONFIG ──
+const TIME_LIMIT = 5 * 60; // 5 minutos en segundos
+
+// ── STATE ──
+let selectedCells = [];
+let isSelecting = false;
+let foundCount = 0;
+let timerInterval = null;
+let secondsLeft = TIME_LIMIT;
+let gameActive = false;
+
+// ── BUILD GRID ──
+function buildGrid() {
+  const grid = document.getElementById('wordGrid');
+  grid.innerHTML = '';
+  for (let r = 0; r < 8; r++) {
+    for (let c = 0; c < 8; c++) {
+      const cell = document.createElement('div');
+      cell.className = 'cell';
+      cell.textContent = GRID[r][c];
+      cell.dataset.r = r;
+      cell.dataset.c = c;
+
+      cell.addEventListener('mousedown', onCellDown);
+      cell.addEventListener('mouseenter', onCellEnter);
+      cell.addEventListener('touchstart', onTouchStart, { passive: true });
+      cell.addEventListener('touchmove', onTouchMove, { passive: false });
+
+      grid.appendChild(cell);
+    }
+  }
+  document.addEventListener('mouseup', onMouseUp);
+  document.addEventListener('touchend', onTouchEnd, { passive: true });
+}
+
+function getCell(r, c) {
+  return document.querySelector(`.cell[data-r="${r}"][data-c="${c}"]`);
+}
+
+// ── SELECTION (blocked when game is inactive) ──
+function onCellDown(e) {
+  if (!gameActive) return;
+  e.preventDefault();
+  isSelecting = true;
+  selectedCells = [];
+  const r = +e.currentTarget.dataset.r;
+  const c = +e.currentTarget.dataset.c;
+  addToSelection(r, c);
+}
+
+function onCellEnter(e) {
+  if (!isSelecting || !gameActive) return;
+  const r = +e.currentTarget.dataset.r;
+  const c = +e.currentTarget.dataset.c;
+  addToSelection(r, c);
+}
+
+function addToSelection(r, c) {
+  const key = `${r},${c}`;
+  if (selectedCells.some(sc => sc.key === key)) return;
+  const cellEl = getCell(r, c);
+  if (cellEl && Array.from(cellEl.classList).some(cls => cls.startsWith('found-'))) return;
+
+  selectedCells.push({ r, c, key });
+  if (cellEl) cellEl.classList.add('selected');
+}
+
+function clearSelection() {
+  selectedCells.forEach(sc => {
+    const el = getCell(sc.r, sc.c);
+    if (el) el.classList.remove('selected');
+  });
+  selectedCells = [];
+}
+
+function onMouseUp() {
+  if (!isSelecting) return;
+  isSelecting = false;
+  checkWord();
+}
+
+// ── TOUCH SUPPORT ──
+function getTouchCell(e) {
+  const touch = e.touches[0];
+  const el = document.elementFromPoint(touch.clientX, touch.clientY);
+  return el && el.classList.contains('cell') ? el : null;
+}
+
+function onTouchStart(e) {
+  if (!gameActive) return;
+  isSelecting = true;
+  selectedCells = [];
+  const el = e.currentTarget;
+  addToSelection(+el.dataset.r, +el.dataset.c);
+}
+
+function onTouchMove(e) {
+  if (!isSelecting || !gameActive) return;
+  e.preventDefault();
+  const el = getTouchCell(e);
+  if (el) addToSelection(+el.dataset.r, +el.dataset.c);
+}
+
+function onTouchEnd() {
+  if (!isSelecting) return;
+  isSelecting = false;
+  checkWord();
+}
+
+// ── WORD CHECK ──
+function checkWord() {
+  const selected = selectedCells.map(sc => `${sc.r},${sc.c}`).join('|');
+
+  for (const [word, data] of Object.entries(WORDS)) {
+    if (data.found) continue;
+    const wordKey = data.cells.map(([r,c]) => `${r},${c}`).join('|');
+    const wordKeyRev = data.cells.slice().reverse().map(([r,c]) => `${r},${c}`).join('|');
+
+    if (selected === wordKey || selected === wordKeyRev) {
+      markWordFound(word, data.cells);
+      return;
+    }
+  }
+  clearSelection();
+}
+
+function markWordFound(word, cells) {
+  WORDS[word].found = true;
+  foundCount++;
+
+  cells.forEach(([r, c]) => {
+    const el = getCell(r, c);
+    if (el) {
+      el.classList.remove('selected');
+      el.classList.add(`found-${word}`);
+    }
+  });
+  selectedCells = [];
+
+  // Update word list
+  const item = document.querySelector(`.word-item[data-word="${word}"]`);
+  if (item) item.classList.add('found');
+
+  // Update progress
+  const pct = (foundCount / 4) * 100;
+  document.getElementById('progressBar').style.width = pct + '%';
+  document.getElementById('progressLabel').textContent = `${foundCount} de 4 encontradas`;
+
+  // Celebrate if all found
+  if (foundCount === 4) {
+    setTimeout(showCelebration, 600);
+  }
+}
+
+// ── TIMER (cuenta regresiva desde 5:00) ──
+function updateTimerDisplay() {
+  const m = String(Math.floor(secondsLeft / 60)).padStart(2, '0');
+  const s = String(secondsLeft % 60).padStart(2, '0');
+  const display = document.getElementById('timerDisplay');
+  display.textContent = `${m}:${s}`;
+
+  // Urgencia visual en los ultimos 30 segundos
+  if (secondsLeft <= 30) {
+    display.classList.add('urgent');
+  } else {
+    display.classList.remove('urgent');
+  }
+}
+
+function startTimer() {
+  secondsLeft = TIME_LIMIT;
+  gameActive = true;
+  updateTimerDisplay();
+
+  timerInterval = setInterval(() => {
+    secondsLeft--;
+    updateTimerDisplay();
+
+    if (secondsLeft <= 0) {
+      stopTimer();
+      showTimeout();
+    }
+  }, 1000);
+}
+
+function stopTimer() {
+  clearInterval(timerInterval);
+  gameActive = false;
+}
+
+function getElapsedString() {
+  const elapsed = TIME_LIMIT - secondsLeft;
+  const m = String(Math.floor(elapsed / 60)).padStart(2, '0');
+  const s = String(elapsed % 60).padStart(2, '0');
+  return `${m}:${s}`;
+}
+
+// ── TIMEOUT ──
+function showTimeout() {
+  document.getElementById('timeoutOverlay').classList.add('active');
+}
+
+// ── CELEBRATION ──
+function showCelebration() {
+  stopTimer();
+  document.getElementById('finalTime').textContent = `Tu tiempo: ${getElapsedString()}`;
+  document.getElementById('celebrationOverlay').classList.add('active');
+  spawnConfetti();
+}
+
+function spawnConfetti() {
+  const colors = ['#FCD34D','#FF6B9D','#C084FC','#67E8F9','#a3e635','#fff'];
+  for (let i = 0; i < 60; i++) {
+    setTimeout(() => {
+      const piece = document.createElement('div');
+      piece.className = 'confetti-piece';
+      piece.style.left = Math.random() * 100 + 'vw';
+      piece.style.top = '-20px';
+      piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+      piece.style.width = (6 + Math.random() * 8) + 'px';
+      piece.style.height = (6 + Math.random() * 8) + 'px';
+      piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+      piece.style.animationDuration = (1.5 + Math.random() * 2.5) + 's';
+      piece.style.animationDelay = '0s';
+      document.body.appendChild(piece);
+      setTimeout(() => piece.remove(), 4000);
+    }, i * 50);
+  }
+}
+
+// ── RESTART ──
+function restartGame() {
+  Object.keys(WORDS).forEach(w => WORDS[w].found = false);
+  foundCount = 0;
+  selectedCells = [];
+  isSelecting = false;
+
+  document.getElementById('celebrationOverlay').classList.remove('active');
+  document.getElementById('timeoutOverlay').classList.remove('active');
+  document.getElementById('progressBar').style.width = '0%';
+  document.getElementById('progressLabel').textContent = '0 de 4 encontradas';
+  document.getElementById('timerDisplay').classList.remove('urgent');
+
+  document.querySelectorAll('.word-item').forEach(el => el.classList.remove('found'));
+
+  stopTimer();
+  buildGrid();
+  startTimer();
+}
+
+// ── INIT ──
+buildGrid();
+startTimer();
+</script>
+</body>
+</html>
