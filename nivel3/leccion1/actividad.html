@@ -302,144 +302,257 @@
   }
 
   .ciclo-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-    gap: 20px;
     position: relative;
+    width: min(92vw, 860px);
+    aspect-ratio: 1 / 1;
+    margin: 0 auto;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow:
+      0 18px 60px rgba(126,19,34,0.18),
+      inset 0 0 0 14px rgba(241,238,231,0.55),
+      inset 0 0 0 18px rgba(244,178,74,0.12);
+    background: radial-gradient(circle at center, rgba(241,238,231,0.08) 0%, rgba(241,238,231,0.02) 55%, transparent 56%);
+    isolation: isolate;
   }
 
-  /* Centro del círculo */
   .ciclo-grid::before {
     content: '';
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100px;
-    height: 100px;
-    background: radial-gradient(circle, var(--crema) 40%, rgba(244,178,74,0.3) 100%);
+    inset: 18px;
     border-radius: 50%;
-    border: 3px solid rgba(244,178,74,0.5);
-    box-shadow:
-      0 0 0 6px rgba(241,238,231,0.8),
-      0 0 0 8px rgba(244,178,74,0.2),
-      0 8px 32px rgba(244,178,74,0.3);
-    z-index: 20;
-    animation: pulseCenter 3s ease-in-out infinite;
+    border: 1px solid rgba(255,255,255,0.35);
+    pointer-events: none;
+    z-index: 2;
   }
-  .ciclo-grid::after {
-    content: '♻';
+
+  .ciclo-centro {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 28px;
-    z-index: 21;
-    animation: spinSlow 12s linear infinite;
-    filter: drop-shadow(0 2px 4px rgba(126,19,34,0.3));
-  }
-  @keyframes pulseCenter {
-    0%,100% { box-shadow: 0 0 0 6px rgba(241,238,231,0.8), 0 0 0 8px rgba(244,178,74,0.2), 0 8px 32px rgba(244,178,74,0.3); }
-    50%      { box-shadow: 0 0 0 8px rgba(241,238,231,0.8), 0 0 0 12px rgba(244,178,74,0.3), 0 8px 48px rgba(244,178,74,0.5); }
-  }
-  @keyframes spinSlow {
-    from { transform: translate(-50%, -50%) rotate(0deg); }
-    to   { transform: translate(-50%, -50%) rotate(360deg); }
+    width: 240px;
+    height: 240px;
+    z-index: 30;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
-  /* ── FASE CARD ── */
-  .fase-card {
-    background: rgba(241,238,231,0.93);
-    border-radius: 28px;
-    padding: 24px 20px 20px;
-    position: relative;
-    overflow: hidden;
+  .ciclo-centro-ring {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 8px solid rgba(244,178,74,0.45);
     box-shadow:
-      0 6px 28px rgba(126,19,34,0.12),
-      inset 0 1px 0 rgba(255,255,255,0.9);
-    transition: box-shadow 0.3s, transform 0.2s;
-    border: 2px solid transparent;
+      0 0 0 12px rgba(241,238,231,0.78),
+      0 0 0 16px rgba(244,178,74,0.18),
+      0 10px 30px rgba(126,19,34,0.14);
+    animation: pulseCenter 3s ease-in-out infinite;
   }
-  .fase-card.drag-over {
-    transform: scale(1.02);
-    border-color: var(--dorado);
-    box-shadow: 0 8px 36px rgba(244,178,74,0.35), inset 0 1px 0 rgba(255,255,255,0.9);
+
+  .ciclo-centro-inner {
+    position: relative;
+    width: 138px;
+    height: 138px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #E5537B 0%, #C51722 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.7rem, 3vw, 2.1rem);
+    font-style: italic;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.35),
+      0 8px 20px rgba(126,19,34,0.22);
   }
+
+  .ciclo-mini-icon {
+    position: absolute;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.78);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    box-shadow: 0 4px 14px rgba(126,19,34,0.15);
+  }
+  .ciclo-mini-icon.i1 { top: 18px; left: 50%; transform: translateX(-50%); }
+  .ciclo-mini-icon.i2 { top: 50%; right: 18px; transform: translateY(-50%); }
+  .ciclo-mini-icon.i3 { bottom: 18px; left: 50%; transform: translateX(-50%); }
+  .ciclo-mini-icon.i4 { top: 50%; left: 18px; transform: translateY(-50%); }
+
+  @keyframes pulseCenter {
+    0%,100% {
+      box-shadow:
+        0 0 0 12px rgba(241,238,231,0.78),
+        0 0 0 16px rgba(244,178,74,0.18),
+        0 10px 30px rgba(126,19,34,0.14);
+    }
+    50% {
+      box-shadow:
+        0 0 0 16px rgba(241,238,231,0.78),
+        0 0 0 22px rgba(244,178,74,0.28),
+        0 14px 40px rgba(126,19,34,0.18);
+    }
+  }
+
+  /* ── FASES COMO CUADRANTES ── */
+  .fase-card {
+    position: absolute;
+    width: 50%;
+    height: 50%;
+    margin: 0;
+    border-radius: 0;
+    padding: 44px 34px 34px;
+    overflow: hidden;
+    box-shadow: none;
+    border: none;
+    transition: transform 0.25s, filter 0.25s, box-shadow 0.25s;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
   .fase-card::before {
     content: '';
     position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 6px;
-    border-radius: 28px 28px 0 0;
+    inset: 0;
+    border-radius: 0;
+    background:
+      radial-gradient(circle at top left, rgba(255,255,255,0.22) 0%, transparent 36%),
+      linear-gradient(180deg, rgba(255,255,255,0.08), transparent 40%);
+    pointer-events: none;
   }
-  .fase-card:nth-child(1) { --fase-color: #C51722; }
-  .fase-card:nth-child(2) { --fase-color: #E5537B; }
-  .fase-card:nth-child(3) { --fase-color: #E95A5F; }
-  .fase-card:nth-child(4) { --fase-color: #7E1322; }
-  .fase-card::before { background: var(--fase-color); }
+
+  .fase-card.drag-over {
+    transform: scale(1.02);
+    filter: brightness(1.05);
+    z-index: 25;
+    box-shadow: inset 0 0 0 3px rgba(255,255,255,0.35);
+  }
+
+  #card-menstrual {
+    top: 0;
+    left: 0;
+    background: linear-gradient(135deg, #C84F6B 0%, #B01833 100%);
+    padding: 97px 56px 34px 170px;
+    --fase-text: #FFF7F8;
+  }
+
+  #card-folicular {
+    top: 0;
+    right: 0;
+    background: linear-gradient(135deg, #F0AB16 0%, #F4B24A 100%);
+    padding: 97px 48px 34px 74px;
+    --fase-text: #7E1322;
+  }
+
+  #card-lutea {
+    bottom: 0;
+    left: 0;
+    background: linear-gradient(135deg, #A7BAD8 0%, #8DA7CA 100%);
+    padding: 44px 30px 104px 170px;
+    --fase-text: #5A3640;
+  }
+
+  #card-ovulacion {
+    bottom: 0;
+    right: 0;
+    background: linear-gradient(135deg, #D9A6CF 0%, #C78FC3 100%);
+    padding: 44px 48px 104px 30px;
+    --fase-text: #7E1322;
+  }
 
   .fase-card .corner-deco {
     position: absolute;
-    top: 14px;
-    right: 14px;
-    width: 44px;
-    height: 44px;
+    width: 52px;
+    height: 52px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 22px;
-    background: rgba(255,255,255,0.7);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    font-size: 24px;
+    background: rgba(255,255,255,0.74);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    z-index: 2;
   }
+
+  #card-menstrual .corner-deco { top: 34px; right: 34px; }
+  #card-folicular .corner-deco { top: 34px; left: 34px; }
+  #card-lutea .corner-deco { bottom: 34px; right: 34px; }
+  #card-ovulacion .corner-deco { bottom: 34px; left: 34px; }
+
   .fase-card h3 {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(1.1rem, 2.5vw, 1.4rem);
-    color: var(--vino);
-    margin-bottom: 8px;
-    padding-right: 50px;
+    font-size: clamp(1.15rem, 2.2vw, 1.55rem);
+    color: var(--fase-text);
+    margin-bottom: 10px;
+    line-height: 1.18;
+    position: relative;
+    z-index: 2;
   }
+
   .fase-card .fase-badge {
     display: inline-block;
-    background: var(--fase-color);
-    color: #fff;
-    font-size: 10px;
+    background: rgba(255,255,255,0.28);
+    color: var(--fase-text);
+    font-size: 11px;
     font-weight: 900;
-    letter-spacing: 1.5px;
+    letter-spacing: 1.4px;
     text-transform: uppercase;
-    padding: 3px 10px;
+    padding: 5px 12px;
     border-radius: 20px;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
+    position: relative;
+    z-index: 2;
+    width: fit-content;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.2);
   }
+
   .fase-card p.desc {
     font-size: 13px;
-    color: #6a404a;
-    line-height: 1.6;
-    margin-bottom: 16px;
+    color: var(--fase-text);
+    line-height: 1.65;
+    margin-bottom: 18px;
+    opacity: 0.95;
+    position: relative;
+    z-index: 2;
+    max-width: 82%;
   }
 
   /* Drop zone dentro de la fase */
   .drop-zone {
-    min-height: 56px;
-    background: rgba(255,255,255,0.5);
-    border: 2px dashed rgba(0,0,0,0.12);
-    border-radius: 16px;
+    max-width: 250px;
+    min-height: 78px;
+    background: rgba(255,255,255,0.22);
+    border: 2px dashed rgba(255,255,255,0.45);
+    border-radius: 18px;
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
-    padding: 10px 12px;
+    padding: 12px 14px;
     transition: background 0.3s, border-color 0.3s;
     position: relative;
     align-items: center;
+    margin-top: auto;
+    z-index: 2;
+    backdrop-filter: blur(3px);
   }
+
   .drop-zone.drag-over {
-    background: rgba(244,178,74,0.15);
+    background: rgba(255,255,255,0.34);
     border-color: var(--dorado);
   }
+
   .drop-zone .placeholder {
     font-size: 12px;
-    color: #aaa;
+    color: rgba(255,255,255,0.9);
     font-style: italic;
     pointer-events: none;
     width: 100%;
@@ -638,17 +751,89 @@
   }
 
   /* ── RESPONSIVE ── */
+  @media (max-width: 920px) and (min-width: 641px) {
+    .ciclo-grid {
+      width: min(95vw, 760px);
+    }
+    .ciclo-centro {
+      width: 210px;
+      height: 210px;
+    }
+    .ciclo-centro-inner {
+      width: 122px;
+      height: 122px;
+      font-size: 1.8rem;
+    }
+    #card-menstrual { padding: 48px 46px 28px 40px; }
+    #card-folicular { padding: 48px 40px 28px 62px; }
+    #card-lutea { padding: 40px 62px 46px 40px; }
+    #card-ovulacion { padding: 40px 40px 46px 62px; }
+    .fase-card h3 { font-size: 1.15rem; }
+    .fase-card p.desc { font-size: 12.5px; }
+    .drop-zone { min-height: 70px; }
+  }
+
   @media (max-width: 640px) {
     .ciclo-grid {
-      grid-template-columns: 1fr;
-      grid-template-rows: auto;
+      width: 100%;
+      aspect-ratio: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      border-radius: 0;
+      overflow: visible;
+      box-shadow: none;
+      background: none;
     }
-    .ciclo-grid::before, .ciclo-grid::after { display: none; }
-    .fase-card { border-radius: 20px; }
+    .ciclo-grid::before { display: none; }
+    .ciclo-centro { display: none; }
+
+    .fase-card {
+      position: relative;
+      width: 100%;
+      height: auto;
+      min-height: 230px;
+      border-radius: 22px;
+      padding: 24px 20px 20px;
+      box-shadow:
+        0 6px 28px rgba(126,19,34,0.12),
+        inset 0 1px 0 rgba(255,255,255,0.9);
+    }
+
+    #card-menstrual,
+    #card-folicular,
+    #card-lutea,
+    #card-ovulacion {
+      top: auto;
+      left: auto;
+      right: auto;
+      bottom: auto;
+      padding: 24px 20px 20px;
+    }
+
+    #card-menstrual .corner-deco,
+    #card-folicular .corner-deco,
+    #card-lutea .corner-deco,
+    #card-ovulacion .corner-deco {
+      top: 14px;
+      right: 14px;
+      left: auto;
+      bottom: auto;
+      width: 44px;
+      height: 44px;
+      font-size: 22px;
+    }
+
+    .drop-zone {
+      min-height: 56px;
+      margin-top: 12px;
+    }
+
     .ceci-header { width: 70px; top: 16px; }
     .luna-deco { display: none; }
     .instrucciones-card { padding: 24px 20px; }
   }
+
   @media (max-width: 900px) {
     .ceci-header { width: 90px; }
   }
@@ -712,7 +897,17 @@
 <div id="actividad-central">
   <div class="ciclo-grid">
 
-    <!-- FASE 1: Menstrual (arriba-izq) -->
+    <!-- centro decorativo -->
+    <div class="ciclo-centro" aria-hidden="true">
+      <div class="ciclo-centro-ring"></div>
+      <div class="ciclo-mini-icon i1">🩸</div>
+      <div class="ciclo-mini-icon i2">🌱</div>
+      <div class="ciclo-mini-icon i3">🌸</div>
+      <div class="ciclo-mini-icon i4">🌙</div>
+      <div class="ciclo-centro-inner">Fases</div>
+    </div>
+
+    <!-- FASE 1: Menstrual -->
     <div class="fase-card" id="card-menstrual">
       <div class="corner-deco">🩸</div>
       <span class="fase-badge">Fase 1</span>
@@ -723,7 +918,7 @@
       </div>
     </div>
 
-    <!-- FASE 2: Folicular (arriba-der) -->
+    <!-- FASE 2: Folicular -->
     <div class="fase-card" id="card-folicular">
       <div class="corner-deco">🌱</div>
       <span class="fase-badge">Fase 2</span>
@@ -734,24 +929,24 @@
       </div>
     </div>
 
-    <!-- FASE 3: Ovulación (abajo-izq) -->
-    <div class="fase-card" id="card-ovulacion">
-      <div class="corner-deco">🌸</div>
-      <span class="fase-badge">Fase 3</span>
-      <h3>Fase de Ovulación</h3>
-      <p class="desc">Es el momento del ciclo en el que el cuerpo tiene más energía y se siente más activo.</p>
-      <div class="drop-zone" id="zone-ovulacion" data-fase="ovulacion">
-        <span class="placeholder">Arrastra las palabras aquí</span>
-      </div>
-    </div>
-
-    <!-- FASE 4: Lútea (abajo-der) -->
+    <!-- FASE 4: Lútea -->
     <div class="fase-card" id="card-lutea">
       <div class="corner-deco">🌙</div>
       <span class="fase-badge">Fase 4</span>
       <h3>Fase Lútea</h3>
       <p class="desc">El cuerpo comienza a disminuir su energía y se prepara para iniciar un nuevo ciclo.</p>
       <div class="drop-zone" id="zone-lutea" data-fase="lutea">
+        <span class="placeholder">Arrastra las palabras aquí</span>
+      </div>
+    </div>
+
+    <!-- FASE 3: Ovulación -->
+    <div class="fase-card" id="card-ovulacion">
+      <div class="corner-deco">🌸</div>
+      <span class="fase-badge">Fase 3</span>
+      <h3>Fase de Ovulación</h3>
+      <p class="desc">Es el momento del ciclo en el que el cuerpo tiene más energía y se siente más activo.</p>
+      <div class="drop-zone" id="zone-ovulacion" data-fase="ovulacion">
         <span class="placeholder">Arrastra las palabras aquí</span>
       </div>
     </div>
@@ -853,6 +1048,7 @@ function onDragStart(e) {
 function onDragEnd(e) {
   this.classList.remove('dragging');
   document.querySelectorAll('.drop-zone').forEach(z => z.classList.remove('drag-over'));
+  document.querySelectorAll('.fase-card').forEach(c => c.classList.remove('drag-over'));
   document.getElementById('pool').classList.remove('drag-over');
 }
 
@@ -933,14 +1129,20 @@ function onTouchMove(e) {
   touchClone.style.top  = (t.clientY - touchOffY) + 'px';
   e.preventDefault();
 
-  // highlight zone under finger
   touchClone.style.display = 'none';
   const el = document.elementFromPoint(t.clientX, t.clientY);
   touchClone.style.display = '';
+
   document.querySelectorAll('.drop-zone').forEach(z => z.classList.remove('drag-over'));
+  document.querySelectorAll('.fase-card').forEach(c => c.classList.remove('drag-over'));
+
   if (el) {
     const zone = el.closest('.drop-zone');
-    if (zone) zone.classList.add('drag-over');
+    if (zone) {
+      zone.classList.add('drag-over');
+      const faseCard = zone.closest('.fase-card');
+      if (faseCard) faseCard.classList.add('drag-over');
+    }
   }
 }
 
@@ -954,6 +1156,7 @@ function onTouchEnd(e) {
   touchClone = null;
   touchCard.style.opacity = '1';
   document.querySelectorAll('.drop-zone').forEach(z => z.classList.remove('drag-over'));
+  document.querySelectorAll('.fase-card').forEach(c => c.classList.remove('drag-over'));
 
   if (el) {
     const zone = el.closest('.drop-zone');
@@ -973,13 +1176,11 @@ function procesarDrop(id, zone) {
   const fasePalabra = card.dataset.fase;
 
   if (faseDestino === fasePalabra) {
-    // ✅ Correcto
     card.classList.remove('wrong-flash');
     void card.offsetWidth;
     card.classList.add('correct');
     card.draggable = false;
 
-    // Remover placeholder si existe
     const ph = zone.querySelector('.placeholder');
     if (ph) ph.remove();
 
@@ -995,7 +1196,6 @@ function procesarDrop(id, zone) {
       setTimeout(mostrarFinal, 800);
     }
   } else {
-    // ❌ Incorrecto
     card.classList.add('wrong-flash');
     setTimeout(() => card.classList.remove('wrong-flash'), 600);
     showToast(mensajesIncorrectos[Math.floor(Math.random() * mensajesIncorrectos.length)]);
