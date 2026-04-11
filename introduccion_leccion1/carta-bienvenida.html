@@ -571,19 +571,17 @@
 
       <!-- ─────────────────────────────────────────────
            INSIGNIAS FLOTANTES ALREDEDOR DE LA CARTA
-           Para reemplazar imágenes: cambia cada src="badgeN.png"
-           por la ruta de tu PNG. Deben ser cuadradas o circulares.
       ────────────────────────────────────────────────── -->
       <div class="badges" aria-hidden="true">
-        <img src="badge1.png" class="badge badge1" alt="Insignia 1">
-        <img src="badge2.png" class="badge badge2" alt="Insignia 2">
-        <img src="badge3.png" class="badge badge3" alt="Insignia 3">
-        <img src="badge4.png" class="badge badge4" alt="Insignia 4">
-        <img src="badge5.png" class="badge badge5" alt="Insignia 5">
-        <img src="badge6.png" class="badge badge6" alt="Insignia 6">
-        <img src="badge7.png" class="badge badge7" alt="Insignia 7">
-        <img src="badge8.png" class="badge badge8" alt="Insignia 8">
-        <img src="badge9.png" class="badge badge9" alt="Insignia 9">
+        <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754355/badge1_xwiht1.png" class="badge badge1" alt="Insignia 1">
+        <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754356/badge2_rwlx1w.png" class="badge badge2" alt="Insignia 2">
+        <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754357/badge3_zimalv.png" class="badge badge3" alt="Insignia 3">
+        <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754357/badge4_ltkt8x.png" class="badge badge4" alt="Insignia 4">
+        <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754454/badge5_gxzrk7.png" class="badge badge5" alt="Insignia 5">
+        <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754454/badge6_xfnnhu.png" class="badge badge6" alt="Insignia 6">
+        <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754454/badge7_indzb7.png" class="badge badge7" alt="Insignia 7">
+        <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754455/badge8_ohzk4o.png" class="badge badge8" alt="Insignia 8">
+        <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754456/badge9_vatiow.png" class="badge badge9" alt="Insignia 9">
       </div>
 
       <!-- ─────────────────────────────────────────────
@@ -625,14 +623,13 @@
 
             <!-- ─────────────────────────────────────────
                  FIRMA CON IMAGEN DEL PERSONAJE
-                 Reemplaza src="personaje.png" por tu PNG.
             ──────────────────────────────────────────── -->
             <div class="signature">
               <div class="signature-text">
                 Atentamente:<br>Ceci y Luna ✨
               </div>
               <img
-                src="ceci.png"
+                src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754459/ceci_n0riyu.png"
                 class="character"
                 alt="Ceci y Luna"
               >
@@ -671,16 +668,16 @@
         return {
           x:       Math.random() * W,
           y:       Math.random() * H,
-          r:       Math.random() * 1.4 + 0.3,   // radio
-          alpha:   Math.random(),                  // opacidad actual
-          delta:   (Math.random() * 0.006 + 0.002) * (Math.random() < 0.5 ? 1 : -1), // velocidad parpadeo
-          speed:   Math.random() * 0.06 + 0.01,  // deriva lenta
+          r:       Math.random() * 1.4 + 0.3,
+          alpha:   Math.random(),
+          delta:   (Math.random() * 0.006 + 0.002) * (Math.random() < 0.5 ? 1 : -1),
+          speed:   Math.random() * 0.06 + 0.01,
         };
       }
 
       /* Inicializa las estrellas */
       function buildStars() {
-        const count = Math.floor((W * H) / 5000); // densidad adaptiva
+        const count = Math.floor((W * H) / 5000);
         stars = Array.from({ length: Math.min(count, 320) }, createStar);
       }
 
@@ -692,7 +689,7 @@
           if (s.alpha >= 1) { s.alpha = 1; s.delta *= -1; }
           if (s.alpha <= 0) { s.alpha = 0; s.delta *= -1; }
 
-          s.y -= s.speed; // deriva muy suave hacia arriba
+          s.y -= s.speed;
           if (s.y < -2) { s.y = H + 2; s.x = Math.random() * W; }
 
           ctx.beginPath();
@@ -719,9 +716,9 @@
       const paper  = document.querySelector('.letter-paper');
 
       function fillRings() {
-        bar.innerHTML = ''; // limpia anillos previos
-        const height    = paper.offsetHeight - 40; // alto disponible
-        const ringH     = 28;  // altura de cada anillo (px)
+        bar.innerHTML = '';
+        const height    = paper.offsetHeight - 40;
+        const ringH     = 28;
         const count     = Math.floor(height / ringH);
         for (let i = 0; i < count; i++) {
           const ring = document.createElement('div');
@@ -730,8 +727,7 @@
         }
       }
 
-      /* Espera a que el DOM esté pintado */
-      window.addEventListener('load',   fillRings);
+      window.addEventListener('load', fillRings);
       window.addEventListener('resize', fillRings);
     })();
 
@@ -769,7 +765,6 @@
       });
 
       letter.addEventListener('mousemove', (e) => {
-        /* actualiza posición de origen de destellos */
         letter._mx = e.clientX;
         letter._my = e.clientY;
       });
@@ -782,14 +777,10 @@
 
     /* =========================================================
        4. PLACEHOLDERS VISUALES PARA INSIGNIAS SIN IMAGEN
-          Cuando badge1.png … badge9.png no existen, muestra
-          un círculo degradado con un emoji representativo.
        ========================================================= */
     (function badgeFallbacks() {
-      /* Emojis decorativos para cada insignia */
       const emojis = ['⭐','🌙','✨','🔮','🌟','💫','🎯','🌈','💎'];
 
-      /* Paletas de color para cada insignia */
       const palettes = [
         ['#7B4FD4','#C084FC'], ['#2563EB','#93C5FD'], ['#DB2777','#F9A8D4'],
         ['#D97706','#FCD34D'], ['#059669','#6EE7B7'], ['#7C3AED','#C4B5FD'],
@@ -798,13 +789,11 @@
 
       document.querySelectorAll('.badge').forEach((img, i) => {
         img.addEventListener('error', function() {
-          /* Crea un canvas circular como placeholder */
           const size = 78;
           const c    = document.createElement('canvas');
           c.width    = size; c.height = size;
           const ctx  = c.getContext('2d');
 
-          /* Degradado de fondo */
           const grad = ctx.createRadialGradient(size*0.4, size*0.35, 4, size/2, size/2, size/2);
           grad.addColorStop(0, palettes[i][1]);
           grad.addColorStop(1, palettes[i][0]);
@@ -812,18 +801,15 @@
           ctx.fillStyle = grad;
           ctx.fill();
 
-          /* Emoji centrado */
           ctx.font = `${size * 0.42}px serif`;
           ctx.textAlign    = 'center';
           ctx.textBaseline = 'middle';
           ctx.fillText(emojis[i] || '✦', size/2, size/2 + 2);
 
-          /* Reemplaza el <img> roto por el canvas */
           this.style.display = 'none';
           const wrapper = this.parentNode;
           c.className    = this.className;
           c.style.cssText = this.style.cssText;
-          /* Hereda la misma posición y animación */
           c.style.position  = 'absolute';
           c.style.borderRadius = '50%';
           wrapper.insertBefore(c, this);
@@ -839,13 +825,11 @@
       const char = document.querySelector('.character');
       if (!char) return;
       char.addEventListener('error', function() {
-        /* Canvas circular con silueta de personaje simple */
         const size = 72;
         const c    = document.createElement('canvas');
         c.width    = size; c.height = size;
         const ctx  = c.getContext('2d');
 
-        /* Fondo degradado suave */
         const grad = ctx.createRadialGradient(size*0.4, size*0.3, 4, size/2, size/2, size/2);
         grad.addColorStop(0, '#F3E8FF');
         grad.addColorStop(1, '#C084FC');
@@ -853,7 +837,6 @@
         ctx.fillStyle = grad;
         ctx.fill();
 
-        /* Emoji de personaje */
         ctx.font = `${size * 0.48}px serif`;
         ctx.textAlign    = 'center';
         ctx.textBaseline = 'middle';
@@ -868,7 +851,6 @@
 
     /* =========================================================
        7. ESTRELLAS FIJAS BRILLANTES (generadas en el DOM)
-          Complementan el canvas con destellos más grandes
        ========================================================= */
     (function addTwinkleStars() {
       const NUM = 18;

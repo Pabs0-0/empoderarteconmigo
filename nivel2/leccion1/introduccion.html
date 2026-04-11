@@ -1,1220 +1,720 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Pandora · Nivel 2 · Lección 1</title>
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>El Viaje de Ceci — Nivel 2 · Lección 1 · El Árbol de las Emociones</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fredoka+One&display=swap" rel="stylesheet">
 <style>
   :root {
-    --orange: #F49A1C;
-    --orange-soft: #F6AA4E;
-    --coral: #F56C6C;
-    --fuchsia: #E5488B;
-    --cream: #F3EFE7;
-    --mint: #9FD4C1;
-    --blue: #6E92D8;
-    --plum: #5A3B4F;
-    --plum-light: #7a5368;
-    --white: #ffffff;
-    --gold: #FFDA6A;
-
-    --bg-deep: #140b22;
-    --bg-mid: #241235;
-    --bg-soft: #321a42;
-    --text-light: #f7eefb;
-    --text-soft: rgba(247,238,251,0.78);
+    --deep:   #7A3500;
+    --main:   #D4760A;
+    --accent: #E89830;
+    --light:  #FFF3E0;
+    --coral:  #FF7043;
+    --peach:  #FFAB76;
+    --rose:   #FF8A65;
+    --cream:  #FFF8F0;
+    --gold:   #FFD54F;
+    --warm-glow: rgba(232,152,48,0.55);
   }
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  html { scroll-behavior: smooth; }
+  * { margin:0; padding:0; box-sizing:border-box; }
 
   body {
     font-family: 'Nunito', sans-serif;
-    background:
-      radial-gradient(circle at 20% 20%, rgba(228, 136, 7, 0.911) 0%, transparent 28%),
-      radial-gradient(circle at 80% 25%, rgba(229, 72, 98, 0.938) 0%, transparent 25%),
-      radial-gradient(circle at 50% 75%, rgba(240, 116, 1, 0.774) 0%, transparent 26%),
-      linear-gradient(180deg, #be4122 0%, #d16e1ce7 45%, #b31429 100%);
-    color: var(--text-light);
+    background: #1A0A00;
+    color: #fff;
     overflow-x: hidden;
     min-height: 100vh;
   }
 
-  /* ── CANVAS STARS ── */
-  #starsCanvas {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: 0;
+  /* ── CANVAS ── */
+  #starfield {
+    position: fixed; top:0; left:0;
+    width:100%; height:100%;
+    z-index:0; pointer-events:none;
   }
 
-  /* ── FLOATING PARTICLES ── */
-  .particles {
-    position: fixed;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-    overflow: hidden;
+  /* ── WARM NEBULAE ── */
+  .neb {
+    position:fixed; border-radius:50%;
+    filter:blur(90px); opacity:.18;
+    z-index:0; pointer-events:none;
+    animation:nebWarm 9s ease-in-out infinite alternate;
   }
-  .particle {
-    position: absolute;
-    border-radius: 50%;
-    opacity: 0;
-    animation: floatParticle linear infinite;
-  }
-
-  @keyframes floatParticle {
-    0%   { transform: translateY(110vh) scale(0); opacity: 0; }
-    10%  { opacity: 1; }
-    90%  { opacity: 0.6; }
-    100% { transform: translateY(-10vh) scale(1.3); opacity: 0; }
+  .neb1{width:700px;height:700px;background:#D4760A;top:-140px;left:-180px;animation-delay:0s;}
+  .neb2{width:520px;height:520px;background:#FF7043;top:200px;right:-120px;animation-delay:2s;}
+  .neb3{width:440px;height:440px;background:#E89830;bottom:60px;left:20%;animation-delay:4s;}
+  .neb4{width:340px;height:340px;background:#FFAB76;top:50%;right:8%;animation-delay:1.5s;}
+  .neb5{width:260px;height:260px;background:#FF8A65;top:35%;left:55%;animation-delay:3s;}
+  .neb6{width:300px;height:300px;background:#FFD54F;bottom:20%;left:5%;animation-delay:2.5s;opacity:.1;}
+  @keyframes nebWarm{
+    from{opacity:.12;transform:scale(1);}
+    to{opacity:.24;transform:scale(1.1);}
   }
 
-  /* ── GLOBAL WRAPPER ── */
-  .page-wrap {
-    position: relative;
-    z-index: 1;
+  /* ── PARTICLES ── */
+  .pt{
+    position:fixed;border-radius:50%;
+    pointer-events:none;z-index:0;
+    animation:ptFall linear infinite;
+  }
+  @keyframes ptFall{
+    0%{transform:translateY(-20px) rotate(0deg);opacity:0;}
+    10%{opacity:1;}90%{opacity:.8;}
+    100%{transform:translateY(110vh) rotate(720deg);opacity:0;}
   }
 
-  /* ═══════════════════════════════════════
-     HERO
-  ═══════════════════════════════════════ */
-  .hero {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 60px 24px 80px;
-    position: relative;
-    overflow: hidden;
-   
+  /* ── FLOAT / SPARKLE ── */
+  @keyframes float{
+    from{transform:translateY(0);}
+    to{transform:translateY(-14px);}
+  }
+  @keyframes floatSlow{
+    from{transform:translateY(0) rotate(-4deg);}
+    to{transform:translateY(-10px) rotate(4deg);}
+  }
+  @keyframes spkl{
+    0%{opacity:.2;transform:scale(.7) rotate(0deg);}
+    50%{opacity:1;transform:scale(1.25) rotate(180deg);}
+    100%{opacity:.4;transform:scale(.9) rotate(360deg);}
+  }
+  @keyframes haloBreath{
+    from{transform:translate(-50%,-50%) scale(.88);opacity:.5;}
+    to{transform:translate(-50%,-50%) scale(1.22);opacity:1;}
+  }
+  @keyframes heartPulse{
+    0%,100%{transform:scale(1);}
+    50%{transform:scale(1.18);}
+  }
+  @keyframes borderShim{
+    0%{opacity:.4;}50%{opacity:1;}100%{opacity:.4;}
   }
 
-  /* Glow orbs */
-  .hero::before {
-    content: '';
-    position: absolute;
-    width: 600px; height: 600px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(244,154,28,0.12) 0%, transparent 70%);
-    top: -100px; left: 50%;
-    transform: translateX(-50%);
-    animation: pulse-orb 6s ease-in-out infinite;
-  }
-  .hero::after {
-    content: '';
-    position: absolute;
-    width: 400px; height: 400px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(229,72,139,0.12) 0%, transparent 70%);
-    bottom: 0; right: -80px;
-    animation: pulse-orb 8s ease-in-out infinite reverse;
+  /* ── FIXED SPARKLES ── */
+  .fixed-spk{
+    position:fixed;z-index:1;pointer-events:none;
+    animation:spkl ease-in-out infinite alternate;
   }
 
-  @keyframes pulse-orb {
-    0%, 100% { transform: translateX(-50%) scale(1); opacity: 0.7; }
-    50% { transform: translateX(-50%) scale(1.15); opacity: 1; }
+  /* ── WRAPPER ── */
+  .wrapper{
+    position:relative;z-index:2;
+    max-width:960px;margin:0 auto;
+    padding:0 20px 70px;
   }
 
-  /* badge */
-  .level-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: linear-gradient(135deg, #F49A1C, #E5488B);
-    color: white;
-    font-size: 0.78rem;
-    font-weight: 800;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    padding: 6px 18px;
-    border-radius: 50px;
-    margin-bottom: 28px;
-    box-shadow: 0 4px 20px rgba(244,154,28,0.35);
-    animation: fadeDown 0.8s ease both;
+  /* ── NIVEL PILL ── */
+  .nivel-pill{
+    display:inline-block;
+    background:linear-gradient(135deg,#D4760A,#E89830);
+    color:#fff;font-family:'Fredoka One',cursive;
+    font-size:.95rem;letter-spacing:3px;
+    padding:8px 28px;border-radius:50px;
+    box-shadow:0 0 26px rgba(232,152,48,.6);
+    margin-bottom:20px;
+    animation:pillGlow 3s ease-in-out infinite alternate;
+  }
+  @keyframes pillGlow{
+    from{box-shadow:0 0 16px rgba(232,152,48,.4);}
+    to{box-shadow:0 0 42px rgba(232,152,48,.95);}
   }
 
-  .hero-title {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2.6rem, 7vw, 5rem);
-    font-weight: 700;
-    color: var(--cream);
-    text-align: center;
-    line-height: 1.1;
-    margin-bottom: 12px;
-    animation: fadeDown 0.9s 0.1s ease both;
-    text-shadow: 0 0 60px rgba(244,154,28,0.35);
+  /* ── HERO ── */
+  .hero{position:relative;padding:48px 20px 0;text-align:center;}
+
+  .hero-block{
+    background:linear-gradient(145deg,#7A3500 0%,#A84B00 50%,#7A3500 100%);
+    border:2px solid rgba(232,152,48,.55);
+    border-radius:32px;padding:50px 40px 44px;
+    position:relative;overflow:hidden;
+    box-shadow:0 0 80px rgba(122,53,0,.85),0 0 140px rgba(212,118,10,.25),
+               inset 0 1px 0 rgba(255,255,255,.08);
   }
-  .hero-title em {
-    font-style: italic;
-    color: var(--orange-soft);
+  .hero-block::after{
+    content:'';position:absolute;
+    top:-2px;left:-2px;right:-2px;bottom:-2px;
+    border-radius:34px;
+    background:linear-gradient(135deg,rgba(232,152,48,.4),transparent,rgba(255,171,118,.25));
+    z-index:0;animation:borderShim 5s linear infinite;
+  }
+  .hero-inner{position:relative;z-index:1;}
+
+  .hero-nivel{
+    font-family:'Fredoka One',cursive;
+    font-size:1rem;color:#FFAB76;
+    letter-spacing:4px;text-transform:uppercase;margin-bottom:8px;
+  }
+  .hero-title{
+    font-family:'Fredoka One',cursive;
+    font-size:clamp(2rem,5.5vw,3.6rem);
+    color:#fff;
+    text-shadow:0 0 32px rgba(232,152,48,.85),0 2px 4px rgba(0,0,0,.4);
+    line-height:1.15;margin-bottom:10px;
+  }
+  .hero-title span{color:#FFD54F;}
+  .hero-subtitle{
+    font-size:1.1rem;color:#FFCC80;font-weight:700;margin-bottom:18px;
+  }
+  .hero-lesson-tag{
+    display:inline-block;
+    background:rgba(212,118,10,.35);
+    border:1px solid rgba(232,152,48,.5);
+    border-radius:50px;padding:8px 24px;
+    font-family:'Fredoka One',cursive;
+    font-size:1rem;color:#FFE0B2;
+    letter-spacing:1px;margin-bottom:28px;
   }
 
-  .hero-subtitle {
-    font-size: clamp(1.05rem, 2.5vw, 1.25rem);
-    color: rgba(243,239,231,0.88);
-    text-align: center;
-    max-width: 560px;
-    line-height: 1.7;
-    margin-bottom: 48px;
-    font-weight: 400;
-    animation: fadeDown 1s 0.2s ease both;
-    opacity: 0.92;
+  .hero-chars{
+    display:flex;justify-content:center;align-items:flex-end;gap:16px;
+    margin-top:10px;
+  }
+  .hero-chars img{
+    height:200px;
+    filter:drop-shadow(0 0 24px rgba(232,152,48,.7));
+    animation:float 4s ease-in-out infinite alternate;
+  }
+  .hero-chars img:nth-child(2){height:120px;animation-delay:.7s;}
+  .hero-chars img:nth-child(3){height:165px;animation-delay:1.5s;}
+
+  /* ── SECTION LABEL ── */
+  .section-label{
+    text-align:center;margin:44px 0 28px;
+  }
+  .section-label h2{
+    font-family:'Fredoka One',cursive;
+    font-size:clamp(1.2rem,3.8vw,1.85rem);
+    color:#FFCC80;
+    background:rgba(122,53,0,.7);
+    border:1px solid rgba(232,152,48,.45);
+    display:inline-block;padding:12px 36px;
+    border-radius:50px;
+    box-shadow:0 0 24px rgba(212,118,10,.35);
   }
 
-  /* Characters */
-  .hero-chars {
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    gap: 0;
-    position: relative;
-    animation: fadeUp 1s 0.4s ease both;
+  /* ── CONTENT CARDS ── */
+  .card{
+    background:var(--light);
+    border-radius:26px;padding:34px 38px;
+    margin-bottom:24px;
+    border:2px solid rgba(212,118,10,.2);
+    box-shadow:0 10px 50px rgba(122,53,0,.4),0 2px 8px rgba(0,0,0,.2);
+    position:relative;overflow:hidden;
   }
-  .char-wrap {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  .card::before{
+    content:'';position:absolute;top:0;left:0;right:0;height:5px;
+    border-radius:26px 26px 0 0;
   }
-  .char-wrap img.char-img {
-    width: clamp(140px, 22vw, 220px);
-    filter: drop-shadow(0 10px 30px rgba(244,154,28,0.35));
-    animation: float 5s ease-in-out infinite;
-  }
-  .char-wrap:nth-child(2) img.char-img {
-    animation-delay: -2.5s;
-    animation-duration: 6s;
-  }
-  .char-label {
-    font-size: 0.82rem;
-    font-weight: 800;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--orange-soft);
-    background: rgba(244,154,28,0.15);
-    border: 1px solid rgba(244,154,28,0.3);
-    border-radius: 30px;
-    padding: 4px 14px;
-    margin-top: 10px;
+  .card.c1::before{background:linear-gradient(90deg,#D4760A,#E89830,#FFD54F);}
+  .card.c2::before{background:linear-gradient(90deg,#FF7043,#E89830,#FFAB76);}
+  .card.c3::before{background:linear-gradient(90deg,#FFD54F,#E89830,#FF8A65);}
+
+  .card-row{display:flex;align-items:center;gap:26px;}
+  .card-text{flex:1;}
+  .card-char{flex-shrink:0;width:130px;}
+  .card-char img{
+    width:100%;
+    filter:drop-shadow(0 4px 14px rgba(212,118,10,.45));
+    animation:float 4.5s ease-in-out infinite alternate;
   }
 
-  /* speech bubble */
-  .speech-bubble {
-    position: absolute;
-    top: -18px;
-    background: rgba(255,255,255,0.95);
-    color: var(--plum);
-    font-size: 0.82rem;
-    font-weight: 700;
-    border-radius: 16px 16px 16px 4px;
-    padding: 8px 14px;
-    white-space: nowrap;
-    box-shadow: 0 4px 16px rgba(90,59,79,0.2);
-    animation: float 4s ease-in-out infinite;
+  .card-emoji{font-size:2.2rem;margin-bottom:10px;display:block;}
+  .card h3{
+    font-family:'Fredoka One',cursive;
+    font-size:1.45rem;color:#7A3500;margin-bottom:13px;
   }
-  .speech-bubble.right {
-    border-radius: 16px 16px 4px 16px;
-    right: -10px;
-    animation-delay: -1s;
-  }
-  .speech-bubble.left {
-    left: -10px;
+  .card p{
+    font-size:1.05rem;color:#5C2700;
+    line-height:1.78;font-weight:700;
   }
 
-  /* floating decorations in hero */
-  .deco-float {
-    position: absolute;
-    pointer-events: none;
-    animation: float 6s ease-in-out infinite;
+  /* ── EMOTIONS STRIP ── */
+  .emo-strip{
+    display:flex;justify-content:center;
+    flex-wrap:wrap;gap:14px;
+    margin:10px 0 4px;
   }
-  .deco-float img { width: 100%; }
-
-  /* ═══════════════════════════════════════
-     WAVE divider
-  ═══════════════════════════════════════ */
-  .wave-divider {
-    width: 100%;
-    line-height: 0;
-    margin-top: -2px;
+  .emo-pill{
+    background:linear-gradient(135deg,#7A3500,#A84B00);
+    border-radius:50px;padding:10px 22px;
+    font-family:'Fredoka One',cursive;
+    font-size:1rem;color:#FFF3E0;
+    border:1px solid rgba(232,152,48,.4);
+    box-shadow:0 4px 18px rgba(122,53,0,.45);
+    transition:transform .3s,box-shadow .3s;
+    cursor:default;
   }
-  .wave-divider svg { display: block; width: 100%; }
-
-  /* ═══════════════════════════════════════
-     MAIN CONTENT AREA
-  ═══════════════════════════════════════ */
-  .content-area {
-    position: relative;
-    overflow: hidden;
-    padding-bottom: 80px;
+  .emo-pill:hover{
+    transform:translateY(-5px) scale(1.06);
+    box-shadow:0 10px 28px rgba(212,118,10,.55);
   }
 
-  /* subtle bg pattern */
-  .content-area::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image:
-      radial-gradient(circle at 20% 20%, rgba(244,154,28,0.05) 0%, transparent 40%),
-      radial-gradient(circle at 80% 60%, rgba(229,72,139,0.04) 0%, transparent 40%),
-      radial-gradient(circle at 50% 80%, rgba(159,212,193,0.04) 0%, transparent 40%);
-    pointer-events: none;
+  /* ── ACTIVITIES CARD ── */
+  .act-card{
+    background:var(--light);
+    border-radius:26px;padding:34px 38px;
+    margin-bottom:24px;
+    border:2px solid rgba(212,118,10,.2);
+    box-shadow:0 10px 50px rgba(122,53,0,.4);
+    position:relative;overflow:hidden;
+  }
+  .act-card::before{
+    content:'';position:absolute;top:0;left:0;right:0;height:5px;
+    background:linear-gradient(90deg,#FF8A65,#E89830,#FFD54F);
+    border-radius:26px 26px 0 0;
+  }
+  .act-card h3{
+    font-family:'Fredoka One',cursive;
+    font-size:1.45rem;color:#7A3500;margin-bottom:20px;
+  }
+  .act-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:16px;
+  }
+  .act-item{
+    background:linear-gradient(145deg,#7A3500,#A84B00);
+    border-radius:20px;padding:22px 18px;
+    text-align:center;
+    border:1px solid rgba(232,152,48,.35);
+    box-shadow:0 4px 22px rgba(122,53,0,.5);
+    transition:transform .3s,box-shadow .3s;
+    cursor:default;
+  }
+  .act-item:hover{
+    transform:translateY(-6px);
+    box-shadow:0 14px 32px rgba(212,118,10,.55);
+  }
+  .act-icon{font-size:2rem;margin-bottom:10px;display:block;}
+  .act-label{font-size:.88rem;font-weight:700;color:#FFF3E0;line-height:1.45;}
+
+  /* ── DIVIDER ── */
+  .divider{
+    display:flex;align-items:center;gap:14px;
+    margin:30px 0;opacity:.38;
+  }
+  .divider::before,.divider::after{
+    content:'';flex:1;height:1px;
+    background:linear-gradient(90deg,transparent,#E89830,transparent);
+  }
+  .divider span{font-size:1.1rem;}
+
+  /* ── BADGE AREA ── */
+  .badge-section{
+    text-align:center;margin:36px 0;
+  }
+  .badge-box{
+    background:linear-gradient(145deg,#7A3500,#A84B00);
+    border:2px solid rgba(232,152,48,.5);
+    border-radius:28px;padding:40px 30px;
+    display:inline-block;min-width:280px;
+    position:relative;overflow:hidden;
+    box-shadow:0 0 55px rgba(212,118,10,.45),inset 0 1px 0 rgba(255,255,255,.08);
+  }
+  .badge-halo{
+    position:absolute;top:50%;left:50%;
+    width:200px;height:200px;
+    background:radial-gradient(circle,rgba(255,213,79,.28) 0%,transparent 70%);
+    transform:translate(-50%,-50%);
+    border-radius:50%;
+    animation:haloBreath 3s ease-in-out infinite alternate;
+  }
+  .badge-img{
+    width:110px;
+    filter:drop-shadow(0 0 24px rgba(255,213,79,.75))
+           drop-shadow(0 0 10px rgba(232,152,48,.8));
+    position:relative;z-index:1;
+    animation:float 3.5s ease-in-out infinite alternate;
+  }
+  .badge-title{
+    font-family:'Fredoka One',cursive;
+    font-size:1.35rem;color:#FFD54F;
+    margin-top:14px;
+    text-shadow:0 0 18px rgba(255,213,79,.55);
+    position:relative;z-index:1;
+  }
+  .badge-desc{
+    font-size:.92rem;color:#FFCC80;
+    margin-top:8px;font-weight:700;
+    position:relative;z-index:1;
   }
 
-  .container {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 0 24px;
-    position: relative;
-    z-index: 1;
+  /* ── DECO FLOAT ── */
+  .deco-float{
+    position:absolute;pointer-events:none;z-index:1;opacity:.78;
+    animation:float ease-in-out infinite alternate;
+  }
+  .deco-heart{
+    animation:heartPulse 2.5s ease-in-out infinite;
   }
 
-  /* ── Section header ── */
-  .section-tag {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 0.72rem;
-    font-weight: 800;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: #ff9bc8;
-    background: rgba(229,72,139,0.12);
-    border: 1px solid rgba(229,72,139,0.25);
-    border-radius: 30px;
-    padding: 5px 16px;
-    margin-bottom: 14px;
+  /* ── CLOSING ── */
+  .closing{
+    text-align:center;margin:46px 0 20px;position:relative;
   }
-  .section-title {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(1.8rem, 4vw, 2.6rem);
-    color: var(--text-light);
-    line-height: 1.2;
-    margin-bottom: 10px;
+  .closing-box{
+    background:linear-gradient(145deg,#7A3500,#A84B00);
+    border:2px solid rgba(232,152,48,.4);
+    border-radius:28px;padding:42px 38px;
+    position:relative;overflow:hidden;
+    box-shadow:0 0 55px rgba(122,53,0,.55);
   }
-  .section-title span { color: var(--orange); }
+  .closing-box h2{
+    font-family:'Fredoka One',cursive;
+    font-size:clamp(1.5rem,4vw,2.2rem);
+    color:#fff;margin-bottom:14px;
+    text-shadow:0 0 22px rgba(232,152,48,.65);
+  }
+  .closing-box p{
+    font-size:1.05rem;color:#FFCC80;
+    line-height:1.75;font-weight:700;
+    max-width:580px;margin:0 auto 26px;
+  }
+  .cta-btn{
+    display:inline-block;
+    background:linear-gradient(135deg,#D4760A,#E89830);
+    color:#fff;font-family:'Fredoka One',cursive;
+    font-size:1.2rem;padding:16px 46px;
+    border-radius:50px;border:none;cursor:pointer;
+    box-shadow:0 0 34px rgba(232,152,48,.65),0 4px 16px rgba(0,0,0,.3);
+    transition:transform .3s,box-shadow .3s;
+    text-decoration:none;letter-spacing:1px;
+  }
+  .cta-btn:hover{
+    transform:translateY(-4px) scale(1.05);
+    box-shadow:0 0 56px rgba(232,152,48,.9),0 8px 28px rgba(0,0,0,.4);
+  }
+  .closing-chars{
+    display:flex;justify-content:center;align-items:flex-end;
+    gap:18px;margin-top:30px;
+  }
+  .closing-chars img{
+    height:150px;
+    filter:drop-shadow(0 0 16px rgba(232,152,48,.55));
+    animation:float 4s ease-in-out infinite alternate;
+  }
+  .closing-chars img:nth-child(2){height:130px;animation-delay:1s;}
+  .closing-chars img:nth-child(3){height:90px;animation-delay:.5s;opacity:.85;}
 
-  /* ═══════════════════════════════════════
-     DISCOVER SECTION
-  ═══════════════════════════════════════ */
-  .discover-section {
-    padding: 80px 0 60px;
+  /* ── DOCENTE ── */
+  .docente-wrap{
+    margin-top:54px;border-radius:20px;overflow:hidden;
+    border:1px solid rgba(212,118,10,.3);
+    box-shadow:0 4px 22px rgba(122,53,0,.3);
   }
-
-  .discover-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
-    margin-top: 40px;
+  .doc-toggle{
+    background:rgba(90,35,0,.85);
+    padding:18px 28px;
+    display:flex;justify-content:space-between;align-items:center;
+    cursor:pointer;user-select:none;
+    border:none;width:100%;
+    color:#FFCC80;
+    font-family:'Nunito',sans-serif;font-weight:700;font-size:.95rem;
+    letter-spacing:1px;transition:background .3s;
   }
-
-  .discover-card {
-    background: linear-gradient(145deg, rgba(37,20,53,0.88), rgba(56,27,71,0.72));
-    border: 1px solid rgba(244,154,28,0.15);
-    border-radius: 28px;
-    padding: 36px 32px;
-    position: relative;
-    overflow: hidden;
-    box-shadow: 0 8px 40px rgba(0,0,0,0.22);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    backdrop-filter: blur(10px);
+  .doc-toggle:hover{background:rgba(120,55,0,.92);}
+  .doc-toggle .arrow{font-size:1.1rem;transition:transform .3s;}
+  .doc-toggle.open .arrow{transform:rotate(180deg);}
+  .doc-body{
+    display:none;background:rgba(30,10,0,.95);padding:28px;
   }
-  .discover-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 16px 50px rgba(0,0,0,0.3);
+  .doc-body.open{display:block;}
+  .doc-body h4{
+    color:#E89830;font-family:'Fredoka One',cursive;
+    font-size:1.1rem;margin-bottom:10px;
   }
-  .discover-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 5px;
-    background: linear-gradient(90deg, var(--orange), var(--coral));
-    border-radius: 28px 28px 0 0;
+  .doc-body p{
+    color:#FFCC80;font-size:.92rem;line-height:1.72;font-weight:600;
   }
-  .discover-card.card-b::before {
-    background: linear-gradient(90deg, var(--fuchsia), var(--blue));
-  }
-
-  .card-icon-big {
-    font-size: 2.4rem;
-    margin-bottom: 16px;
-    display: block;
-  }
-  .card-emoji-img {
-    width: 56px;
-    margin-bottom: 14px;
-    display: block;
-  }
-  .discover-card h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.35rem;
-    color: var(--cream);
-    margin-bottom: 12px;
-  }
-  .discover-card p {
-    font-size: 0.98rem;
-    line-height: 1.75;
-    color: rgba(243,239,231,0.8);
+  .doc-placeholder{
+    border:1px dashed rgba(232,152,48,.4);
+    border-radius:12px;padding:20px;text-align:center;
+    color:rgba(232,152,48,.5);font-size:.88rem;
+    margin-top:14px;font-weight:600;
   }
 
-  /* floating deco in content */
-  .deco-abs {
-    position: absolute;
-    pointer-events: none;
-    animation: float 7s ease-in-out infinite;
+  /* ── RESPONSIVE ── */
+  @media(max-width:640px){
+    .hero-block{padding:34px 18px 28px;}
+    .hero-chars img{height:120px;}
+    .card-row{flex-direction:column;}
+    .card-char{width:100px;margin:0 auto;}
+    .act-grid{grid-template-columns:repeat(2,1fr);}
+    .closing-box{padding:28px 18px;}
   }
-
-  /* ═══════════════════════════════════════
-     LEARN SECTION
-  ═══════════════════════════════════════ */
-  .learn-section {
-    padding: 60px 0;
-  }
-
-  .learn-inner {
-    background: linear-gradient(135deg, #402347 0%, #5a2e54 100%);
-    border-radius: 36px;
-    padding: 56px 52px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
-    align-items: center;
-    position: relative;
-    overflow: hidden;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.28);
-    border: 1px solid rgba(244,154,28,0.15);
-  }
-  .learn-inner::before {
-    content: '';
-    position: absolute;
-    width: 350px; height: 350px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(244,154,28,0.1) 0%, transparent 70%);
-    top: -80px; right: -80px;
-  }
-
-  .learn-text h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(1.6rem, 3.5vw, 2.2rem);
-    color: var(--cream);
-    margin-bottom: 16px;
-    line-height: 1.2;
-  }
-  .learn-text p {
-    font-size: 1rem;
-    color: rgba(243,239,231,0.82);
-    line-height: 1.8;
-  }
-
-  .learn-visual {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 16px;
-  }
-  .learn-visual img {
-    width: clamp(120px, 20vw, 200px);
-    filter: drop-shadow(0 8px 24px rgba(244,154,28,0.32));
-    animation: float 5s ease-in-out infinite;
-  }
-  .learn-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    justify-content: center;
-  }
-  .learn-tag {
-    background: rgba(244,154,28,0.18);
-    border: 1px solid rgba(244,154,28,0.35);
-    color: #ffd08c;
-    font-size: 0.78rem;
-    font-weight: 700;
-    border-radius: 30px;
-    padding: 5px 14px;
-  }
-
-  /* ═══════════════════════════════════════
-     OBJETIVO SECTION
-  ═══════════════════════════════════════ */
-  .objetivo-section {
-    padding: 60px 0;
-  }
-
-  .objetivo-card {
-    background: linear-gradient(135deg, #f49a1cd0 0%, #F56C6C 60%, #E5488B 100%);
-    border-radius: 36px;
-    padding: 56px 52px;
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 40px;
-    align-items: center;
-    position: relative;
-    overflow: hidden;
-    box-shadow: 0 20px 60px rgba(245,108,108,0.28);
-  }
-  .objetivo-card::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-    pointer-events: none;
-  }
-  .objetivo-icon-wrap {
-    width: 90px; height: 90px;
-    background: rgba(255,255,255,0.2);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    backdrop-filter: blur(8px);
-    border: 2px solid rgba(255,255,255,0.3);
-  }
-  .objetivo-icon-wrap img {
-    width: 48px;
-    filter: brightness(0) invert(1);
-  }
-  .objetivo-card h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(1.4rem, 3vw, 2rem);
-    color: white;
-    margin-bottom: 14px;
-    line-height: 1.2;
-  }
-  .objetivo-card p {
-    font-size: 1.05rem;
-    color: rgba(255,255,255,0.92);
-    line-height: 1.8;
-  }
-
-  /* ═══════════════════════════════════════
-     QUÉ HAREMOS
-  ═══════════════════════════════════════ */
-  .haremos-section {
-    padding: 60px 0;
-  }
-
-  .haremos-header {
-    text-align: center;
-    margin-bottom: 48px;
-  }
-
-  .activities-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-  }
-
-  .activity-card {
-    background: linear-gradient(145deg, rgba(32,18,47,0.9), rgba(53,28,66,0.78));
-    border: 1px solid rgba(255,255,255,0.06);
-    border-radius: 24px;
-    padding: 30px 28px;
-    display: flex;
-    align-items: flex-start;
-    gap: 20px;
-    box-shadow: 0 6px 30px rgba(0,0,0,0.2);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    position: relative;
-    overflow: hidden;
-    backdrop-filter: blur(10px);
-  }
-  .activity-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 40px rgba(0,0,0,0.28);
-  }
-
-  .activity-card:nth-child(1) { border-left: 4px solid var(--orange); }
-  .activity-card:nth-child(2) { border-left: 4px solid var(--fuchsia); }
-  .activity-card:nth-child(3) { border-left: 4px solid var(--mint); }
-  .activity-card:nth-child(4) { border-left: 4px solid var(--blue); }
-
-  .activity-icon {
-    width: 56px; height: 56px;
-    border-radius: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    font-size: 1.6rem;
-  }
-  .activity-card:nth-child(1) .activity-icon { background: rgba(244,154,28,0.12); }
-  .activity-card:nth-child(2) .activity-icon { background: rgba(229,72,139,0.1); }
-  .activity-card:nth-child(3) .activity-icon { background: rgba(159,212,193,0.14); }
-  .activity-card:nth-child(4) .activity-icon { background: rgba(110,146,216,0.12); }
-
-  .activity-icon img { width: 32px; }
-
-  .activity-content h4 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.05rem;
-    color: var(--cream);
-    margin-bottom: 6px;
-  }
-  .activity-content p {
-    font-size: 0.88rem;
-    color: rgba(243,239,231,0.75);
-    line-height: 1.6;
-  }
-
-  /* ═══════════════════════════════════════
-     CHARACTERS BANNER
-  ═══════════════════════════════════════ */
-  .chars-banner {
-    padding: 60px 0 20px;
-    text-align: center;
-    position: relative;
-  }
-  .chars-banner-inner {
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    gap: 32px;
-    flex-wrap: wrap;
-  }
-  .chars-banner .char-wrap img.char-img {
-    width: clamp(120px, 18vw, 190px);
-    filter: drop-shadow(0 8px 20px rgba(244,154,28,0.25));
-  }
-  .chars-banner-text {
-    max-width: 400px;
-    text-align: left;
-  }
-  .chars-banner-text h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.6rem;
-    color: var(--text-light);
-    margin-bottom: 10px;
-  }
-  .chars-banner-text p {
-    font-size: 0.96rem;
-    color: rgba(243,239,231,0.76);
-    line-height: 1.75;
-  }
-
-  /* ═══════════════════════════════════════
-     DOCENTES PANEL
-  ═══════════════════════════════════════ */
-  .teacher-section {
-    padding: 40px 0 60px;
-  }
-
-  .teacher-accordion {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 20px;
-    overflow: hidden;
-    backdrop-filter: blur(8px);
-  }
-
-  .teacher-header {
-    width: 100%;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 20px 28px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    text-align: left;
-    font-family: 'Nunito', sans-serif;
-  }
-  .teacher-header-left {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-  .teacher-badge {
-    background: rgba(255,255,255,0.08);
-    color: var(--cream);
-    font-size: 0.7rem;
-    font-weight: 800;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    border-radius: 20px;
-    padding: 4px 12px;
-    border: 1px solid rgba(255,255,255,0.12);
-  }
-  .teacher-header h4 {
-    font-size: 0.95rem;
-    font-weight: 700;
-    color: rgba(243,239,231,0.82);
-  }
-  .teacher-chevron {
-    color: rgba(243,239,231,0.72);
-    font-size: 1rem;
-    transition: transform 0.3s ease;
-    flex-shrink: 0;
-  }
-  .teacher-accordion.open .teacher-chevron {
-    transform: rotate(180deg);
-  }
-
-  .teacher-body {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.4s ease, padding 0.3s ease;
-    padding: 0 28px;
-  }
-  .teacher-accordion.open .teacher-body {
-    max-height: 400px;
-    padding: 0 28px 24px;
-  }
-  .teacher-body p {
-    font-size: 0.9rem;
-    color: rgba(243,239,231,0.72);
-    line-height: 1.7;
-    margin-bottom: 10px;
-  }
-  .teacher-body p:last-child { margin-bottom: 0; }
-
-  /* ═══════════════════════════════════════
-     FOOTER
-  ═══════════════════════════════════════ */
-  .page-footer {
-    background: linear-gradient(180deg, #201230 0%, #140b22 100%);
-    padding: 32px 24px;
-    text-align: center;
-    border-top: 1px solid rgba(255,255,255,0.05);
-  }
-  .page-footer p {
-    color: rgba(243,239,231,0.5);
-    font-size: 0.78rem;
-    letter-spacing: 0.05em;
-  }
-  .page-footer strong {
-    color: var(--orange-soft);
-  }
-
-  /* ═══════════════════════════════════════
-     ANIMATIONS
-  ═══════════════════════════════════════ */
-  @keyframes float {
-    0%, 100% { transform: translateY(0px) rotate(0deg); }
-    33% { transform: translateY(-12px) rotate(1.5deg); }
-    66% { transform: translateY(-6px) rotate(-1deg); }
-  }
-  @keyframes floatSpin {
-    0%, 100% { transform: translateY(0) rotate(0deg); }
-    50% { transform: translateY(-14px) rotate(180deg); }
-  }
-  @keyframes twinkle {
-    0%, 100% { opacity: 0.3; transform: scale(0.8); }
-    50% { opacity: 1; transform: scale(1.2); }
-  }
-  @keyframes fadeDown {
-    from { opacity: 0; transform: translateY(-20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-  @keyframes scaleIn {
-    from { opacity: 0; transform: scale(0.85); }
-    to { opacity: 1; transform: scale(1); }
-  }
-  @keyframes shimmer {
-    0% { background-position: -200% center; }
-    100% { background-position: 200% center; }
-  }
-
-  /* ── Scroll reveal ── */
-  .reveal {
-    opacity: 0;
-    transform: translateY(28px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
-  }
-  .reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  .reveal-delay-1 { transition-delay: 0.1s; }
-  .reveal-delay-2 { transition-delay: 0.2s; }
-  .reveal-delay-3 { transition-delay: 0.3s; }
-  .reveal-delay-4 { transition-delay: 0.4s; }
-
-  /* ═══════════════════════════════════════
-     RESPONSIVE
-  ═══════════════════════════════════════ */
-  @media (max-width: 768px) {
-    .discover-grid { grid-template-columns: 1fr; }
-    .learn-inner { grid-template-columns: 1fr; padding: 36px 28px; }
-    .objetivo-card { grid-template-columns: 1fr; padding: 36px 28px; }
-    .objetivo-icon-wrap { margin: 0 auto; }
-    .objetivo-card h2 { text-align: center; }
-    .objetivo-card p { text-align: center; }
-    .activities-grid { grid-template-columns: 1fr; }
-    .chars-banner-inner { flex-direction: column; align-items: center; }
-    .chars-banner-text { text-align: center; }
-    .deco-abs { display: none; }
-  }
-
-  /* ── Emoji row in hero ── */
-  .emotion-row {
-    display: flex;
-    gap: 14px;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-bottom: 48px;
-    animation: fadeIn 1.2s 0.6s ease both;
-  }
-  .emotion-pill {
-    display: flex;
-    align-items: center;
-    gap: 7px;
-    background: rgba(255,255,255,0.1);
-    border: 1px solid rgba(255,255,255,0.18);
-    border-radius: 40px;
-    padding: 8px 18px;
-    backdrop-filter: blur(6px);
-    color: var(--cream);
-    font-size: 0.85rem;
-    font-weight: 600;
-  }
-  .emotion-pill img { width: 22px; }
 </style>
 </head>
 <body>
 
-<!-- Stars canvas -->
-<canvas id="starsCanvas"></canvas>
+<canvas id="starfield"></canvas>
 
-<!-- Particles -->
-<div class="particles" id="particles-container"></div>
+<!-- Nebulae -->
+<div class="neb neb1"></div>
+<div class="neb neb2"></div>
+<div class="neb neb3"></div>
+<div class="neb neb4"></div>
+<div class="neb neb5"></div>
+<div class="neb neb6"></div>
 
-<div class="page-wrap">
+<!-- Fixed sparkles -->
+<img class="fixed-spk" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754686/estrella_bbltv2.png" style="width:34px;top:8%;left:4%;animation-duration:3s;">
+<img class="fixed-spk" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754686/estrella_bbltv2.png" style="width:44px;top:20%;right:5%;animation-duration:4.5s;animation-delay:1s;">
+<img class="fixed-spk" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754682/corazon_vjqq8g.png" style="width:32px;top:46%;left:2%;animation-duration:3.8s;animation-delay:.6s;animation-name:heartPulse;">
+<img class="fixed-spk" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754686/estrella_bbltv2.png" style="width:26px;top:68%;right:3%;animation-duration:3.5s;animation-delay:2s;">
+<img class="fixed-spk" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754682/corazon_vjqq8g.png" style="width:28px;top:84%;left:7%;animation-duration:2.8s;animation-delay:1.2s;animation-name:heartPulse;">
+<img class="fixed-spk" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754686/estrella_bbltv2.png" style="width:36px;top:90%;right:10%;animation-duration:4.2s;animation-delay:.3s;">
 
-  <!-- ═══════════ HERO ═══════════ -->
-  <section class="hero">
+<div class="wrapper">
 
-    <!-- floating decorations -->
-    <div class="deco-float" style="top:8%;left:6%;width:54px;animation-delay:0s;">
-      <img src="img/estrella.png" alt="" />
-    </div>
-    <div class="deco-float" style="top:14%;right:8%;width:44px;animation-delay:-1.5s;animation-duration:7s;">
-      <img src="img/estrella.png" alt="" />
-    </div>
-    <div class="deco-float" style="top:50%;left:3%;width:38px;animation-delay:-3s;">
-      <img src="img/estrella.png" alt="" />
-    </div>
-    <div class="deco-float" style="bottom:18%;right:5%;width:50px;animation-delay:-2s;animation-duration:8s;">
-      <img src="img/estrella.png" alt="" />
-    </div>
-    <div class="deco-float" style="top:25%;left:15%;width:30px;animation-delay:-4s;animation-duration:5s;">
-      <img src="img/estrella.png" alt="" />
-    </div>
-    <div class="deco-float" style="bottom:25%;left:10%;width:34px;animation-delay:-0.5s;">
-      <img src="img/estrella.png" alt="" />
-    </div>
-    <div class="deco-float" style="top:60%;right:12%;width:36px;animation-delay:-3.5s;">
-      <img src="img/estrella.png" alt="" />
-    </div>
-    <div class="deco-float" style="bottom:12%;right:18%;width:40px;animation-delay:-1s;animation-duration:9s;">
-      <img src="img/estrella.png" alt="" />
-    </div>
+  <!-- ── HERO ── -->
+  <div class="hero">
+    <div class="nivel-pill">✦ NIVEL 2 ✦</div>
+    <div class="hero-block">
+      <div class="hero-inner">
+        <p class="hero-nivel">NIVEL 2 — LECCIÓN 2</p>
+        <h1 class="hero-title">El <span>Árbol</span> de las<br>Emociones </h1>
+        <p class="hero-subtitle">Inteligencia Emocional</p>
+        <div class="hero-lesson-tag">🌟 LECCIÓN 1 — El Árbol de mis Emociones</div>
 
-    <!-- level badge -->
-    <div class="level-badge">
-      <img src="img/estrella.png" alt="" style="width:16px;filter:brightness(0) invert(1);" onerror="this.style.display='none'" />
-      ✦ Nivel 2 · Lección 1
-    </div>
-
-    <!-- title -->
-    <h1 class="hero-title">
-      El mundo de<br><em>tus emociones</em>
-    </h1>
-    <p class="hero-subtitle">
-      Este nivel es un espacio especial para que descubras lo que sientes,<br>
-      lo entiendas y aprendas a cuidarte desde adentro. ✨
-    </p>
-
-    <!-- emotion pills -->
-    <div class="emotion-row">
-      <div class="emotion-pill">
-        <img src="img/ceci_side_laugh.png" alt="" onerror="this.textContent='😊';this.style.fontSize='1.1rem'" />
-        Alegría
-      </div>
-      <div class="emotion-pill">
-        <img src="img/ceci_crying.png" alt="" onerror="this.textContent='😢';this.style.fontSize='1.1rem'" />
-        Tristeza
-      </div>
-      <div class="emotion-pill">
-        <img src="img/ceci_stressed.png" alt="" onerror="this.textContent='😨';this.style.fontSize='1.1rem'" />
-        Miedo
-      </div>
-      <div class="emotion-pill">
-        <img src="img/ceci_upset.png" alt="" onerror="this.textContent='😤';this.style.fontSize='1.1rem'" />
-        Enojo
+        <div class="hero-chars">
+          <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754353/arbol_yuidwd.png" alt="Árbol de emociones" style="height:210px;">
+          </div>
       </div>
     </div>
-
-    <!-- characters -->
-    <div class="hero-chars">
-      <div class="char-wrap">
-        <div class="speech-bubble left">¡Hola, exploradora! 🌟</div>
-        <img class="char-img" src="img/ceci2.png" alt="Ceci"
-             onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22280%22><rect width=%22200%22 height=%22280%22 rx=%2220%22 fill=%22%23F49A1C33%22/><text x=%22100%22 y=%22150%22 text-anchor=%22middle%22 font-size=%2260%22>🧚</text><text x=%22100%22 y%3D%22200%22 text-anchor=%22middle%22 font-size=%2220%22 fill=%22%235A3B4F%22>Ceci</text></svg>'" />
-        <span class="char-label">✦ Ceci</span>
-      </div>
-
-
-      <div class="char-wrap">
-        <div class="speech-bubble right">¡Sentir es poder! 💫</div>
-        <img class="char-img" src="img/luna2.png" alt="Luna"
-             onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22280%22><rect width=%22200%22 height=%22280%22 rx=%2220%22 fill=%22%23E5488B33%22/><text x=%22100%22 y=%22150%22 text-anchor=%22middle%22 font-size=%2260%22>🧜</text><text x=%22100%22 y%3D%22200%22 text-anchor=%22middle%22 font-size=%2220%22 fill=%22%235A3B4F%22>Luna</text></svg>'" />
-        <span class="char-label">✦ Luna</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- wave -->
-  <div class="wave-divider">
-    <svg viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M0 40C240 80 480 0 720 40C960 80 1200 0 1440 40V80H0V40Z" fill="#130a20"/>
-    </svg>
   </div>
 
-  <!-- ═══════════ CONTENT AREA ═══════════ -->
-  <main class="content-area">
-    <div class="container">
+  <!-- ── INTRO LABEL ── -->
+  <div class="section-label">
+    <h2>🌟 Introducción — Lección 1</h2>
+  </div>
 
-      <!-- ── DISCOVER ── -->
-      <section class="discover-section">
-
-        <!-- floating decos -->
-        <div class="deco-abs" style="top:-20px;right:-30px;width:70px;animation-delay:-2s;z-index:0;">
-          <img src="img/estrella.png" alt="" style="width:100%" onerror="this.style.display='none'" />
-        </div>
-        <div class="deco-abs" style="bottom:0;left:-20px;width:55px;animation-delay:0s;z-index:0;">
-          <img src="img/estrella.png" alt="" style="width:100%" onerror="this.style.display='none'" />
-        </div>
-
-        <div class="reveal">
-          <div class="section-tag">🌟 Introducción</div>
-          <h2 class="section-title">¿Qué <span>descubrirás</span> aquí?</h2>
-        </div>
-
-        <div class="discover-grid">
-          <div class="discover-card reveal reveal-delay-1">
-            <img class="card-emoji-img" src="img/emociones.png" alt=""
-                 onerror="this.textContent='🌈';this.style.fontSize='2.4rem';this.style.marginBottom='12px'" />
-            <h3>Las emociones son parte de ti</h3>
-            <p>
-              En este nivel descubrirás que las emociones son parte de tu vida
-              y <strong>todas tienen algo que enseñarte</strong>. No existe ninguna que sea mala o incorrecta.
-            </p>
-          </div>
-          <div class="discover-card card-b reveal reveal-delay-2">
-            <img class="card-emoji-img" src="img/ceci_crying.png" alt=""
-                 onerror="this.textContent='💡';this.style.fontSize='2.4rem';this.style.marginBottom='12px'" />
-            <h3>Cada emoción te habla</h3>
-            <p>
-              A veces sentimos alegría, tristeza, miedo o enojo, y cada emoción
-              nos ayuda a entender lo que pasa <strong>dentro de nosotras</strong>.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <!-- ── LEARN ── -->
-      <section class="learn-section">
-        <div class="learn-inner reveal">
-          <div class="learn-text">
-            <div class="section-tag" style="background:rgba(244,154,28,0.15);border-color:rgba(244,154,28,0.3);color:var(--orange-soft);">📚 Qué aprenderás</div>
-            <h2>Reconoce y <em>expresa</em><br>lo que sientes</h2>
-            <p>
-              Aprenderás a <strong>reconocer tus emociones</strong> y a expresarlas de forma sana.
-              También descubrirás que escuchar lo que sientes es una forma de <strong>cuidarte</strong>.
-            </p>
-          </div>
-          <div class="learn-visual">
-            <img src="img/ceci_tree.png" alt="Árbol de las emociones"
-                 onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22160%22 height=%22200%22><text x=%2280%22 y=%22130%22 text-anchor=%22middle%22 font-size=%22110%22>🌺</text></svg>'" />
-            <div class="learn-tags">
-              <span class="learn-tag">Autoconocimiento</span>
-              <span class="learn-tag">Expresión</span>
-              <span class="learn-tag">Bienestar</span>
-              <span class="learn-tag">Emociones</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ── OBJETIVO ── -->
-      <section class="objetivo-section">
-        <div class="objetivo-card reveal">
-          <div class="objetivo-icon-wrap">
-            <img src="img/corazon.png" alt=""
-                 onerror="this.textContent='🎯';this.style.fontSize='2rem'" />
-          </div>
-          <div>
-            <div class="section-tag" style="background:rgba(255,255,255,0.2);border-color:rgba(255,255,255,0.35);color:white;">🎯 Objetivo del Nivel</div>
-            <h2>Conocerte por dentro</h2>
-            <p>
-              Que identifiques tus emociones, comprendas que <strong>todas son válidas</strong>
-              y empieces a reconocer cómo influyen en tu bienestar.
-              Aquí no hay emociones "correctas" o "incorrectas", solo tuyas.
-            </p>
-          </div>
-          <!-- deco inside -->
-          <div style="position:absolute;right:24px;top:16px;opacity:0.25;pointer-events:none;">
-            <img src="img/estrella.png" alt="" style="width:80px"
-                 onerror="this.style.display='none'" />
-          </div>
-          <div style="position:absolute;right:100px;bottom:16px;opacity:0.2;pointer-events:none;">
-            <img src="img/paneta.png" alt="" style="width:50px"
-                 onerror="this.style.display='none'" />
-          </div>
-        </div>
-      </section>
-
-      <!-- ── QUÉ HAREMOS ── -->
-      <section class="haremos-section">
-        <div class="haremos-header reveal">
-          <div class="section-tag" style="margin:0 auto 14px;">🎮 Qué haremos</div>
-          <h2 class="section-title">Actividades que te <span>esperan</span></h2>
-          <p style="color:rgba(243,239,231,0.72);font-size:0.98rem;line-height:1.7;max-width:520px;margin:0 auto;">
-            Prepárate para explorar, jugar y descubrirte a ti misma con estas experiencias mágicas.
-          </p>
-        </div>
-
-        <div class="activities-grid">
-          <div class="activity-card reveal reveal-delay-1">
-            <div class="activity-icon">
-              <img src="img/ceci_tree.png" alt=""
-                   onerror="this.textContent='🌳';this.style.fontSize='1.6rem'" />
-            </div>
-            <div class="activity-content">
-              <h4>El árbol de las emociones</h4>
-              <p>Explora un árbol mágico donde cada rama representa una emoción diferente.</p>
-            </div>
-          </div>
-
-          <div class="activity-card reveal reveal-delay-2">
-            <div class="activity-icon">
-              <img src="img/corazon.png" alt=""
-                   onerror="this.textContent='🎮';this.style.fontSize='1.6rem'" />
-            </div>
-            <div class="activity-content">
-              <h4>Juegos interactivos</h4>
-              <p>Resuelve desafíos divertidos que te ayudarán a entender mejor cómo te sientes.</p>
-            </div>
-          </div>
-
-          <div class="activity-card reveal reveal-delay-3">
-            <div class="activity-icon">
-              <img src="img/cohete.png" alt=""
-                   onerror="this.textContent='🔍';this.style.fontSize='1.6rem'" />
-            </div>
-            <div class="activity-content">
-              <h4>Situaciones y emociones</h4>
-              <p>Identifica qué emoción aparece en distintas situaciones de la vida real.</p>
-            </div>
-          </div>
-
-          <div class="activity-card reveal reveal-delay-4">
-            <div class="activity-icon">
-              <img src="img/alarma.png" alt=""
-                   onerror="this.textContent='🎨';this.style.fontSize='1.6rem'" />
-            </div>
-            <div class="activity-content">
-              <h4>Expresa con dibujos</h4>
-              <p>Sube tus propios dibujos o imágenes que representen lo que sientes.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ── CHARACTERS BANNER ── -->
-      <section class="chars-banner reveal">
-        <div class="chars-banner-inner">
-          <div class="char-wrap">
-            <img class="char-img" src="img/ceci.png" alt="Ceci"
-                 onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22160%22 height=%22240%22><rect width=%22160%22 height=%22240%22 rx=%2216%22 fill=%22%23F49A1C22%22/><text x=%2280%22 y%3D%22130%22 text-anchor=%22middle%22 font-size=%2280%22>🧚</text></svg>'" />
-            <span class="char-label">Ceci</span>
-          </div>
-
-          <div class="chars-banner-text">
-            <div class="section-tag">💜 Tus acompañantes</div>
-            <h3>Ceci y Luna están contigo en cada paso</h3>
-            <p>
-              No estás sola en este viaje. <strong>Ceci y Luna</strong> te acompañarán
-              en cada actividad, celebrarán tus avances y te ayudarán a descubrir
-              la magia que hay dentro de lo que sientes.
-            </p>
-            <!-- comment/chat deco -->
-            <div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap;">
-              <div style="background:rgba(255,255,255,0.95);border-radius:14px 14px 14px 4px;padding:10px 16px;font-size:0.82rem;font-weight:600;color:var(--plum);box-shadow:0 4px 14px rgba(0,0,0,0.18);">
-                🌟 ¡Cada emoción importa!
-              </div>
-              <div style="background:var(--plum);border-radius:14px 14px 4px 14px;padding:10px 16px;font-size:0.82rem;font-weight:600;color:var(--cream);">
-                💖 ¡Tú puedes!
-              </div>
-            </div>
-          </div>
-
-          <div class="char-wrap">
-            <img class="char-img" src="img/luna.png" alt="Luna"
-                 onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22160%22 height=%22240%22><rect width=%22160%22 height=%22240%22 rx=%2216%22 fill=%22%23E5488B22%22/><text x=%2280%22 y%3D%22130%22 text-anchor=%22middle%22 font-size=%2280%22>🧜</text></svg>'" />
-            <span class="char-label">Luna</span>
-          </div>
-        </div>
-      </section>
-
-      <!-- floating extras near bottom -->
-      <div style="position:relative;height:60px;pointer-events:none;overflow:visible;">
-        <div class="deco-abs" style="top:0;left:10%;width:44px;animation-delay:-1s;">
-          <img src="img/estrella.png" alt="" style="width:100%" onerror="this.style.display='none'" />
-        </div>
-        <div class="deco-abs" style="top:-10px;right:15%;width:38px;animation-delay:-3s;">
-          <img src="img/estrella.png" alt="" style="width:100%" onerror="this.style.display='none'" />
-        </div>
-        <div class="deco-abs" style="top:10px;left:45%;width:32px;animation-delay:-2s;">
-          <img src="img/estrella.png" alt="" style="width:100%" onerror="this.style.display='none'" />
+  <!-- ── CARD 1: ¿Qué descubrirás? ── -->
+  <div class="card c1">
+    <div class="card-row">
+      <div class="card-text">
+        <span class="card-emoji">🌟</span>
+        <h3>¿Qué descubrirás aquí?</h3>
+        <p>En este nivel descubrirás que las emociones son parte de tu vida y que <strong>todas tienen algo que enseñarte</strong>. Alegría, tristeza, miedo, enojo: cada emoción te ayuda a entender lo que pasa dentro de ti.</p>
+        <div class="emo-strip" style="margin-top:16px;">
+          <span class="emo-pill">😊 Alegría</span>
+          <span class="emo-pill">😢 Tristeza</span>
+          <span class="emo-pill">😨 Miedo</span>
+          <span class="emo-pill">😤 Enojo</span>
         </div>
       </div>
+      <div class="card-char">
+        <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754481/ceci_sitting_happy_viogds.png" alt="Ceci feliz sentada">
+      </div>
+    </div>
+  </div>
 
-      <!-- ── DOCENTES SECTION ── -->
-      <section class="teacher-section">
-        <div class="teacher-accordion" id="teacherAccordion">
-          <button class="teacher-header" onclick="toggleTeacher()" aria-expanded="false">
-            <div class="teacher-header-left">
-              <span class="teacher-badge">Para docentes</span>
-              <h4>Valor académico de esta actividad</h4>
-            </div>
-            <span class="teacher-chevron" id="teacherChevron">▼</span>
-          </button>
-          <div class="teacher-body" id="teacherBody">
-            <p>
-              <strong>Área de desarrollo:</strong> Inteligencia emocional, autoconocimiento y habilidades socioemocionales.
-            </p>
-            <p>
-              Esta introducción prepara a la estudiante para explorar el reconocimiento y la gestión emocional
-              de forma segura, lúdica y significativa. Las actividades del Nivel 2 están diseñadas para favorecer
-              la identificación de emociones básicas y su impacto en el bienestar personal.
-            </p>
-            <p>
-              El uso del árbol de las emociones como recurso central permite anclar conceptos abstractos
-              en representaciones visuales y concretas, facilitando la comprensión y la expresión emocional.
-            </p>
+  <!-- ── CARD 2: ¿Qué aprenderás? ── -->
+  <div class="card c2">
+    <div class="card-row">
+      <div class="card-char">
+        <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754485/ceci_thinking_zluhja.png" alt="Ceci pensando" style="animation-delay:1.1s;">
+      </div>
+      <div class="card-text">
+        <span class="card-emoji">📚</span>
+        <h3>¿Qué aprenderás?</h3>
+        <p>Aprenderás a reconocer tus emociones y a expresarlas de forma sana. También descubrirás que <strong>escuchar lo que sientes es una forma de cuidarte</strong>.</p>
+      </div>
+    </div>
+  </div>
 
-          </div>
+  <!-- DECOS between cards -->
+  <div style="position:relative;height:28px;margin:-10px 0;">
+    <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754766/mariposa_ep7ez6.png" class="deco-float" style="width:56px;left:8%;top:-10px;animation-duration:5s;">
+    <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754766/mariposa_ep7ez6.png" class="deco-float" style="width:36px;right:10%;top:-5px;animation-duration:3.5s;animation-delay:.7s;animation-name:heartPulse;">
+    <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754766/mariposa_ep7ez6.png" class="deco-float" style="width:44px;left:50%;top:-8px;animation-duration:4s;animation-delay:1s;">
+  </div>
+
+  <!-- ── CARD 3: Objetivo ── -->
+  <div class="card c3">
+    <div class="card-row">
+      <div class="card-text">
+        <span class="card-emoji">🎯</span>
+        <h3>Objetivo del nivel</h3>
+        <p>Identificarás tus emociones, comprenderás que <strong>todas son válidas</strong> y empezarás a reconocer cómo influyen en tu bienestar.</p>
+      </div>
+      <div class="card-char">
+        <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754463/ceci_calm_mhzuxo.png" alt="Ceci calmada" style="animation-delay:2s;">
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"><span>🌸</span></div>
+
+  <!-- ── ACTIVITIES ── -->
+  <div class="act-card" style="position:relative;">
+    <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754766/mariposa_ep7ez6.png" class="deco-float" style="width:50px;right:16px;top:-18px;animation-duration:4.5s;">
+    <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754756/libro_qr5mnw.png" class="deco-float" style="width:46px;left:12px;bottom:-12px;animation-duration:5s;animation-delay:1s;">
+    <h3>🎮 ¿Qué haremos en esta lección?</h3>
+    <div class="act-grid">
+      <div class="act-item">
+        <span class="act-icon">🌳</span>
+        <p class="act-label">Explorar el árbol de las emociones</p>
+      </div>
+      <div class="act-item">
+        <span class="act-icon">🎮</span>
+        <p class="act-label">Juegos interactivos</p>
+      </div>
+      <div class="act-item">
+        <span class="act-icon">💭</span>
+        <p class="act-label">Identificar emociones en situaciones reales</p>
+      </div>
+      <div class="act-item">
+        <span class="act-icon">📸</span>
+        <p class="act-label">Subir evidencia de la cartilla</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"><span>💛</span></div>
+
+  <!-- ── LUNA & TREE INTERLUDE ── -->
+  <div style="text-align:center;margin:6px 0 20px;display:flex;justify-content:center;align-items:flex-end;gap:20px;flex-wrap:wrap;">
+    <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754678/cecifeliz_lx3gso.png"
+         style="height:140px;filter:drop-shadow(0 0 16px rgba(232,152,48,.55));animation:float 4.5s ease-in-out infinite alternate;">
+    <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754764/lunafeliz_gn9xwn.png"
+         style="height:140px;filter:drop-shadow(0 0 14px rgba(255,213,79,.6));animation:floatSlow 3.8s ease-in-out infinite alternate;animation-delay:.8s;">
+   </div>
+
+  <!-- ── BADGE AREA ── -->
+  <div class="badge-section">
+    <p style="color:#FFAB76;font-weight:700;font-size:.95rem;margin-bottom:18px;letter-spacing:1px;">🏅 TU INSIGNIA DE ESTE NIVEL</p>
+    <div class="badge-box">
+      <div class="badge-halo"></div>
+      <img class="badge-img" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754356/badge2_rwlx1w.png" alt="Insignia Nivel 2">
+      <p class="badge-title">Insignia: Exploradora Emocional</p>
+      <p class="badge-desc">Completa las lecciones del Nivel 2<br>para desbloquearla ✨</p>
+      <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754686/estrella_bbltv2.png" style="position:absolute;width:28px;top:12px;right:22px;animation:spkl 2.5s ease-in-out infinite alternate;">
+      <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754682/corazon_vjqq8g.png" style="position:absolute;width:26px;bottom:18px;left:20px;animation:heartPulse 2.2s ease-in-out infinite;">
+      <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754686/estrella_bbltv2.png" style="position:absolute;width:34px;top:14px;left:22px;animation:spkl 3.5s ease-in-out infinite alternate;animation-delay:1s;">
+    </div>
+  </div>
+
+  <div class="divider"><span>🌺</span></div>
+
+  <!-- ── CLOSING ── -->
+  <div class="closing">
+    <div class="closing-box">
+      <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754686/estrella_bbltv2.png"
+           style="position:absolute;right:-10px;top:-15px;width:100px;opacity:.4;animation:float 6s ease-in-out infinite alternate;pointer-events:none;">
+      <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754682/corazon_vjqq8g.png"
+           style="position:absolute;left:16px;top:16px;width:44px;opacity:.45;animation:heartPulse 2.5s ease-in-out infinite;pointer-events:none;">
+      <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754766/mariposa_ep7ez6.png"
+           style="position:absolute;right:20px;bottom:20px;width:52px;opacity:.4;animation:floatSlow 4s ease-in-out infinite alternate;pointer-events:none;">
+
+      <h2>¡Tu aventura emocional comienza aquí! 🌳</h2>
+      <p>Todas tus emociones tienen un lugar en este viaje. No hay emociones "malas" — solo mensajes que tu corazón tiene para ti. Ceci y Luna están aquí para acompañarte en cada paso.</p>
+      <a href="#" class="cta-btn">¡Comenzar Lección 1! 🌟</a>
+
+      <div class="closing-chars">
+        <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754481/ceci_sitting_happy_viogds.png" alt="Ceci feliz">
         </div>
-      </section>
+    </div>
+  </div>
 
-    </div><!-- /container -->
-  </main>
+  <!-- ── DOCENTE ── -->
+  <div class="docente-wrap">
+    <button class="doc-toggle" id="docBtn" onclick="toggleDoc()">
+      <span>📋 Información pedagógica para docentes</span>
+      <span class="arrow">▼</span>
+    </button>
+    <div class="doc-body" id="docBody">
+      <h4>Valor académico de esta actividad</h4>
+      <p>Esta introducción abre el Nivel 2 del programa, centrado en Inteligencia Emocional. La propuesta pedagógica busca generar un espacio seguro de exploración emocional, presentando las emociones como recursos valiosos para el autoconocimiento y el bienestar. El tono lúdico y narrativo facilita la apertura emocional sin generar ansiedad evaluativa.</p>
+      <div class="doc-placeholder">
+        🗂️ Contenido pedagógico adicional próximamente disponible.<br>
+        Este espacio está reservado para objetivos curriculares, indicadores de logro, competencias SEL y orientaciones metodológicas específicas de la Lección 1 del Nivel 2.
+      </div>
+    </div>
+  </div>
 
-  <!-- footer -->
-  <footer class="page-footer">
-    <p><strong></strong> · Nivel 2 · Lección 1 · El universo de tus emociones ✨</p>
-  </footer>
-
-</div><!-- /page-wrap -->
+</div><!-- end wrapper -->
 
 <script>
-/* ─── STAR CANVAS ─── */
-(function(){
-  const canvas = document.getElementById('starsCanvas');
-  const ctx    = canvas.getContext('2d');
-  let W, H, stars = [];
+// ── WARM STARFIELD ──
+const canvas = document.getElementById('starfield');
+const ctx = canvas.getContext('2d');
+let stars=[], W, H;
 
-  function resize(){
-    W = canvas.width  = window.innerWidth;
-    H = canvas.height = window.innerHeight;
+function resize(){
+  W = canvas.width = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener('resize', resize);
+
+function rnd(a,b){ return a+Math.random()*(b-a); }
+
+function initStars(){
+  stars=[];
+  const warmColors=['#FFD54F','#FFAB76','#FF8A65','#FFF3E0','#E89830','#FFE0B2'];
+  for(let i=0;i<280;i++){
+    stars.push({
+      x:rnd(0,W), y:rnd(0,H),
+      r:rnd(.3,2.4),
+      alpha:rnd(.2,1),
+      speed:rnd(.003,.022),
+      offset:rnd(0,Math.PI*2),
+      color:Math.random()>.6 ? warmColors[Math.floor(Math.random()*warmColors.length)] : '#ffffff'
+    });
   }
+}
+initStars();
 
-  function initStars(){
-    stars = [];
-    const count = Math.floor((W * H) / 3200);
-    for(let i = 0; i < count; i++){
-      stars.push({
-        x: Math.random() * W,
-        y: Math.random() * H,
-        r: Math.random() * 1.6 + 0.3,
-        a: Math.random(),
-        da: (Math.random() - 0.5) * 0.008,
-        speed: Math.random() * 0.12 + 0.02
-      });
-    }
-  }
-
-  function draw(){
-    ctx.clearRect(0, 0, W, H);
-    stars.forEach(s => {
-      s.a += s.da;
-      if(s.a <= 0 || s.a >= 1) s.da *= -1;
-      s.y += s.speed;
-      if(s.y > H) { s.y = 0; s.x = Math.random() * W; }
-
+let tick=0;
+function draw(){
+  ctx.clearRect(0,0,W,H);
+  tick+=.012;
+  stars.forEach(s=>{
+    const pulse=.5+.5*Math.sin(tick*s.speed*60+s.offset);
+    ctx.beginPath();
+    ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+    ctx.fillStyle=s.color;
+    ctx.globalAlpha=s.alpha*pulse;
+    ctx.fill();
+    if(s.r>1.7 && pulse>.83){
+      ctx.globalAlpha=s.alpha*pulse*.32;
+      ctx.strokeStyle=s.color;
+      ctx.lineWidth=.5;
       ctx.beginPath();
-      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(255,244,228,${s.a})`;
-      ctx.fill();
-    });
-    requestAnimationFrame(draw);
-  }
+      ctx.moveTo(s.x-s.r*3.5,s.y); ctx.lineTo(s.x+s.r*3.5,s.y);
+      ctx.moveTo(s.x,s.y-s.r*3.5); ctx.lineTo(s.x,s.y+s.r*3.5);
+      ctx.stroke();
+    }
+    ctx.globalAlpha=1;
+  });
+  requestAnimationFrame(draw);
+}
+draw();
 
-  window.addEventListener('resize', () => { resize(); initStars(); });
-  resize(); initStars(); draw();
-})();
+// ── WARM PARTICLES ──
+const ptColors=['#E89830','#FFF3E0','#FF7043','#FFD54F','#FFAB76','#FF8A65'];
+for(let i=0;i<50;i++){
+  const p=document.createElement('div');
+  p.className='pt';
+  const sz=Math.random()*5+2;
+  p.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*100}vw;
+    background:${ptColors[Math.floor(Math.random()*ptColors.length)]};
+    opacity:${Math.random()*.55+.2};
+    animation-duration:${Math.random()*12+8}s;
+    animation-delay:${Math.random()*12}s;
+    filter:blur(${Math.random()}px);`;
+  document.body.appendChild(p);
+}
 
-/* ─── FLOATING PARTICLES ─── */
-(function(){
-  const container = document.getElementById('particles-container');
-  const colors = ['#F49A1C','#F56C6C','#E5488B','#9FD4C1','#F3EFE7'];
-  const total = 28;
-
-  for(let i = 0; i < total; i++){
-    const p  = document.createElement('div');
-    p.classList.add('particle');
-    const size  = Math.random() * 6 + 2;
-    const color = colors[Math.floor(Math.random() * colors.length)];
-    const left  = Math.random() * 100;
-    const dur   = Math.random() * 12 + 10;
-    const delay = Math.random() * -15;
-    Object.assign(p.style, {
-      width:    size + 'px',
-      height:   size + 'px',
-      left:     left + '%',
-      background: color,
-      animationDuration:  dur + 's',
-      animationDelay:     delay + 's'
-    });
-    container.appendChild(p);
-  }
-})();
-
-/* ─── SCROLL REVEAL ─── */
-(function() {
-  const els = document.querySelectorAll('.reveal');
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
-    });
-  }, { threshold: 0.12 });
-  els.forEach(el => io.observe(el));
-})();
-
-/* ─── TEACHER ACCORDION ─── */
-function toggleTeacher() {
-  const acc = document.getElementById('teacherAccordion');
-  const btn = acc.querySelector('.teacher-header');
-  const isOpen = acc.classList.toggle('open');
-  btn.setAttribute('aria-expanded', isOpen);
+// ── DOCENTE TOGGLE ──
+function toggleDoc(){
+  const btn=document.getElementById('docBtn');
+  const body=document.getElementById('docBody');
+  btn.classList.toggle('open');
+  body.classList.toggle('open');
 }
 </script>
-
 </body>
 </html>

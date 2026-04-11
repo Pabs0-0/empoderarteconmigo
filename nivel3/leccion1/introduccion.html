@@ -1,1137 +1,785 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pandora · Nivel 3 · Introducción</title>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Nunito:wght@300;400;600;700;800&display=swap"
-        rel="stylesheet" />
-    <style>
-        /* ── VARIABLES ────────────────────────────────────── */
-        :root {
-            --rojo: #D61F2C;
-            --coral: #F05C67;
-            --fucsia: #E5487C;
-            --rosa: #F4B7BE;
-            --crema: #F4EEE9;
-            --naranja: #F5A54A;
-            --azul: #3E4A86;
-            --menta: #BFE7D5;
-        }
-
-        /* ── RESET ────────────────────────────────────────── */
-        *,
-        *::before,
-        *::after {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: 'Nunito', sans-serif;
-            background: #1a0510;
-            color: var(--crema);
-            overflow-x: hidden;
-            min-height: 100vh;
-        }
-
-        /* ── CANVAS GALAXY ────────────────────────────────── */
-        #galaxy-canvas {
-            position: fixed;
-            inset: 0;
-            z-index: 0;
-            pointer-events: none;
-        }
-
-        /* ── NEBULA GRADIENTS ─────────────────────────────── */
-        .nebula-layer {
-            position: fixed;
-            inset: 0;
-            z-index: 0;
-            pointer-events: none;
-            background: radial-gradient(ellipse 70% 50% at 15% 20%, rgba(214, 31, 44, 0.35) 0%, transparent 60%), radial-gradient(ellipse 50% 40% at 85% 10%, rgba(229, 72, 124, 0.30) 0%, transparent 55%), radial-gradient(ellipse 60% 45% at 50% 80%, rgba(240, 92, 103, 0.25) 0%, transparent 60%), radial-gradient(ellipse 40% 30% at 75% 60%, rgba(245, 165, 74, 0.15) 0%, transparent 50%), radial-gradient(ellipse 80% 80% at 50% 50%, rgb(94 62 134 / 25%) 0%, transparent 70%), linear-gradient(135deg, #3b0617 0%, #330719 30%, #7f1212 60%, #5f0606 100%);
-            animation: nebulaShift 18s ease-in-out infinite alternate;
-        }
-
-        @keyframes nebulaShift {
-            0% {
-                opacity: 1;
-                filter: hue-rotate(0deg);
-            }
-
-            50% {
-                opacity: .92;
-                filter: hue-rotate(10deg);
-            }
-
-            100% {
-                opacity: 1;
-                filter: hue-rotate(-8deg);
-            }
-        }
-
-        /* ── FLOATING PARTICLES (CSS) ─────────────────────── */
-        .particle {
-            position: fixed;
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 1;
-            animation: floatUp linear infinite;
-        }
-
-        @keyframes floatUp {
-            0% {
-                transform: translateY(0) scale(1);
-                opacity: 0;
-            }
-
-            10% {
-                opacity: 1;
-            }
-
-            90% {
-                opacity: .7;
-            }
-
-            100% {
-                transform: translateY(-100vh) scale(.4);
-                opacity: 0;
-            }
-        }
-
-        /* ── FALLING SPARKLES ─────────────────────────────── */
-        .sparkle-fall {
-            position: fixed;
-            font-size: 12px;
-            pointer-events: none;
-            z-index: 1;
-            animation: fallDown linear infinite;
-            opacity: 0;
-        }
-
-        @keyframes fallDown {
-            0% {
-                transform: translateY(-20px) rotate(0deg);
-                opacity: 0;
-            }
-
-            10% {
-                opacity: .9;
-            }
-
-            90% {
-                opacity: .5;
-            }
-
-            100% {
-                transform: translateY(105vh) rotate(360deg);
-                opacity: 0;
-            }
-        }
-
-        /* ── TWINKLING STARS (CSS pseudo) ────────────────── */
-        .star-css {
-            position: fixed;
-            background: white;
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 1;
-            animation: twinkle ease-in-out infinite alternate;
-        }
-
-        @keyframes twinkle {
-            0% {
-                opacity: .1;
-                transform: scale(.8);
-            }
-
-            100% {
-                opacity: 1;
-                transform: scale(1.3);
-            }
-        }
-
-        /* ── LAYOUT ───────────────────────────────────────── */
-        .content-wrapper {
-            position: relative;
-            z-index: 10;
-        }
-
-        /* ── SECTION SHARED ───────────────────────────────── */
-        section {
-            position: relative;
-            padding: 80px 24px;
-        }
-
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-        }
-
-        /* ── BADGE ────────────────────────────────────────── */
-        .badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(245, 165, 74, .18);
-            border: 1px solid rgba(245, 165, 74, .4);
-            color: var(--naranja);
-            font-weight: 700;
-            font-size: .78rem;
-            letter-spacing: .12em;
-            text-transform: uppercase;
-            padding: 6px 16px;
-            border-radius: 100px;
-            margin-bottom: 18px;
-        }
-
-        /* ── HERO ─────────────────────────────────────────── */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 60px 24px 80px;
-            overflow: hidden;
-        }
-
-        .hero-inner {
-            position: relative;
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .hero-eyebrow {
-            font-size: .85rem;
-            letter-spacing: .2em;
-            text-transform: uppercase;
-            color: var(--rosa);
-            font-weight: 700;
-            margin-bottom: 10px;
-            animation: fadeSlideUp .8s both;
-        }
-
-        .hero-title {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(3rem, 8vw, 6.5rem);
-            font-weight: 700;
-            line-height: 1.05;
-            background: linear-gradient(135deg, var(--crema) 0%, var(--rosa) 40%, var(--naranja) 80%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: fadeSlideUp .9s .1s both;
-        }
-
-        .hero-subtitle {
-            font-size: clamp(1rem, 2.5vw, 1.35rem);
-            color: rgba(244, 238, 233, .75);
-            margin: 18px auto 0;
-            max-width: 620px;
-            line-height: 1.7;
-            font-weight: 400;
-            animation: fadeSlideUp .9s .2s both;
-        }
-
-        .hero-accent-line {
-            width: 80px;
-            height: 3px;
-            background: linear-gradient(90deg, var(--fucsia), var(--naranja));
-            border-radius: 10px;
-            margin: 28px auto;
-            animation: fadeSlideUp .9s .3s both;
-        }
-
-        /* characters strip */
-        .hero-chars {
-            position: relative;
-            margin-top: 40px;
-            display: flex;
-            justify-content: center;
-            align-items: flex-end;
-            gap: 30px;
-            animation: fadeSlideUp 1s .5s both;
-        }
-
-        .char-img {
-            width: clamp(120px, 18vw, 200px);
-            filter: drop-shadow(0 0 30px rgba(229, 72, 124, .6));
-            animation: floatChar 4s ease-in-out infinite alternate;
-        }
-
-        .char-img.luna {
-            animation-delay: .8s;
-        }
-
-        @keyframes floatChar {
-            0% {
-                transform: translateY(0);
-            }
-
-            100% {
-                transform: translateY(-14px);
-            }
-        }
-
-        /* decorative small PNGs in hero */
-        .deco-float {
-            position: absolute;
-            pointer-events: none;
-            animation: floatDeco ease-in-out infinite alternate;
-        }
-
-        @keyframes floatDeco {
-            0% {
-                transform: translateY(0) rotate(0deg);
-            }
-
-            100% {
-                transform: translateY(-12px) rotate(8deg);
-            }
-        }
-
-        /* ── SECTION TITLE ────────────────────────────────── */
-        .section-label {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 1.5rem;
-            font-family: 'Playfair Display', serif;
-            font-weight: 700;
-            margin-bottom: 28px;
-            color: var(--crema);
-        }
-
-        .section-icon {
-            font-size: 1.6rem;
-            line-height: 1;
-        }
-
-        /* ── GLASS CARD ───────────────────────────────────── */
-        .glass-card {
-            background: linear-gradient(135deg, rgba(244, 238, 233, .10) 0%, rgba(240, 92, 103, .08) 100%);
-            border: 1px solid rgba(244, 183, 190, .20);
-            border-radius: 28px;
-            padding: 40px;
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            box-shadow: 0 8px 40px rgba(0, 0, 0, .3), inset 0 1px 0 rgba(255, 255, 255, .08);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .glass-card::before {
-            content: '';
-            position: absolute;
-            top: -1px;
-            left: -1px;
-            right: -1px;
-            height: 3px;
-            background: linear-gradient(90deg, var(--fucsia), var(--coral), var(--naranja));
-            border-radius: 28px 28px 0 0;
-        }
-
-        /* ── TWO-COL GRID ─────────────────────────────────── */
-        .two-col {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 24px;
-        }
-
-        @media (max-width: 700px) {
-            .two-col {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* ── DISCOVER SECTION ─────────────────────────────── */
-        .discover-section {
-            padding: 60px 24px;
-        }
-
-        .discover-text {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            color: rgba(244, 238, 233, .88);
-        }
-
-        .discover-text strong {
-            color: var(--rosa);
-            font-weight: 700;
-        }
-
-        /* card with side image */
-        .card-with-char {
-            display: flex;
-            gap: 28px;
-            align-items: center;
-        }
-
-        .card-with-char .char-side {
-            width: 130px;
-            flex-shrink: 0;
-            filter: drop-shadow(0 0 18px rgba(229, 72, 124, .5));
-            animation: floatChar 3.5s ease-in-out infinite alternate;
-        }
-
-        @media (max-width: 700px) {
-            .card-with-char {
-                flex-direction: column;
-            }
-
-            .card-with-char .char-side {
-                width: 100px;
-            }
-        }
-
-        /* ── APRENDIZAJE ──────────────────────────────────── */
-        .learn-section {
-            padding: 0 24px 60px;
-        }
-
-        .learn-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 20px;
-        }
-
-        .learn-pill {
-            background: linear-gradient(135deg, rgba(214, 31, 44, .15), rgba(229, 72, 124, .10));
-            border: 1px solid rgba(229, 72, 124, .25);
-            border-radius: 20px;
-            padding: 28px 24px;
-            display: flex;
-            gap: 16px;
-            align-items: flex-start;
-            transition: transform .3s, box-shadow .3s;
-        }
-
-        .learn-pill:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 32px rgba(214, 31, 44, .25);
-        }
-
-        .learn-pill-icon {
-            font-size: 2rem;
-            line-height: 1;
-            flex-shrink: 0;
-        }
-
-        .learn-pill-text {
-            font-size: .98rem;
-            line-height: 1.6;
-            color: rgba(244, 238, 233, .9);
-        }
-
-        /* ── OBJETIVO ─────────────────────────────────────── */
-        .objetivo-section {
-            padding: 0 24px 60px;
-        }
-
-        .objetivo-card {
-            background: linear-gradient(135deg, rgba(214, 31, 44, .22), rgba(229, 72, 124, .18), rgba(245, 165, 74, .08));
-            border: 1px solid rgba(244, 183, 190, .30);
-            border-radius: 28px;
-            padding: 50px 44px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .objetivo-card::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(245, 165, 74, .08), transparent 70%);
-            pointer-events: none;
-        }
-
-        .objetivo-title {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(1.4rem, 3vw, 2rem);
-            margin-bottom: 16px;
-            color: var(--crema);
-        }
-
-        .objetivo-text {
-            font-size: 1.12rem;
-            line-height: 1.75;
-            color: rgba(244, 238, 233, .85);
-            max-width: 680px;
-            margin: 0 auto;
-        }
-
-        .objetivo-deco-char {
-            position: absolute;
-            bottom: -10px;
-            right: 20px;
-            width: 120px;
-            opacity: .85;
-            filter: drop-shadow(0 0 20px rgba(229, 72, 124, .5));
-            animation: floatChar 4.5s ease-in-out infinite alternate;
-        }
-
-        /* ── QUÉ HAREMOS ──────────────────────────────────── */
-        .haremos-section {
-            padding: 0 24px 60px;
-        }
-
-        .haremos-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-top: 8px;
-        }
-
-        .haremos-card {
-            background: rgba(244, 238, 233, .06);
-            border: 1px solid rgba(244, 183, 190, .18);
-            border-radius: 22px;
-            padding: 32px 22px;
-            text-align: center;
-            cursor: default;
-            transition: transform .35s cubic-bezier(.34, 1.56, .64, 1), box-shadow .35s;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .haremos-card::before {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, var(--fucsia), var(--coral));
-            transform: scaleX(0);
-            transition: transform .35s;
-        }
-
-        .haremos-card:hover::before {
-            transform: scaleX(1);
-        }
-
-        .haremos-card:hover {
-            transform: translateY(-6px) scale(1.02);
-            box-shadow: 0 16px 40px rgba(229, 72, 124, .22);
-        }
-
-        .haremos-icon {
-            font-size: 2.4rem;
-            margin-bottom: 14px;
-            display: block;
-        }
-
-        .haremos-label {
-            font-size: .95rem;
-            font-weight: 700;
-            color: var(--crema);
-            line-height: 1.4;
-        }
-
-        /* ── INTRO LABEL ──────────────────────────────────── */
-        .intro-ribbon {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-
-        .intro-ribbon .ribbon-tag {
-            display: inline-block;
-            background: linear-gradient(135deg, var(--rojo), var(--fucsia));
-            padding: 10px 32px;
-            border-radius: 100px;
-            font-weight: 800;
-            font-size: .82rem;
-            letter-spacing: .18em;
-            text-transform: uppercase;
-            color: var(--crema);
-            box-shadow: 0 4px 20px rgba(214, 31, 44, .4);
-        }
-
-        /* ── DOCENTE PANEL ────────────────────────────────── */
-        .docente-section {
-            padding: 40px 24px 80px;
-        }
-
-        .docente-toggle {
-            background: none;
-            border: 1px solid rgba(191, 231, 213, .25);
-            border-radius: 16px;
-            padding: 18px 28px;
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            cursor: pointer;
-            color: rgba(191, 231, 213, .7);
-            font-family: 'Nunito', sans-serif;
-            font-size: .95rem;
-            font-weight: 700;
-            letter-spacing: .05em;
-            transition: background .3s, border-color .3s;
-        }
-
-        .docente-toggle:hover {
-            background: rgba(191, 231, 213, .06);
-            border-color: rgba(191, 231, 213, .4);
-        }
-
-        .docente-toggle-arrow {
-            font-size: 1.1rem;
-            transition: transform .35s;
-        }
-
-        .docente-toggle.open .docente-toggle-arrow {
-            transform: rotate(180deg);
-        }
-
-        .docente-body {
-            overflow: hidden;
-            max-height: 0;
-            transition: max-height .5s ease, padding .35s;
-            padding: 0 28px;
-        }
-
-        .docente-body.open {
-            max-height: 600px;
-            padding: 24px 28px 0;
-        }
-
-        .docente-inner {
-            background: rgba(191, 231, 213, .05);
-            border: 1px solid rgba(191, 231, 213, .15);
-            border-radius: 14px;
-            padding: 28px;
-            font-size: .9rem;
-            line-height: 1.7;
-            color: rgba(191, 231, 213, .75);
-            margin-bottom: 20px;
-        }
-
-        .docente-inner p {
-            margin-bottom: 10px;
-        }
-
-        .docente-inner strong {
-            color: var(--menta);
-        }
-
-        /* ── FOOTER ───────────────────────────────────────── */
-        .site-footer {
-            text-align: center;
-            padding: 24px;
-            font-size: .78rem;
-            color: rgba(244, 238, 233, .3);
-            letter-spacing: .1em;
-        }
-
-        /* ── ANIMATIONS ───────────────────────────────────── */
-        @keyframes fadeSlideUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* scroll reveal helper */
-        .reveal {
-            opacity: 0;
-            transform: translateY(36px);
-            transition: opacity .7s ease, transform .7s ease;
-        }
-
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* stagger children */
-        .stagger-children>* {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity .6s ease, transform .6s ease;
-        }
-
-        .stagger-children.visible>*:nth-child(1) {
-            opacity: 1;
-            transform: none;
-            transition-delay: .05s;
-        }
-
-        .stagger-children.visible>*:nth-child(2) {
-            opacity: 1;
-            transform: none;
-            transition-delay: .15s;
-        }
-
-        .stagger-children.visible>*:nth-child(3) {
-            opacity: 1;
-            transform: none;
-            transition-delay: .25s;
-        }
-
-        .stagger-children.visible>*:nth-child(4) {
-            opacity: 1;
-            transform: none;
-            transition-delay: .35s;
-        }
-
-        /* divider */
-        .divider {
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(229, 72, 124, .3), transparent);
-            margin: 0 auto;
-            max-width: 700px;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>El Viaje de Ceci — Nivel 3 · Lección 1 · La Magia de Tu Ciclo</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fredoka+One&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --deep:   #6B0A14;
+    --main:   #C0392B;
+    --accent: #E74C6F;
+    --light:  #FDECEF;
+    --rose:   #F06292;
+    --blush:  #FFCDD2;
+    --coral:  #EF5350;
+    --cream:  #FFF5F6;
+    --gold:   #FFD54F;
+    --magenta:#E91E63;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    font-family:'Nunito',sans-serif;
+    background:#1A0307;
+    color:#fff;
+    overflow-x:hidden;
+    min-height:100vh;
+  }
+
+  /* ── CANVAS ── */
+  #starfield {
+    position:fixed;top:0;left:0;
+    width:100%;height:100%;
+    z-index:0;pointer-events:none;
+  }
+
+  /* ── NEBULAE ── */
+  .neb {
+    position:fixed;border-radius:50%;
+    filter:blur(95px);opacity:.17;
+    z-index:0;pointer-events:none;
+    animation:nebPulse 9s ease-in-out infinite alternate;
+  }
+  .n1{width:700px;height:700px;background:#C0392B;top:-140px;left:-170px;animation-delay:0s;}
+  .n2{width:520px;height:520px;background:#E74C6F;top:200px;right:-120px;animation-delay:2.5s;}
+  .n3{width:450px;height:450px;background:#E91E63;bottom:60px;left:20%;animation-delay:4s;}
+  .n4{width:330px;height:330px;background:#F06292;top:55%;right:7%;animation-delay:1.8s;}
+  .n5{width:280px;height:280px;background:#EF5350;top:32%;left:52%;animation-delay:3.2s;}
+  .n6{width:310px;height:310px;background:#FF80AB;bottom:15%;left:4%;animation-delay:2s;opacity:.11;}
+  @keyframes nebPulse{
+    from{opacity:.11;transform:scale(1);}
+    to{opacity:.23;transform:scale(1.1);}
+  }
+
+  /* ── PARTICLES ── */
+  .pt{
+    position:fixed;border-radius:50%;
+    pointer-events:none;z-index:0;
+    animation:ptFall linear infinite;
+  }
+  @keyframes ptFall{
+    0%{transform:translateY(-20px) rotate(0deg);opacity:0;}
+    10%{opacity:1;}90%{opacity:.8;}
+    100%{transform:translateY(110vh) rotate(720deg);opacity:0;}
+  }
+
+  /* ── KEYFRAMES ── */
+  @keyframes float{from{transform:translateY(0);}to{transform:translateY(-13px);}}
+  @keyframes floatSlow{
+    from{transform:translateY(0) rotate(-4deg);}
+    to{transform:translateY(-9px) rotate(4deg);}
+  }
+  @keyframes spkl{
+    0%{opacity:.2;transform:scale(.7) rotate(0deg);}
+    50%{opacity:1;transform:scale(1.25) rotate(180deg);}
+    100%{opacity:.4;transform:scale(.9) rotate(360deg);}
+  }
+  @keyframes heartPulse{
+    0%,100%{transform:scale(1);}
+    50%{transform:scale(1.22);}
+  }
+  @keyframes haloBreath{
+    from{transform:translate(-50%,-50%) scale(.88);opacity:.5;}
+    to{transform:translate(-50%,-50%) scale(1.25);opacity:1;}
+  }
+  @keyframes borderShim{
+    0%{opacity:.4;}50%{opacity:1;}100%{opacity:.4;}
+  }
+  @keyframes pillGlow{
+    from{box-shadow:0 0 16px rgba(231,76,111,.4);}
+    to{box-shadow:0 0 44px rgba(231,76,111,.95);}
+  }
+  @keyframes moonOrbit{
+    from{transform:rotate(0deg) translateX(18px) rotate(0deg);}
+    to{transform:rotate(360deg) translateX(18px) rotate(-360deg);}
+  }
+  @keyframes breatheScale{
+    from{transform:scale(1);}
+    to{transform:scale(1.06);}
+  }
+  @keyframes phaseGlow{
+    from{box-shadow:0 0 12px rgba(231,76,111,.3);}
+    to{box-shadow:0 0 28px rgba(231,76,111,.7);}
+  }
+
+  /* ── FIXED SPARKLES ── */
+  .fixed-spk{
+    position:fixed;z-index:1;pointer-events:none;
+    animation:spkl ease-in-out infinite alternate;
+  }
+
+  /* ── WRAPPER ── */
+  .wrapper{
+    position:relative;z-index:2;
+    max-width:960px;margin:0 auto;
+    padding:0 20px 72px;
+  }
+
+  /* ── NIVEL PILL ── */
+  .nivel-pill{
+    display:inline-block;
+    background:linear-gradient(135deg,#C0392B,#E74C6F);
+    color:#fff;font-family:'Fredoka One',cursive;
+    font-size:.95rem;letter-spacing:3px;
+    padding:8px 28px;border-radius:50px;
+    box-shadow:0 0 26px rgba(231,76,111,.6);
+    margin-bottom:20px;
+    animation:pillGlow 3s ease-in-out infinite alternate;
+  }
+
+  /* ── HERO ── */
+  .hero{position:relative;padding:48px 20px 0;text-align:center;}
+
+  .hero-block{
+    background:linear-gradient(145deg,#6B0A14 0%,#951525 52%,#6B0A14 100%);
+    border:2px solid rgba(231,76,111,.55);
+    border-radius:32px;padding:52px 40px 46px;
+    position:relative;overflow:hidden;
+    box-shadow:0 0 80px rgba(107,10,20,.9),0 0 140px rgba(192,57,43,.25),
+               inset 0 1px 0 rgba(255,255,255,.08);
+  }
+  .hero-block::after{
+    content:'';position:absolute;
+    top:-2px;left:-2px;right:-2px;bottom:-2px;
+    border-radius:34px;
+    background:linear-gradient(135deg,rgba(231,76,111,.38),transparent,rgba(240,98,146,.22));
+    z-index:0;animation:borderShim 5s linear infinite;
+  }
+
+  /* moon orbiting in hero corner */
+  .hero-moon-wrap{
+    position:absolute;top:18px;right:24px;
+    width:60px;height:60px;z-index:2;opacity:.55;
+  }
+  .hero-moon-wrap img{
+    width:50px;
+    animation:floatSlow 4s ease-in-out infinite alternate;
+  }
+
+  .hero-inner{position:relative;z-index:1;}
+  .hero-nivel{
+    font-family:'Fredoka One',cursive;
+    font-size:1rem;color:#F06292;
+    letter-spacing:4px;text-transform:uppercase;margin-bottom:8px;
+  }
+  .hero-title{
+    font-family:'Fredoka One',cursive;
+    font-size:clamp(2rem,5.5vw,3.6rem);
+    color:#fff;
+    text-shadow:0 0 32px rgba(231,76,111,.88),0 2px 4px rgba(0,0,0,.4);
+    line-height:1.15;margin-bottom:10px;
+  }
+  .hero-title span{color:#FFCDD2;}
+  .hero-subtitle{
+    font-size:1.1rem;color:#FFCDD2;font-weight:700;margin-bottom:18px;
+  }
+  .hero-lesson-tag{
+    display:inline-block;
+    background:rgba(192,57,43,.35);
+    border:1px solid rgba(231,76,111,.5);
+    border-radius:50px;padding:8px 26px;
+    font-family:'Fredoka One',cursive;
+    font-size:1rem;color:#FFD0D8;
+    letter-spacing:1px;margin-bottom:28px;
+  }
+
+  .hero-chars{
+    display:flex;justify-content:center;align-items:flex-end;gap:18px;
+    margin-top:10px;
+  }
+  .hero-chars img{
+    height:200px;
+    filter:drop-shadow(0 0 24px rgba(231,76,111,.7));
+    animation:float 4s ease-in-out infinite alternate;
+  }
+  .hero-chars img:nth-child(2){height:105px;animation-delay:.8s;}
+  .hero-chars img:nth-child(3){height:170px;animation-delay:1.7s;}
+
+  /* ── SECTION LABEL ── */
+  .section-label{
+    text-align:center;margin:44px 0 28px;
+  }
+  .section-label h2{
+    font-family:'Fredoka One',cursive;
+    font-size:clamp(1.2rem,3.8vw,1.85rem);
+    color:#FFCDD2;
+    background:rgba(107,10,20,.72);
+    border:1px solid rgba(231,76,111,.45);
+    display:inline-block;padding:12px 36px;
+    border-radius:50px;
+    box-shadow:0 0 24px rgba(192,57,43,.35);
+  }
+
+  /* ── CONTENT CARDS ── */
+  .card{
+    background:var(--light);
+    border-radius:26px;padding:34px 38px;
+    margin-bottom:24px;
+    border:2px solid rgba(192,57,43,.2);
+    box-shadow:0 10px 50px rgba(107,10,20,.42),0 2px 8px rgba(0,0,0,.2);
+    position:relative;overflow:hidden;
+  }
+  .card::before{
+    content:'';position:absolute;top:0;left:0;right:0;height:5px;
+    border-radius:26px 26px 0 0;
+  }
+  .card.c1::before{background:linear-gradient(90deg,#C0392B,#E74C6F,#F06292);}
+  .card.c2::before{background:linear-gradient(90deg,#E74C6F,#E91E63,#F06292);}
+  .card.c3::before{background:linear-gradient(90deg,#F06292,#E74C6F,#C0392B);}
+
+  .card-row{display:flex;align-items:center;gap:26px;}
+  .card-text{flex:1;}
+  .card-char{flex-shrink:0;width:130px;}
+  .card-char img{
+    width:100%;
+    filter:drop-shadow(0 4px 14px rgba(192,57,43,.45));
+    animation:float 4.5s ease-in-out infinite alternate;
+  }
+
+  .card-emoji{font-size:2.2rem;margin-bottom:10px;display:block;}
+  .card h3{
+    font-family:'Fredoka One',cursive;
+    font-size:1.45rem;color:#6B0A14;margin-bottom:13px;
+  }
+  .card p{
+    font-size:1.05rem;color:#5C0010;
+    line-height:1.8;font-weight:700;
+  }
+
+  /* ── PHASES STRIP ── */
+  .phases-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:14px;margin-top:18px;
+  }
+  @media(max-width:560px){.phases-grid{grid-template-columns:repeat(2,1fr);}}
+
+  .phase-item{
+    background:linear-gradient(145deg,#6B0A14,#951525);
+    border-radius:18px;padding:16px 12px;
+    text-align:center;
+    border:1px solid rgba(231,76,111,.35);
+    box-shadow:0 4px 18px rgba(107,10,20,.5);
+    transition:transform .3s,box-shadow .3s;
+    cursor:default;
+    animation:phaseGlow 3s ease-in-out infinite alternate;
+  }
+  .phase-item:hover{transform:translateY(-5px);}
+  .phase-item:nth-child(2){animation-delay:.5s;}
+  .phase-item:nth-child(3){animation-delay:1s;}
+  .phase-item:nth-child(4){animation-delay:1.5s;}
+  .phase-img{width:55px;margin:0 auto 8px;display:block;filter:drop-shadow(0 0 8px rgba(231,76,111,.4));}
+  .phase-label{font-size:.82rem;font-weight:700;color:#FDECEF;line-height:1.3;}
+
+  /* ── ACTIVITIES CARD ── */
+  .act-card{
+    background:var(--light);
+    border-radius:26px;padding:34px 38px;
+    margin-bottom:24px;
+    border:2px solid rgba(192,57,43,.2);
+    box-shadow:0 10px 50px rgba(107,10,20,.4);
+    position:relative;overflow:hidden;
+  }
+  .act-card::before{
+    content:'';position:absolute;top:0;left:0;right:0;height:5px;
+    background:linear-gradient(90deg,#E91E63,#E74C6F,#F06292);
+    border-radius:26px 26px 0 0;
+  }
+  .act-card h3{
+    font-family:'Fredoka One',cursive;
+    font-size:1.45rem;color:#6B0A14;margin-bottom:20px;
+  }
+  .act-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:16px;
+  }
+  .act-item{
+    background:linear-gradient(145deg,#6B0A14,#951525);
+    border-radius:20px;padding:22px 18px;
+    text-align:center;
+    border:1px solid rgba(231,76,111,.35);
+    box-shadow:0 4px 22px rgba(107,10,20,.5);
+    transition:transform .3s,box-shadow .3s;
+    cursor:default;
+  }
+  .act-item:hover{
+    transform:translateY(-6px);
+    box-shadow:0 14px 32px rgba(231,76,111,.55);
+  }
+  .act-icon{font-size:1.9rem;margin-bottom:9px;display:block;}
+  .act-label{font-size:.88rem;font-weight:700;color:#FDECEF;line-height:1.45;}
+  .act-img{height:40px;margin:0 auto 8px;display:block;filter:drop-shadow(0 0 6px rgba(231,76,111,.5));}
+
+  /* ── DIVIDER ── */
+  .divider{
+    display:flex;align-items:center;gap:14px;
+    margin:28px 0;opacity:.38;
+  }
+  .divider::before,.divider::after{
+    content:'';flex:1;height:1px;
+    background:linear-gradient(90deg,transparent,#E74C6F,transparent);
+  }
+  .divider span{font-size:1.1rem;}
+
+  /* ── BADGE SECTION ── */
+  .badge-section{
+    text-align:center;margin:36px 0;
+  }
+  .badge-box{
+    background:linear-gradient(145deg,#6B0A14,#951525);
+    border:2px solid rgba(231,76,111,.55);
+    border-radius:28px;padding:42px 30px;
+    display:inline-block;min-width:290px;
+    position:relative;overflow:hidden;
+    box-shadow:0 0 60px rgba(192,57,43,.5),inset 0 1px 0 rgba(255,255,255,.08);
+  }
+  .badge-halo{
+    position:absolute;top:50%;left:50%;
+    width:220px;height:220px;
+    background:radial-gradient(circle,rgba(240,98,146,.28) 0%,transparent 70%);
+    transform:translate(-50%,-50%);
+    border-radius:50%;
+    animation:haloBreath 3s ease-in-out infinite alternate;
+  }
+  .badge-img{
+    width:115px;
+    filter:drop-shadow(0 0 26px rgba(240,98,146,.78))
+           drop-shadow(0 0 10px rgba(231,76,111,.82));
+    position:relative;z-index:1;
+    animation:float 3.5s ease-in-out infinite alternate;
+  }
+  .badge-title{
+    font-family:'Fredoka One',cursive;
+    font-size:1.32rem;color:#FFCDD2;
+    margin-top:14px;
+    text-shadow:0 0 18px rgba(240,98,146,.55);
+    position:relative;z-index:1;
+  }
+  .badge-desc{
+    font-size:.92rem;color:#FFCDD2;
+    margin-top:8px;font-weight:700;opacity:.85;
+    position:relative;z-index:1;
+  }
+
+  /* ── DECO FLOAT ── */
+  .deco-float{
+    position:absolute;pointer-events:none;z-index:1;opacity:.75;
+    animation:float ease-in-out infinite alternate;
+  }
+
+  /* ── UTERUS CARD ── */
+  .body-card{
+    background:linear-gradient(145deg,#6B0A14,#951525);
+    border:2px solid rgba(231,76,111,.42);
+    border-radius:26px;padding:34px 38px;
+    margin-bottom:24px;
+    position:relative;overflow:hidden;
+    box-shadow:0 0 55px rgba(107,10,20,.6),inset 0 1px 0 rgba(255,255,255,.06);
+  }
+  .body-card::before{
+    content:'';position:absolute;top:0;left:0;right:0;height:5px;
+    background:linear-gradient(90deg,#F06292,#E74C6F,#C0392B);
+    border-radius:26px 26px 0 0;
+  }
+  .body-inner{display:flex;align-items:center;gap:28px;}
+  .body-text{flex:1;}
+  .body-char{flex-shrink:0;width:130px;text-align:center;}
+  .body-char img{
+    width:100%;
+    filter:drop-shadow(0 0 18px rgba(231,76,111,.55));
+    animation:breatheScale 4s ease-in-out infinite alternate;
+  }
+  .body-card h3{
+    font-family:'Fredoka One',cursive;
+    font-size:1.4rem;color:#FFCDD2;margin-bottom:14px;
+  }
+  .body-card p{
+    font-size:1.02rem;color:#FFD0D8;
+    line-height:1.8;font-weight:700;
+  }
+
+  /* ── CLOSING ── */
+  .closing{
+    text-align:center;margin:46px 0 20px;position:relative;
+  }
+  .closing-box{
+    background:linear-gradient(145deg,#6B0A14,#951525);
+    border:2px solid rgba(231,76,111,.42);
+    border-radius:28px;padding:42px 38px;
+    position:relative;overflow:hidden;
+    box-shadow:0 0 60px rgba(107,10,20,.58);
+  }
+  .closing-box h2{
+    font-family:'Fredoka One',cursive;
+    font-size:clamp(1.4rem,4vw,2.1rem);
+    color:#fff;margin-bottom:14px;
+    text-shadow:0 0 22px rgba(231,76,111,.68);
+  }
+  .closing-box p{
+    font-size:1.04rem;color:#FFCDD2;
+    line-height:1.75;font-weight:700;
+    max-width:580px;margin:0 auto 26px;
+  }
+  .cta-btn{
+    display:inline-block;
+    background:linear-gradient(135deg,#C0392B,#E74C6F);
+    color:#fff;font-family:'Fredoka One',cursive;
+    font-size:1.2rem;padding:16px 46px;
+    border-radius:50px;border:none;cursor:pointer;
+    box-shadow:0 0 34px rgba(231,76,111,.65),0 4px 16px rgba(0,0,0,.3);
+    transition:transform .3s,box-shadow .3s;
+    text-decoration:none;letter-spacing:1px;
+  }
+  .cta-btn:hover{
+    transform:translateY(-4px) scale(1.05);
+    box-shadow:0 0 58px rgba(231,76,111,.9),0 8px 28px rgba(0,0,0,.4);
+  }
+  .closing-chars{
+    display:flex;justify-content:center;align-items:flex-end;
+    gap:20px;margin-top:30px;flex-wrap:wrap;
+  }
+  .closing-chars img{
+    height:148px;
+    filter:drop-shadow(0 0 16px rgba(231,76,111,.55));
+    animation:float 4s ease-in-out infinite alternate;
+  }
+  .closing-chars img:nth-child(2){height:125px;animation-delay:1s;}
+  .closing-chars img:nth-child(3){height:88px;animation-delay:.5s;opacity:.8;}
+
+  /* ── DOCENTE ── */
+  .docente-wrap{
+    margin-top:54px;border-radius:20px;overflow:hidden;
+    border:1px solid rgba(192,57,43,.3);
+    box-shadow:0 4px 22px rgba(107,10,20,.3);
+  }
+  .doc-toggle{
+    background:rgba(80,5,15,.88);
+    padding:18px 28px;
+    display:flex;justify-content:space-between;align-items:center;
+    cursor:pointer;user-select:none;
+    border:none;width:100%;
+    color:#FFCDD2;
+    font-family:'Nunito',sans-serif;font-weight:700;font-size:.95rem;
+    letter-spacing:1px;transition:background .3s;
+  }
+  .doc-toggle:hover{background:rgba(110,15,30,.95);}
+  .doc-toggle .arrow{font-size:1.1rem;transition:transform .3s;}
+  .doc-toggle.open .arrow{transform:rotate(180deg);}
+  .doc-body{
+    display:none;background:rgba(20,3,8,.97);padding:28px;
+  }
+  .doc-body.open{display:block;}
+  .doc-body h4{
+    color:#E74C6F;font-family:'Fredoka One',cursive;
+    font-size:1.1rem;margin-bottom:10px;
+  }
+  .doc-body p{
+    color:#FFCDD2;font-size:.92rem;line-height:1.72;font-weight:600;
+  }
+  .doc-placeholder{
+    border:1px dashed rgba(231,76,111,.4);
+    border-radius:12px;padding:20px;text-align:center;
+    color:rgba(231,76,111,.5);font-size:.88rem;
+    margin-top:14px;font-weight:600;line-height:1.6;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media(max-width:640px){
+    .hero-block{padding:34px 18px 28px;}
+    .hero-chars img{height:115px;}
+    .card-row,.body-inner{flex-direction:column;}
+    .card-char,.body-char{width:110px;margin:0 auto;}
+    .act-grid{grid-template-columns:repeat(2,1fr);}
+    .closing-box{padding:28px 18px;}
+    .badge-box{min-width:unset;width:100%;max-width:320px;}
+  }
+</style>
 </head>
-
 <body>
 
-    <!-- ── GALAXY LAYERS ─────────────────────────────────── -->
-    <div class="nebula-layer"></div>
-    <canvas id="galaxy-canvas"></canvas>
+<canvas id="starfield"></canvas>
 
-    <!-- ── CSS STARS (scattered) ───────────────────────── -->
-    <!-- Generated by JS below -->
+<!-- Nebulae -->
+<div class="neb n1"></div>
+<div class="neb n2"></div>
+<div class="neb n3"></div>
+<div class="neb n4"></div>
+<div class="neb n5"></div>
+<div class="neb n6"></div>
 
-    <!-- ── CONTENT ───────────────────────────────────────── -->
-    <div class="content-wrapper">
+<!-- Fixed sparkles -->
+<img class="fixed-spk" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754686/estrella_bbltv2.png" style="width:32px;top:7%;left:4%;animation-duration:3.2s;">
+<img class="fixed-spk" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754686/estrella_bbltv2.png" style="width:42px;top:18%;right:5%;animation-duration:4.5s;animation-delay:1s;">
+<img class="fixed-spk" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754682/corazon_vjqq8g.png" style="width:30px;top:43%;left:2%;animation-duration:2.8s;animation-delay:.6s;animation-name:heartPulse;">
+<img class="fixed-spk" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754751/full_moon_k8gubh.png" style="width:38px;top:62%;right:3%;animation-duration:5s;animation-delay:2s;animation-name:floatSlow;">
+<img class="fixed-spk" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754682/corazon_vjqq8g.png" style="width:26px;top:82%;left:7%;animation-duration:3s;animation-delay:1.3s;animation-name:heartPulse;">
+<img class="fixed-spk" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754686/estrella_bbltv2.png" style="width:22px;top:91%;right:10%;animation-duration:4.2s;animation-delay:.4s;">
 
-        <!-- ══ HERO ══════════════════════════════════════════ -->
-        <section class="hero">
-            <!-- floating deco PNGs -->
-            <img src="img/full_moon.png" class="deco-float"
-                style="top:8%;left:6%;width:70px;opacity:.7;animation-duration:5s;" alt="" />
-            <img src="img/estrella.png" class="deco-float"
-                style="top:12%;right:8%;width:52px;opacity:.65;animation-duration:4.2s;animation-delay:.5s;" alt="" />
-            <img src="img/estrella.png" class="deco-float"
-                style="bottom:22%;left:4%;width:90px;opacity:.45;animation-duration:6s;animation-delay:.2s;" alt="" />
-            <img src="img/estrella.png" class="deco-float"
-                style="bottom:15%;right:5%;width:80px;opacity:.55;animation-duration:5.5s;animation-delay:1s;" alt="" />
-            <img src="img/estrella.png" class="deco-float"
-                style="top:35%;left:2%;width:40px;opacity:.8;animation-duration:3.5s;animation-delay:.7s;" alt="" />
-            <img src="img/estrella.png" class="deco-float"
-                style="top:60%;right:3%;width:35px;opacity:.7;animation-duration:3.8s;animation-delay:1.3s;" alt="" />
-            <img src="img/estrella.png" class="deco-float"
-                style="top:25%;left:18%;width:44px;opacity:.6;animation-duration:4.8s;animation-delay:.3s;" alt="" />
-            <img src="img/full_moon.png" class="deco-float"
-                style="bottom:30%;right:18%;width:65px;opacity:.4;animation-duration:6.5s;" alt="" />
-            <img src="img/libro.png" class="deco-float"
-                style="top:70%;left:15%;width:36px;opacity:.5;animation-duration:4s;animation-delay:.9s;" alt="" />
-            <img src="img/libro.png" class="deco-float"
-                style="bottom:10%;left:40%;width:30px;opacity:.65;animation-duration:3.2s;animation-delay:.6s;"
-                alt="" />
-            <img src="img/CHOCOLATE.png" class="deco-float"
-                style="top:5%;left:45%;width:55px;opacity:.55;animation-duration:5.8s;animation-delay:.4s;" alt="" />
-            
-            <div class="hero-inner">
-                <p class="hero-eyebrow">✦ Nivel 3 · Lección 1 ✦</p>
-                <h1 class="hero-title">Tu cuerpo,<br>tu universo</h1>
-                <div class="hero-accent-line"></div>
-                <p class="hero-subtitle">Bienvenida a un espacio mágico donde descubrirás los ciclos naturales de tu
-                    cuerpo y aprenderás a conocerte con curiosidad, amor y calma.</p>
+<div class="wrapper">
 
-                <div class="hero-chars">
-                    <img src="img/ceci_cozy.png" class="char-img ceci" alt="Ceci" />
-                    <img src="img/luna_side.png" class="char-img luna" alt="Luna" />
-                </div>
-            </div>
-        </section>
+  <!-- ── HERO ── -->
+  <div class="hero">
+    <div class="nivel-pill">✦ NIVEL 3 ✦</div>
+    <div class="hero-block">
+      <div class="hero-moon-wrap">
+        <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754751/full_moon_k8gubh.png" alt="">
+      </div>
+      <div class="hero-inner">
+        <p class="hero-nivel">NIVEL 3 — LECCIÓN 1</p>
+        <h1 class="hero-title">La <span>Magia</span> de<br>Tu Ciclo</h1>
+        <p class="hero-subtitle">Ciclo Menstrual y Autonomía Corporal</p>
+        <div class="hero-lesson-tag">🌸 LECCIÓN 1 — El Ciclo Mágico de Ceci</div>
+        <div class="hero-chars">
+          <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754637/ceci2_b6thu9.png" alt="Ceci asombrada" style="height:205px;">
+         </div>
+      </div>
+    </div>
+  </div>
 
-        <!-- ══ INTRO RIBBON ══════════════════════════════════ -->
-        <div class="intro-ribbon reveal">
-            <span class="ribbon-tag">✨ Introducción ✨</span>
+  <!-- ── INTRO LABEL ── -->
+  <div class="section-label">
+    <h2>🌸 Introducción — Lección 1</h2>
+  </div>
+
+  <!-- ── CARD 1: ¿Qué descubrirás? ── -->
+  <div class="card c1">
+    <div class="card-row">
+      <div class="card-text">
+        <span class="card-emoji">🌟</span>
+        <h3>¿Qué descubrirás aquí?</h3>
+        <p>En este nivel descubrirás que tu cuerpo tiene <strong>ciclos naturales llenos de cambios y aprendizajes</strong>. Así como la naturaleza cambia, tu cuerpo también vive procesos que forman parte de crecer.</p>
+        <!-- phases -->
+        <div class="phases-grid" style="margin-top:20px;">
+          <div class="phase-item">
+            <img class="phase-img" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754688/fase1_ihw8qr.png" alt="Fase 1" style="width: 70px;right:18px;top:-14px;animation-duration:2.8s;animation-name:heartPulse;">
+            <p class="phase-label">Fase 1</p>
+          </div>
+          <div class="phase-item">
+            <img class="phase-img" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754747/fase2_mhfpew.png" alt="Fase 2" style="width: 90px;right:18px;top:-14px;animation-duration:2.8s;animation-name:heartPulse;">
+            <p class="phase-label">Fase 2</p>
+          </div>
+          <div class="phase-item">
+            <img class="phase-img" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754748/fase3_ym9nlp.png" alt="Fase 3" style="width: 114px;right:18px;top:-14px;animation-duration:2.8s;animation-name:heartPulse;">
+            <p class="phase-label">Fase 3</p>
+          </div>
+          <div class="phase-item">
+            <img class="phase-img" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754749/fase4_xkabur.png" alt="Fase 4" style="width: 100px;right:18px;top:-14px;animation-duration:2.8s;animation-name:heartPulse;">
+            <p class="phase-label">Fase 4</p>
+          </div>
         </div>
+      </div>
+      <div class="card-char">
+        <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754475/ceci_phone_float_n0n52w.png" alt="Ceci curiosa">
+      </div>
+    </div>
+  </div>
 
-        <!-- ══ QUÉ DESCUBRIRÁS ════════════════════════════════ -->
-        <section class="discover-section">
-            <div class="container">
-                <div class="glass-card reveal card-with-char">
-                    <img src="img/ceci_asking.png" class="char-side" alt="Ceci" />
-                    <div>
-                        <div class="section-label">
-                            <span class="section-icon">🌟</span>
-                            Qué descubrirás aquí
-                        </div>
-                        <p class="discover-text">
-                            En este nivel descubrirás que <strong>tu cuerpo tiene ciclos naturales</strong> llenos de
-                            cambios y aprendizajes.<br><br>
-                            Así como la naturaleza cambia, tu cuerpo también vive procesos que forman parte de
-                            <strong>crecer</strong>.
-                        </p>
-                        
-                    </div>
-                </div>
-            </div>
-        </section>
+  <!-- ── CARD 2: ¿Qué aprenderás? ── -->
+  <div class="card c2" style="position:relative;">
+    <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754682/corazon_vjqq8g.png" class="deco-float" style="width:36px;right:18px;top:-14px;animation-duration:2.8s;animation-name:heartPulse;">
+    <div class="card-row">
+      <div class="card-char">
+        <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754485/ceci_thinking_again_shnorw.png" alt="Ceci pensando" style="animation-delay:1s;">
+      </div>
+      <div class="card-text">
+        <span class="card-emoji">📚</span>
+        <h3>¿Qué aprenderás?</h3>
+        <p>Aprenderás qué es el ciclo menstrual y por qué ocurre. Descubrirás que <strong>conocer tu cuerpo es una forma de cuidarte y respetarte</strong>.</p>
+      </div>
+    </div>
+  </div>
 
-        <!-- ══ QUÉ APRENDERÁS ════════════════════════════════ -->
-        <section class="learn-section">
-            <div class="container">
-                <div class="section-label reveal">
-                    <span class="section-icon">📚</span>
-                    Qué aprenderás
-                </div>
-                <div class="learn-grid stagger-children">
-                    <div class="learn-pill">
-                        <span class="learn-pill-icon">🔴</span>
-                        <p class="learn-pill-text">Aprenderás <strong style="color:var(--rosa);">qué es el ciclo
-                                menstrual</strong> y por qué ocurre en tu cuerpo.</p>
-                    </div>
-                    <div class="learn-pill">
-                        <span class="learn-pill-icon">💫</span>
-                        <p class="learn-pill-text">Descubrirás que <strong style="color:var(--rosa);">conocer tu
-                                cuerpo</strong> es una forma de cuidarte y respetarte.</p>
-                    </div>
-                    <div class="learn-pill">
-                        <span class="learn-pill-icon">🌙</span>
-                        <p class="learn-pill-text">Explorarás las <strong style="color:var(--rosa);">fases y ritmos
-                                naturales</strong> que forman parte de tu crecimiento.</p>
-                    </div>
-                    <div class="learn-pill">
-                        <span class="learn-pill-icon">🌸</span>
-                        <p class="learn-pill-text">Encontrarás en el <strong
-                                style="color:var(--rosa);">autocuidado</strong> una herramienta poderosa y amorosa.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+  <!-- ── CARD 3: Objetivo ── -->
+  <div class="card c3">
+    <div class="card-row">
+      <div class="card-text">
+        <span class="card-emoji">🎯</span>
+        <h3>Objetivo del nivel</h3>
+        <p>Comprenderás de manera <strong>natural y positiva</strong> el ciclo menstrual como parte del desarrollo de tu cuerpo, eliminando tabúes y estigmas. Tu cuerpo no es un misterio — es una maravilla.</p>
+      </div>
+      <div class="card-char">
+        <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754468/ceci_holding_phone_mifswt.png" alt="Ceci con celular flotando" style="animation-delay:1.5s;">
+      </div>
+    </div>
+  </div>
 
-        <div class="divider reveal"></div>
+  <!-- ── BODY KNOWLEDGE CARD ── -->
+  <div class="body-card" style="position:relative;">
+    <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754686/estrella_bbltv2.png" class="deco-float" style="width:28px;right:20px;top:-10px;animation-duration:3.2s;">
+    <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754751/full_moon_k8gubh.png" class="deco-float" style="width:44px;left:14px;bottom:-16px;animation-duration:5s;animation-delay:.8s;">
+    <div class="body-inner">
+      <div class="body-text">
+        <h3>🔬 Conoce tu sistema reproductivo</h3>
+        <p>En este nivel también explorarás cómo funciona tu sistema reproductivo. Conocerte es empoderarte — y hay mucha magia en entender lo que ocurre dentro de ti.</p>
+        <p style="margin-top:12px;color:#FFCDD2;">No hay preguntas vergonzosas. Todo lo que sientes y preguntas es válido. 💜</p>
+      </div>
+      <div class="body-char">
+        <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754773/uterus_tqhu1f.png" alt="Sistema reproductivo" style="width:90px;">
+      </div>
+    </div>
+  </div>
 
-        <!-- ══ OBJETIVO ═══════════════════════════════════════ -->
-        <section class="objetivo-section" style="padding-top:50px;">
-            <div class="container">
-                <div class="objetivo-card reveal">
-                    <div class="badge">🎯 Objetivo del nivel</div>
-                    <h2 class="objetivo-title">¿Hacia dónde vamos juntas?</h2>
-                    <p class="objetivo-text">
-                        Que comprendas de manera <strong>natural y positiva</strong> el ciclo menstrual como parte del
-                        desarrollo de tu cuerpo, sintiéndote acompañada, segura y curiosa durante todo el camino.
-                    </p>
-                    <div style="margin-top:28px;display:flex;justify-content:center;gap:14px;flex-wrap:wrap;">
-                        <img src="img/corazon.png"
-                            style="height:40px;opacity:.75;filter:drop-shadow(0 0 10px rgba(245,165,74,.6));" alt="" />
-                        <img src="img/corazon.png"
-                            style="height:40px;opacity:.75;filter:drop-shadow(0 0 10px rgba(229,72,124,.6));" alt="" />
-                        <img src="img/corazon.png"
-                            style="height:40px;opacity:.75;filter:drop-shadow(0 0 10px rgba(244,183,190,.5));" alt="" />
-                    </div>
-                    <img src="img/luna_side.png" class="objetivo-deco-char" alt="Luna" />
-                </div>
-            </div>
-        </section>
+  <div class="divider"><span>🌸</span></div>
 
-        <div class="divider reveal"></div>
+  <!-- ── ACTIVITIES ── -->
+  <div class="act-card" style="position:relative;">
+    <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754772/toalla_zux74n.png" class="deco-float" style="width:50px;right:16px;top:-16px;animation-duration:4.5s;">
+    <h3>🎮 ¿Qué haremos en esta lección?</h3>
+    <div class="act-grid">
+      <div class="act-item">
+        <img class="act-img" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754688/fase1_ihw8qr.png" alt="">
+        <p class="act-label">Explorar las 4 fases del ciclo</p>
+      </div>
+      <div class="act-item">
+        <span class="act-icon">🎮</span>
+        <p class="act-label">Juegos de completar frases</p>
+      </div>
+      <div class="act-item">
+        <img class="act-img" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754751/full_moon_k8gubh.png" alt="">
+        <p class="act-label">Conocer tu sistema reproductivo</p>
+      </div>
+      <div class="act-item">
+        <span class="act-icon">📸</span>
+        <p class="act-label">Subir evidencia de la cartilla</p>
+      </div>
+    </div>
+  </div>
 
-        <!-- ══ QUÉ HAREMOS ════════════════════════════════════ -->
-        <section class="haremos-section" style="padding-top:50px;">
-            <div class="container">
-                <div class="section-label reveal">
-                    <span class="section-icon">🎮</span>
-                    Qué haremos
-                </div>
-                <p class="reveal" style="color:rgba(244,238,233,.7);margin-bottom:30px;max-width:560px;">
-                    En este nivel podrás vivir una experiencia interactiva y mágica llena de descubrimientos:
-                </p>
-                <div class="haremos-grid stagger-children">
-                    <div class="haremos-card">
-                        <span class="haremos-icon">🌀</span>
-                        <p class="haremos-label">Explorar juegos<br>sobre el ciclo</p>
-                    </div>
-                    <div class="haremos-card">
-                        <span class="haremos-icon">✨</span>
-                        <p class="haremos-label">Descubrir datos<br>curiosos</p>
-                    </div>
-                    <div class="haremos-card">
-                        <span class="haremos-icon">🖼️</span>
-                        <p class="haremos-label">Completar actividades<br>visuales</p>
-                    </div>
-                    <div class="haremos-card">
-                        <span class="haremos-icon">🔮</span>
-                        <p class="haremos-label">Resolver retos<br>interactivos</p>
-                    </div>
-                </div>
+  <div class="divider"><span>🌙</span></div>
 
-                <!-- complementary icons -->
-                <div style="margin-top:40px;display:flex;justify-content:center;gap:18px;flex-wrap:wrap;"
-                    class="reveal">
-                    <img src="img/CHOCOLATE.png"
-                        style="height:48px;opacity:.7;filter:drop-shadow(0 0 10px rgba(214,31,44,.5));animation:floatChar 4s ease-in-out infinite alternate;"
-                        alt="" />
-                    <img src="img/toalla.png"
-                        style="height:48px;opacity:.7;filter:drop-shadow(0 0 10px rgba(240,92,103,.5));animation:floatChar 4s ease-in-out infinite alternate;animation-delay:.5s;"
-                        alt="" />
-                    <img src="img/celular.png"
-                        style="height:48px;opacity:.7;filter:drop-shadow(0 0 10px rgba(245,165,74,.5));animation:floatChar 4s ease-in-out infinite alternate;animation-delay:1s;"
-                        alt="" />
-                    <img src="img/mano.png"
-                        style="height:48px;opacity:.7;filter:drop-shadow(0 0 10px rgba(229,72,124,.5));animation:floatChar 4s ease-in-out infinite alternate;animation-delay:.3s;"
-                        alt="" />
-                    <img src="img/corazon.png"
-                        style="height:48px;opacity:.7;filter:drop-shadow(0 0 10px rgba(191,231,213,.4));animation:floatChar 4s ease-in-out infinite alternate;animation-delay:.8s;"
-                        alt="" />
-                    <img src="img/estrella.png"
-                        style="height:48px;opacity:.7;filter:drop-shadow(0 0 10px rgba(62,74,134,.5));animation:floatChar 4s ease-in-out infinite alternate;animation-delay:1.2s;"
-                        alt="" />
-                </div>
-            </div>
-        </section>
 
-        <!-- ══ DOCENTE PANEL ══════════════════════════════════ -->
-        <section class="docente-section">
-            <div class="container">
-                <div style="max-width:700px;margin:0 auto;">
-                    <button class="docente-toggle" id="docenteBtn">
-                        <span>🏫 &nbsp;Sección para docentes</span>
-                        <span class="docente-toggle-arrow">▼</span>
-                    </button>
-                    <div class="docente-body" id="docenteBody">
-                        <div class="docente-inner">
-                            <p><strong>Valor académico de esta actividad</strong></p>
-                            <p>Esta introducción está diseñada como punto de entrada narrativo y emocional al tema del
-                                ciclo menstrual. Su estructura favorece la curiosidad y la seguridad psicológica antes
-                                de abordar contenidos biológicos o de salud.</p>
-                            <p>El enfoque mágico y positivo reduce barreras emocionales y culturales frecuentes en este
-                                tema, creando un clima de confianza ideal para el aprendizaje significativo.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+  <!-- ── BADGE ── -->
+  <div class="badge-section">
+    <p style="color:#F06292;font-weight:700;font-size:.95rem;margin-bottom:18px;letter-spacing:1px;">🏅 TU INSIGNIA DE ESTE NIVEL</p>
+    <div class="badge-box">
+      <div class="badge-halo"></div>
+      <img class="badge-img" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754357/badge3_zimalv.png" alt="Insignia Nivel 3">
+      <p class="badge-title">Insignia: Conocedora de Tu Ciclo</p>
+      <p class="badge-desc">Completa las lecciones del Nivel 3<br>para desbloquearla ✨</p>
+      <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754686/estrella_bbltv2.png" style="position:absolute;width:28px;top:12px;right:22px;animation:spkl 2.5s ease-in-out infinite alternate;">
+      <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754682/corazon_vjqq8g.png" style="position:absolute;width:26px;bottom:22px;left:20px;animation:heartPulse 2.2s ease-in-out infinite;">
+      <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754751/full_moon_k8gubh.png" style="position:absolute;width:34px;top:14px;left:20px;animation:floatSlow 4.5s ease-in-out infinite alternate;">
+      </div>
+  </div>
 
-        <footer class="site-footer">
-            ✦ Pandora · Nivel 3 · Lección 1 · Introducción ✦
-        </footer>
+  <div class="divider"><span>💗</span></div>
 
-    </div><!-- /content-wrapper -->
+  <!-- ── CLOSING ── -->
+  <div class="closing">
+    <div class="closing-box">
+    <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754682/corazon_vjqq8g.png"
+           style="position:absolute;left:16px;top:16px;width:44px;opacity:.44;animation:heartPulse 2.5s ease-in-out infinite;pointer-events:none;">
+      <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754751/full_moon_k8gubh.png"
+           style="position:absolute;right:18px;bottom:22px;width:54px;opacity:.36;animation:floatSlow 5s ease-in-out infinite alternate;pointer-events:none;">
 
-    <script>
-        /* ══════════════════════════════════════════════════════
-           GALAXY CANVAS — stars, glows, meteors
-        ══════════════════════════════════════════════════════ */
-        (function () {
-            const canvas = document.getElementById('galaxy-canvas');
-            const ctx = canvas.getContext('2d');
+      <h2>¡Tu cuerpo es una maravilla! 🌸🌙</h2>
+      <p>Este viaje es tuyo. Conocerte, escucharte y respetarte es el acto más poderoso que puedes hacer. Ceci y Luna están aquí para acompañarte — con curiosidad, sin juicios y con mucho cariño.</p>
+      <a href="#" class="cta-btn">¡Comenzar Lección 1! 🌸</a>
 
-            let W, H;
-            const stars = [];
-            const glows = [];
-            const meteors = [];
+      <div class="closing-chars">
+        <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754772/toalla_zux74n.png" alt="Toalla" style="height:80px;opacity:.75;">
+      </div>
+    </div>
+  </div>
 
-            const PALETTE = [
-                '#F4EEE9', '#F4B7BE', '#F05C67', '#E5487C',
-                '#F5A54A', '#D61F2C', '#BFE7D5', '#3E4A86'
-            ];
+  <!-- ── DOCENTE ── -->
+  <div class="docente-wrap">
+    <button class="doc-toggle" id="docBtn" onclick="toggleDoc()">
+      <span>📋 Información pedagógica para docentes</span>
+      <span class="arrow">▼</span>
+    </button>
+    <div class="doc-body" id="docBody">
+      <h4>Valor académico de esta actividad</h4>
+      <p>Esta introducción abre el Nivel 3 del programa, centrado en salud menstrual y autonomía corporal. La propuesta pedagógica busca desmitificar el ciclo menstrual mediante un enfoque lúdico, positivo y libre de estigmas. El abordaje promueve la alfabetización en salud reproductiva como herramienta de autocuidado y empoderamiento para las estudiantes.</p>
+      <div class="doc-placeholder">
+        🗂️ Contenido pedagógico adicional próximamente disponible.<br>
+        Este espacio está reservado para objetivos curriculares, indicadores de logro, competencias en salud, orientaciones metodológicas y referencias científicas específicas de la Lección 1 del Nivel 3.
+      </div>
+    </div>
+  </div>
 
-            function resize() {
-                W = canvas.width = window.innerWidth;
-                H = canvas.height = window.innerHeight;
-            }
+</div><!-- end wrapper -->
 
-            function randBetween(a, b) { return a + Math.random() * (b - a); }
-            function randItem(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+<script>
+// ── ROSE STARFIELD ──
+const canvas = document.getElementById('starfield');
+const ctx = canvas.getContext('2d');
+let stars=[], W, H;
 
-            function initStars() {
-                stars.length = 0;
-                const count = Math.floor(W * H / 2200);
-                for (let i = 0; i < count; i++) {
-                    stars.push({
-                        x: Math.random() * W,
-                        y: Math.random() * H,
-                        r: randBetween(.3, 1.8),
-                        color: randItem(['#F4EEE9', '#F4B7BE', '#ffffff', '#F5A54A']),
-                        alpha: randBetween(.2, 1),
-                        speed: randBetween(.002, .012),
-                        phase: Math.random() * Math.PI * 2
-                    });
-                }
-            }
+function resize(){
+  W = canvas.width = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener('resize', resize);
 
-            function initGlows() {
-                glows.length = 0;
-                for (let i = 0; i < 14; i++) {
-                    glows.push({
-                        x: Math.random() * W,
-                        y: Math.random() * H,
-                        r: randBetween(30, 100),
-                        color: randItem(PALETTE),
-                        alpha: randBetween(.04, .14),
-                        dx: randBetween(-.12, .12),
-                        dy: randBetween(-.08, .08)
-                    });
-                }
-            }
+function rnd(a,b){ return a+Math.random()*(b-a); }
 
-            function spawnMeteor() {
-                meteors.push({
-                    x: Math.random() * W,
-                    y: randBetween(-40, H * .3),
-                    len: randBetween(60, 160),
-                    speed: randBetween(3, 8),
-                    angle: randBetween(.3, .6),
-                    alpha: 1,
-                    color: randItem(['#F4EEE9', '#F4B7BE', '#F5A54A', '#E5487C'])
-                });
-            }
+function initStars(){
+  stars=[];
+  const rosePalette=['#FFCDD2','#F06292','#EF5350','#FDECEF','#E74C6F','#FFD0D8','#FF80AB'];
+  for(let i=0;i<290;i++){
+    stars.push({
+      x:rnd(0,W), y:rnd(0,H),
+      r:rnd(.3,2.4),
+      alpha:rnd(.2,1),
+      speed:rnd(.003,.022),
+      offset:rnd(0,Math.PI*2),
+      color:Math.random()>.55 ? rosePalette[Math.floor(Math.random()*rosePalette.length)] : '#ffffff'
+    });
+  }
+}
+initStars();
 
-            let frame = 0;
+let tick=0;
+function draw(){
+  ctx.clearRect(0,0,W,H);
+  tick+=.012;
+  stars.forEach(s=>{
+    const pulse=.5+.5*Math.sin(tick*s.speed*60+s.offset);
+    ctx.beginPath();
+    ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+    ctx.fillStyle=s.color;
+    ctx.globalAlpha=s.alpha*pulse;
+    ctx.fill();
+    if(s.r>1.7 && pulse>.83){
+      ctx.globalAlpha=s.alpha*pulse*.3;
+      ctx.strokeStyle=s.color;ctx.lineWidth=.5;
+      ctx.beginPath();
+      ctx.moveTo(s.x-s.r*3.5,s.y); ctx.lineTo(s.x+s.r*3.5,s.y);
+      ctx.moveTo(s.x,s.y-s.r*3.5); ctx.lineTo(s.x,s.y+s.r*3.5);
+      ctx.stroke();
+    }
+    ctx.globalAlpha=1;
+  });
+  requestAnimationFrame(draw);
+}
+draw();
 
-            function draw() {
-                ctx.clearRect(0, 0, W, H);
+// ── ROSE PARTICLES ──
+const ptC=['#E74C6F','#FDECEF','#EF5350','#FFCDD2','#F06292','#FF80AB','#C0392B'];
+for(let i=0;i<52;i++){
+  const p=document.createElement('div');
+  p.className='pt';
+  const sz=Math.random()*5+2;
+  p.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*100}vw;
+    background:${ptC[Math.floor(Math.random()*ptC.length)]};
+    opacity:${Math.random()*.55+.2};
+    animation-duration:${Math.random()*12+8}s;
+    animation-delay:${Math.random()*12}s;
+    filter:blur(${Math.random()}px);`;
+  document.body.appendChild(p);
+}
 
-                /* soft glow blobs */
-                glows.forEach(g => {
-                    g.x += g.dx; g.y += g.dy;
-                    if (g.x < -g.r) g.x = W + g.r;
-                    if (g.x > W + g.r) g.x = -g.r;
-                    if (g.y < -g.r) g.y = H + g.r;
-                    if (g.y > H + g.r) g.y = -g.r;
-                    const grad = ctx.createRadialGradient(g.x, g.y, 0, g.x, g.y, g.r);
-                    grad.addColorStop(0, g.color + Math.round(g.alpha * 255).toString(16).padStart(2, '0'));
-                    grad.addColorStop(1, 'transparent');
-                    ctx.fillStyle = grad;
-                    ctx.beginPath();
-                    ctx.arc(g.x, g.y, g.r, 0, Math.PI * 2);
-                    ctx.fill();
-                });
-
-                /* twinkling stars */
-                stars.forEach(s => {
-                    const alpha = s.alpha * (.5 + .5 * Math.sin(frame * s.speed + s.phase));
-                    ctx.globalAlpha = alpha;
-                    ctx.fillStyle = s.color;
-                    ctx.beginPath();
-                    ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-                    ctx.fill();
-                });
-                ctx.globalAlpha = 1;
-
-                /* cross sparkles on bright stars */
-                stars.filter(s => s.r > 1.2).forEach(s => {
-                    const a = .3 + .7 * Math.abs(Math.sin(frame * s.speed + s.phase));
-                    ctx.strokeStyle = s.color;
-                    ctx.globalAlpha = a * .6;
-                    ctx.lineWidth = .5;
-                    const l = s.r * 4;
-                    ctx.beginPath();
-                    ctx.moveTo(s.x - l, s.y); ctx.lineTo(s.x + l, s.y);
-                    ctx.moveTo(s.x, s.y - l); ctx.lineTo(s.x, s.y + l);
-                    ctx.stroke();
-                    ctx.globalAlpha = 1;
-                });
-
-                /* meteors */
-                if (frame % 220 === 0) spawnMeteor();
-                for (let i = meteors.length - 1; i >= 0; i--) {
-                    const m = meteors[i];
-                    m.x += Math.cos(m.angle) * m.speed;
-                    m.y += Math.sin(m.angle) * m.speed;
-                    m.alpha -= .018;
-                    if (m.alpha <= 0) { meteors.splice(i, 1); continue; }
-                    const ex = m.x - Math.cos(m.angle) * m.len;
-                    const ey = m.y - Math.sin(m.angle) * m.len;
-                    const grad = ctx.createLinearGradient(m.x, m.y, ex, ey);
-                    grad.addColorStop(0, m.color + 'ff');
-                    grad.addColorStop(1, 'transparent');
-                    ctx.strokeStyle = grad;
-                    ctx.globalAlpha = m.alpha;
-                    ctx.lineWidth = 1.5;
-                    ctx.beginPath();
-                    ctx.moveTo(m.x, m.y);
-                    ctx.lineTo(ex, ey);
-                    ctx.stroke();
-                    ctx.globalAlpha = 1;
-                }
-
-                frame++;
-                requestAnimationFrame(draw);
-            }
-
-            window.addEventListener('resize', () => { resize(); initStars(); initGlows(); });
-            resize();
-            initStars();
-            initGlows();
-            draw();
-        })();
-
-        /* ══════════════════════════════════════════════════════
-           CSS STAR SPRINKLE
-        ══════════════════════════════════════════════════════ */
-        (function () {
-            const colors = ['#F4EEE9', '#F4B7BE', '#F5A54A', '#E5487C', '#ffffff'];
-            for (let i = 0; i < 55; i++) {
-                const el = document.createElement('div');
-                el.className = 'star-css';
-                const size = Math.random() * 2.5 + .5;
-                el.style.cssText = `
-      width:${size}px; height:${size}px;
-      left:${Math.random() * 100}%;
-      top:${Math.random() * 100}%;
-      background:${colors[Math.floor(Math.random() * colors.length)]};
-      animation-duration:${1.5 + Math.random() * 3}s;
-      animation-delay:${Math.random() * 4}s;
-      box-shadow: 0 0 ${size * 2}px ${colors[Math.floor(Math.random() * colors.length)]};
-    `;
-                document.body.appendChild(el);
-            }
-        })();
-
-        /* ══════════════════════════════════════════════════════
-           FALLING SPARKLE SYMBOLS
-        ══════════════════════════════════════════════════════ */
-        (function () {
-            const symbols = ['✦', '✧', '·', '⋆', '˚', '✺', '✼', '⊹', '✹', '★', '☽', '✿'];
-            const colors = ['#F4B7BE', '#F05C67', '#F5A54A', '#E5487C', '#F4EEE9', '#BFE7D5'];
-            for (let i = 0; i < 30; i++) {
-                const el = document.createElement('div');
-                el.className = 'sparkle-fall';
-                el.textContent = symbols[Math.floor(Math.random() * symbols.length)];
-                el.style.cssText = `
-      left: ${Math.random() * 100}%;
-      color: ${colors[Math.floor(Math.random() * colors.length)]};
-      font-size: ${8 + Math.random() * 10}px;
-      animation-duration: ${6 + Math.random() * 10}s;
-      animation-delay: ${Math.random() * 10}s;
-    `;
-                document.body.appendChild(el);
-            }
-        })();
-
-        /* ══════════════════════════════════════════════════════
-           SCROLL REVEAL
-        ══════════════════════════════════════════════════════ */
-        (function () {
-            const io = new IntersectionObserver(entries => {
-                entries.forEach(e => {
-                    if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
-                });
-            }, { threshold: .12 });
-            document.querySelectorAll('.reveal, .stagger-children').forEach(el => io.observe(el));
-        })();
-
-        /* ══════════════════════════════════════════════════════
-           DOCENTE ACCORDION
-        ══════════════════════════════════════════════════════ */
-        document.getElementById('docenteBtn').addEventListener('click', function () {
-            this.classList.toggle('open');
-            document.getElementById('docenteBody').classList.toggle('open');
-        });
-    </script>
+// ── DOCENTE ──
+function toggleDoc(){
+  document.getElementById('docBtn').classList.toggle('open');
+  document.getElementById('docBody').classList.toggle('open');
+}
+</script>
 </body>
-
 </html>
