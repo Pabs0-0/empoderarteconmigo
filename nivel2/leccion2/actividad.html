@@ -1,845 +1,561 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>¡Bonus Extra! – Primeros Auxilios Emocionales</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>El Viaje de Ceci · Nivel 2 · Descubre las Emociones</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap');
 
-  <!-- Google Fonts: Fredoka One (títulos) + Nunito (cuerpo) -->
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+:root {
+  --principal: #D4760A;
+  --acento: #E89830;
+  --claro: #FFF3E0;
+  --dorado: #F4C430;
+  --naranja-suave: #FFE0B2;
+  --naranja-oscuro: #8B4500;
+  --shadow: 0 6px 28px rgba(212,118,10,0.18);
+}
 
-  <style>
-    /* =============================================
-       VARIABLES GLOBALES
-    ============================================= */
-    :root {
-      /* Paleta Nivel 2 */
-      --naranja:    #FF7043;
-      --coral:      #FF8A65;
-      --fucsia:     #E91E8C;
-      --rosa:       #F06292;
-      --beige:      #FFF8F0;
-      --crema:      #FFF3E0;
-      --menta:      #A8E6CF;
-      --azul:       #90CAF9;
-      --lila:       #CE93D8;
-      --morado:     #AB47BC;
-      --amarillo:   #FFD54F;
-      --blanco:     #FFFFFF;
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
-      /* Sombras */
-      --sombra-s:   0 2px 10px rgba(0,0,0,.10);
-      --sombra-m:   0 6px 24px rgba(0,0,0,.14);
-      --sombra-l:   0 12px 40px rgba(0,0,0,.18);
+body {
+  font-family: 'Nunito', sans-serif;
+  min-height: 100vh;
+  background: url('https://res.cloudinary.com/dijezdfsr/image/upload/v1775754355/background_duuc07.png') center/cover fixed;
+  overflow-x: hidden;
+}
 
-      /* Tamaños de PNG – cambia aquí para ajustar en toda la página */
-      --png-xs:     40px;
-      --png-sm:     64px;
-      --png-md:     96px;
-      --png-lg:     140px;
-      --png-xl:     200px;
+/* ===== FIXED DECOS ===== */
+.deco-fix {
+  position: fixed; pointer-events: none; z-index: 0;
+  opacity: 0.6; animation: decoF 5s ease-in-out infinite alternate;
+}
+.deco-fix.d1 { top: 7%;  left: 3%;  width: 44px; animation-delay: 0s; }
+.deco-fix.d2 { top: 20%; right: 4%; width: 36px; animation-delay: 1s; }
+.deco-fix.d3 { bottom: 16%; left: 2%; width: 50px; animation-delay: 2s; }
+.deco-fix.d4 { bottom: 9%; right: 3%; width: 32px; animation-delay: 0.5s; }
+@keyframes decoF { from { transform: translateY(0) rotate(-4deg); } to { transform: translateY(-12px) rotate(4deg); } }
 
-      --ceci-size:  200px;
-      --luna-size:  180px;
-      --icon-size:  52px;
+/* ===== PAGE ===== */
+.page { position: relative; z-index: 1; max-width: 680px; margin: 0 auto; padding: 22px 14px 70px; }
 
-      /* Tipografía */
-      --font-titulo:  'Fredoka One', cursive;
-      --font-cuerpo:  'Nunito', sans-serif;
+/* ===== BADGE ===== */
+.nivel-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--principal); color: #fff;
+  font-size: 11px; font-weight: 900; letter-spacing: 2px; text-transform: uppercase;
+  padding: 6px 20px; border-radius: 20px; margin-bottom: 12px;
+  box-shadow: 0 3px 14px rgba(212,118,10,0.35);
+}
 
-      /* Radio */
-      --r-s:  12px;
-      --r-m:  24px;
-      --r-l:  40px;
-      --r-xl: 60px;
-    }
+/* ===== INTRO BLOCK ===== */
+.intro-block {
+  background: var(--claro); border: 3px solid var(--acento);
+  border-radius: 28px; padding: 22px 22px 18px; margin-bottom: 20px;
+  box-shadow: var(--shadow);
+  display: flex; gap: 14px; align-items: center; flex-wrap: wrap;
+  position: relative; overflow: hidden;
+}
+.intro-block::after {
+  content: ''; position: absolute; top: -40px; right: -40px;
+  width: 130px; height: 130px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(232,152,48,0.12), transparent 70%);
+  pointer-events: none;
+}
+.intro-char img {
+  height: 100px; object-fit: contain;
+  filter: drop-shadow(0 4px 12px rgba(212,118,10,0.22));
+  animation: ceciFloat 4s ease-in-out infinite alternate; flex-shrink: 0;
+}
+@keyframes ceciFloat { from { transform: translateY(0); } to { transform: translateY(-8px); } }
+.intro-text { flex: 1; min-width: 180px; }
+.intro-text .tag {
+  display: inline-block; background: var(--principal); color: #fff;
+  font-size: 11px; font-weight: 900; letter-spacing: 1px; text-transform: uppercase;
+  padding: 4px 14px; border-radius: 12px; margin-bottom: 8px;
+}
+.intro-text h1 { font-size: clamp(19px,4.5vw,24px); font-weight: 900; color: var(--principal); line-height: 1.2; margin-bottom: 8px; }
+.intro-text p  { font-size: clamp(13px,2.3vw,15px); font-weight: 600; color: var(--naranja-oscuro); line-height: 1.6; }
 
-    /* =============================================
-       RESET + BASE
-    ============================================= */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+/* ===== CARTILLA BLOCK ===== */
+.cartilla-block {
+  background: var(--claro); border: 3px solid var(--principal);
+  border-radius: 22px; padding: 16px 20px; margin-bottom: 24px;
+  box-shadow: var(--shadow);
+  display: flex; gap: 14px; align-items: center; flex-wrap: wrap;
+}
+.cartilla-icon { font-size: 36px; flex-shrink: 0; animation: bookPulse 2s ease-in-out infinite alternate; }
+@keyframes bookPulse { from { transform: scale(1); } to { transform: scale(1.08) rotate(3deg); } }
+.cartilla-text { flex: 1; }
+.cartilla-text .ct-tag {
+  font-size: 11px; font-weight: 900; color: var(--principal);
+  letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 4px;
+}
+.cartilla-text .ct-main {
+  font-size: clamp(15px,3vw,17px); font-weight: 900; color: var(--naranja-oscuro); line-height: 1.3;
+}
+.cartilla-text .ct-sub {
+  font-size: 13px; font-weight: 600; color: var(--acento); margin-top: 3px;
+}
 
-    html { scroll-behavior: smooth; }
+/* ===== GAME SECTION ===== */
+.game-section { display: flex; flex-direction: column; gap: 16px; }
 
-    body {
-      font-family: var(--font-cuerpo);
-      background-color: var(--beige);
-      background-image: url('img/background.png');
-      background-size: cover;
-      background-attachment: fixed;
-      background-position: center top;
-      min-height: 100vh;
-      overflow-x: hidden;
-      color: #3a2a1e;
-    }
+/* Progress */
+.progress-wrap {
+  background: rgba(255,243,224,0.92); border: 2px solid var(--acento);
+  border-radius: 18px; padding: 12px 18px; box-shadow: var(--shadow);
+}
+.progress-top {
+  display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;
+}
+.progress-label { font-size: 12px; font-weight: 900; color: var(--principal); letter-spacing: 1px; text-transform: uppercase; }
+.progress-fraction { font-size: 13px; font-weight: 900; color: var(--acento); }
+.progress-bar-bg {
+  background: rgba(212,118,10,0.15); border-radius: 20px; height: 10px; overflow: hidden;
+}
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--acento), var(--principal));
+  border-radius: 20px; width: 0%;
+  transition: width 0.5s cubic-bezier(0.34,1.56,0.64,1);
+  box-shadow: 0 0 8px rgba(244,196,48,0.4);
+}
 
-    /* =============================================
-       CAPA DECORATIVA DE FONDO (formas orgánicas CSS)
-    ============================================= */
-    .bg-shapes {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 0;
-      overflow: hidden;
-    }
-    .bg-shapes::before {
-      content: '';
-      position: absolute;
-      top: -80px; left: -80px;
-      width: 340px; height: 340px;
-      background: radial-gradient(circle, rgba(255,112,67,.30) 0%, transparent 70%);
-      border-radius: 50%;
-    }
-    .bg-shapes::after {
-      content: '';
-      position: absolute;
-      bottom: -60px; right: -60px;
-      width: 300px; height: 300px;
-      background: radial-gradient(circle, rgba(233,30,140,.25) 0%, transparent 70%);
-      border-radius: 50%;
-    }
-    .shape-menta {
-      position: absolute;
-      top: 30%; left: -40px;
-      width: 180px; height: 180px;
-      background: radial-gradient(circle, rgba(168,230,207,.40) 0%, transparent 70%);
-      border-radius: 50%;
-    }
-    .shape-azul {
-      position: absolute;
-      top: 60%; right: -30px;
-      width: 160px; height: 160px;
-      background: radial-gradient(circle, rgba(144,202,249,.35) 0%, transparent 70%);
-      border-radius: 50%;
-    }
-    .shape-lila {
-      position: absolute;
-      top: 15%; right: 5%;
-      width: 120px; height: 120px;
-      background: radial-gradient(circle, rgba(206,147,216,.30) 0%, transparent 70%);
-      border-radius: 50%;
-    }
+/* Question card */
+.question-card {
+  background: var(--claro); border: 3px solid var(--acento);
+  border-radius: 28px; padding: 28px 22px 24px;
+  box-shadow: var(--shadow); text-align: center;
+  animation: cardSlideIn 0.45s cubic-bezier(0.34,1.56,0.64,1);
+}
+@keyframes cardSlideIn { from { opacity:0; transform:translateY(20px) scale(0.96); } to { opacity:1; transform:translateY(0) scale(1); } }
 
-    /* =============================================
-       CONTENEDOR PRINCIPAL
-    ============================================= */
-    .main-wrapper {
-      position: relative;
-      z-index: 1;
-      max-width: 680px;
-      margin: 0 auto;
-      padding: 0 16px 60px;
-    }
+.q-num {
+  display: inline-block; background: var(--principal); color: #fff;
+  font-size: 11px; font-weight: 900; letter-spacing: 1.5px; text-transform: uppercase;
+  padding: 4px 16px; border-radius: 20px; margin-bottom: 16px;
+}
 
-    /* =============================================
-       HERO / CABECERA
-    ============================================= */
-    .hero {
-      position: relative;
-      text-align: center;
-      padding: 40px 20px 36px;
-    }
+.emoji-display {
+  font-size: clamp(36px,10vw,56px);
+  letter-spacing: 6px; margin-bottom: 8px;
+  animation: emojiPop 0.5s cubic-bezier(0.34,1.56,0.64,1);
+  line-height: 1.1;
+}
+@keyframes emojiPop { from { transform:scale(0.5); opacity:0; } to { transform:scale(1); opacity:1; } }
 
-    /* Onda superior decorativa */
-    .hero::before {
-      content: '';
-      position: absolute;
-      top: 0; left: -16px; right: -16px;
-      height: 120px;
-      background: linear-gradient(135deg, var(--naranja) 0%, var(--fucsia) 100%);
-      border-radius: 0 0 60% 60% / 0 0 50px 50px;
-      z-index: -1;
-    }
+.arrow-hint {
+  font-size: 18px; color: var(--acento); font-weight: 900; margin-bottom: 6px; display: block;
+}
+.q-label {
+  font-size: clamp(16px,3.5vw,19px); font-weight: 900; color: var(--naranja-oscuro);
+  margin-bottom: 6px; line-height: 1.3;
+}
+.q-sub {
+  font-size: 13px; font-weight: 600; color: var(--acento); opacity: 0.8;
+}
 
-    .hero-badge {
-      display: inline-block;
-      background: var(--amarillo);
-      color: #7B4F00;
-      font-family: var(--font-titulo);
-      font-size: 1rem;
-      padding: 6px 22px;
-      border-radius: 999px;
-      margin-bottom: 12px;
-      box-shadow: var(--sombra-s);
-      letter-spacing: .5px;
-      animation: pop .6s ease both;
-    }
+/* Character hint */
+.char-hint {
+  display: flex; gap: 12px; align-items: center; justify-content: center;
+  margin-top: 14px;
+}
+.char-hint img { height: 56px; object-fit: contain; filter: drop-shadow(0 3px 8px rgba(212,118,10,0.2)); }
+.hint-bubble {
+  background: #fff; border: 2px solid var(--acento);
+  border-radius: 16px 16px 16px 4px; padding: 8px 14px;
+  font-size: 13px; font-weight: 700; color: var(--naranja-oscuro);
+  line-height: 1.4; max-width: 200px;
+}
 
-    .hero-title {
-      font-family: var(--font-titulo);
-      font-size: clamp(2.6rem, 8vw, 4rem);
-      color: var(--blanco);
-      text-shadow: 0 3px 0 rgba(0,0,0,.15), 0 6px 20px rgba(0,0,0,.18);
-      line-height: 1.1;
-      animation: slideDown .7s ease both .1s;
-      letter-spacing: 1px;
-    }
+/* Options */
+.options-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;
+}
+@media (min-width: 480px) {
+  .options-grid { grid-template-columns: repeat(3, 1fr); }
+}
 
-    .hero-sparkles {
-      font-size: 2rem;
-      display: inline;
-      animation: spin 3s linear infinite;
-    }
+.option-btn {
+  background: #fff; border: 3px solid rgba(232,152,48,0.35);
+  border-radius: 20px; padding: 14px 10px;
+  font-family: 'Nunito', sans-serif;
+  font-size: clamp(13px,2.5vw,15px); font-weight: 800; color: var(--naranja-oscuro);
+  cursor: pointer; transition: all 0.2s; text-align: center;
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  box-shadow: 0 3px 12px rgba(212,118,10,0.1);
+  -webkit-tap-highlight-color: transparent;
+}
+.option-btn .opt-emoji { font-size: 26px; }
+.option-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 22px rgba(212,118,10,0.22); border-color: var(--acento); }
+.option-btn:active { transform: scale(0.96); }
+.option-btn.selected { border-color: var(--acento); background: var(--naranja-suave); }
+.option-btn.correct {
+  border-color: #27AE60; background: #D5F5E3; color: #1a5c38;
+  animation: correctPop 0.5s cubic-bezier(0.34,1.56,0.64,1);
+  box-shadow: 0 0 0 4px rgba(39,174,96,0.2);
+}
+.option-btn.incorrect {
+  border-color: #E74C3C; background: #FADBD8; color: #7b1c1c;
+  animation: shakeBtn 0.45s ease;
+}
+@keyframes correctPop { 0%{transform:scale(0.9);} 60%{transform:scale(1.1);} 100%{transform:scale(1);} }
+@keyframes shakeBtn { 0%,100%{transform:translateX(0);} 25%{transform:translateX(-7px);} 75%{transform:translateX(7px);} }
 
-    .hero-sub {
-      font-size: 1.05rem;
-      color: rgba(255,255,255,.92);
-      font-weight: 700;
-      margin-top: 6px;
-      animation: slideDown .7s ease both .2s;
-    }
+/* Feedback */
+.feedback-bar {
+  border-radius: 18px; padding: 13px 18px;
+  font-size: clamp(14px,2.8vw,15px); font-weight: 800; line-height: 1.4;
+  display: flex; gap: 10px; align-items: center;
+  animation: fadeIn 0.35s ease;
+}
+@keyframes fadeIn { from{opacity:0;transform:translateY(-6px);} to{opacity:1;transform:translateY(0);} }
+.feedback-bar.correct { background: #D5F5E3; border: 2px solid #27AE60; color: #1a5c38; }
+.feedback-bar.incorrect { background: #FEF9C3; border: 2px solid #F59E0B; color: #7a4a00; }
+.feedback-emoji { font-size: 22px; flex-shrink: 0; }
 
-    /* Personajes en el hero */
-    .hero-chars {
-      display: flex;
-      justify-content: center;
-      align-items: flex-end;
-      gap: 12px;
-      margin-top: 24px;
-      animation: slideUp .8s ease both .3s;
-    }
+/* Next button */
+.next-btn {
+  width: 100%; background: var(--principal); color: #fff;
+  border: none; border-radius: 20px; padding: 16px;
+  font-family: 'Nunito', sans-serif; font-size: 16px; font-weight: 900;
+  cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 18px rgba(212,118,10,0.3); display: none;
+}
+.next-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(212,118,10,0.4); }
+.next-btn.show { display: block; animation: fadeIn 0.3s ease; }
 
-    .char-img {
-      width: var(--ceci-size);
-      height: auto;
-      filter: drop-shadow(0 6px 12px rgba(0,0,0,.18));
-    }
-    .char-img.luna { width: var(--luna-size); }
+/* Completion */
+.completion-card {
+  background: linear-gradient(135deg, var(--principal), var(--acento));
+  border-radius: 28px; padding: 32px 24px; text-align: center;
+  box-shadow: var(--shadow); display: none;
+  animation: cardSlideIn 0.6s cubic-bezier(0.34,1.56,0.64,1);
+}
+.completion-card.show { display: block; }
+.comp-stars { font-size: 36px; margin-bottom: 12px; animation: starSpin 0.8s ease; }
+@keyframes starSpin { from{transform:scale(0) rotate(-180deg);} to{transform:scale(1) rotate(0);} }
+.completion-card h2 { font-size: clamp(20px,5vw,28px); font-weight: 900; color: #fff; margin-bottom: 12px; line-height: 1.2; }
+.completion-card p { font-size: 15px; font-weight: 700; color: rgba(255,255,255,0.9); line-height: 1.6; margin-bottom: 10px; }
+.comp-chars { display: flex; justify-content: center; gap: 12px; margin-top: 18px; }
+.comp-chars img { height: 80px; object-fit: contain; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.2)); animation: ceciFloat 3.5s ease-in-out infinite alternate; }
+.restart-btn {
+  margin-top: 20px; background: rgba(255,255,255,0.2);
+  border: 3px solid rgba(255,255,255,0.5); color: #fff;
+  border-radius: 20px; padding: 12px 28px;
+  font-family: 'Nunito', sans-serif; font-size: 15px; font-weight: 900;
+  cursor: pointer; transition: background 0.2s, transform 0.2s;
+}
+.restart-btn:hover { background: rgba(255,255,255,0.32); transform: scale(1.03); }
 
-    /* Destellos flotantes en el hero */
-    .hero-deco {
-      position: absolute;
-      pointer-events: none;
-    }
-    .deco-tl { top: 110px; left: 10px; width: var(--icon-size); animation: float 4s ease-in-out infinite; }
-    .deco-tr { top: 90px; right: 10px; width: var(--icon-size); animation: float 4s ease-in-out infinite 1s; }
-    .deco-bl { bottom: 30px; left: 20px; width: var(--png-sm); animation: float 5s ease-in-out infinite .5s; }
-    .deco-br { bottom: 20px; right: 20px; width: var(--png-sm); animation: float 5s ease-in-out infinite 1.5s; }
+/* Confetti */
+.confetti-piece {
+  position: fixed; border-radius: 2px;
+  pointer-events: none; z-index: 9999;
+  animation: confettiFall linear forwards;
+}
+@keyframes confettiFall { 0%{transform:translateY(-20px) rotate(0deg);opacity:1;} 100%{transform:translateY(100vh) rotate(720deg);opacity:0;} }
 
-    /* =============================================
-       BOTÓN PRINCIPAL "ACTIVAR BONUS"
-    ============================================= */
-    .btn-activar-wrap {
-      text-align: center;
-      margin: 28px 0 10px;
-    }
-
-    .btn-activar {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      background: linear-gradient(135deg, var(--fucsia) 0%, var(--naranja) 100%);
-      color: var(--blanco);
-      font-family: var(--font-titulo);
-      font-size: 1.4rem;
-      padding: 16px 40px;
-      border: none;
-      border-radius: 999px;
-      cursor: pointer;
-      box-shadow: 0 6px 0 #b81565, 0 10px 30px rgba(233,30,140,.35);
-      transition: transform .15s ease, box-shadow .15s ease;
-      letter-spacing: .5px;
-      animation: pulse 2s ease-in-out infinite;
-    }
-
-    .btn-activar:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 9px 0 #b81565, 0 14px 36px rgba(233,30,140,.45);
-    }
-
-    .btn-activar:active {
-      transform: translateY(2px);
-      box-shadow: 0 3px 0 #b81565, 0 6px 16px rgba(233,30,140,.3);
-    }
-
-    .btn-activar .btn-icon { font-size: 1.6rem; }
-
-    /* Estado: ocultar botón cuando activado */
-    .btn-activar.hidden { display: none; }
-
-    /* =============================================
-       SECCIÓN DE CONTENIDO (oculta inicialmente)
-    ============================================= */
-    .content-section {
-      display: none;
-      animation: fadeIn .5s ease both;
-    }
-    .content-section.visible { display: block; }
-
-    /* Intro del contenido */
-    .content-intro {
-      background: linear-gradient(135deg, var(--fucsia) 0%, var(--morado) 100%);
-      border-radius: var(--r-l);
-      padding: 28px 28px 24px;
-      text-align: center;
-      color: var(--blanco);
-      margin-bottom: 24px;
-      box-shadow: var(--sombra-m);
-      position: relative;
-      overflow: hidden;
-    }
-    .content-intro::after {
-      content: '';
-      position: absolute;
-      bottom: -20px; right: -20px;
-      width: 100px; height: 100px;
-      background: rgba(255,255,255,.12);
-      border-radius: 50%;
-    }
-
-    .content-titulo {
-      font-family: var(--font-titulo);
-      font-size: clamp(1.6rem, 5vw, 2.2rem);
-      margin-bottom: 4px;
-      text-shadow: 0 2px 8px rgba(0,0,0,.2);
-    }
-    .content-subtitulo {
-      font-size: 1rem;
-      font-weight: 700;
-      opacity: .9;
-      margin-bottom: 14px;
-    }
-    .content-intro-txt {
-      font-size: 1.05rem;
-      font-weight: 600;
-      background: rgba(255,255,255,.18);
-      border-radius: var(--r-s);
-      padding: 12px 18px;
-      backdrop-filter: blur(4px);
-    }
-
-    /* =============================================
-       BARRA DE PROGRESO
-    ============================================= */
-    .progress-wrap {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 20px;
-      padding: 0 4px;
-    }
-    .progress-label {
-      font-size: .85rem;
-      font-weight: 800;
-      color: var(--fucsia);
-      white-space: nowrap;
-    }
-    .progress-bar-outer {
-      flex: 1;
-      height: 14px;
-      background: rgba(0,0,0,.08);
-      border-radius: 999px;
-      overflow: hidden;
-    }
-    .progress-bar-inner {
-      height: 100%;
-      background: linear-gradient(90deg, var(--fucsia), var(--naranja));
-      border-radius: 999px;
-      width: 0%;
-      transition: width .5s cubic-bezier(.4,0,.2,1);
-    }
-
-    /* =============================================
-       TARJETAS DE PASOS
-    ============================================= */
-    .steps-container { display: flex; flex-direction: column; gap: 18px; }
-
-    .step-card {
-      border-radius: var(--r-l);
-      padding: 24px 24px 22px;
-      box-shadow: var(--sombra-m);
-      position: relative;
-      overflow: hidden;
-      opacity: 0;
-      transform: translateY(30px);
-      transition: opacity .5s ease, transform .5s ease;
-    }
-    .step-card.revealed {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* Colores alternados por paso */
-    .step-card:nth-child(1) { background: linear-gradient(135deg, var(--menta) 0%, #d4f5e7 100%); }
-    .step-card:nth-child(2) { background: linear-gradient(135deg, var(--azul) 0%, #ddeeff 100%); }
-    .step-card:nth-child(3) { background: linear-gradient(135deg, var(--amarillo) 0%, #fff8c8 100%); }
-    .step-card:nth-child(4) { background: linear-gradient(135deg, var(--coral) 0%, #ffd5c5 100%); }
-    .step-card:nth-child(5) { background: linear-gradient(135deg, var(--lila) 0%, #f2dcf8 100%); }
-
-    /* Badge con número */
-    .step-badge {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      background: rgba(255,255,255,.65);
-      backdrop-filter: blur(6px);
-      font-family: var(--font-titulo);
-      font-size: 1.2rem;
-      color: #3a2a1e;
-      box-shadow: var(--sombra-s);
-      flex-shrink: 0;
-    }
-
-    .step-header {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 10px;
-    }
-
-    .step-title {
-      font-family: var(--font-titulo);
-      font-size: 1.25rem;
-      color: #2e1f10;
-      line-height: 1.2;
-    }
-
-    .step-text {
-      font-size: 1rem;
-      font-weight: 600;
-      color: #3a2a1e;
-      line-height: 1.55;
-      padding-left: 50px;
-    }
-
-    /* Bubbles de frases para el Paso 2 */
-    .phrase-bubbles {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      margin-top: 10px;
-      padding-left: 50px;
-    }
-    .phrase-bubble {
-      display: inline-block;
-      background: rgba(255,255,255,.70);
-      border-radius: 999px;
-      padding: 8px 18px;
-      font-size: .95rem;
-      font-weight: 700;
-      color: #2a3a7e;
-      backdrop-filter: blur(4px);
-      box-shadow: var(--sombra-s);
-      width: fit-content;
-    }
-
-    /* Decoración pequeña en la esquina de cada tarjeta */
-    .step-deco-img {
-      position: absolute;
-      bottom: 12px; right: 14px;
-      width: var(--png-xs);
-      opacity: .55;
-      pointer-events: none;
-    }
-
-    /* =============================================
-       BOTÓN SIGUIENTE PASO
-    ============================================= */
-    .btn-next-wrap {
-      text-align: center;
-      margin-top: 22px;
-    }
-    .btn-next {
-      background: var(--blanco);
-      color: var(--fucsia);
-      border: 3px solid var(--fucsia);
-      font-family: var(--font-titulo);
-      font-size: 1.1rem;
-      padding: 12px 34px;
-      border-radius: 999px;
-      cursor: pointer;
-      transition: background .2s ease, color .2s ease, transform .15s ease;
-      box-shadow: var(--sombra-s);
-    }
-    .btn-next:hover {
-      background: var(--fucsia);
-      color: var(--blanco);
-      transform: scale(1.04);
-    }
-    .btn-next:active { transform: scale(.97); }
-    .btn-next.hidden { display: none; }
-
-    /* =============================================
-       BLOQUE CIERRE FINAL
-    ============================================= */
-    .closing-card {
-      background: linear-gradient(135deg, var(--naranja) 0%, var(--fucsia) 100%);
-      border-radius: var(--r-l);
-      padding: 30px 28px;
-      text-align: center;
-      color: var(--blanco);
-      box-shadow: var(--sombra-l);
-      margin-top: 24px;
-      position: relative;
-      overflow: hidden;
-      opacity: 0;
-      transform: translateY(30px);
-      transition: opacity .6s ease, transform .6s ease;
-    }
-    .closing-card.revealed { opacity: 1; transform: translateY(0); }
-
-    .closing-card::before {
-      content: '';
-      position: absolute;
-      top: -30px; left: -30px;
-      width: 120px; height: 120px;
-      background: rgba(255,255,255,.15);
-      border-radius: 50%;
-    }
-    .closing-card::after {
-      content: '';
-      position: absolute;
-      bottom: -20px; right: -20px;
-      width: 90px; height: 90px;
-      background: rgba(255,255,255,.12);
-      border-radius: 50%;
-    }
-
-    .closing-emoji { font-size: 2.2rem; margin-bottom: 8px; display: block; }
-
-    .closing-text {
-      font-size: 1.1rem;
-      font-weight: 700;
-      line-height: 1.55;
-      position: relative;
-      z-index: 1;
-    }
-
-    .closing-text strong {
-      font-family: var(--font-titulo);
-      font-size: 1.25rem;
-      display: block;
-      margin-top: 6px;
-      text-shadow: 0 2px 8px rgba(0,0,0,.15);
-    }
-
-    /* Personaje al final */
-    .closing-chars {
-      display: flex;
-      justify-content: center;
-      gap: 16px;
-      margin-top: 18px;
-    }
-    .closing-char { width: var(--png-lg); filter: drop-shadow(0 6px 14px rgba(0,0,0,.22)); }
-
-    /* =============================================
-       CLASES UTILITARIAS DE TAMAÑO PARA PNGs
-    ============================================= */
-    .img-xs  { width: var(--png-xs);  height: auto; }
-    .img-sm  { width: var(--png-sm);  height: auto; }
-    .img-md  { width: var(--png-md);  height: auto; }
-    .img-lg  { width: var(--png-lg);  height: auto; }
-    .img-xl  { width: var(--png-xl);  height: auto; }
-    .img-icon { width: var(--icon-size); height: auto; }
-
-    /* =============================================
-       ANIMACIONES
-    ============================================= */
-    @keyframes slideDown {
-      from { opacity: 0; transform: translateY(-22px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes slideUp {
-      from { opacity: 0; transform: translateY(22px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to   { opacity: 1; }
-    }
-    @keyframes pop {
-      0%   { transform: scale(.7); opacity: 0; }
-      70%  { transform: scale(1.08); }
-      100% { transform: scale(1);  opacity: 1; }
-    }
-    @keyframes float {
-      0%, 100% { transform: translateY(0px) rotate(0deg); }
-      50%       { transform: translateY(-10px) rotate(5deg); }
-    }
-    @keyframes spin {
-      from { display: inline-block; transform: rotate(0deg); }
-      to   { transform: rotate(360deg); }
-    }
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50%       { transform: scale(1.04); }
-    }
-
-    /* =============================================
-       RESPONSIVE — DESKTOP
-    ============================================= */
-    @media (min-width: 600px) {
-      :root {
-        --ceci-size: 220px;
-        --luna-size: 200px;
-        --png-lg: 160px;
-      }
-      .hero::before { height: 210px; }
-      .hero { padding: 50px 32px 40px; }
-      .step-text, .phrase-bubbles { padding-left: 54px; }
-    }
-
-    @media (min-width: 960px) {
-      :root {
-        --ceci-size: 260px;
-        --luna-size: 230px;
-      }
-      .main-wrapper { padding-bottom: 80px; }
-    }
-  </style>
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--acento); border-radius: 6px; }
+</style>
 </head>
 <body>
 
-  <!-- ==========================================
-       CAPA DECORATIVA DE FONDO
-  =========================================== -->
-  <div class="bg-shapes" aria-hidden="true">
-    <div class="shape-menta"></div>
-    <div class="shape-azul"></div>
-    <div class="shape-lila"></div>
+<img class="deco-fix d1" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754686/estrella_bbltv2.png" alt="">
+<img class="deco-fix d2" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754682/corazon_vjqq8g.png" alt="">
+<img class="deco-fix d3" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754766/mariposa_ep7ez6.png" alt="">
+<img class="deco-fix d4" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754686/estrella_bbltv2.png" alt="">
+
+<div class="page">
+
+  <!-- BADGE -->
+  <div style="text-align:center;margin-bottom:8px;">
+    <span class="nivel-badge">✦ Nivel 2 · El árbol de las emociones ✦</span>
   </div>
 
-  <!-- ==========================================
-       CONTENEDOR PRINCIPAL
-  =========================================== -->
-  <div class="main-wrapper">
+  <!-- INTRO -->
+  <section class="intro-block">
+    <div class="intro-char">
+      <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754641/ceciahi_i4ugkt.png" alt="Ceci emociones">
+    </div>
+    <div class="intro-text">
+      <span class="tag">Lección 2 · Actividad lúdica</span>
+      <h1>Descubre las emociones</h1>
+      <p>A veces, las emociones se pueden reconocer en situaciones, gestos… ¡y hasta en emojis! En este juego vas a descubrir qué emoción se esconde en cada combinación. ✨</p>
+    </div>
+  </section>
 
-    <!-- ======== HERO ======== -->
-    <header class="hero" role="banner">
+  <!-- CARTILLA -->
+  <section class="cartilla-block">
+    <div class="cartilla-icon">📖</div>
+    <div class="cartilla-text">
+      <div class="ct-tag">📌 Reto con cartilla</div>
+      <div class="ct-main">Dirígete a la página 34 de tu cartilla y realiza la actividad.</div>
+      <div class="ct-sub">Luego vuelve aquí para el juego de emojis 🎯</div>
+    </div>
+  </section>
 
-      <!-- Destellos decorativos PNG flotantes -->
-      <img src="img/estrella.png" alt="" class="hero-deco deco-tl img-icon" aria-hidden="true" onerror="this.style.display='none'" />
-      <img src="img/estrella.png"  alt="" class="hero-deco deco-tr img-icon" aria-hidden="true" onerror="this.style.display='none'" />
-      <img src="img/estrella.png"      alt="" class="hero-deco deco-bl img-sm"  aria-hidden="true" onerror="this.style.display='none'" />
-      <img src="img/estrella.png" alt="" class="hero-deco deco-br img-sm"  aria-hidden="true" onerror="this.style.display='none'" />
+  <!-- GAME -->
+  <section class="game-section">
 
-      <!-- Badge -->
-      <div class="hero-badge">✨ Momento especial ✨</div>
-
-      <!-- Título -->
-      <h1 class="hero-title">
-        ¡Bonus Extra!
-      </h1>
-      <p class="hero-sub">¡Activa tu Bonus! 🎉</p>
-
-      <!-- Personajes -->
-      <div class="hero-chars">
-        <img src="img/ceci1.png"  alt="Ceci, la protagonista de la cartilla"  class="char-img"      onerror="this.style.display='none'" />
-       
+    <!-- Progress -->
+    <div class="progress-wrap">
+      <div class="progress-top">
+        <span class="progress-label">Tu progreso</span>
+        <span class="progress-fraction" id="progressFraction">1 / 5</span>
       </div>
-
-    </header><!-- /hero -->
-
-    <!-- ======== BOTÓN ACTIVAR ======== -->
-    <div class="btn-activar-wrap">
-      <button class="btn-activar" id="btnActivar" aria-label="Activar el Bonus Extra">
-        <span class="btn-icon">🌟</span>
-        ¡Activar Bonus!
-        <span class="btn-icon">🌟</span>
-      </button>
+      <div class="progress-bar-bg"><div class="progress-bar-fill" id="progressFill"></div></div>
     </div>
 
-    <!-- ======== SECCIÓN DE CONTENIDO (oculta hasta activar) ======== -->
-    <section class="content-section" id="contentSection" aria-label="Primeros auxilios emocionales">
-
-      <!-- Intro -->
-      <div class="content-intro">
-        <h2 class="content-titulo">💛 Primeros auxilios emocionales</h2>
-        <p class="content-subtitulo">Explicado para niñas</p>
-        <p class="content-intro-txt">Cuando alguien cercano se siente mal, puedes ayudar de esta forma:</p>
+    <!-- Question card -->
+    <div class="question-card" id="questionCard">
+      <div class="q-num" id="qNum">Reto 1 de 5</div>
+      <div class="emoji-display" id="emojiDisplay"></div>
+      <span class="arrow-hint">👇</span>
+      <div class="q-label">¿Qué emoción representa?</div>
+      <div class="q-sub">Piensa en cómo se siente la situación</div>
+      <div class="char-hint">
+        <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754485/ceci_thinking_zluhja.png" alt="Ceci pensando">
+        <div class="hint-bubble" id="hintBubble">Observa bien los emojis ✨</div>
       </div>
+    </div>
 
-      <!-- Barra de progreso -->
-      <div class="progress-wrap" aria-label="Progreso de los pasos">
-        <span class="progress-label" id="progressLabel">Paso 0 de 5</span>
-        <div class="progress-bar-outer" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="5">
-          <div class="progress-bar-inner" id="progressBar"></div>
-        </div>
+    <!-- Options -->
+    <div class="options-grid" id="optionsGrid"></div>
+
+    <!-- Feedback -->
+    <div class="feedback-bar" id="feedbackBar" style="display:none;"></div>
+
+    <!-- Next button -->
+    <button class="next-btn" id="nextBtn" onclick="nextQuestion()">Siguiente emoción →</button>
+
+    <!-- Completion -->
+    <div class="completion-card" id="completionCard">
+      <div class="comp-stars">🌟✨🌟✨🌟</div>
+      <h2>¡Reconoces tus emociones!</h2>
+      <p>🌟 Reconocer tus emociones es un superpoder.</p>
+      <p>Cuando entiendes cómo se sienten las situaciones, puedes cuidarte mejor y también cuidar a quienes te rodean. 💛</p>
+      <div class="comp-chars">
+        <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754678/cecifeliz_lx3gso.png" alt="Ceci feliz">
+        <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754764/luna2_widgjq.png" alt="Luna">
       </div>
+      <button class="restart-btn" onclick="restartGame()">🎮 Jugar de nuevo</button>
+    </div>
 
-      <!-- Contenedor de tarjetas -->
-      <div class="steps-container" id="stepsContainer">
+  </section>
+</div>
 
-        <!-- PASO 1 -->
-        <article class="step-card" id="step-1" aria-label="Paso 1">
-          <div class="step-header">
-            <span class="step-badge">1</span>
-            <h3 class="step-title">Escucha con atención</h3>
-          </div>
-          <p class="step-text">A veces lo más importante es escuchar sin interrumpir.</p>
-          <img src="img/corazon.png" alt="" class="step-deco-img" aria-hidden="true" onerror="this.style.display='none'" />
-        </article>
+<script>
+// ============================
+// DATA
+// ============================
+const QUESTIONS = [
+  {
+    emojis: '😴 + 📚 + 😤',
+    answer: 'Frustración',
+    hint: '¿Sientes que algo no sale como esperas?',
+  },
+  {
+    emojis: '🎂 + 🎉 + 🥰',
+    answer: 'Alegría',
+    hint: '¿Qué sientes en un momento de celebración?',
+  },
+  {
+    emojis: '💔 + 😔 + 🌧️',
+    answer: 'Tristeza',
+    hint: '¿Hay algo que duela en esta imagen?',
+  },
+  {
+    emojis: '🌙 + 🚪 + ❓',
+    answer: 'Miedo',
+    hint: '¿Te imaginas en un lugar desconocido de noche?',
+  },
+  {
+    emojis: '🏃 + 🥇 + 💪',
+    answer: 'Orgullo',
+    hint: '¿Cómo te sentirías si lograras algo difícil?',
+  },
+];
 
-        <!-- PASO 2 -->
-        <article class="step-card" id="step-2" aria-label="Paso 2">
-          <div class="step-header">
-            <span class="step-badge">2</span>
-            <h3 class="step-title">Habla con calma</h3>
-          </div>
-          <p class="step-text">Puedes decir frases como:</p>
-          <div class="phrase-bubbles">
-            <span class="phrase-bubble">💬 "Estoy aquí contigo"</span>
-            <span class="phrase-bubble">💬 "Si quieres, puedes contarme qué pasó."</span>
-          </div>
-          <img src="img/corazon.png" alt="" class="step-deco-img" aria-hidden="true" onerror="this.style.display='none'" />
-        </article>
+const OPTIONS = [
+  { label: 'Alegría',     emoji: '😊' },
+  { label: 'Tristeza',   emoji: '😢' },
+  { label: 'Miedo',      emoji: '😨' },
+  { label: 'Frustración',emoji: '😤' },
+  { label: 'Orgullo',    emoji: '🏆' },
+];
 
-        <!-- PASO 3 -->
-        <article class="step-card" id="step-3" aria-label="Paso 3">
-          <div class="step-header">
-            <span class="step-badge">3</span>
-            <h3 class="step-title">Respiren juntos 🌬️</h3>
-          </div>
-          <p class="step-text">Respirar lento ayuda al cuerpo a relajarse.</p>
-          <img src="img/chocolate.png" alt="" class="step-deco-img" aria-hidden="true" onerror="this.style.display='none'" />
-        </article>
+const CORRECT_MSGS = [
+  '✨ ¡Muy bien! Reconociste esa emoción.',
+  '✨ ¡Exacto! Estás entendiendo las emociones.',
+  '✨ ¡Lo lograste! Eres increíble.',
+  '✨ ¡Así es! Nada te detiene.',
+  '✨ ¡Perfecto! Sigues brillando.',
+];
 
-        <!-- PASO 4 -->
-        <article class="step-card" id="step-4" aria-label="Paso 4">
-          <div class="step-header">
-            <span class="step-badge">4</span>
-            <h3 class="step-title">No juzgues lo que siente 💛</h3>
-          </div>
-          <p class="step-text">Cada emoción es válida.</p>
-          <img src="img/estrella.png" alt="" class="step-deco-img" aria-hidden="true" onerror="this.style.display='none'" />
-        </article>
+const WRONG_MSGS = [
+  '💡 Observa cómo se siente la situación.',
+  '💡 Piensa si hay esfuerzo, tristeza o alegría.',
+  '💡 ¡Inténtalo de nuevo, vas muy bien!',
+  '💡 Mira los emojis uno por uno. ¿Qué cuentan?',
+];
 
-        <!-- PASO 5 -->
-        <article class="step-card" id="step-5" aria-label="Paso 5">
-          <div class="step-header">
-            <span class="step-badge">5</span>
-            <h3 class="step-title">Busca ayuda de un adulto 🤝</h3>
-          </div>
-          <p class="step-text">Si la situación es muy difícil, lo mejor es contarle a un adulto de confianza.</p>
-          <img src="img/corazon.png" alt="" class="step-deco-img" aria-hidden="true" onerror="this.style.display='none'" />
-        </article>
+// ============================
+// STATE
+// ============================
+let currentIdx = 0;
+let answered = false;
+let toastTimeout = null;
 
-      </div><!-- /steps-container -->
+// ============================
+// INIT
+// ============================
+function init() {
+  renderOptions();
+  showQuestion();
+}
 
-      <!-- Botón siguiente paso -->
-      <div class="btn-next-wrap">
-        <button class="btn-next" id="btnNext" aria-label="Revelar siguiente paso">
-          ¡Siguiente paso! →
-        </button>
-      </div>
+function renderOptions() {
+  const grid = document.getElementById('optionsGrid');
+  grid.innerHTML = '';
+  OPTIONS.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn';
+    btn.dataset.label = opt.label;
+    btn.innerHTML = `<span class="opt-emoji">${opt.emoji}</span><span>${opt.label}</span>`;
+    btn.addEventListener('click', () => chooseOption(opt.label, btn));
+    grid.appendChild(btn);
+  });
+}
 
-      <!-- Cierre final -->
-      <div class="closing-card" id="closingCard" aria-label="Mensaje de cierre">
-        <span class="closing-emoji">🌸</span>
-        <p class="closing-text">
-          Acompañar a alguien con respeto y cariño también es una forma de ser una
-          <strong>GranDiosa que cuida a los demás. 💜</strong>
-        </p>
-        <!-- Personajes al cierre -->
-        <div class="closing-chars">
-          <img src="img/ceci.png" alt="Ceci feliz celebrando" class="closing-char" onerror="this.style.display='none'" />
-        </div>
-      </div>
+function showQuestion() {
+  answered = false;
+  const q = QUESTIONS[currentIdx];
 
-    </section><!-- /content-section -->
+  document.getElementById('qNum').textContent = `Reto ${currentIdx + 1} de ${QUESTIONS.length}`;
+  document.getElementById('emojiDisplay').textContent = q.emojis;
+  document.getElementById('hintBubble').textContent = 'Observa bien los emojis ✨';
 
-  </div><!-- /main-wrapper -->
+  // Reset options
+  document.querySelectorAll('.option-btn').forEach(btn => {
+    btn.className = 'option-btn';
+    btn.disabled = false;
+  });
 
-  <!-- ==========================================
-       JAVASCRIPT – INTERACCIÓN POR PASOS
-  =========================================== -->
-  <script>
-    // =============================================
-    // Estado de la actividad
-    // =============================================
-    const TOTAL_STEPS = 5;
-    let currentStep = 0;        // cuántos pasos revelados
-    let activated = false;      // si ya se activó el bonus
+  // Hide feedback & next
+  document.getElementById('feedbackBar').style.display = 'none';
+  document.getElementById('nextBtn').className = 'next-btn';
 
-    // Referencias DOM
-    const btnActivar    = document.getElementById('btnActivar');
-    const contentSection = document.getElementById('contentSection');
-    const stepsContainer = document.getElementById('stepsContainer');
-    const btnNext        = document.getElementById('btnNext');
-    const closingCard    = document.getElementById('closingCard');
-    const progressBar    = document.getElementById('progressBar');
-    const progressLabel  = document.getElementById('progressLabel');
+  // Animate question card
+  const qCard = document.getElementById('questionCard');
+  qCard.style.animation = 'none';
+  void qCard.offsetWidth;
+  qCard.style.animation = 'cardSlideIn 0.45s cubic-bezier(0.34,1.56,0.64,1)';
 
-    // Todas las tarjetas de pasos
-    const stepCards = stepsContainer.querySelectorAll('.step-card');
+  // Update progress
+  const pct = (currentIdx / QUESTIONS.length) * 100;
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressFraction').textContent = (currentIdx + 1) + ' / ' + QUESTIONS.length;
+}
 
-    // =============================================
-    // Función: actualizar barra de progreso
-    // =============================================
-    function updateProgress(step) {
-      const pct = (step / TOTAL_STEPS) * 100;
-      progressBar.style.width = pct + '%';
-      progressLabel.textContent = `Paso ${step} de ${TOTAL_STEPS}`;
-      progressBar.parentElement.setAttribute('aria-valuenow', step);
-    }
+function chooseOption(label, btn) {
+  if (answered) return;
+  answered = true;
 
-    // =============================================
-    // Función: revelar el siguiente paso
-    // =============================================
-    function revealNextStep() {
-      if (currentStep >= TOTAL_STEPS) return;
+  const q = QUESTIONS[currentIdx];
+  const isCorrect = label === q.answer;
 
-      const card = stepCards[currentStep];
-      currentStep++;
+  // Disable all options
+  document.querySelectorAll('.option-btn').forEach(b => { b.disabled = true; });
 
-      // Pequeño delay para que la animación se vea bien
-      setTimeout(() => {
-        card.classList.add('revealed');
-        card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-      }, 60);
-
-      // Actualizar progreso
-      updateProgress(currentStep);
-
-      // Si se revelaron todos los pasos → mostrar cierre, ocultar botón
-      if (currentStep === TOTAL_STEPS) {
-        btnNext.classList.add('hidden');
-
-        setTimeout(() => {
-          closingCard.classList.add('revealed');
-          closingCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        }, 400);
-      }
-    }
-
-    // =============================================
-    // Evento: Activar Bonus
-    // =============================================
-    btnActivar.addEventListener('click', function () {
-      if (activated) return;
-      activated = true;
-
-      // Ocultar botón principal
-      btnActivar.classList.add('hidden');
-
-      // Mostrar sección de contenido
-      contentSection.classList.add('visible');
-
-      // Revelar el primer paso automáticamente
-      setTimeout(revealNextStep, 300);
-
-      // Scroll suave hacia el contenido
-      setTimeout(() => {
-        contentSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 200);
+  if (isCorrect) {
+    btn.classList.add('correct');
+    showFeedback(CORRECT_MSGS[currentIdx % CORRECT_MSGS.length], true);
+    document.getElementById('hintBubble').textContent = '¡Lo lograste! 🌟';
+  } else {
+    btn.classList.add('incorrect');
+    // Highlight correct
+    document.querySelectorAll('.option-btn').forEach(b => {
+      if (b.dataset.label === q.answer) b.classList.add('correct');
     });
+    showFeedback(WRONG_MSGS[Math.floor(Math.random() * WRONG_MSGS.length)], false);
+    document.getElementById('hintBubble').textContent = q.hint;
+  }
 
-    // =============================================
-    // Evento: Siguiente paso
-    // =============================================
-    btnNext.addEventListener('click', function () {
-      revealNextStep();
-    });
+  const nextBtn = document.getElementById('nextBtn');
+  nextBtn.textContent = currentIdx < QUESTIONS.length - 1 ? 'Siguiente emoción →' : '¡Ver mis resultados! 🌟';
+  nextBtn.className = 'next-btn show';
+}
 
-    // =============================================
-    // Inicialización: asegurarse de que el progreso empiece en 0
-    // =============================================
-    updateProgress(0);
-  </script>
+function showFeedback(msg, isCorrect) {
+  const fb = document.getElementById('feedbackBar');
+  fb.className = 'feedback-bar ' + (isCorrect ? 'correct' : 'incorrect');
+  fb.innerHTML = `<span class="feedback-emoji">${isCorrect ? '✅' : '💡'}</span><span>${msg}</span>`;
+  fb.style.display = 'flex';
+}
 
+function nextQuestion() {
+  currentIdx++;
+  if (currentIdx >= QUESTIONS.length) {
+    showCompletion();
+    return;
+  }
+  showQuestion();
+}
+
+function showCompletion() {
+  // Progress 100%
+  document.getElementById('progressFill').style.width = '100%';
+  document.getElementById('progressFraction').textContent = '5 / 5 ✨';
+
+  document.getElementById('questionCard').style.display = 'none';
+  document.getElementById('optionsGrid').style.display = 'none';
+  document.getElementById('feedbackBar').style.display = 'none';
+  document.getElementById('nextBtn').className = 'next-btn';
+  document.getElementById('completionCard').classList.add('show');
+  launchConfetti();
+}
+
+function restartGame() {
+  currentIdx = 0;
+  answered = false;
+  document.getElementById('questionCard').style.display = 'block';
+  document.getElementById('optionsGrid').style.display = 'grid';
+  document.getElementById('completionCard').classList.remove('show');
+  renderOptions();
+  showQuestion();
+}
+
+// ============================
+// CONFETTI
+// ============================
+function launchConfetti() {
+  const colors = ['#D4760A','#E89830','#F4C430','#FFF3E0','#FF6B6B','#4CAF88'];
+  for (let i = 0; i < 55; i++) {
+    const c = document.createElement('div');
+    c.className = 'confetti-piece';
+    c.style.left = Math.random() * 100 + 'vw';
+    c.style.top = '-20px';
+    c.style.background = colors[Math.floor(Math.random() * colors.length)];
+    c.style.width  = (7 + Math.random() * 9) + 'px';
+    c.style.height = (7 + Math.random() * 9) + 'px';
+    c.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+    c.style.animationDuration  = (1.5 + Math.random() * 2.2) + 's';
+    c.style.animationDelay     = (Math.random() * 1.2) + 's';
+    document.body.appendChild(c);
+    setTimeout(() => c.remove(), 4500);
+  }
+}
+
+// ============================
+// START
+// ============================
+init();
+</script>
 </body>
 </html>

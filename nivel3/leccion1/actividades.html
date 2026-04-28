@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>El Viaje de Ceci · Nivel 3 · El Ciclo Menstrual</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap');
+
+:root {
+  --principal: #C0392B;
+  --acento: #E74C6F;
+  --claro: #FDECEF;
+  --dorado: #F4C430;
+  --rosa-suave: #FADADD;
+  --rojo-oscuro: #7B241C;
+  --verde: #27AE60;
+  --shadow: 0 6px 28px rgba(192,57,43,0.16);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Nunito', sans-serif;
+  min-height: 100vh;
+  background: url('https://res.cloudinary.com/dijezdfsr/image/upload/v1775754355/background_duuc07.png') center/cover fixed;
+  overflow-x: hidden;
+}
+
+/* ===== FIXED DECOS ===== */
+.deco-fix {
+  position: fixed; pointer-events: none; z-index: 0;
+  opacity: 0.55; animation: decoF 5s ease-in-out infinite alternate;
+}
+.deco-fix.d1 { top: 7%;  left: 3%;  width: 40px; animation-delay: 0s; }
+.deco-fix.d2 { top: 20%; right: 4%; width: 34px; animation-delay: 1s; }
+.deco-fix.d3 { bottom: 16%; left: 2%; width: 46px; animation-delay: 2s; }
+.deco-fix.d4 { bottom: 9%; right: 3%; width: 30px; animation-delay: 0.5s; }
+@keyframes decoF { from { transform: translateY(0) rotate(-4deg); } to { transform: translateY(-12px) rotate(4deg); } }
+
+/* ===== PAGE ===== */
+.page { position: relative; z-index: 1; max-width: 680px; margin: 0 auto; padding: 22px 14px 70px; }
+
+/* ===== BADGE ===== */
+.nivel-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--principal); color: #fff;
+  font-size: 11px; font-weight: 900; letter-spacing: 2px; text-transform: uppercase;
+  padding: 6px 20px; border-radius: 20px; margin-bottom: 12px;
+  box-shadow: 0 3px 14px rgba(192,57,43,0.35);
+}
+
+/* ===== INTRO ===== */
+.intro-block {
+  background: var(--claro); border: 3px solid var(--acento);
+  border-radius: 28px; padding: 22px 22px 18px; margin-bottom: 20px;
+  box-shadow: var(--shadow);
+  display: flex; gap: 14px; align-items: center; flex-wrap: wrap;
+  position: relative; overflow: hidden;
+}
+.intro-block::after {
+  content: ''; position: absolute; top: -40px; right: -40px;
+  width: 130px; height: 130px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(231,76,111,0.12), transparent 70%);
+  pointer-events: none;
+}
+.intro-char { flex-shrink: 0; display: flex; align-items: flex-end; gap: 8px; }
+.intro-char img { object-fit: contain; filter: drop-shadow(0 4px 12px rgba(192,57,43,0.2)); }
+.intro-char .ceci-img { height: 100px; animation: ceciFloat 4s ease-in-out infinite alternate; }
+.intro-char .edu-img  { height: 68px; opacity: 0.9; animation: ceciFloat 4s ease-in-out infinite alternate; animation-delay: 0.5s; }
+@keyframes ceciFloat { from { transform: translateY(0); } to { transform: translateY(-8px); } }
+.intro-text { flex: 1; min-width: 180px; }
+.intro-text .tag {
+  display: inline-block; background: var(--principal); color: #fff;
+  font-size: 11px; font-weight: 900; letter-spacing: 1px; text-transform: uppercase;
+  padding: 4px 14px; border-radius: 12px; margin-bottom: 8px;
+}
+.intro-text h1 { font-size: clamp(20px,4.5vw,25px); font-weight: 900; color: var(--principal); line-height: 1.2; margin-bottom: 8px; }
+.intro-text p  { font-size: clamp(13px,2.3vw,15px); font-weight: 600; color: var(--rojo-oscuro); line-height: 1.6; }
+
+/* ===== INSTRUCTION ===== */
+.instruction-block {
+  background: var(--claro); border: 3px solid var(--principal);
+  border-radius: 22px; padding: 16px 20px; margin-bottom: 20px;
+  box-shadow: var(--shadow);
+  display: flex; gap: 14px; align-items: center;
+}
+.inst-icon { font-size: 32px; flex-shrink: 0; animation: instPulse 2s ease-in-out infinite alternate; }
+@keyframes instPulse { from { transform: scale(1); } to { transform: scale(1.1) rotate(4deg); } }
+.inst-text .it-title { font-size: clamp(15px,3vw,17px); font-weight: 900; color: var(--principal); margin-bottom: 4px; }
+.inst-text .it-sub   { font-size: 13px; font-weight: 600; color: var(--acento); }
+
+/* ===== WORD BANK ===== */
+.bank-section { margin-bottom: 20px; }
+.bank-label {
+  font-size: 12px; font-weight: 900; color: rgb(175 12 12);
+  letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; text-align: center;
+}
+.word-bank {
+  background: rgba(253,236,239,0.9); border: 3px solid var(--acento);
+  border-radius: 22px; padding: 16px 18px; box-shadow: var(--shadow);
+  display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;
+}
+.word-chip {
+  background: #fff; border: 3px solid var(--acento);
+  border-radius: 50px; padding: 10px 20px;
+  font-size: clamp(13px,2.5vw,15px); font-weight: 900; color: var(--principal);
+  cursor: pointer; transition: all 0.2s; user-select: none;
+  box-shadow: 0 3px 12px rgba(192,57,43,0.12);
+  -webkit-tap-highlight-color: transparent;
+}
+.word-chip:hover { transform: translateY(-3px); box-shadow: 0 8px 22px rgba(192,57,43,0.22); border-color: var(--principal); }
+.word-chip:active { transform: scale(0.96); }
+.word-chip.selected {
+  background: var(--acento); color: #fff; border-color: var(--principal);
+  box-shadow: 0 4px 18px rgba(231,76,111,0.4);
+  transform: translateY(-2px) scale(1.04);
+  animation: chipPulse 0.4s ease;
+}
+@keyframes chipPulse { 0%{transform:scale(0.95);} 60%{transform:scale(1.08);} 100%{transform:scale(1.04);} }
+.word-chip.used {
+  background: rgba(253,236,239,0.6); color: rgba(192,57,43,0.4);
+  border-color: rgba(231,76,111,0.25); cursor: not-allowed;
+  text-decoration: line-through;
+}
+
+/* ===== PROGRESS ===== */
+.progress-wrap {
+  background: rgba(253,236,239,0.9); border: 2px solid var(--acento);
+  border-radius: 18px; padding: 12px 18px; margin-bottom: 20px; box-shadow: var(--shadow);
+}
+.progress-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.progress-label { font-size: 12px; font-weight: 900; color: var(--principal); letter-spacing: 1px; text-transform: uppercase; }
+.progress-fraction { font-size: 13px; font-weight: 900; color: var(--acento); }
+.progress-bar-bg { background: rgba(192,57,43,0.15); border-radius: 20px; height: 10px; overflow: hidden; }
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--acento), var(--principal));
+  border-radius: 20px; width: 0%;
+  transition: width 0.5s cubic-bezier(0.34,1.56,0.64,1);
+  box-shadow: 0 0 8px rgba(231,76,111,0.4);
+}
+
+/* ===== SENTENCE CARDS ===== */
+.sentences-section { display: flex; flex-direction: column; gap: 14px; margin-bottom: 20px; }
+
+.sentence-card {
+  background: var(--claro); border: 3px solid rgba(231,76,111,0.3);
+  border-radius: 24px; padding: 20px 20px;
+  box-shadow: var(--shadow); transition: border-color 0.3s, box-shadow 0.3s;
+  position: relative; overflow: hidden;
+}
+.sentence-card.completed {
+  border-color: var(--verde);
+  background: linear-gradient(135deg, #FDECEF 0%, #D5F5E3 100%);
+  box-shadow: 0 6px 22px rgba(39,174,96,0.2);
+}
+.sentence-card.error { animation: cardShake 0.45s ease; }
+@keyframes cardShake { 0%,100%{transform:translateX(0);} 25%{transform:translateX(-8px);} 75%{transform:translateX(8px);} }
+
+.sc-num {
+  font-size: 11px; font-weight: 900; color: var(--acento);
+  letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 10px;
+  display: flex; align-items: center; gap: 8px;
+}
+.sc-check { font-size: 18px; display: none; animation: popIn 0.4s cubic-bezier(0.34,1.56,0.64,1); }
+.sentence-card.completed .sc-check { display: inline; }
+@keyframes popIn { 0%{transform:scale(0) rotate(-90deg);} 100%{transform:scale(1) rotate(0);} }
+
+.sc-text {
+  font-size: clamp(15px,3.2vw,18px); font-weight: 800; color: var(--rojo-oscuro);
+  line-height: 1.6; display: flex; flex-wrap: wrap; align-items: center; gap: 6px;
+}
+.blank {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 130px; height: 38px; border-radius: 12px;
+  border: 3px dashed var(--acento); background: rgba(231,76,111,0.08);
+  font-size: clamp(13px,2.8vw,16px); font-weight: 900; color: var(--acento);
+  cursor: pointer; padding: 0 14px; transition: all 0.2s;
+  -webkit-tap-highlight-color: transparent;
+}
+.blank:hover { background: rgba(231,76,111,0.15); }
+.blank.filled {
+  border-style: solid; border-color: var(--verde);
+  background: rgba(39,174,96,0.1); color: #1a5c38;
+  cursor: default; animation: popIn 0.4s cubic-bezier(0.34,1.56,0.64,1);
+}
+.blank.pending-fill {
+  border-color: var(--principal); background: rgba(192,57,43,0.12);
+  color: var(--principal); animation: blankPulse 0.4s ease;
+}
+@keyframes blankPulse { 0%{transform:scale(1);} 50%{transform:scale(1.06);} 100%{transform:scale(1);} }
+
+.sc-feedback {
+  margin-top: 10px; border-radius: 14px; padding: 10px 14px;
+  font-size: 13px; font-weight: 800; line-height: 1.4;
+  display: none; gap: 8px; align-items: center;
+}
+.sc-feedback.show { display: flex; animation: fadeIn 0.3s ease; }
+@keyframes fadeIn { from{opacity:0;transform:translateY(-5px);} to{opacity:1;transform:translateY(0);} }
+.sc-feedback.correct { background: #D5F5E3; border: 2px solid var(--verde); color: #1a5c38; }
+.sc-feedback.incorrect { background: #FFF9C4; border: 2px solid #F39C12; color: #7a4a00; }
+.sc-fb-emoji { font-size: 18px; flex-shrink: 0; }
+
+/* ===== COMPLETION ===== */
+.completion-card {
+  background: linear-gradient(135deg, var(--principal), var(--acento));
+  border-radius: 28px; padding: 32px 24px; text-align: center;
+  box-shadow: var(--shadow); display: none;
+  animation: slideUp 0.6s cubic-bezier(0.34,1.56,0.64,1);
+}
+.completion-card.show { display: block; }
+@keyframes slideUp { from{opacity:0;transform:translateY(24px) scale(0.96);} to{opacity:1;transform:translateY(0) scale(1);} }
+.comp-stars { font-size: 38px; margin-bottom: 12px; animation: starSpin 0.8s ease; }
+@keyframes starSpin { from{transform:scale(0) rotate(-180deg);} to{transform:scale(1) rotate(0);} }
+.completion-card h2 { font-size: clamp(22px,5vw,30px); font-weight: 900; color: #fff; margin-bottom: 10px; line-height: 1.2; }
+.completion-card p  { font-size: 15px; font-weight: 700; color: rgba(255,255,255,0.92); line-height: 1.6; margin-bottom: 8px; }
+.comp-chars { display: flex; justify-content: center; gap: 12px; margin-top: 18px; }
+.comp-chars img { height: 80px; object-fit: contain; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.2)); animation: ceciFloat 3.5s ease-in-out infinite alternate; }
+.restart-btn {
+  margin-top: 20px; background: rgba(255,255,255,0.22);
+  border: 3px solid rgba(255,255,255,0.5); color: #fff;
+  border-radius: 20px; padding: 12px 28px;
+  font-family: 'Nunito', sans-serif; font-size: 15px; font-weight: 900;
+  cursor: pointer; transition: background 0.2s, transform 0.2s;
+}
+.restart-btn:hover { background: rgba(255,255,255,0.34); transform: scale(1.03); }
+
+/* ===== CONFETTI ===== */
+.confetti-piece {
+  position: fixed; border-radius: 2px;
+  pointer-events: none; z-index: 9999;
+  animation: confettiFall linear forwards;
+}
+@keyframes confettiFall { 0%{transform:translateY(-20px) rotate(0deg);opacity:1;} 100%{transform:translateY(100vh) rotate(720deg);opacity:0;} }
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--acento); border-radius: 6px; }
+</style>
+</head>
+<body>
+
+<img class="deco-fix d1" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754686/estrella_bbltv2.png" alt="">
+<img class="deco-fix d2" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754682/corazon_vjqq8g.png" alt="">
+<img class="deco-fix d3" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754686/estrella_bbltv2.png" alt="">
+<img class="deco-fix d4" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754682/corazon_vjqq8g.png" alt="">
+
+<div class="page">
+
+  <!-- BADGE -->
+  <div style="text-align:center;margin-bottom:8px;">
+    <span class="nivel-badge">✦ Nivel 3 · La magia de tu ciclo ✦</span>
+  </div>
+
+  <!-- INTRO -->
+  <section class="intro-block">
+    <div class="intro-char">
+      <img class="ceci-img" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754747/fase2_mhfpew.png" alt="Ceci">
+      </div>
+    <div class="intro-text">
+      <span class="tag">Lección 1 · Actividad</span>
+      <h1>🌸 El ciclo menstrual</h1>
+      <p>Tu cuerpo tiene procesos increíbles. Conocerlos te ayuda a <strong>entenderte, cuidarte y sentirte más segura</strong>. ¡Vamos a explorar juntas! 💙</p>
+    </div>
+  </section>
+
+  <!-- INSTRUCTION -->
+  <section class="instruction-block">
+    <div class="inst-icon">🎮</div>
+    <div class="inst-text">
+      <div class="it-title">Completa la frase</div>
+      <div class="it-sub">Selecciona una palabra del banco y luego toca el espacio en blanco. ¡Tú puedes! ✨</div>
+    </div>
+  </section>
+
+  <!-- WORD BANK -->
+  <section class="bank-section">
+    <div class="bank-label">✦ Banco de palabras · Toca para seleccionar</div>
+    <div class="word-bank" id="wordBank"></div>
+  </section>
+
+  <!-- PROGRESS -->
+  <div class="progress-wrap">
+    <div class="progress-top">
+      <span class="progress-label">Tu progreso</span>
+      <span class="progress-fraction" id="progressFraction">0 / 4</span>
+    </div>
+    <div class="progress-bar-bg"><div class="progress-bar-fill" id="progressFill"></div></div>
+  </div>
+
+  <!-- SENTENCES -->
+  <section class="sentences-section" id="sentencesSection"></section>
+
+  <!-- COMPLETION -->
+  <div class="completion-card" id="completionCard">
+    <div class="comp-stars">🌟✨🌟✨🌟</div>
+    <h2>¡Lo lograste, GranDiosa!</h2>
+    <p>Ya conoces tu ciclo. Eso es poder. 💪</p>
+    <p>Entender cómo funciona tu cuerpo es una forma de cuidarte, respetarte y celebrar quién eres. 🌸</p>
+    <div class="comp-chars">
+      <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754463/ceci_calm_mhzuxo.png" alt="Ceci calm">
+      <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754772/toalla_zux74n.png" alt="Toalla" style="height:60px;">
+    </div>
+    <button class="restart-btn" onclick="restartGame()">🌸 Jugar de nuevo</button>
+  </div>
+
+</div>
+
+<script>
+// ============================
+// DATA
+// ============================
+const WORDS = ['MENARQUÍA', 'OVULACIÓN', 'FOLICULAR', 'MENSTRUAL', 'LÚTEA'];
+
+const SENTENCES = [
+  {
+    id: 0,
+    before: 'Durante la fase',
+    after: ', el cuerpo libera un óvulo.',
+    answer: 'OVULACIÓN',
+    feedbackCorrect: '✨ ¡Muy bien! La ovulación es el momento en que el cuerpo libera un óvulo.',
+    feedbackWrong: '💡 Piensa: ¿qué fase tiene que ver con liberar algo del cuerpo?',
+  },
+  {
+    id: 1,
+    before: 'La primera menstruación de una niña se llama',
+    after: '.',
+    answer: 'MENARQUÍA',
+    feedbackCorrect: '✨ ¡Lo estás haciendo increíble! La menarquía es un hito natural del cuerpo.',
+    feedbackWrong: '💡 Piensa: ¿cómo se llama la primera vez que algo ocurre en el ciclo?',
+  },
+  {
+    id: 2,
+    before: 'En la fase',
+    after: ', el cuerpo recupera energía después del sangrado.',
+    answer: 'FOLICULAR',
+    feedbackCorrect: '✨ ¡Exacto! La fase folicular es de energía y renovación.',
+    feedbackWrong: '💡 Piensa: ¿qué fase viene después de la menstruación y da energía nueva?',
+  },
+  {
+    id: 3,
+    before: 'La fase',
+    after: ' es cuando aparece el sangrado natural del ciclo.',
+    answer: 'MENSTRUAL',
+    feedbackCorrect: '✨ ¡Perfecto! La fase menstrual es cuando ocurre el sangrado. Es completamente normal.',
+    feedbackWrong: '💡 Piensa: ¿cuál fase comparte su nombre con "menstruación"?',
+  },
+];
+
+// ============================
+// STATE
+// ============================
+let selectedWord = null;
+let completedCount = 0;
+let toastTimeout = null;
+
+// ============================
+// RENDER WORD BANK
+// ============================
+function renderWordBank() {
+  const bank = document.getElementById('wordBank');
+  bank.innerHTML = '';
+  WORDS.forEach(word => {
+    const chip = document.createElement('button');
+    chip.className = 'word-chip';
+    chip.id = 'chip-' + word;
+    chip.textContent = word;
+    chip.addEventListener('click', () => selectWord(word, chip));
+    bank.appendChild(chip);
+  });
+}
+
+// ============================
+// RENDER SENTENCES
+// ============================
+function renderSentences() {
+  const section = document.getElementById('sentencesSection');
+  section.innerHTML = '';
+  SENTENCES.forEach((s, i) => {
+    const card = document.createElement('div');
+    card.className = 'sentence-card';
+    card.id = 'scard-' + s.id;
+    card.innerHTML = `
+      <div class="sc-num">
+        Frase ${i + 1} de ${SENTENCES.length}
+        <span class="sc-check">✅</span>
+      </div>
+      <div class="sc-text">
+        <span>${s.before}</span>
+        <span class="blank" id="blank-${s.id}" data-id="${s.id}" onclick="fillBlank(${s.id})">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        <span>${s.after}</span>
+      </div>
+      <div class="sc-feedback" id="fb-${s.id}">
+        <span class="sc-fb-emoji"></span>
+        <span class="sc-fb-text"></span>
+      </div>
+    `;
+    section.appendChild(card);
+  });
+}
+
+// ============================
+// SELECT WORD
+// ============================
+function selectWord(word, chip) {
+  // Deselect all chips
+  document.querySelectorAll('.word-chip').forEach(c => {
+    if (!c.classList.contains('used')) c.classList.remove('selected');
+  });
+
+  if (selectedWord === word) {
+    // Toggle off
+    selectedWord = null;
+    return;
+  }
+
+  selectedWord = word;
+  chip.classList.add('selected');
+
+  // Highlight unfilled blanks
+  document.querySelectorAll('.blank:not(.filled)').forEach(b => {
+    b.classList.add('pending-fill');
+    setTimeout(() => b.classList.remove('pending-fill'), 400);
+  });
+}
+
+// ============================
+// FILL BLANK
+// ============================
+function fillBlank(sentenceId) {
+  if (!selectedWord) {
+    // Hint: select a word first
+    document.querySelectorAll('.word-chip:not(.used)').forEach(c => {
+      c.style.outline = '3px solid ' + getComputedStyle(document.documentElement).getPropertyValue('--acento');
+      setTimeout(() => c.style.outline = '', 800);
+    });
+    return;
+  }
+
+  const sentence = SENTENCES.find(s => s.id === sentenceId);
+  const blank = document.getElementById('blank-' + sentenceId);
+  const card = document.getElementById('scard-' + sentenceId);
+  const fb = document.getElementById('fb-' + sentenceId);
+
+  if (blank.classList.contains('filled')) return;
+
+  if (selectedWord === sentence.answer) {
+    // CORRECT
+    blank.textContent = selectedWord;
+    blank.classList.add('filled');
+    card.classList.add('completed');
+
+    // Mark chip as used
+    const chip = document.getElementById('chip-' + selectedWord);
+    if (chip) { chip.classList.remove('selected'); chip.classList.add('used'); }
+
+    // Feedback
+    fb.className = 'sc-feedback correct show';
+    fb.querySelector('.sc-fb-emoji').textContent = '✨';
+    fb.querySelector('.sc-fb-text').textContent = sentence.feedbackCorrect;
+
+    selectedWord = null;
+    completedCount++;
+    updateProgress();
+
+    if (completedCount === SENTENCES.length) {
+      setTimeout(showCompletion, 700);
+    }
+  } else {
+    // WRONG
+    card.classList.add('error');
+    setTimeout(() => card.classList.remove('error'), 500);
+
+    fb.className = 'sc-feedback incorrect show';
+    fb.querySelector('.sc-fb-emoji').textContent = '💡';
+    fb.querySelector('.sc-fb-text').textContent = sentence.feedbackWrong;
+
+    // Deselect word but don't discard it
+    document.querySelectorAll('.word-chip').forEach(c => c.classList.remove('selected'));
+    selectedWord = null;
+  }
+}
+
+// ============================
+// PROGRESS
+// ============================
+function updateProgress() {
+  const pct = (completedCount / SENTENCES.length) * 100;
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressFraction').textContent = completedCount + ' / ' + SENTENCES.length;
+}
+
+// ============================
+// COMPLETION
+// ============================
+function showCompletion() {
+  document.getElementById('completionCard').classList.add('show');
+  document.getElementById('completionCard').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  launchConfetti();
+}
+
+function restartGame() {
+  completedCount = 0;
+  selectedWord = null;
+  document.getElementById('completionCard').classList.remove('show');
+  updateProgress();
+  renderWordBank();
+  renderSentences();
+}
+
+// ============================
+// CONFETTI
+// ============================
+function launchConfetti() {
+  const colors = ['#C0392B','#E74C6F','#FDECEF','#F4C430','#FADADD','#fff'];
+  for (let i = 0; i < 52; i++) {
+    const c = document.createElement('div');
+    c.className = 'confetti-piece';
+    c.style.left = Math.random() * 100 + 'vw';
+    c.style.top = '-20px';
+    c.style.background = colors[Math.floor(Math.random() * colors.length)];
+    c.style.width  = (7 + Math.random() * 9) + 'px';
+    c.style.height = (7 + Math.random() * 9) + 'px';
+    c.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+    c.style.animationDuration  = (1.4 + Math.random() * 2.2) + 's';
+    c.style.animationDelay     = (Math.random() * 1.2) + 's';
+    document.body.appendChild(c);
+    setTimeout(() => c.remove(), 4500);
+  }
+}
+
+// ============================
+// INIT
+// ============================
+renderWordBank();
+renderSentences();
+</script>
+</body>
+</html>

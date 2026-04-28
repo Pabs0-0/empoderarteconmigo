@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>El Viaje de Ceci — Nivel 8 · Lección 1 · Lidera como Embajadora</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fredoka+One&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --deep:     #3D1060;
+    --main:     #7D3C98;
+    --accent:   #BB6BD9;
+    --light:    #F5EEF8;
+    --violet:   #9B59B6;
+    --lavender: #D7BDE2;
+    --lilac:    #E8D5F0;
+    --rose:     #E879B0;
+    --gold:     #FFD700;
+    --cream:    #FBF5FF;
+    --magenta:  #C0392B;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    font-family:'Nunito',sans-serif;
+    background:#0D0520;
+    color:#fff;
+    overflow-x:hidden;
+    min-height:100vh;
+  }
+
+  #starfield { position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none; }
+
+  /* ── NEBULAE ── */
+  .neb{position:fixed;border-radius:50%;filter:blur(95px);opacity:.18;z-index:0;pointer-events:none;animation:nebPulse 9s ease-in-out infinite alternate;}
+  .n1{width:700px;height:700px;background:#7D3C98;top:-140px;left:-170px;animation-delay:0s;}
+  .n2{width:520px;height:520px;background:#BB6BD9;top:200px;right:-120px;animation-delay:2.5s;}
+  .n3{width:450px;height:450px;background:#9B59B6;bottom:60px;left:20%;animation-delay:4s;}
+  .n4{width:330px;height:330px;background:#E879B0;top:55%;right:7%;animation-delay:1.8s;opacity:.13;}
+  .n5{width:280px;height:280px;background:#D7BDE2;top:32%;left:52%;animation-delay:3.2s;opacity:.12;}
+  .n6{width:340px;height:340px;background:#FFD700;bottom:12%;left:5%;animation-delay:2s;opacity:.08;}
+  @keyframes nebPulse{from{opacity:.1;transform:scale(1);}to{opacity:.22;transform:scale(1.1);}}
+
+  /* ── PARTICLES ── */
+  .pt{position:fixed;border-radius:50%;pointer-events:none;z-index:0;animation:ptFall linear infinite;}
+  @keyframes ptFall{0%{transform:translateY(-20px) rotate(0deg);opacity:0;}10%{opacity:1;}90%{opacity:.8;}100%{transform:translateY(110vh) rotate(720deg);opacity:0;}}
+
+  /* ── CONFETTI ── */
+  .confetti{position:fixed;pointer-events:none;z-index:1;animation:confettiFall linear infinite;}
+  @keyframes confettiFall{
+    0%{transform:translateY(-30px) rotate(0deg) translateX(0);opacity:0;}
+    5%{opacity:.9;}
+    90%{opacity:.7;}
+    100%{transform:translateY(110vh) rotate(720deg) translateX(40px);opacity:0;}
+  }
+
+  /* ── KEYFRAMES ── */
+  @keyframes float{from{transform:translateY(0);}to{transform:translateY(-13px);}}
+  @keyframes floatSlow{from{transform:translateY(0) rotate(-4deg);}to{transform:translateY(-9px) rotate(4deg);}}
+  @keyframes spkl{0%{opacity:.2;transform:scale(.7) rotate(0deg);}50%{opacity:1;transform:scale(1.25) rotate(180deg);}100%{opacity:.4;transform:scale(.9) rotate(360deg);}}
+  @keyframes heartPulse{0%,100%{transform:scale(1);}50%{transform:scale(1.22);}}
+  @keyframes haloBreath{from{transform:translate(-50%,-50%) scale(.88);opacity:.5;}to{transform:translate(-50%,-50%) scale(1.25);opacity:1;}}
+  @keyframes borderShim{0%{opacity:.4;}50%{opacity:1;}100%{opacity:.4;}}
+  @keyframes pillGlow{from{box-shadow:0 0 16px rgba(187,107,217,.4);}to{box-shadow:0 0 44px rgba(187,107,217,.95);}}
+  @keyframes breatheScale{from{transform:scale(1);}to{transform:scale(1.07);}}
+  @keyframes starPop{0%,100%{transform:scale(1) rotate(0deg);}50%{transform:scale(1.3) rotate(20deg);}}
+  @keyframes lilacGlow{from{box-shadow:0 0 12px rgba(187,107,217,.3);}to{box-shadow:0 0 28px rgba(155,89,182,.7);}}
+  @keyframes celebShine{
+    0%{box-shadow:0 0 20px rgba(187,107,217,.3),inset 0 0 20px rgba(187,107,217,.1);}
+    50%{box-shadow:0 0 55px rgba(232,121,176,.7),inset 0 0 40px rgba(215,189,226,.2);}
+    100%{box-shadow:0 0 20px rgba(187,107,217,.3),inset 0 0 20px rgba(187,107,217,.1);}
+  }
+  @keyframes goldFloat{
+    0%{transform:translateY(0) rotate(0deg);}
+    33%{transform:translateY(-8px) rotate(5deg);}
+    66%{transform:translateY(-3px) rotate(-3deg);}
+    100%{transform:translateY(0) rotate(0deg);}
+  }
+  @keyframes liderarLetter{
+    0%,100%{transform:translateY(0);filter:drop-shadow(0 0 8px rgba(255,215,0,.4));}
+    50%{transform:translateY(-6px);filter:drop-shadow(0 0 18px rgba(255,215,0,.9));}
+  }
+  @keyframes celebBadge{
+    0%{transform:scale(1) rotate(0deg);filter:drop-shadow(0 0 18px rgba(255,215,0,.5));}
+    50%{transform:scale(1.08) rotate(5deg);filter:drop-shadow(0 0 40px rgba(255,215,0,.9));}
+    100%{transform:scale(1) rotate(0deg);filter:drop-shadow(0 0 18px rgba(255,215,0,.5));}
+  }
+
+  /* ── FIXED SPARKLES ── */
+  .fixed-spk{position:fixed;z-index:1;pointer-events:none;animation:spkl ease-in-out infinite alternate;}
+
+  /* ── WRAPPER ── */
+  .wrapper{position:relative;z-index:2;max-width:960px;margin:0 auto;padding:0 20px 72px;}
+
+  /* ── NIVEL PILL ── */
+  .nivel-pill{display:inline-block;background:linear-gradient(135deg,#7D3C98,#BB6BD9);color:#fff;font-family:'Fredoka One',cursive;font-size:.95rem;letter-spacing:3px;padding:8px 28px;border-radius:50px;box-shadow:0 0 26px rgba(187,107,217,.6);margin-bottom:20px;animation:pillGlow 3s ease-in-out infinite alternate;}
+
+  /* ── FINAL LEVEL BANNER ── */
+  .final-banner{
+    background:linear-gradient(135deg,rgba(255,215,0,.15),rgba(187,107,217,.2),rgba(255,215,0,.15));
+    border:2px solid rgba(255,215,0,.45);
+    border-radius:20px;padding:14px 28px;margin-bottom:24px;text-align:center;
+    font-family:'Fredoka One',cursive;font-size:1rem;
+    color:#FFD700;letter-spacing:2px;
+    box-shadow:0 0 28px rgba(255,215,0,.25);
+    animation:breatheScale 3s ease-in-out infinite alternate;
+  }
+
+  /* ── HERO ── */
+  .hero{position:relative;padding:0 20px 0;text-align:center;}
+  .hero-block{
+    background:linear-gradient(145deg,#3D1060 0%,#6B2090 52%,#3D1060 100%);
+    border:2px solid rgba(187,107,217,.55);border-radius:32px;padding:52px 40px 46px;
+    position:relative;overflow:hidden;
+    box-shadow:0 0 80px rgba(61,16,96,.9),0 0 140px rgba(125,60,152,.25),inset 0 1px 0 rgba(255,255,255,.08);
+  }
+  .hero-block::after{content:'';position:absolute;top:-2px;left:-2px;right:-2px;bottom:-2px;border-radius:34px;background:linear-gradient(135deg,rgba(187,107,217,.38),transparent,rgba(232,121,176,.22));z-index:0;animation:borderShim 5s linear infinite;}
+
+  .hero-star{position:absolute;z-index:2;opacity:.48;animation:floatSlow ease-in-out infinite alternate;}
+  .hero-star.tl{top:20px;left:28px;width:46px;animation-duration:4s;}
+  .hero-star.tr{top:22px;right:28px;width:54px;animation-duration:5.2s;animation-delay:.8s;}
+  .hero-star.bl{bottom:18px;left:22px;width:36px;animation-duration:3.8s;animation-delay:1.4s;}
+  .hero-star.br{bottom:20px;right:22px;width:40px;animation-duration:4.5s;animation-delay:.4s;}
+
+  .hero-inner{position:relative;z-index:1;}
+  .hero-nivel{font-family:'Fredoka One',cursive;font-size:1rem;color:#D7BDE2;letter-spacing:4px;text-transform:uppercase;margin-bottom:8px;}
+  .hero-title{font-family:'Fredoka One',cursive;font-size:clamp(1.8rem,5vw,3.5rem);color:#fff;text-shadow:0 0 32px rgba(187,107,217,.88),0 2px 4px rgba(0,0,0,.4);line-height:1.15;margin-bottom:8px;}
+  .hero-title span{color:#E8D5F0;}
+  .hero-sub2{font-size:.95rem;color:#D7BDE2;font-weight:700;margin-bottom:18px;line-height:1.55;}
+  .hero-lesson-tag{display:inline-block;background:rgba(61,16,96,.4);border:1px solid rgba(187,107,217,.5);border-radius:50px;padding:8px 26px;font-family:'Fredoka One',cursive;font-size:1rem;color:#E8D5F0;letter-spacing:1px;margin-bottom:28px;}
+
+  .hero-chars{display:flex;justify-content:center;align-items:flex-end;gap:18px;margin-top:10px;}
+  .hero-chars img{height:200px;filter:drop-shadow(0 0 24px rgba(187,107,217,.7));animation:float 4s ease-in-out infinite alternate;}
+  .hero-chars img:nth-child(2){height:105px;animation-delay:.8s;}
+  .hero-chars img:nth-child(3){height:165px;animation-delay:1.7s;}
+
+  /* ── SECTION LABEL ── */
+  .section-label{text-align:center;margin:44px 0 28px;}
+  .section-label h2{font-family:'Fredoka One',cursive;font-size:clamp(1.2rem,3.8vw,1.85rem);color:#D7BDE2;background:rgba(61,16,96,.75);border:1px solid rgba(187,107,217,.45);display:inline-block;padding:12px 36px;border-radius:50px;box-shadow:0 0 24px rgba(125,60,152,.35);}
+
+  /* ── CONTENT CARDS ── */
+  .card{background:var(--light);border-radius:26px;padding:34px 38px;margin-bottom:24px;border:2px solid rgba(125,60,152,.2);box-shadow:0 10px 50px rgba(61,16,96,.42),0 2px 8px rgba(0,0,0,.2);position:relative;overflow:hidden;}
+  .card::before{content:'';position:absolute;top:0;left:0;right:0;height:5px;border-radius:26px 26px 0 0;}
+  .card.c1::before{background:linear-gradient(90deg,#7D3C98,#BB6BD9,#9B59B6);}
+  .card.c2::before{background:linear-gradient(90deg,#BB6BD9,#E879B0,#D7BDE2);}
+  .card.c3::before{background:linear-gradient(90deg,#E879B0,#BB6BD9,#7D3C98);}
+
+  .card-row{display:flex;align-items:center;gap:26px;}
+  .card-text{flex:1;}
+  .card-char{flex-shrink:0;width:130px;}
+  .card-char img{width:100%;filter:drop-shadow(0 4px 14px rgba(125,60,152,.45));animation:float 4.5s ease-in-out infinite alternate;}
+  .card-emoji{font-size:2.2rem;margin-bottom:10px;display:block;}
+  .card h3{font-family:'Fredoka One',cursive;font-size:1.45rem;color:#3D1060;margin-bottom:13px;}
+  .card p{font-size:1.05rem;color:#4A1070;line-height:1.8;font-weight:700;}
+
+  /* cartilla ref */
+  .cartilla-ref{display:inline-block;background:linear-gradient(135deg,#7D3C98,#BB6BD9);color:#F5EEF8;border-radius:50px;padding:6px 18px;font-size:.9rem;font-weight:800;margin-top:10px;box-shadow:0 4px 14px rgba(125,60,152,.4);animation:breatheScale 3s ease-in-out infinite alternate;}
+
+  /* ── LIDERART CARD ── */
+  .liderart-card{
+    background:linear-gradient(145deg,#3D1060,#6B2090);
+    border:2px solid rgba(187,107,217,.42);border-radius:26px;padding:36px 40px;margin-bottom:26px;
+    position:relative;overflow:hidden;animation:celebShine 7s ease-in-out infinite;
+  }
+  .liderart-card::before{content:'';position:absolute;top:0;left:0;right:0;height:5px;background:linear-gradient(90deg,#FFD700,#BB6BD9,#E879B0);border-radius:26px 26px 0 0;}
+  .liderart-card h3{font-family:'Fredoka One',cursive;font-size:1.45rem;color:#E8D5F0;margin-bottom:18px;}
+
+  /* L.I.D.E.R.A.R. letters */
+  .liderart-letters{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin-bottom:24px;}
+  .letter-box{
+    background:linear-gradient(145deg,rgba(187,107,217,.22),rgba(125,60,152,.35));
+    border:2px solid rgba(187,107,217,.5);border-radius:16px;
+    padding:14px 12px;text-align:center;min-width:90px;flex:1;max-width:110px;
+    animation:liderarLetter 3s ease-in-out infinite;
+  }
+  .letter-box:nth-child(1){animation-delay:0s;}
+  .letter-box:nth-child(2){animation-delay:.3s;}
+  .letter-box:nth-child(3){animation-delay:.6s;}
+  .letter-box:nth-child(4){animation-delay:.9s;}
+  .letter-box:nth-child(5){animation-delay:1.2s;}
+  .letter-box:nth-child(6){animation-delay:1.5s;}
+  .letter-box:nth-child(7){animation-delay:1.8s;}
+  .letter-big{font-family:'Fredoka One',cursive;font-size:1.8rem;color:#FFD700;display:block;line-height:1;text-shadow:0 0 15px rgba(255,215,0,.6);}
+  .letter-word{font-size:.75rem;font-weight:700;color:#D7BDE2;margin-top:4px;line-height:1.3;}
+
+  .liderart-note{background:rgba(187,107,217,.15);border:1px solid rgba(187,107,217,.35);border-radius:14px;padding:14px 20px;font-size:1rem;color:#D7BDE2;font-weight:700;line-height:1.65;text-align:center;}
+
+  /* ── ACTIVITIES ── */
+  .act-card{background:var(--light);border-radius:26px;padding:34px 38px;margin-bottom:26px;border:2px solid rgba(125,60,152,.2);box-shadow:0 10px 50px rgba(61,16,96,.4);position:relative;overflow:hidden;}
+  .act-card::before{content:'';position:absolute;top:0;left:0;right:0;height:5px;background:linear-gradient(90deg,#E879B0,#BB6BD9,#D7BDE2);border-radius:26px 26px 0 0;}
+  .act-card h3{font-family:'Fredoka One',cursive;font-size:1.45rem;color:#3D1060;margin-bottom:20px;}
+  .act-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;}
+  .act-item{background:linear-gradient(145deg,#3D1060,#6B2090);border-radius:20px;padding:22px 18px;text-align:center;border:1px solid rgba(187,107,217,.35);box-shadow:0 4px 22px rgba(61,16,96,.5);transition:transform .3s,box-shadow .3s;cursor:default;animation:lilacGlow 3s ease-in-out infinite alternate;}
+  .act-item:nth-child(2){animation-delay:.5s;}
+  .act-item:nth-child(3){animation-delay:1s;}
+  .act-item:nth-child(4){animation-delay:1.5s;}
+  .act-item:hover{transform:translateY(-6px);box-shadow:0 14px 32px rgba(187,107,217,.55);}
+  .act-icon{font-size:1.9rem;margin-bottom:9px;display:block;}
+  .act-label{font-size:.88rem;font-weight:700;color:#F5EEF8;line-height:1.45;}
+
+  /* ── DECO FLOAT ── */
+  .deco-float{position:absolute;pointer-events:none;z-index:1;opacity:.75;animation:float ease-in-out infinite alternate;}
+
+  /* ── DIVIDER ── */
+  .divider{display:flex;align-items:center;gap:14px;margin:28px 0;opacity:.38;}
+  .divider::before,.divider::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,#BB6BD9,transparent);}
+  .divider span{font-size:1.1rem;}
+
+  /* ── BADGES SECTION ── */
+  .badges-section{text-align:center;margin:36px 0;}
+  .badges-title{font-family:'Fredoka One',cursive;font-size:1.1rem;color:#D7BDE2;margin-bottom:22px;background:rgba(61,16,96,.65);display:inline-block;padding:10px 28px;border-radius:50px;border:1px solid rgba(187,107,217,.35);}
+
+  .badges-row{display:flex;justify-content:center;align-items:flex-end;gap:36px;flex-wrap:wrap;}
+  .badge-wrap{text-align:center;position:relative;}
+  .badge-halo{position:absolute;top:50%;left:50%;width:160px;height:160px;background:radial-gradient(circle,rgba(187,107,217,.25) 0%,transparent 70%);transform:translate(-50%,-50%);border-radius:50%;animation:haloBreath 3s ease-in-out infinite alternate;}
+  .badge-halo.gold{background:radial-gradient(circle,rgba(255,215,0,.3) 0%,transparent 70%);}
+  .badge-img{width:110px;position:relative;z-index:1;animation:celebBadge 4s ease-in-out infinite;}
+  .badge-img.b2{animation-delay:1.5s;}
+  .badge-lbl{font-family:'Fredoka One',cursive;font-size:.95rem;color:#D7BDE2;margin-top:10px;}
+
+  /* ── GRAND CLOSING ── */
+  .grand-closing{
+    text-align:center;margin:46px 0 20px;
+    position:relative;
+  }
+  .grand-box{
+    background:linear-gradient(145deg,#3D1060,#6B2090);
+    border:3px solid rgba(255,215,0,.45);
+    border-radius:32px;padding:52px 40px;
+    position:relative;overflow:hidden;
+    box-shadow:0 0 80px rgba(61,16,96,.7),0 0 120px rgba(255,215,0,.15);
+  }
+  .grand-box::before{content:'';position:absolute;top:0;left:0;right:0;height:6px;background:linear-gradient(90deg,#FFD700,#BB6BD9,#E879B0,#FFD700);border-radius:32px 32px 0 0;animation:borderShim 4s linear infinite;}
+
+  .grand-box h2{
+    font-family:'Fredoka One',cursive;
+    font-size:clamp(1.6rem,4.5vw,2.5rem);
+    color:#FFD700;margin-bottom:16px;
+    text-shadow:0 0 28px rgba(255,215,0,.65);
+  }
+  .grand-box p{font-size:1.05rem;color:#D7BDE2;line-height:1.78;font-weight:700;max-width:600px;margin:0 auto 28px;}
+  .cta-btn{display:inline-block;background:linear-gradient(135deg,#7D3C98,#BB6BD9);color:#fff;font-family:'Fredoka One',cursive;font-size:1.2rem;padding:18px 50px;border-radius:50px;border:none;cursor:pointer;box-shadow:0 0 36px rgba(187,107,217,.65),0 4px 16px rgba(0,0,0,.3);transition:transform .3s,box-shadow .3s;text-decoration:none;letter-spacing:1px;}
+  .cta-btn:hover{transform:translateY(-4px) scale(1.06);box-shadow:0 0 60px rgba(187,107,217,.9),0 8px 28px rgba(0,0,0,.4);}
+
+  .grand-chars{display:flex;justify-content:center;align-items:flex-end;gap:20px;margin-top:34px;flex-wrap:wrap;}
+  .grand-chars img{height:165px;filter:drop-shadow(0 0 18px rgba(187,107,217,.6));animation:float 4s ease-in-out infinite alternate;}
+  .grand-chars img:nth-child(2){height:130px;animation-delay:.8s;}
+  .grand-chars img:nth-child(3){height:100px;animation-delay:1.4s;}
+  .grand-chars img:nth-child(4){height:85px;animation-delay:.4s;opacity:.8;}
+
+  /* ── DOCENTE ── */
+  .docente-wrap{margin-top:54px;border-radius:20px;overflow:hidden;border:1px solid rgba(125,60,152,.3);box-shadow:0 4px 22px rgba(61,16,96,.3);}
+  .doc-toggle{background:rgba(25,5,50,.88);padding:18px 28px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;user-select:none;border:none;width:100%;color:#D7BDE2;font-family:'Nunito',sans-serif;font-weight:700;font-size:.95rem;letter-spacing:1px;transition:background .3s;}
+  .doc-toggle:hover{background:rgba(50,10,80,.95);}
+  .doc-toggle .arrow{font-size:1.1rem;transition:transform .3s;}
+  .doc-toggle.open .arrow{transform:rotate(180deg);}
+  .doc-body{display:none;background:rgba(10,3,22,.97);padding:28px;}
+  .doc-body.open{display:block;}
+  .doc-body h4{color:#BB6BD9;font-family:'Fredoka One',cursive;font-size:1.1rem;margin-bottom:10px;}
+  .doc-body p{color:#D7BDE2;font-size:.92rem;line-height:1.72;font-weight:600;}
+  .doc-placeholder{border:1px dashed rgba(187,107,217,.4);border-radius:12px;padding:20px;text-align:center;color:rgba(187,107,217,.5);font-size:.88rem;margin-top:14px;font-weight:600;line-height:1.6;}
+
+  @media(max-width:640px){
+    .hero-block{padding:34px 18px 28px;}
+    .hero-chars img{height:115px;}
+    .card-row{flex-direction:column;}
+    .card-char{width:110px;margin:0 auto;}
+    .liderart-letters{gap:6px;}
+    .letter-box{min-width:70px;padding:10px 6px;}
+    .letter-big{font-size:1.4rem;}
+    .act-grid{grid-template-columns:repeat(2,1fr);}
+    .grand-box{padding:34px 18px;}
+    .badges-row{gap:20px;}
+  }
+</style>
+</head>
+<body>
+
+<canvas id="starfield"></canvas>
+<div class="neb n1"></div><div class="neb n2"></div><div class="neb n3"></div>
+<div class="neb n4"></div><div class="neb n5"></div><div class="neb n6"></div>
+
+<img class="fixed-spk" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754686/estrella_bbltv2.png" style="width:34px;top:7%;left:4%;animation-duration:3.2s;">
+<img class="fixed-spk" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754686/estrella_bbltv2.png" style="width:44px;top:16%;right:5%;animation-duration:4.5s;animation-delay:1s;">
+<img class="fixed-spk" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754682/corazon_vjqq8g.png" style="width:30px;top:40%;left:2%;animation-duration:2.8s;animation-delay:.6s;animation-name:heartPulse;">
+<img class="fixed-spk" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754686/estrella_bbltv2.png" style="width:28px;top:60%;right:3%;animation-duration:3.5s;animation-delay:2s;animation-name:starPop;">
+<img class="fixed-spk" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754686/estrella_bbltv2.png" style="width:36px;top:80%;left:7%;animation-duration:4.2s;animation-delay:.4s;">
+<img class="fixed-spk" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754682/corazon_vjqq8g.png" style="width:24px;top:91%;right:10%;animation-duration:3s;animation-delay:1.3s;animation-name:heartPulse;">
+
+<div class="wrapper">
+
+  <!-- ── FINAL BANNER ── -->
+  <div style="padding-top:48px;text-align:center;">
+    <div class="final-banner">
+      🎉 ¡HAS LLEGADO AL ÚLTIMO NIVEL DEL VIAJE EN PANDORA! 🎉
+    </div>
+  </div>
+
+  <!-- ── NIVEL PILL ── -->
+  <div style="text-align:center;">
+    <div class="nivel-pill">✦ NIVEL 8 ✦</div>
+  </div>
+
+  <!-- ── HERO ── -->
+  <div class="hero">
+    <div class="hero-block">
+      <img class="hero-star tl" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754686/estrella_bbltv2.png" alt="">
+      <img class="hero-star tr" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754686/estrella_bbltv2.png" alt="">
+      <img class="hero-star bl" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754682/corazon_vjqq8g.png" alt="" style="width:38px;">
+      <img class="hero-star br" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754686/estrella_bbltv2.png" alt="" style="width:36px;">
+      <div class="hero-inner">
+        <p class="hero-nivel">NIVEL 8 — LECCIÓN 1</p>
+        <h1 class="hero-title">Lidera como<br><span>Embajadora</span> </h1>
+        <p class="hero-sub2">Proyecto de Impacto · Método L.I.D.E.R.A.R. · Certificación · Celebración</p>
+        <div class="hero-lesson-tag">👑 LECCIÓN 1 — Mi Proyecto con el Método L.I.D.E.R.A.R.</div>
+        <div class="hero-chars">
+          <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1776434303/Removal-444_ia5zwj.png" alt="Ceci y Luna brillando" style="height:215px;">
+          </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── INTRO LABEL ── -->
+  <div class="section-label">
+    <h2>👑 Introducción — Lección 1</h2>
+  </div>
+
+  <!-- ── CARD 1 ── -->
+  <div class="card c1">
+    <div class="card-row">
+      <div class="card-text">
+        <span class="card-emoji">🌟</span>
+        <h3>¿Qué descubrirás aquí?</h3>
+        <p>¡Has llegado al último nivel del viaje en Pandora! 🎉 En este nivel aplicarás <strong>todo lo que aprendiste</strong> para diseñar tu propio proyecto de impacto. Esto es lo que hace una verdadera Embajadora.</p>
+      </div>
+      <div class="card-char">
+        <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754678/cecifeliz_lx3gso.png" alt="Ceci feliz">
+      </div>
+    </div>
+  </div>
+
+  <!-- ── CARD 2 ── -->
+  <div class="card c2" style="position:relative;">
+    <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754682/corazon_vjqq8g.png" class="deco-float" style="width:32px;right:18px;top:-12px;animation-duration:2.8s;animation-name:heartPulse;">
+    <div class="card-row">
+      <div class="card-char">
+        <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754633/ceci_writing_mgcju3.png" alt="Ceci escribiendo" style="animation-delay:1s;">
+      </div>
+      <div class="card-text">
+        <span class="card-emoji">📚</span>
+        <h3>¿Qué aprenderás?</h3>
+        <p>Aprenderás a aplicar el <strong>método L.I.D.E.R.A.R.</strong> para diseñar una campaña, proyecto o acción de cambio. Reúnete con tus compañeras embajadoras — escoge con quién te gustaría liderar tu proyecto.</p>
+        <p style="margin-top:10px;"><strong>¡La idea es que no lo trabajes sola!</strong></p>
+        <div class="cartilla-ref">📖 Ver página 86 de tu cartilla</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── CARD 3 ── -->
+  <div class="card c3">
+    <div class="card-row">
+      <div class="card-text">
+        <span class="card-emoji">🎯</span>
+        <h3>Objetivo del nivel</h3>
+        <p>Diseñarás y presentarás un proyecto de impacto usando el método L.I.D.E.R.A.R., y cerrarás el programa sintiéndote <strong>reconocida, empoderada y lista para actuar</strong>.</p>
+      </div>
+      <div class="card-char">
+        <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754477/ceci_pointing_l9mr0h.png" alt="Ceci apuntando" style="animation-delay:1.5s;">
+      </div>
+    </div>
+  </div>
+ 
+    
+
+  <div class="divider"><span>🎊</span></div>
+
+  <!-- ── ACTIVITIES ── -->
+  <div class="act-card" style="position:relative;">
+    <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754771/paneta_tx1mio.png" class="deco-float" style="width:50px;right:16px;top:-16px;animation-duration:5.5s;">
+    <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754751/friends_naeiga.png" class="deco-float" style="width:52px;left:12px;bottom:-14px;animation-duration:4.5s;animation-delay:1s;">
+    <h3>🎮 ¿Qué haremos en esta lección?</h3>
+    <div class="act-grid">
+      <div class="act-item">
+        <span class="act-icon">👑</span>
+        <p class="act-label">Método L.I.D.E.R.A.R. paso a paso</p>
+      </div>
+      <div class="act-item">
+        <span class="act-icon">🧩</span>
+        <p class="act-label">Puzzle del compromiso de Embajadora</p>
+      </div>
+      <div class="act-item">
+        <span class="act-icon">🌍</span>
+        <p class="act-label">Diseño de tu proyecto de impacto</p>
+      </div>
+      <div class="act-item">
+        <span class="act-icon">📸</span>
+        <p class="act-label">Comparte tu proyecto en video o imagen</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── BADGES ── -->
+  <div class="badges-section">
+    <div class="badges-title">🏅 Tu certificación y cierre especial te esperan</div>
+    <div style="margin-top:20px;"></div>
+    <div class="badges-row">
+      <div class="badge-wrap">
+        <div class="badge-halo"></div>
+        <img class="badge-img" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754455/badge8_ohzk4o.png" alt="Badge 8">
+        <p class="badge-lbl">Insignia de Proyecto</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"><span>✨</span></div>
+
+  <!-- ── GRAND CLOSING ── -->
+  <div class="grand-closing">
+    <div class="grand-box">
+      <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754689/etrella_bd1ne3.png"
+           style="position:absolute;right:-10px;top:-14px;width:100px;opacity:.38;animation:goldFloat 5s ease-in-out infinite;pointer-events:none;">
+      <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754682/corazon_vjqq8g.png"
+           style="position:absolute;left:16px;top:16px;width:44px;opacity:.44;animation:heartPulse 2.5s ease-in-out infinite;pointer-events:none;">
+      <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754686/estrella_bbltv2.png"
+           style="position:absolute;right:18px;bottom:22px;width:52px;opacity:.36;animation:spkl 4s ease-in-out infinite alternate;pointer-events:none;">
+
+      <h2>🎉 ¡Este es TU momento de brillar! 🎉</h2>
+      <p>Has recorrido todo el viaje de Pandora — cada nivel, cada reflexión, cada aprendizaje te trajo hasta aquí. Ahora llegó el momento de usarlo todo para hacer algo real, poderoso y tuyo. Ceci, Luna y todo el mundo de Pandora están aquí para celebrarte.</p>
+      <a href="#" class="cta-btn">¡Comenzar mi Proyecto! 👑</a>
+
+      <div class="grand-chars">
+        <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754682/cohete_szsjlk.png" alt="Ceci y Luna brillando" style="height:170px;animation-duration:3.5s;">
+        </div>
+    </div>
+  </div>
+
+  <!-- ── DOCENTE ── -->
+  <div class="docente-wrap">
+    <button class="doc-toggle" id="docBtn" onclick="toggleDoc()">
+      <span>📋 Información pedagógica para docentes</span>
+      <span class="arrow">▼</span>
+    </button>
+    <div class="doc-body" id="docBody">
+      <h4>Valor académico de esta actividad</h4>
+      <p>Esta introducción abre y cierra el Nivel 8, el nivel culminante del programa "El Viaje de Ceci en el Mundo de Pandora". La propuesta pedagógica integra todos los aprendizajes previos (autoestima, emociones, ciclo menstrual, derechos, liderazgo) en un proyecto de impacto colaborativo estructurado con el método L.I.D.E.R.A.R. (página 86 de la cartilla). El enfoque de trabajo en equipo y certificación busca generar cierre emocional, reconocimiento colectivo y agencia real.</p>
+      <div class="doc-placeholder">
+        </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ── CELEBRATION STARFIELD ──
+const canvas = document.getElementById('starfield');
+const ctx = canvas.getContext('2d');
+let stars=[], W, H;
+
+function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight;}
+resize();
+window.addEventListener('resize', resize);
+function rnd(a,b){return a+Math.random()*(b-a);}
+
+function initStars(){
+  stars=[];
+  const celeb=['#F5EEF8','#D7BDE2','#BB6BD9','#9B59B6','#E879B0','#E8D5F0','#FFD700','#ffffff'];
+  for(let i=0;i<330;i++){
+    stars.push({x:rnd(0,W),y:rnd(0,H),r:rnd(.3,2.6),alpha:rnd(.2,1),speed:rnd(.003,.022),offset:rnd(0,Math.PI*2),color:Math.random()>.4?celeb[Math.floor(Math.random()*celeb.length)]:'#ffffff'});
+  }
+}
+initStars();
+
+let tick=0;
+function draw(){
+  ctx.clearRect(0,0,W,H);tick+=.012;
+  stars.forEach(s=>{
+    const p=.5+.5*Math.sin(tick*s.speed*60+s.offset);
+    ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fillStyle=s.color;ctx.globalAlpha=s.alpha*p;ctx.fill();
+    if(s.r>1.8&&p>.83){
+      ctx.globalAlpha=s.alpha*p*.3;ctx.strokeStyle=s.color;ctx.lineWidth=.5;
+      ctx.beginPath();ctx.moveTo(s.x-s.r*3.5,s.y);ctx.lineTo(s.x+s.r*3.5,s.y);ctx.moveTo(s.x,s.y-s.r*3.5);ctx.lineTo(s.x,s.y+s.r*3.5);ctx.stroke();
+    }
+    ctx.globalAlpha=1;
+  });
+  requestAnimationFrame(draw);
+}
+draw();
+
+// ── PARTICLES ──
+const ptC=['#BB6BD9','#F5EEF8','#9B59B6','#D7BDE2','#E879B0','#E8D5F0','#FFD700'];
+for(let i=0;i<60;i++){
+  const p=document.createElement('div');p.className='pt';
+  const sz=Math.random()*5+2;
+  p.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*100}vw;background:${ptC[Math.floor(Math.random()*ptC.length)]};opacity:${Math.random()*.55+.2};animation-duration:${Math.random()*12+8}s;animation-delay:${Math.random()*12}s;filter:blur(${Math.random()}px);`;
+  document.body.appendChild(p);
+}
+
+// ── CONFETTI ──
+const confC=['#FFD700','#BB6BD9','#E879B0','#F5EEF8','#9B59B6'];
+const shapes=['●','★','♦','▲'];
+for(let i=0;i<20;i++){
+  const c=document.createElement('div');c.className='confetti';
+  const sz=Math.random()*10+6;
+  c.innerHTML=shapes[Math.floor(Math.random()*shapes.length)];
+  c.style.cssText=`font-size:${sz}px;left:${Math.random()*100}vw;color:${confC[Math.floor(Math.random()*confC.length)]};opacity:${Math.random()*.7+.2};animation-duration:${Math.random()*14+10}s;animation-delay:${Math.random()*14}s;`;
+  document.body.appendChild(c);
+}
+
+function toggleDoc(){
+  document.getElementById('docBtn').classList.toggle('open');
+  document.getElementById('docBody').classList.toggle('open');
+}
+</script>
+</body>
+</html>

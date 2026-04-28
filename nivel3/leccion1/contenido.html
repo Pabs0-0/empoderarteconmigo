@@ -1,0 +1,1396 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>El Ciclo Mágico de Ceci · Pandora Nivel 3</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Nunito:wght@400;600;700;800;900&display=swap');
+
+  :root {
+    --principal: #C0392B;
+    --acento:    #E74C6F;
+    --claro:     #FDECEF;
+    --vino:      #7E1322;
+    --dorado:    #F4B24A;
+    --cafe:      #8B5837;
+    --crema:     #FFF8F5;
+
+    --fase1: #C0392B;
+    --fase2: #E8A020;
+    --fase3: #C27BB5;
+    --fase4: #6A8AB8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    min-height: 100vh;
+    background: url('https://res.cloudinary.com/dijezdfsr/image/upload/v1775754355/background_duuc07.png') center/cover fixed;
+    overflow-x: hidden;
+    cursor: default;
+  }
+
+  /* ── SPARKLES ── */
+  .sparkle {
+    position: fixed;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.5;
+    animation: floatSpark linear infinite;
+  }
+  @keyframes floatSpark {
+    0%   { transform: translateY(0) rotate(0deg); opacity: 0.4; }
+    50%  { opacity: 0.8; }
+    100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+  }
+
+  /* ── DECORATIVES ── */
+  .deco {
+    position: fixed;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.6;
+    filter: drop-shadow(0 4px 16px rgba(192,57,43,0.2));
+    animation: decoFloat 6s ease-in-out infinite;
+  }
+  @keyframes decoFloat {
+    0%,100% { transform: translateY(0) rotate(-3deg); }
+    50%      { transform: translateY(-12px) rotate(3deg); }
+  }
+
+  /* ── HEADER ── */
+  header {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    padding: 40px 24px 28px;
+  }
+  .badge-nivel {
+    display: inline-block;
+    background: var(--principal);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 6px 18px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+    box-shadow: 0 4px 16px rgba(192,57,43,0.35);
+  }
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 5vw, 3.2rem);
+    color: #fff;
+    line-height: 1.15;
+    text-shadow: 0 2px 16px rgba(126,19,34,0.5);
+  }
+  header h1 span { color: var(--acento); }
+  .header-sub {
+    font-size: 14px;
+    color: rgba(134, 3, 3, 0.75);
+    font-weight: 600;
+    margin-top: 8px;
+    letter-spacing: 1px;
+  }
+
+  .ceci-header {
+    position: absolute;
+    right: max(16px, 4%);
+    top: 10px;
+    width: clamp(80px, 11vw, 160px);
+    filter: drop-shadow(0 8px 24px rgba(192,57,43,0.3));
+    animation: decoFloat 5s ease-in-out infinite;
+    z-index: 12;
+  }
+
+  /* ── INSTRUCCIONES ── */
+  .instrucciones-wrap {
+    position: relative;
+    z-index: 10;
+    max-width: 780px;
+    margin: 0 auto 32px;
+    padding: 0 16px;
+  }
+  .instrucciones-card {
+    background: var(--claro);
+    border: 2px solid rgba(231,76,111,0.3);
+    border-radius: 24px;
+    padding: 26px 28px;
+    box-shadow: 0 8px 36px rgba(192,57,43,0.12);
+    position: relative;
+    overflow: hidden;
+  }
+  .instrucciones-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 5px;
+    background: linear-gradient(90deg, var(--principal), var(--acento), var(--dorado), var(--acento), var(--principal));
+    border-radius: 24px 24px 0 0;
+  }
+  .instrucciones-card .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--acento);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 800;
+    padding: 5px 14px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+    letter-spacing: 1px;
+  }
+  .instrucciones-card h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    color: var(--principal);
+    margin-bottom: 12px;
+  }
+  .instrucciones-card p {
+    color: #5a2020;
+    font-size: 15px;
+    line-height: 1.7;
+    margin-bottom: 8px;
+  }
+  .instrucciones-card ul {
+    list-style: none;
+    margin: 6px 0 12px 0;
+  }
+  .instrucciones-card ul li {
+    color: #5a2020;
+    font-size: 15px;
+    padding: 3px 0 3px 22px;
+    position: relative;
+  }
+  .instrucciones-card ul li::before {
+    content: '✦';
+    position: absolute;
+    left: 0;
+    color: var(--dorado);
+    font-size: 11px;
+    top: 6px;
+  }
+  .instrucciones-card .highlight-box {
+    background: rgba(231,76,111,0.08);
+    border-left: 4px solid var(--acento);
+    border-radius: 0 14px 14px 0;
+    padding: 12px 16px;
+    margin-top: 12px;
+  }
+  .instrucciones-card .highlight-box p {
+    margin: 0;
+    font-weight: 700;
+    color: var(--principal);
+    font-size: 14px;
+  }
+
+  /* ── POOL DE PALABRAS ── */
+  #palabras-pool {
+    position: relative;
+    z-index: 10;
+    max-width: 900px;
+    margin: 0 auto 28px;
+    padding: 0 16px;
+  }
+  .pool-label {
+    text-align: center;
+    font-size: 12px;
+    font-weight: 800;
+    color: rgb(217 44 44 / 90%);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .pool-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    background: rgba(253,236,239,0.88);
+    border: 2px dashed rgba(231,76,111,0.4);
+    border-radius: 20px;
+    padding: 20px;
+    min-height: 72px;
+    box-shadow: 0 4px 20px rgba(192,57,43,0.08);
+  }
+
+  .word-card {
+    background: #fff;
+    border: 2px solid rgba(231,76,111,0.4);
+    border-radius: 50px;
+    padding: 9px 20px;
+    font-size: clamp(12px, 2.2vw, 14px);
+    font-weight: 800;
+    color: var(--principal);
+    cursor: grab;
+    user-select: none;
+    box-shadow: 0 3px 12px rgba(192,57,43,0.12);
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+    touch-action: none;
+    position: relative;
+  }
+  .word-card.dragging {
+    cursor: grabbing;
+    transform: scale(1.1) rotate(2deg);
+    box-shadow: 0 12px 30px rgba(192,57,43,0.28);
+    z-index: 9999;
+    border-color: var(--acento);
+  }
+  .word-card.correct {
+    background: linear-gradient(135deg, rgba(244,178,74,0.22), rgba(231,76,111,0.12));
+    border-color: var(--dorado);
+    cursor: default;
+    pointer-events: none;
+    animation: popIn 0.4s cubic-bezier(0.34,1.56,0.64,1) forwards;
+    font-size: clamp(11px, 2vw, 13px);
+    padding: 7px 14px;
+  }
+  .word-card.wrong-flash {
+    animation: shakeBack 0.5s ease forwards;
+    border-color: var(--principal);
+  }
+  @keyframes popIn {
+    0%   { transform: scale(0.8); opacity: 0.5; }
+    60%  { transform: scale(1.1); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  @keyframes shakeBack {
+    0%   { transform: translateX(0); }
+    20%  { transform: translateX(-8px) rotate(-2deg); }
+    40%  { transform: translateX(8px) rotate(2deg); }
+    60%  { transform: translateX(-5px); }
+    80%  { transform: translateX(5px); }
+    100% { transform: translateX(0); }
+  }
+
+  /* ── PROGRESO ── */
+  .progress-wrap {
+    position: relative;
+    z-index: 10;
+    max-width: 480px;
+    margin: 0 auto 28px;
+    padding: 0 16px;
+    text-align: center;
+  }
+  .progress-label {
+    font-size: 12px;
+    font-weight: 800;
+    color: rgb(217 44 44 / 90%);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .progress-bar-bg {
+    background: rgba(253,236,239,0.5);
+    border-radius: 20px;
+    height: 10px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--acento), var(--dorado));
+    border-radius: 20px;
+    width: 0%;
+    transition: width 0.6s cubic-bezier(0.34,1.56,0.64,1);
+    box-shadow: 0 0 8px rgba(244,178,74,0.5);
+  }
+  .progress-count {
+    margin-top: 6px;
+    font-size: 13px;
+    color: rgb(217 44 44 / 90%);
+    font-weight: 700;
+  }
+
+  /* ── CÍRCULO PRINCIPAL ── */
+  #actividad-central {
+    position: relative;
+    z-index: 10;
+    max-width: 1000px;
+    margin: 0 auto 40px;
+    padding: 0 16px;
+  }
+
+  /* Scale wrapper to keep circle responsive without breaking it */
+  .ciclo-scale-wrap {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .ciclo-grid {
+    position: relative;
+    width: min(90vw, 780px);
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow:
+      0 18px 60px rgba(192,57,43,0.2),
+      inset 0 0 0 14px rgba(253,236,239,0.45),
+      inset 0 0 0 18px rgba(244,178,74,0.1);
+    isolation: isolate;
+    flex-shrink: 0;
+  }
+
+  .ciclo-grid::before {
+    content: '';
+    position: absolute;
+    inset: 18px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.28);
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  /* Central hub */
+  .ciclo-centro {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 22%;
+    height: 22%;
+    z-index: 30;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .ciclo-centro-ring {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 6px solid rgba(244,178,74,0.5);
+    box-shadow:
+      0 0 0 10px rgba(253,236,239,0.7),
+      0 0 0 14px rgba(244,178,74,0.15);
+    animation: pulseCenter 3s ease-in-out infinite;
+  }
+  .ciclo-centro-inner {
+    position: relative;
+    width: 68%;
+    height: 68%;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #E74C6F 0%, #C0392B 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(0.7rem, 2vw, 1.5rem);
+    font-style: italic;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.3), 0 6px 18px rgba(126,19,34,0.25);
+    text-align: center;
+    padding: 4px;
+    line-height: 1.15;
+  }
+  .ciclo-mini-icon {
+    position: absolute;
+    width: clamp(22px, 4%, 42px);
+    height: clamp(22px, 4%, 42px);
+    border-radius: 50%;
+    background: rgba(255,255,255,0.82);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: clamp(10px, 2%, 20px);
+    box-shadow: 0 3px 10px rgba(126,19,34,0.15);
+  }
+  .ciclo-mini-icon.i1 { top: 10%; left: 50%; transform: translateX(-50%); }
+  .ciclo-mini-icon.i2 { top: 50%; right: 10%; transform: translateY(-50%); }
+  .ciclo-mini-icon.i3 { bottom: 10%; left: 50%; transform: translateX(-50%); }
+  .ciclo-mini-icon.i4 { top: 50%; left: 10%; transform: translateY(-50%); }
+
+  @keyframes pulseCenter {
+    0%,100% { box-shadow: 0 0 0 10px rgba(253,236,239,0.7), 0 0 0 14px rgba(244,178,74,0.15); }
+    50%      { box-shadow: 0 0 0 14px rgba(253,236,239,0.7), 0 0 0 20px rgba(244,178,74,0.25); }
+  }
+
+  /* ── CUADRANTES ── */
+  .fase-card {
+    position: absolute;
+    width: 50%;
+    height: 50%;
+    overflow: hidden;
+    transition: filter 0.25s;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+  }
+  .fase-card.glow-anim { animation: quadGlow 0.8s ease; }
+  @keyframes quadGlow {
+    0%,100% { filter: brightness(1); }
+    40%     { filter: brightness(1.22) saturate(1.3); }
+  }
+
+  .fase-inner {
+    width: 100%;
+    height: 100%;
+    padding: clamp(8px, 3%, 40px);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 10px;
+    overflow: hidden;
+  }
+
+  /* Ajustes de contenido por cuadrante para mejorar visibilidad dentro del círculo */
+  #card-menstrual  .fase-inner { justify-content: flex-end; align-items: flex-end; text-align: right; }
+  #card-folicular .fase-inner { justify-content: flex-end; align-items: flex-start; text-align: left; }
+  #card-lutea      .fase-inner { justify-content: flex-start; align-items: flex-end; text-align: right; }
+  #card-ovulacion  .fase-inner { justify-content: flex-start; align-items: flex-start; text-align: left; }
+
+  /* Position each quadrant */
+  #card-menstrual  { top: 0;   left: 0;  background: linear-gradient(135deg, #C84F6B 0%, #A01530 100%); --fase-text: #FFF0F2; }
+  #card-folicular  { top: 0;   right: 0; background: linear-gradient(135deg, #E8A020 0%, #F4C060 100%); --fase-text: #5a2000; }
+  #card-lutea      { bottom: 0;left: 0;  background: linear-gradient(135deg, #7B9CC8 0%, #5A7DAA 100%); --fase-text: #fff; }
+  #card-ovulacion  { bottom: 0;right: 0; background: linear-gradient(135deg, #C888BE 0%, #A860A0 100%); --fase-text: #fff; }
+
+  .fase-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at top left, rgba(255,255,255,0.18) 0%, transparent 40%);
+    pointer-events: none;
+  }
+
+  .corner-deco {
+    position: absolute;
+    width: clamp(28px, 5%, 48px);
+    height: clamp(28px, 5%, 48px);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: clamp(13px, 2.5%, 22px);
+    background: rgba(255,255,255,0.75);
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    z-index: 2;
+  }
+  #card-menstrual  .corner-deco { top: clamp(6px,4%,28px);    right: clamp(6px,4%,28px); }
+  #card-folicular  .corner-deco { top: clamp(6px,4%,28px);    left: clamp(6px,4%,28px);  }
+  #card-lutea      .corner-deco { bottom: clamp(6px,4%,28px); right: clamp(6px,4%,28px); }
+  #card-ovulacion  .corner-deco { bottom: clamp(6px,4%,28px); left: clamp(6px,4%,28px);  }
+
+  .fase-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.28);
+    color: var(--fase-text);
+    font-size: clamp(8px, 1.2%, 11px);
+    font-weight: 900;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: clamp(2px,0.5%,5px) clamp(6px,1%,12px);
+    border-radius: 20px;
+    margin-bottom: clamp(4px,1%,10px);
+    width: fit-content;
+    position: relative;
+    z-index: 2;
+  }
+  .fase-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(0.9rem, 2.4vw, 1.5rem);
+    color: var(--fase-text);
+    margin-bottom: clamp(3px,0.8%,8px);
+    line-height: 1.2;
+    position: relative;
+    z-index: 2;
+  }
+  .fase-card p.desc {
+    font-size: clamp(0.85rem, 1.5vw, 1.2rem);
+    color: var(--fase-text);
+    line-height: 1.5;
+    margin-bottom: clamp(4px,1%,14px);
+    opacity: 0.92;
+    position: relative;
+    z-index: 2;
+    max-width: 90%;
+  }
+  @media (min-width: 1200px) {
+    .fase-card h3 { font-size: 1.7rem; }
+    .fase-card p.desc { font-size: 1.25rem; }
+  }
+  @media (max-width: 680px) {
+    .fase-card p.desc { max-width: 72%; font-size: 0.95rem; }
+    .fase-card h3 { font-size: 1.05rem; }
+  }
+
+  /* Drop zone */
+  .drop-zone {
+    width: 100%;
+    min-height: clamp(36px, 8%, 72px);
+    max-height: clamp(36px, 8%, 72px);
+    background: rgba(255,255,255,0.18);
+    border: 2px dashed rgba(255,255,255,0.5);
+    border-radius: clamp(8px,2%,16px);
+    display: flex;
+    flex-wrap: wrap;
+    gap: clamp(3px,0.8%,8px);
+    padding: clamp(4px,1%,10px);
+    transition: background 0.3s, border-color 0.3s;
+    align-items: center;
+    margin-top: 12px;
+    z-index: 2;
+    position: relative;
+    overflow: hidden;
+  }
+  #card-lutea .drop-zone,
+  #card-ovulacion .drop-zone {
+    min-height: clamp(30px, 6%, 50px);
+    max-height: clamp(30px, 6%, 50px);
+    padding: 6px 8px;
+    overflow: hidden;
+  }
+  #card-lutea .fase-inner,
+  #card-ovulacion .fase-inner {
+    justify-content: flex-start;
+  }
+  .drop-zone.drag-over {
+    background: rgba(255,255,255,0.32);
+    border-color: var(--dorado);
+  }
+  .drop-zone .placeholder {
+    font-size: clamp(8px,1.1%,11px);
+    color: rgba(255,255,255,0.85);
+    font-style: italic;
+    pointer-events: none;
+    width: 100%;
+    text-align: center;
+  }
+  /* Smaller word-cards inside drop zone */
+  .drop-zone .word-card {
+    font-size: clamp(7px, 0.8%, 9px);
+    padding: clamp(2px,0.4%,5px) clamp(4px,0.8%,10px);
+    line-height: 1.2;
+  }
+
+  /* Padding adjustments per quadrant to avoid center overlap */
+  #card-menstrual  .fase-inner { padding-top: clamp(10px,6%,60px); padding-left: clamp(8px,4%,40px); padding-right: clamp(24px,12%,110px); padding-bottom: clamp(6px,3%,28px); }
+  #card-folicular .fase-inner {
+    padding-top: clamp(20px, 20%, 80px);
+    padding-right: clamp(8px, 19%, 40px);
+    padding-left: clamp(24px, 12%, 80px);
+    padding-bottom: clamp(6px, 3%, 28px);}
+    
+  #card-lutea      .fase-inner { padding-bottom: clamp(10px,6%,60px); padding-left: clamp(8px,4%,40px); padding-right: clamp(24px,12%,110px); padding-top: clamp(6px,3%,28px); }
+  #card-ovulacion  .fase-inner { padding-bottom: clamp(10px,6%,60px); padding-right: clamp(8px,4%,40px); padding-left: clamp(24px,12%,80px); padding-top: clamp(6px,3%,28px); }
+
+  @media (max-width: 680px) {
+    .ciclo-grid { width: min(96vw, 680px); }
+    .fase-inner {
+      padding: 8px 6px;
+      justify-content: space-between;
+      gap: 6px;
+    }
+    .fase-card h3 { font-size: 0.9rem; }
+    .fase-card p.desc {
+      font-size: 0.78rem;
+      max-width: 70%;
+      line-height: 1.4;
+      word-break: break-word;
+    }
+    .drop-zone { min-height: 42px; max-height: 42px; padding: 5px 7px; overflow: hidden; }
+    .drop-zone .word-card { font-size: 0.75rem; padding: 3px 7px; }
+    #card-menstrual  .fase-inner,
+    #card-folicular .fase-inner,
+    #card-lutea      .fase-inner,
+    #card-ovulacion  .fase-inner {
+      padding: 6px 8px;
+    }
+  }
+
+  @media (max-width: 485px) {
+    .fase-inner {
+      padding: 6px 4px;
+      gap: 4px;
+    }
+    .fase-card h3 { font-size: 0.7rem; }
+    .fase-card p.desc {
+      font-size: 0.6rem;
+      max-width: 65%;
+      line-height: 1.3;
+    }
+    .drop-zone { min-height: 36px; max-height: 36px; padding: 4px 6px; overflow: hidden; }
+    .drop-zone .word-card { font-size: 0.7rem; padding: 2px 6px; }
+    #card-menstrual  .fase-inner,
+    #card-folicular .fase-inner,
+    #card-lutea      .fase-inner,
+    #card-ovulacion  .fase-inner {
+      padding: 4px 6px;
+    }
+  }
+
+  /* ── TOAST ── */
+  #toast {
+    position: fixed;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--claro);
+    border: 2px solid var(--acento);
+    border-radius: 50px;
+    padding: 11px 26px;
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--principal);
+    box-shadow: 0 8px 28px rgba(192,57,43,0.2);
+    z-index: 9000;
+    transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+    pointer-events: none;
+    white-space: nowrap;
+  }
+  #toast.show { transform: translateX(-50%) translateY(0); }
+
+  /* ── BURST ── */
+  .burst {
+    position: fixed;
+    pointer-events: none;
+    z-index: 8000;
+    font-size: 18px;
+    animation: burstAnim 0.8s ease forwards;
+  }
+  @keyframes burstAnim {
+    0%   { transform: scale(0) rotate(0deg); opacity: 1; }
+    60%  { transform: scale(1.4) rotate(20deg); opacity: 1; }
+    100% { transform: scale(2) rotate(40deg) translateY(-30px); opacity: 0; }
+  }
+
+  /* ── LUNA DECO ── */
+  .luna-deco {
+    position: fixed;
+    left: max(12px, 2%);
+    bottom: 80px;
+    width: clamp(70px, 9vw, 110px);
+    filter: drop-shadow(0 8px 20px rgba(231,76,111,0.3));
+    animation: decoFloat 7s ease-in-out infinite;
+    z-index: 5;
+    opacity: 0.85;
+  }
+
+  /* ── BONUS ── */
+  .bonus-section {
+    position: relative;
+    z-index: 10;
+    max-width: 640px;
+    margin: 0 auto 40px;
+    padding: 0 16px;
+  }
+  .bonus-box {
+    background: linear-gradient(135deg, #5a1020 0%, #8b2030 50%, #5a1020 100%);
+    border: 4px solid var(--dorado);
+    border-radius: 26px;
+    padding: 26px 22px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    cursor: not-allowed;
+    transition: all 0.4s;
+    box-shadow: 0 8px 30px rgba(244,178,74,0.2);
+    animation: bonusFloat 3.2s ease-in-out infinite alternate;
+  }
+  .bonus-box.unlocked {
+    cursor: pointer;
+    animation: bonusFloat 3.2s ease-in-out infinite alternate, bonusGlow 2s ease-in-out infinite alternate;
+  }
+  .bonus-box::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(244,178,74,0.04) 10px, rgba(244,178,74,0.04) 20px);
+    pointer-events: none;
+  }
+  .bonus-box::after {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%; width: 200%; height: 200%;
+    background: radial-gradient(ellipse at center, rgba(244,178,74,0.07), transparent 60%);
+    animation: shimRot 6s linear infinite;
+    pointer-events: none;
+  }
+  @keyframes bonusFloat {
+    from { transform: translateY(0); }
+    to   { transform: translateY(-6px); }
+  }
+  @keyframes bonusGlow {
+    from { box-shadow: 0 8px 28px rgba(244,178,74,0.3); }
+    to   { box-shadow: 0 8px 28px rgba(244,178,74,0.7), 0 0 40px rgba(244,178,74,0.3); }
+  }
+  @keyframes shimRot { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+  .bonus-icon  { font-size: 34px; margin-bottom: 8px; display: block; }
+  .bonus-title { font-size: clamp(22px,5vw,28px); font-weight: 900; color: var(--dorado); letter-spacing: 2px; margin-bottom: 5px; text-shadow: 0 0 20px rgba(244,178,74,0.4); }
+  .bonus-sub   { font-size: 13px; color: rgba(255,255,255,0.65); font-weight: 700; }
+  .bonus-box.unlocked .bonus-sub { color: rgba(255,255,255,0.9); }
+
+  /* ── BONUS MODAL ── */
+  #bonus-modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(80,10,20,0.82);
+    z-index: 10001;
+    display: flex; align-items: center; justify-content: center;
+    padding: 20px;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.35s;
+    backdrop-filter: blur(8px);
+  }
+  #bonus-modal-overlay.show { opacity: 1; pointer-events: all; }
+  .bonus-modal {
+    background: linear-gradient(160deg, #3d0a14 0%, #6b1a28 50%, #3d0a14 100%);
+    border: 4px solid var(--acento);
+    border-radius: 30px;
+    padding: 34px 26px 30px;
+    max-width: 540px; width: 100%;
+    max-height: 90vh; overflow-y: auto;
+    position: relative;
+    box-shadow: 0 24px 80px rgba(231,76,111,0.45);
+    transform: scale(0.88) translateY(28px);
+    transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  #bonus-modal-overlay.show .bonus-modal { transform: scale(1) translateY(0); }
+  .bonus-modal::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 4px;
+    background: linear-gradient(90deg, var(--acento), var(--dorado), var(--acento));
+    border-radius: 30px 30px 0 0;
+    background-size: 200% 100%;
+    animation: shimLine 2s linear infinite;
+  }
+  @keyframes shimLine { from { background-position: 0%; } to { background-position: 200%; } }
+  .bonus-modal-close {
+    position: absolute; top: 13px; right: 13px;
+    background: var(--acento); border: none; border-radius: 50%;
+    width: 34px; height: 34px; font-size: 16px; font-weight: 900;
+    color: #fff; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: transform 0.2s; z-index: 1;
+  }
+  .bonus-modal-close:hover { transform: scale(1.1) rotate(90deg); }
+  .bonus-modal-header { text-align: center; margin-bottom: 22px; }
+  .bonus-modal-header .gift { font-size: 46px; display: block; margin-bottom: 6px; animation: giftBounce 1s ease infinite alternate; }
+  @keyframes giftBounce { from { transform: scale(1); } to { transform: scale(1.1) rotate(5deg); } }
+  .bonus-modal-header h2 { font-size: clamp(17px,4vw,23px); font-weight: 900; color: var(--dorado); margin-bottom: 4px; }
+  .bonus-modal-header p  { font-size: 13px; color: rgba(255,255,255,0.7); font-weight: 600; }
+
+  .bonus-item {
+    background: rgba(231,76,111,0.12);
+    border: 2px solid rgba(231,76,111,0.3);
+    border-radius: 16px;
+    padding: 12px 16px;
+    margin-bottom: 10px;
+    display: flex; gap: 12px; align-items: flex-start;
+  }
+  .bonus-item-emoji { font-size: 22px; flex-shrink: 0; margin-top: 2px; }
+  .bonus-item-text  { font-size: clamp(13px,2.2vw,15px); font-weight: 700; color: rgba(255,255,255,0.9); line-height: 1.5; }
+  .bonus-ref {
+    background: rgba(255,255,255,0.07);
+    border-radius: 12px;
+    padding: 12px 16px;
+    margin-top: 14px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.55);
+    font-style: italic;
+    line-height: 1.5;
+  }
+
+  /* ── MODAL FINAL ── */
+  #modal-final {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    background: rgba(126,19,34,0.55);
+    backdrop-filter: blur(8px);
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  #modal-final.show { display: flex; }
+
+  .modal-card {
+    background: linear-gradient(145deg, var(--crema) 0%, rgba(253,180,190,0.35) 100%);
+    border-radius: 32px;
+    padding: 40px 34px 36px;
+    max-width: 520px;
+    width: 100%;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 24px 80px rgba(126,19,34,0.3), inset 0 1px 0 rgba(255,255,255,0.9);
+    border: 2px solid rgba(244,178,74,0.4);
+    animation: modalIn 0.6s cubic-bezier(0.34,1.56,0.64,1) forwards;
+    overflow: hidden;
+  }
+  @keyframes modalIn {
+    0%   { transform: scale(0.7) translateY(40px); opacity: 0; }
+    100% { transform: scale(1) translateY(0); opacity: 1; }
+  }
+  .modal-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 7px;
+    background: linear-gradient(90deg, var(--principal), var(--acento), var(--dorado), var(--acento), var(--principal));
+    border-radius: 32px 32px 0 0;
+  }
+  .modal-stars { font-size: 26px; margin-bottom: 14px; animation: twinkle 1.5s ease-in-out infinite; }
+  @keyframes twinkle { 0%,100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+  .modal-card h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    color: var(--principal);
+    margin-bottom: 18px;
+    line-height: 1.1;
+  }
+  .modal-card h2 span { color: var(--acento); }
+  .modal-card p { font-size: 15px; color: #5a2020; line-height: 1.8; margin-bottom: 10px; }
+  .modal-ceci {
+    width: clamp(90px, 18vw, 140px);
+    margin: 18px auto 0;
+    display: block;
+    filter: drop-shadow(0 8px 24px rgba(231,76,111,0.4));
+    animation: decoFloat 4s ease-in-out infinite;
+  }
+  .modal-btn {
+    display: inline-block;
+    margin-top: 24px;
+    background: linear-gradient(135deg, var(--acento), var(--principal));
+    color: #fff;
+    font-size: 14px;
+    font-weight: 900;
+    padding: 13px 32px;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 6px 22px rgba(192,57,43,0.3);
+    letter-spacing: 1px;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .modal-btn:hover { transform: translateY(-2px) scale(1.04); box-shadow: 0 10px 30px rgba(192,57,43,0.4); }
+
+  /* ── CONFETTI ── */
+  .confetti-piece {
+    position: fixed;
+    border-radius: 2px;
+    pointer-events: none;
+    z-index: 9999;
+    animation: confettiFall linear forwards;
+  }
+  @keyframes confettiFall {
+    0%   { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+  }
+
+  /* ── CYCLE GLOW ANIMATION ── */
+  @keyframes quadSequenceGlow {
+    0%   { filter: brightness(1.35) saturate(1.4); box-shadow: inset 0 0 0 4px rgba(255,255,255,0.55); }
+    100% { filter: brightness(1); box-shadow: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Sparkles -->
+<div class="sparkle" style="left:5%;top:10%;font-size:14px;animation-duration:8s;animation-delay:0s;">✦</div>
+<div class="sparkle" style="left:15%;top:40%;font-size:10px;animation-duration:10s;animation-delay:2s;">✧</div>
+<div class="sparkle" style="left:80%;top:20%;font-size:12px;animation-duration:7s;animation-delay:1s;">✦</div>
+<div class="sparkle" style="left:92%;top:60%;font-size:8px;animation-duration:9s;animation-delay:3s;">✦</div>
+<div class="sparkle" style="left:50%;top:5%;font-size:11px;animation-duration:11s;animation-delay:0.5s;">✧</div>
+<div class="sparkle" style="left:70%;top:90%;font-size:12px;animation-duration:9s;animation-delay:1.5s;">✧</div>
+
+<!-- Luna deco -->
+<img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754762/luna_side_wcsbzy.png" class="luna-deco" alt="Luna">
+
+<!-- ══ HEADER ══ -->
+<header>
+  <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754460/ceci_amazed_g1o0ho.png" class="ceci-header" alt="Ceci">
+  <div class="badge-nivel">✦ Nivel 3 · La magia de tu ciclo ✦</div>
+  <h1>El ciclo <span>mágico</span> de Ceci</h1>
+  <p class="header-sub">Actividad interactiva · Fases del ciclo menstrual · págs. 35–46</p>
+</header>
+
+<!-- ══ INSTRUCCIONES ══ -->
+<div class="instrucciones-wrap">
+  <div class="instrucciones-card">
+    <div class="tag">🎮 ¿Cómo jugar?</div>
+    <h2>Ubica cada palabra en su fase</h2>
+    <p>Verás un círculo dividido en <strong>4 partes</strong> que representan las fases del ciclo menstrual. Cada sección tiene:</p>
+    <ul>
+      <li>el nombre de la fase</li>
+      <li>una descripción corta</li>
+      <li>y una zona para recibir sus palabras</li>
+    </ul>
+    <div class="highlight-box">
+      <p>✨ Arrastra (o toca) cada palabra hacia la fase que creas que le corresponde. ¡Cuando todas estén en su lugar descubrirás cómo funciona el ciclo!</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══ POOL DE PALABRAS ══ -->
+<div id="palabras-pool">
+  <p class="pool-label">✦ Palabras para ubicar ✦</p>
+  <div class="pool-container" id="pool" data-zone="pool"></div>
+</div>
+
+<!-- ══ PROGRESO ══ -->
+<div class="progress-wrap">
+  <p class="progress-label">Tu progreso</p>
+  <div class="progress-bar-bg"><div class="progress-bar-fill" id="progress-bar"></div></div>
+  <p class="progress-count" id="progress-count">0 de 12 palabras ubicadas</p>
+</div>
+
+<!-- ══ CÍRCULO ══ -->
+<div id="actividad-central">
+  <div class="ciclo-scale-wrap">
+    <div class="ciclo-grid" id="ciclo-grid">
+
+      <!-- Centro -->
+      <div class="ciclo-centro" aria-hidden="true">
+        <div class="ciclo-centro-ring"></div>
+        <div class="ciclo-mini-icon i1">🩸</div>
+        <div class="ciclo-mini-icon i2">🌱</div>
+        <div class="ciclo-mini-icon i3">🌸</div>
+        <div class="ciclo-mini-icon i4">🌙</div>
+        <div class="ciclo-centro-inner">Ciclo</div>
+      </div>
+
+      <!-- FASE 1: Menstrual — top-left -->
+      <div class="fase-card" id="card-menstrual">
+        <div class="corner-deco">🩸</div>
+        <div class="fase-inner">
+          <span class="fase-badge">Fase 1</span>
+          <h3>Fase Menstrual</h3>
+          <p class="desc">Es el momento en que aparece el sangrado y el cuerpo inicia un nuevo ciclo.</p>
+          <div class="drop-zone" id="zone-menstrual" data-fase="menstrual">
+            <span class="placeholder">Suelta aquí</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- FASE 2: Folicular — top-right -->
+      <div class="fase-card" id="card-folicular">
+        <div class="corner-deco">🌱</div>
+        <div class="fase-inner">
+          <span class="fase-badge">Fase 2</span>
+          <h3>Fase Folicular</h3>
+          <p class="desc">El cuerpo recupera energía después de la menstruación.</p>
+          <div class="drop-zone" id="zone-folicular" data-fase="folicular">
+            <span class="placeholder">Suelta aquí</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- FASE 4: Lútea — bottom-left -->
+      <div class="fase-card" id="card-lutea">
+        <div class="corner-deco">🌙</div>
+        <div class="fase-inner">
+          <div class="drop-zone" id="zone-lutea" data-fase="lutea">
+            <span class="placeholder">Suelta aquí</span>
+          </div>
+          <h3>Fase Lútea</h3>
+          <p class="desc">El cuerpo disminuye su energía y se prepara para un nuevo ciclo.</p>
+          <span class="fase-badge">Fase 4</span>
+        </div>
+      </div>
+
+      <!-- FASE 3: Ovulación — bottom-right -->
+      <div class="fase-card" id="card-ovulacion">
+        <div class="corner-deco">🌸</div>
+        <div class="fase-inner">
+          <div class="drop-zone" id="zone-ovulacion" data-fase="ovulacion">
+            <span class="placeholder">Suelta aquí</span>
+          </div>
+          <h3>Fase de Ovulación</h3>
+          <p class="desc">El cuerpo tiene más energía y se siente más activo y social.</p>
+          <span class="fase-badge">Fase 3</span>
+        </div>
+      </div>
+
+    </div><!-- /ciclo-grid -->
+  </div>
+</div>
+
+<!-- ══ BONUS ══ -->
+<section class="bonus-section">
+  <div class="bonus-box" id="bonusBox">
+    <span class="bonus-icon" id="bonusIcon">🔒</span>
+    <div class="bonus-title">BONUS</div>
+    <div class="bonus-sub" id="bonusSub">Completa la actividad para desbloquear</div>
+  </div>
+</section>
+
+<!-- ══ TOAST ══ -->
+<div id="toast"></div>
+
+<!-- ══ MODAL FINAL ══ -->
+<div id="modal-final">
+  <div class="modal-card">
+    <div class="modal-stars">🌟✨💫⭐✨🌟</div>
+    <h2>Gran<span>Diosa</span> ✦</h2>
+    <p>Tu cuerpo vive ciclos naturales que cambian con el tiempo.</p>
+    <p>Aprender a reconocerlos te ayuda a <strong>entenderte, respetarte y cuidarte mejor</strong>.</p>
+    <p style="font-size:13px;color:#9a4050;margin-top:8px;">¡Completaste la actividad con toda tu magia! 💕</p>
+    <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754478/ceci_satisfecha_r8qfmd.png" class="modal-ceci" alt="Ceci celebra">
+    <br>
+    <button class="modal-btn" onclick="cerrarModal()">✦ ¡Seguir explorando! ✦</button>
+  </div>
+</div>
+
+<!-- ══ BONUS MODAL ══ -->
+<div id="bonus-modal-overlay">
+  <div class="bonus-modal">
+    <button class="bonus-modal-close" id="bonusModalClose">✕</button>
+    <div class="bonus-modal-header">
+      <span class="gift">🎁</span>
+      <h2>¡BONUS DESBLOQUEADO!</h2>
+      <p>La Menarquía</p>
+    </div>
+
+    <div class="bonus-item">
+      <div class="bonus-item-emoji">🩸</div>
+      <div class="bonus-item-text">La <strong>menarquía</strong> es la primera menstruación. Es un hito natural del desarrollo.</div>
+    </div>
+    <div class="bonus-item">
+      <div class="bonus-item-emoji">⏱️</div>
+      <div class="bonus-item-text">Puede ocurrir entre los <strong>9 y 16 años</strong>. No hay una edad "correcta".</div>
+    </div>
+    <div class="bonus-item">
+      <div class="bonus-item-emoji">💛</div>
+      <div class="bonus-item-text">Algunas niñas sienten cólicos, cambios de humor o sorpresa, como le pasó a Ceci.</div>
+    </div>
+    <div class="bonus-item">
+      <div class="bonus-item-emoji">🌿</div>
+      <div class="bonus-item-text">Tener la menstruación <strong>no te limita</strong>. Puedes hacer deporte e ir al colegio.</div>
+    </div>
+    <div class="bonus-item">
+      <div class="bonus-item-emoji">💜</div>
+      <div class="bonus-item-text">Si sientes mucho dolor, háblalo con un adulto de confianza.</div>
+    </div>
+    <div class="bonus-item">
+      <div class="bonus-item-emoji">✨</div>
+      <div class="bonus-item-text">Tu cuerpo está creciendo. No hay nada malo en lo que está ocurriendo.</div>
+    </div>
+
+    <div class="bonus-ref">
+      Referencia científica: Organización Mundial de la Salud (OMS). La menarquía ocurre en promedio entre los 12 y 13 años, aunque el rango normal va de los 9 a los 16 años (OMS, 2023).
+    </div>
+  </div>
+</div>
+
+<script>
+// ── DATOS ──
+const palabrasData = [
+  { id:'p1',  texto:'descanso',             fase:'menstrual'  },
+  { id:'p2',  texto:'renovación',           fase:'menstrual'  },
+  { id:'p3',  texto:'sangrado',             fase:'menstrual'  },
+  { id:'p4',  texto:'más energía',          fase:'folicular'  },
+  { id:'p5',  texto:'ganas de aprender',    fase:'folicular'  },
+  { id:'p6',  texto:'mayor concentración',  fase:'folicular'  },
+  { id:'p7',  texto:'confianza',            fase:'ovulacion'  },
+  { id:'p8',  texto:'energía alta',         fase:'ovulacion'  },
+  { id:'p9',  texto:'sociabilidad',         fase:'ovulacion'  },
+  { id:'p10', texto:'sensibilidad',         fase:'lutea'      },
+  { id:'p11', texto:'cansancio',            fase:'lutea'      },
+  { id:'p12', texto:'necesidad de descanso',fase:'lutea'      },
+];
+
+function shuffle(arr) {
+  for (let i = arr.length-1; i>0; i--) {
+    const j = Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]] = [arr[j],arr[i]];
+  }
+  return arr;
+}
+
+const mezcladas = shuffle([...palabrasData]);
+let correctas = 0;
+const totalPalabras = palabrasData.length;
+const ubicacion = {};
+mezcladas.forEach(p => ubicacion[p.id] = 'pool');
+
+let bonusUnlocked = false;
+
+// ── CREAR TARJETA ──
+function crearTarjeta(p) {
+  const card = document.createElement('div');
+  card.className = 'word-card';
+  card.id = 'word-'+p.id;
+  card.dataset.id = p.id;
+  card.dataset.fase = p.fase;
+  card.textContent = p.texto;
+  card.draggable = true;
+  card.addEventListener('dragstart', onDragStart);
+  card.addEventListener('dragend', onDragEnd);
+  card.addEventListener('touchstart', onTouchStart, {passive:false});
+  card.addEventListener('touchmove',  onTouchMove,  {passive:false});
+  card.addEventListener('touchend',   onTouchEnd);
+  return card;
+}
+
+const pool = document.getElementById('pool');
+mezcladas.forEach(p => pool.appendChild(crearTarjeta(p)));
+
+// ── DRAG DESKTOP ──
+let draggedId = null, draggedEl = null;
+
+function onDragStart(e) {
+  draggedId = this.dataset.id;
+  draggedEl = this;
+  this.classList.add('dragging');
+  e.dataTransfer.effectAllowed = 'move';
+  e.dataTransfer.setData('text/plain', draggedId);
+}
+function onDragEnd() {
+  this.classList.remove('dragging');
+  document.querySelectorAll('.drop-zone').forEach(z => z.classList.remove('drag-over'));
+  document.querySelectorAll('.fase-card').forEach(c => c.classList.remove('drag-over'));
+  pool.classList.remove('drag-over');
+}
+
+document.querySelectorAll('.drop-zone').forEach(zone => {
+  zone.addEventListener('dragover', e => {
+    e.preventDefault();
+    zone.classList.add('drag-over');
+    const fc = zone.closest('.fase-card');
+    if (fc) fc.classList.add('drag-over');
+  });
+  zone.addEventListener('dragleave', () => {
+    zone.classList.remove('drag-over');
+    const fc = zone.closest('.fase-card');
+    if (fc) fc.classList.remove('drag-over');
+  });
+  zone.addEventListener('drop', e => {
+    e.preventDefault();
+    zone.classList.remove('drag-over');
+    const fc = zone.closest('.fase-card');
+    if (fc) fc.classList.remove('drag-over');
+    const id = e.dataTransfer.getData('text/plain');
+    procesarDrop(id, zone);
+  });
+});
+
+pool.addEventListener('dragover', e => { e.preventDefault(); pool.classList.add('drag-over'); });
+pool.addEventListener('dragleave', () => pool.classList.remove('drag-over'));
+pool.addEventListener('drop', e => {
+  e.preventDefault();
+  pool.classList.remove('drag-over');
+  const id = e.dataTransfer.getData('text/plain');
+  const card = document.getElementById('word-'+id);
+  if (card && !card.classList.contains('correct')) {
+    pool.appendChild(card);
+    ubicacion[id] = 'pool';
+  }
+});
+
+// ── TOUCH DRAG ──
+let touchCard = null, touchClone = null, touchOffX = 0, touchOffY = 0;
+
+function onTouchStart(e) {
+  if (this.classList.contains('correct')) return;
+  touchCard = this;
+  const t = e.touches[0];
+  const rect = this.getBoundingClientRect();
+  touchOffX = t.clientX - rect.left;
+  touchOffY = t.clientY - rect.top;
+
+  touchClone = this.cloneNode(true);
+  touchClone.style.cssText = `
+    position:fixed; pointer-events:none; z-index:9999;
+    width:${rect.width}px; opacity:0.92;
+    left:${rect.left}px; top:${rect.top}px;
+    transform:scale(1.08) rotate(2deg); transition:none;
+    font-family:'Nunito',sans-serif; font-size:14px; font-weight:800;
+    background:#fff; border:2px solid #E74C6F; border-radius:50px;
+    padding:9px 20px; box-shadow:0 12px 30px rgba(192,57,43,0.28); color:#C0392B;
+  `;
+  document.body.appendChild(touchClone);
+  this.style.opacity = '0.3';
+  e.preventDefault();
+}
+function onTouchMove(e) {
+  if (!touchClone) return;
+  const t = e.touches[0];
+  touchClone.style.left = (t.clientX - touchOffX) + 'px';
+  touchClone.style.top  = (t.clientY - touchOffY) + 'px';
+  e.preventDefault();
+  touchClone.style.display = 'none';
+  const el = document.elementFromPoint(t.clientX, t.clientY);
+  touchClone.style.display = '';
+  document.querySelectorAll('.drop-zone').forEach(z => z.classList.remove('drag-over'));
+  document.querySelectorAll('.fase-card').forEach(c => c.classList.remove('drag-over'));
+  if (el) {
+    const zone = el.closest('.drop-zone');
+    if (zone) {
+      zone.classList.add('drag-over');
+      const fc = zone.closest('.fase-card');
+      if (fc) fc.classList.add('drag-over');
+    }
+  }
+}
+function onTouchEnd(e) {
+  if (!touchClone || !touchCard) return;
+  const t = e.changedTouches[0];
+  touchClone.style.display = 'none';
+  const el = document.elementFromPoint(t.clientX, t.clientY);
+  touchClone.style.display = '';
+  touchClone.remove(); touchClone = null;
+  touchCard.style.opacity = '1';
+  document.querySelectorAll('.drop-zone').forEach(z => z.classList.remove('drag-over'));
+  document.querySelectorAll('.fase-card').forEach(c => c.classList.remove('drag-over'));
+  if (el) {
+    const zone = el.closest('.drop-zone');
+    if (zone) procesarDrop(touchCard.dataset.id, zone);
+  }
+  touchCard = null;
+}
+
+// ── LÓGICA DROP ──
+function procesarDrop(id, zone) {
+  const card = document.getElementById('word-'+id);
+  if (!card || card.classList.contains('correct')) return;
+  const faseDestino = zone.dataset.fase;
+  const fasePalabra = card.dataset.fase;
+  if (faseDestino === fasePalabra) {
+    card.classList.remove('wrong-flash');
+    void card.offsetWidth;
+    card.classList.add('correct');
+    card.draggable = false;
+    const ph = zone.querySelector('.placeholder');
+    if (ph) ph.remove();
+    zone.appendChild(card);
+    ubicacion[id] = faseDestino;
+    correctas++;
+    actualizarProgreso();
+    mostrarBurst(card);
+    showToast(mensajesCorrectos[Math.floor(Math.random()*mensajesCorrectos.length)]);
+    if (correctas === totalPalabras) {
+      setTimeout(() => {
+        animarCicloCompleto();
+        setTimeout(desbloquearBonus, 1200);
+        setTimeout(mostrarFinal, 2400);
+      }, 600);
+    }
+  } else {
+    card.classList.add('wrong-flash');
+    setTimeout(() => card.classList.remove('wrong-flash'), 600);
+    showToast(mensajesIncorrectos[Math.floor(Math.random()*mensajesIncorrectos.length)]);
+  }
+}
+
+// ── ANIMACIÓN CICLO COMPLETO ──
+const QUAD_ORDER = ['card-menstrual','card-folicular','card-ovulacion','card-lutea'];
+function animarCicloCompleto() {
+  QUAD_ORDER.forEach((id, i) => {
+    setTimeout(() => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.classList.add('glow-anim');
+      setTimeout(() => el.classList.remove('glow-anim'), 900);
+    }, i * 300);
+  });
+  // Pulse the center ring
+  setTimeout(() => {
+    const ring = document.querySelector('.ciclo-centro-ring');
+    if (ring) {
+      ring.style.transition = 'box-shadow 0.4s';
+      ring.style.boxShadow = '0 0 0 20px rgba(253,236,239,0.7), 0 0 0 30px rgba(244,178,74,0.4), 0 0 60px rgba(231,76,111,0.5)';
+      setTimeout(() => { ring.style.boxShadow = ''; }, 1200);
+    }
+  }, QUAD_ORDER.length * 300);
+}
+
+// ── BONUS ──
+function desbloquearBonus() {
+  if (bonusUnlocked) return;
+  bonusUnlocked = true;
+  const box = document.getElementById('bonusBox');
+  box.classList.add('unlocked');
+  document.getElementById('bonusIcon').textContent = '🎁';
+  document.getElementById('bonusSub').textContent = '¡Toca para abrir tu BONUS!';
+  box.style.cursor = 'pointer';
+  showToast('🎁 ¡BONUS desbloqueado! Tócalo para abrirlo', 4000);
+}
+document.getElementById('bonusBox').addEventListener('click', () => {
+  if (!bonusUnlocked) {
+    showToast('💜 Completa la actividad para desbloquear el BONUS');
+    return;
+  }
+  document.getElementById('bonus-modal-overlay').classList.add('show');
+  document.body.style.overflow = 'hidden';
+});
+document.getElementById('bonusModalClose').addEventListener('click', () => {
+  document.getElementById('bonus-modal-overlay').classList.remove('show');
+  document.body.style.overflow = '';
+});
+document.getElementById('bonus-modal-overlay').addEventListener('click', e => {
+  if (e.target === e.currentTarget) {
+    document.getElementById('bonus-modal-overlay').classList.remove('show');
+    document.body.style.overflow = '';
+  }
+});
+
+// ── MENSAJES ──
+const mensajesCorrectos  = ['✨ Muy bien, ¡lo descubriste!','✨ ¡Exacto! Vas increíble','✨ ¡Correcto! Sigues brillando','✦ ¡Así es! Muy bien','💫 ¡Perfecto! Sigue así'];
+const mensajesIncorrectos = ['🌸 Intenta otra vez','💭 Piensa en cómo se siente el cuerpo en esa fase','✨ Vas muy bien, ¡tú puedes!','🩷 Casi… ¡sigue intentando!','💫 No te rindas, ¡casi lo tienes!'];
+
+// ── TOAST ──
+let toastTimer = null;
+function showToast(msg, dur=2200) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), dur);
+}
+
+// ── BURST ──
+function mostrarBurst(card) {
+  const rect = card.getBoundingClientRect();
+  const cx = rect.left + rect.width/2;
+  const cy = rect.top  + rect.height/2;
+  const emojis = ['✨','⭐','💫','✦','🌟','💕'];
+  for (let i=0;i<6;i++) {
+    const b = document.createElement('div');
+    b.className = 'burst';
+    b.textContent = emojis[i%emojis.length];
+    b.style.left = (cx+(Math.random()-.5)*60)+'px';
+    b.style.top  = (cy+(Math.random()-.5)*60)+'px';
+    b.style.animationDelay = (i*0.07)+'s';
+    document.body.appendChild(b);
+    setTimeout(()=>b.remove(), 900);
+  }
+}
+
+// ── PROGRESO ──
+function actualizarProgreso() {
+  const pct = (correctas/totalPalabras)*100;
+  document.getElementById('progress-bar').style.width = pct+'%';
+  document.getElementById('progress-count').textContent =
+    correctas+' de '+totalPalabras+' palabras ubicadas'+(correctas===totalPalabras?' 🎉':'');
+}
+
+// ── MODAL FINAL ──
+function mostrarFinal() {
+  document.getElementById('modal-final').classList.add('show');
+  lanzarConfetti();
+}
+function cerrarModal() {
+  document.getElementById('modal-final').classList.remove('show');
+}
+function lanzarConfetti() {
+  const colors = ['#C0392B','#E74C6F','#FDECEF','#F4B24A','#C888BE','#7B9CC8','#fff'];
+  for (let i=0;i<80;i++) {
+    const c = document.createElement('div');
+    c.className = 'confetti-piece';
+    c.style.left = Math.random()*100+'vw';
+    c.style.top = '-20px';
+    c.style.background = colors[Math.floor(Math.random()*colors.length)];
+    c.style.width = (6+Math.random()*10)+'px';
+    c.style.height = (6+Math.random()*10)+'px';
+    c.style.borderRadius = Math.random()>.5?'50%':'2px';
+    c.style.animationDuration = (1.5+Math.random()*2.5)+'s';
+    c.style.animationDelay = (Math.random()*1.5)+'s';
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),5000);
+  }
+}
+</script>
+</body>
+</html>

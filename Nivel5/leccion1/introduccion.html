@@ -3,27 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>El Viaje de Ceci — Nivel 4 · Lección 1 · ¡Eres GranDiosa!</title>
+<title>El Viaje de Ceci — Nivel 5 · Lección 1 · Los Poderes de Tu Nuevo Cuerpo</title>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fredoka+One&display=swap" rel="stylesheet">
 <style>
   :root {
-    --deep:   #0D4A1C;
-    --main:   #1E7A34;
-    --accent: #27AE60;
-    --light:  #E8F8EE;
-    --lime:   #69D98C;
-    --mint:   #B8F0CB;
-    --jade:   #2ECC71;
-    --cream:  #F2FCF5;
+    --deep:   #0D1733;
+    --main:   #1B2A5E;
+    --accent: #3B5998;
+    --light:  #E8EAF6;
+    --indigo: #5C6BC0;
+    --lavender:#9FA8DA;
+    --periwinkle:#7986CB;
+    --cream:  #F3F4FF;
     --gold:   #FFD54F;
-    --emerald:#00C853;
+    --sky:    #B3C5E8;
   }
 
   * { margin:0; padding:0; box-sizing:border-box; }
 
   body {
     font-family:'Nunito',sans-serif;
-    background:#020F06;
+    background:#05091A;
     color:#fff;
     overflow-x:hidden;
     min-height:100vh;
@@ -42,15 +42,15 @@
     z-index:0;pointer-events:none;
     animation:nebPulse 9s ease-in-out infinite alternate;
   }
-  .n1{width:700px;height:700px;background:#1E7A34;top:-140px;left:-170px;animation-delay:0s;}
-  .n2{width:520px;height:520px;background:#27AE60;top:200px;right:-120px;animation-delay:2.5s;}
-  .n3{width:450px;height:450px;background:#2ECC71;bottom:60px;left:20%;animation-delay:4s;}
-  .n4{width:330px;height:330px;background:#00C853;top:55%;right:7%;animation-delay:1.8s;}
-  .n5{width:280px;height:280px;background:#69D98C;top:32%;left:52%;animation-delay:3.2s;}
-  .n6{width:310px;height:310px;background:#B8F0CB;bottom:15%;left:4%;animation-delay:2s;opacity:.1;}
+  .n1{width:700px;height:700px;background:#1B2A5E;top:-140px;left:-170px;animation-delay:0s;}
+  .n2{width:520px;height:520px;background:#3B5998;top:200px;right:-120px;animation-delay:2.5s;}
+  .n3{width:450px;height:450px;background:#5C6BC0;bottom:60px;left:20%;animation-delay:4s;}
+  .n4{width:330px;height:330px;background:#7986CB;top:55%;right:7%;animation-delay:1.8s;}
+  .n5{width:280px;height:280px;background:#9FA8DA;top:32%;left:52%;animation-delay:3.2s;}
+  .n6{width:310px;height:310px;background:#C5CAE9;bottom:15%;left:4%;animation-delay:2s;opacity:.1;}
   @keyframes nebPulse{
-    from{opacity:.1;transform:scale(1);}
-    to{opacity:.22;transform:scale(1.1);}
+    from{opacity:.11;transform:scale(1);}
+    to{opacity:.23;transform:scale(1.1);}
   }
 
   /* ── PARTICLES ── */
@@ -88,24 +88,25 @@
     0%{opacity:.4;}50%{opacity:1;}100%{opacity:.4;}
   }
   @keyframes pillGlow{
-    from{box-shadow:0 0 16px rgba(39,174,96,.4);}
-    to{box-shadow:0 0 44px rgba(39,174,96,.95);}
+    from{box-shadow:0 0 16px rgba(59,89,152,.4);}
+    to{box-shadow:0 0 44px rgba(59,89,152,.95);}
   }
   @keyframes breatheScale{
     from{transform:scale(1);}
     to{transform:scale(1.07);}
   }
-  @keyframes orbitSpin{
-    from{transform:rotate(0deg);}
-    to{transform:rotate(360deg);}
-  }
-  @keyframes emeraldGlow{
-    from{filter:drop-shadow(0 0 10px rgba(39,174,96,.4));}
-    to{filter:drop-shadow(0 0 28px rgba(39,174,96,.9));}
-  }
   @keyframes starPop{
     0%,100%{transform:scale(1) rotate(0deg);}
     50%{transform:scale(1.3) rotate(20deg);}
+  }
+  @keyframes indigoGlow{
+    from{box-shadow:0 0 18px rgba(59,89,152,.3);}
+    to{box-shadow:0 0 38px rgba(92,107,192,.8);}
+  }
+  @keyframes cosmicShine{
+    0%{box-shadow:0 0 20px rgba(59,89,152,.3),inset 0 0 20px rgba(59,89,152,.1);}
+    50%{box-shadow:0 0 50px rgba(92,107,192,.7),inset 0 0 40px rgba(159,168,218,.2);}
+    100%{box-shadow:0 0 20px rgba(59,89,152,.3),inset 0 0 20px rgba(59,89,152,.1);}
   }
 
   /* ── FIXED SPARKLES ── */
@@ -124,11 +125,11 @@
   /* ── NIVEL PILL ── */
   .nivel-pill{
     display:inline-block;
-    background:linear-gradient(135deg,#1E7A34,#27AE60);
+    background:linear-gradient(135deg,#1B2A5E,#3B5998);
     color:#fff;font-family:'Fredoka One',cursive;
     font-size:.95rem;letter-spacing:3px;
     padding:8px 28px;border-radius:50px;
-    box-shadow:0 0 26px rgba(39,174,96,.6);
+    box-shadow:0 0 26px rgba(59,89,152,.6);
     margin-bottom:20px;
     animation:pillGlow 3s ease-in-out infinite alternate;
   }
@@ -137,53 +138,54 @@
   .hero{position:relative;padding:48px 20px 0;text-align:center;}
 
   .hero-block{
-    background:linear-gradient(145deg,#0D4A1C 0%,#1A6B2E 52%,#0D4A1C 100%);
-    border:2px solid rgba(39,174,96,.55);
+    background:linear-gradient(145deg,#0D1733 0%,#1B2A5E 52%,#0D1733 100%);
+    border:2px solid rgba(59,89,152,.55);
     border-radius:32px;padding:52px 40px 46px;
     position:relative;overflow:hidden;
-    box-shadow:0 0 80px rgba(13,74,28,.9),0 0 140px rgba(30,122,52,.25),
+    box-shadow:0 0 80px rgba(13,23,51,.9),0 0 140px rgba(27,42,94,.25),
                inset 0 1px 0 rgba(255,255,255,.08);
   }
   .hero-block::after{
     content:'';position:absolute;
     top:-2px;left:-2px;right:-2px;bottom:-2px;
     border-radius:34px;
-    background:linear-gradient(135deg,rgba(39,174,96,.38),transparent,rgba(105,217,140,.22));
+    background:linear-gradient(135deg,rgba(59,89,152,.38),transparent,rgba(92,107,192,.22));
     z-index:0;animation:borderShim 5s linear infinite;
   }
 
-  /* orbiting stars in hero corners */
-  .hero-orbit{
-    position:absolute;width:48px;opacity:.5;z-index:2;
-    animation:floatSlow 4s ease-in-out infinite alternate;
+  .hero-star{
+    position:absolute;z-index:2;opacity:.45;
+    animation:floatSlow ease-in-out infinite alternate;
   }
-  .hero-orbit.tl{top:18px;left:24px;animation-delay:.3s;}
-  .hero-orbit.tr{top:18px;right:24px;animation-delay:1s;}
+  .hero-star.tl{top:20px;left:28px;width:44px;animation-duration:4s;}
+  .hero-star.tr{top:22px;right:28px;width:52px;animation-duration:5s;animation-delay:.8s;}
+  .hero-star.br{bottom:18px;right:22px;width:36px;animation-duration:3.5s;animation-delay:1.2s;}
 
   .hero-inner{position:relative;z-index:1;}
   .hero-nivel{
     font-family:'Fredoka One',cursive;
-    font-size:1rem;color:#69D98C;
+    font-size:1rem;color:#9FA8DA;
     letter-spacing:4px;text-transform:uppercase;margin-bottom:8px;
   }
   .hero-title{
     font-family:'Fredoka One',cursive;
-    font-size:clamp(2rem,5.5vw,3.7rem);
+    font-size:clamp(1.8rem,5vw,3.5rem);
     color:#fff;
-    text-shadow:0 0 32px rgba(39,174,96,.88),0 2px 4px rgba(0,0,0,.4);
+    text-shadow:0 0 32px rgba(92,107,192,.88),0 2px 4px rgba(0,0,0,.4);
     line-height:1.15;margin-bottom:10px;
   }
-  .hero-title span{color:#B8F0CB;}
+  .hero-title span{color:#C5CAE9;}
   .hero-subtitle{
-    font-size:1.1rem;color:#B8F0CB;font-weight:700;margin-bottom:18px;
+    font-size:1rem;color:#C5CAE9;font-weight:700;margin-bottom:18px;
+    line-height:1.55;
   }
   .hero-lesson-tag{
     display:inline-block;
-    background:rgba(30,122,52,.35);
-    border:1px solid rgba(39,174,96,.5);
+    background:rgba(27,42,94,.4);
+    border:1px solid rgba(59,89,152,.5);
     border-radius:50px;padding:8px 26px;
     font-family:'Fredoka One',cursive;
-    font-size:1rem;color:#C8F5D8;
+    font-size:1rem;color:#C5CAE9;
     letter-spacing:1px;margin-bottom:28px;
   }
 
@@ -193,7 +195,7 @@
   }
   .hero-chars img{
     height:200px;
-    filter:drop-shadow(0 0 24px rgba(39,174,96,.7));
+    filter:drop-shadow(0 0 24px rgba(59,89,152,.7));
     animation:float 4s ease-in-out infinite alternate;
   }
   .hero-chars img:nth-child(2){height:100px;animation-delay:.8s;}
@@ -206,12 +208,12 @@
   .section-label h2{
     font-family:'Fredoka One',cursive;
     font-size:clamp(1.2rem,3.8vw,1.85rem);
-    color:#B8F0CB;
-    background:rgba(13,74,28,.75);
-    border:1px solid rgba(39,174,96,.45);
+    color:#C5CAE9;
+    background:rgba(13,23,51,.75);
+    border:1px solid rgba(59,89,152,.45);
     display:inline-block;padding:12px 36px;
     border-radius:50px;
-    box-shadow:0 0 24px rgba(30,122,52,.35);
+    box-shadow:0 0 24px rgba(27,42,94,.35);
   }
 
   /* ── CONTENT CARDS ── */
@@ -219,134 +221,142 @@
     background:var(--light);
     border-radius:26px;padding:34px 38px;
     margin-bottom:24px;
-    border:2px solid rgba(30,122,52,.2);
-    box-shadow:0 10px 50px rgba(13,74,28,.42),0 2px 8px rgba(0,0,0,.2);
+    border:2px solid rgba(27,42,94,.2);
+    box-shadow:0 10px 50px rgba(13,23,51,.42),0 2px 8px rgba(0,0,0,.2);
     position:relative;overflow:hidden;
   }
   .card::before{
     content:'';position:absolute;top:0;left:0;right:0;height:5px;
     border-radius:26px 26px 0 0;
   }
-  .card.c1::before{background:linear-gradient(90deg,#1E7A34,#27AE60,#69D98C);}
-  .card.c2::before{background:linear-gradient(90deg,#27AE60,#2ECC71,#69D98C);}
-  .card.c3::before{background:linear-gradient(90deg,#69D98C,#27AE60,#1E7A34);}
+  .card.c1::before{background:linear-gradient(90deg,#1B2A5E,#3B5998,#5C6BC0);}
+  .card.c2::before{background:linear-gradient(90deg,#3B5998,#5C6BC0,#9FA8DA);}
+  .card.c3::before{background:linear-gradient(90deg,#5C6BC0,#3B5998,#1B2A5E);}
 
   .card-row{display:flex;align-items:center;gap:26px;}
   .card-text{flex:1;}
   .card-char{flex-shrink:0;width:130px;}
   .card-char img{
     width:100%;
-    filter:drop-shadow(0 4px 14px rgba(30,122,52,.45));
+    filter:drop-shadow(0 4px 14px rgba(27,42,94,.45));
     animation:float 4.5s ease-in-out infinite alternate;
   }
 
   .card-emoji{font-size:2.2rem;margin-bottom:10px;display:block;}
   .card h3{
     font-family:'Fredoka One',cursive;
-    font-size:1.45rem;color:#0D4A1C;margin-bottom:13px;
+    font-size:1.45rem;color:#0D1733;margin-bottom:13px;
   }
   .card p{
-    font-size:1.05rem;color:#0A3D18;
+    font-size:1.05rem;color:#1A2544;
     line-height:1.8;font-weight:700;
   }
 
-  /* ── ORBITS VISUAL ── */
-  .orbits-card{
-    background:linear-gradient(145deg,#0D4A1C,#1A6B2E);
-    border:2px solid rgba(39,174,96,.42);
+  /* ── RIGHTS CARD ── */
+  .rights-card{
+    background:linear-gradient(145deg,#0D1733,#1B2A5E);
+    border:2px solid rgba(59,89,152,.42);
     border-radius:26px;padding:36px 40px;
     margin-bottom:26px;
     position:relative;overflow:hidden;
-    box-shadow:0 0 55px rgba(13,74,28,.6),inset 0 1px 0 rgba(255,255,255,.06);
+    box-shadow:0 0 55px rgba(13,23,51,.6),inset 0 1px 0 rgba(255,255,255,.06);
+    animation:cosmicShine 7s ease-in-out infinite;
   }
-  .orbits-card::before{
+  .rights-card::before{
     content:'';position:absolute;top:0;left:0;right:0;height:5px;
-    background:linear-gradient(90deg,#69D98C,#27AE60,#1E7A34);
+    background:linear-gradient(90deg,#9FA8DA,#5C6BC0,#1B2A5E);
     border-radius:26px 26px 0 0;
   }
-  .orbits-inner{display:flex;align-items:center;gap:32px;}
-  .orbits-text{flex:1;}
-  .orbits-visual{flex-shrink:0;width:160px;position:relative;height:160px;}
-
-  /* orbit diagram */
-  .orbit-center{
-    position:absolute;top:50%;left:50%;
-    width:48px;height:48px;
-    background:linear-gradient(135deg,#27AE60,#69D98C);
-    border-radius:50%;
-    transform:translate(-50%,-50%);
-    display:flex;align-items:center;justify-content:center;
-    font-size:1.4rem;
-    box-shadow:0 0 20px rgba(39,174,96,.7);
-    z-index:3;
-    animation:breatheScale 3s ease-in-out infinite alternate;
+  .rights-inner{display:flex;align-items:flex-start;gap:28px;}
+  .rights-text{flex:1;}
+  .rights-char{flex-shrink:0;width:130px;text-align:center;}
+  .rights-char img{
+    width:100%;
+    filter:drop-shadow(0 0 18px rgba(59,89,152,.6));
+    animation:breatheScale 4.5s ease-in-out infinite alternate;
   }
-  .orbit-ring{
-    position:absolute;top:50%;left:50%;
-    border-radius:50%;
-    border:1px solid rgba(39,174,96,.35);
-    transform:translate(-50%,-50%);
-    animation:orbitSpin linear infinite;
-  }
-  .ring1{width:80px;height:80px;animation-duration:8s;}
-  .ring2{width:120px;height:120px;animation-duration:14s;animation-direction:reverse;}
-  .ring3{width:158px;height:158px;animation-duration:20s;}
-  .orbit-dot{
-    position:absolute;top:-6px;left:50%;
-    width:12px;height:12px;
-    background:#69D98C;border-radius:50%;
-    transform:translateX(-50%);
-    box-shadow:0 0 8px rgba(105,217,140,.8);
-  }
-
-  .orbits-card h3{
+  .rights-card h3{
     font-family:'Fredoka One',cursive;
-    font-size:1.4rem;color:#B8F0CB;margin-bottom:14px;
+    font-size:1.4rem;color:#C5CAE9;margin-bottom:14px;
   }
-  .orbits-card p{
-    font-size:1.02rem;color:#C8F5D8;
+  .rights-card p{
+    font-size:1.02rem;color:#D1D8F0;
     line-height:1.8;font-weight:700;
   }
 
-  /* orbit list */
-  .orbit-list{
+  /* rights list */
+  .rights-list{
     display:flex;flex-direction:column;gap:10px;margin-top:16px;
   }
-  .orbit-item{
+  .right-item{
     display:flex;align-items:center;gap:12px;
-    background:rgba(39,174,96,.15);
-    border:1px solid rgba(39,174,96,.3);
-    border-radius:14px;padding:10px 16px;
-    font-family:'Fredoka One',cursive;
-    font-size:.95rem;color:#B8F0CB;
+    background:rgba(59,89,152,.22);
+    border:1px solid rgba(59,89,152,.4);
+    border-radius:14px;padding:11px 16px;
+    font-size:.96rem;font-weight:700;color:#C5CAE9;
     transition:transform .3s;cursor:default;
   }
-  .orbit-item:hover{transform:translateX(6px);}
-  .orbit-num{
-    width:28px;height:28px;
-    background:linear-gradient(135deg,#1E7A34,#27AE60);
-    border-radius:50%;display:flex;align-items:center;justify-content:center;
-    font-size:.8rem;font-weight:900;flex-shrink:0;
-    box-shadow:0 0 10px rgba(39,174,96,.5);
-  }
+  .right-item:hover{transform:translateX(6px);}
+  .right-icon{font-size:1.3rem;flex-shrink:0;}
 
-  /* ── ACTIVITIES CARD ── */
+  /* ── BODY CHANGES CARD ── */
+  .changes-card{
+    background:var(--light);
+    border-radius:26px;padding:34px 38px;
+    margin-bottom:26px;
+    border:2px solid rgba(27,42,94,.2);
+    box-shadow:0 10px 50px rgba(13,23,51,.4);
+    position:relative;overflow:hidden;
+  }
+  .changes-card::before{
+    content:'';position:absolute;top:0;left:0;right:0;height:5px;
+    background:linear-gradient(90deg,#7986CB,#5C6BC0,#3B5998);
+    border-radius:26px 26px 0 0;
+  }
+  .changes-card h3{
+    font-family:'Fredoka One',cursive;
+    font-size:1.4rem;color:#0D1733;margin-bottom:18px;
+  }
+  .changes-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(130px,1fr));
+    gap:14px;
+  }
+  .change-item{
+    background:linear-gradient(145deg,#0D1733,#1B2A5E);
+    border-radius:18px;padding:18px 14px;
+    text-align:center;
+    border:1px solid rgba(59,89,152,.35);
+    box-shadow:0 4px 18px rgba(13,23,51,.5);
+    transition:transform .3s,box-shadow .3s;
+    cursor:default;
+    animation:indigoGlow 3s ease-in-out infinite alternate;
+  }
+  .change-item:nth-child(2){animation-delay:.5s;}
+  .change-item:nth-child(3){animation-delay:1s;}
+  .change-item:nth-child(4){animation-delay:1.5s;}
+  .change-item:hover{transform:translateY(-5px);}
+  .change-img{width:50px;margin:0 auto 8px;display:block;filter:drop-shadow(0 0 8px rgba(92,107,192,.5));}
+  .change-icon{font-size:1.8rem;margin-bottom:8px;display:block;}
+  .change-label{font-size:.82rem;font-weight:700;color:#E8EAF6;line-height:1.35;}
+
+  /* ── ACTIVITIES ── */
   .act-card{
     background:var(--light);
     border-radius:26px;padding:34px 38px;
     margin-bottom:24px;
-    border:2px solid rgba(30,122,52,.2);
-    box-shadow:0 10px 50px rgba(13,74,28,.4);
+    border:2px solid rgba(27,42,94,.2);
+    box-shadow:0 10px 50px rgba(13,23,51,.4);
     position:relative;overflow:hidden;
   }
   .act-card::before{
     content:'';position:absolute;top:0;left:0;right:0;height:5px;
-    background:linear-gradient(90deg,#2ECC71,#27AE60,#69D98C);
+    background:linear-gradient(90deg,#5C6BC0,#3B5998,#9FA8DA);
     border-radius:26px 26px 0 0;
   }
   .act-card h3{
     font-family:'Fredoka One',cursive;
-    font-size:1.45rem;color:#0D4A1C;margin-bottom:20px;
+    font-size:1.45rem;color:#0D1733;margin-bottom:20px;
   }
   .act-grid{
     display:grid;
@@ -354,20 +364,20 @@
     gap:16px;
   }
   .act-item{
-    background:linear-gradient(145deg,#0D4A1C,#1A6B2E);
+    background:linear-gradient(145deg,#0D1733,#1B2A5E);
     border-radius:20px;padding:22px 18px;
     text-align:center;
-    border:1px solid rgba(39,174,96,.35);
-    box-shadow:0 4px 22px rgba(13,74,28,.5);
+    border:1px solid rgba(59,89,152,.35);
+    box-shadow:0 4px 22px rgba(13,23,51,.5);
     transition:transform .3s,box-shadow .3s;
     cursor:default;
   }
   .act-item:hover{
     transform:translateY(-6px);
-    box-shadow:0 14px 32px rgba(39,174,96,.55);
+    box-shadow:0 14px 32px rgba(59,89,152,.55);
   }
   .act-icon{font-size:1.9rem;margin-bottom:9px;display:block;}
-  .act-label{font-size:.88rem;font-weight:700;color:#E8F8EE;line-height:1.45;}
+  .act-label{font-size:.88rem;font-weight:700;color:#E8EAF6;line-height:1.45;}
 
   /* ── DIVIDER ── */
   .divider{
@@ -376,53 +386,44 @@
   }
   .divider::before,.divider::after{
     content:'';flex:1;height:1px;
-    background:linear-gradient(90deg,transparent,#27AE60,transparent);
+    background:linear-gradient(90deg,transparent,#3B5998,transparent);
   }
   .divider span{font-size:1.1rem;}
 
   /* ── BADGE ── */
   .badge-section{text-align:center;margin:36px 0;}
-  .badge-intro{
-    font-family:'Fredoka One',cursive;
-    font-size:1.1rem;color:#69D98C;
-    margin-bottom:18px;
-    background:rgba(13,74,28,.65);
-    display:inline-block;padding:10px 28px;
-    border-radius:50px;
-    border:1px solid rgba(39,174,96,.35);
-  }
   .badge-box{
-    background:linear-gradient(145deg,#0D4A1C,#1A6B2E);
-    border:2px solid rgba(39,174,96,.55);
+    background:linear-gradient(145deg,#0D1733,#1B2A5E);
+    border:2px solid rgba(59,89,152,.55);
     border-radius:28px;padding:42px 30px;
     display:inline-block;min-width:290px;
     position:relative;overflow:hidden;
-    box-shadow:0 0 60px rgba(30,122,52,.5),inset 0 1px 0 rgba(255,255,255,.08);
+    box-shadow:0 0 60px rgba(27,42,94,.5),inset 0 1px 0 rgba(255,255,255,.08);
   }
   .badge-halo{
     position:absolute;top:50%;left:50%;
     width:220px;height:220px;
-    background:radial-gradient(circle,rgba(39,174,96,.28) 0%,transparent 70%);
+    background:radial-gradient(circle,rgba(92,107,192,.28) 0%,transparent 70%);
     transform:translate(-50%,-50%);
     border-radius:50%;
     animation:haloBreath 3s ease-in-out infinite alternate;
   }
   .badge-img{
     width:115px;
-    filter:drop-shadow(0 0 26px rgba(105,217,140,.78))
-           drop-shadow(0 0 10px rgba(39,174,96,.82));
+    filter:drop-shadow(0 0 26px rgba(159,168,218,.78))
+           drop-shadow(0 0 10px rgba(92,107,192,.82));
     position:relative;z-index:1;
     animation:float 3.5s ease-in-out infinite alternate;
   }
   .badge-title{
     font-family:'Fredoka One',cursive;
-    font-size:1.32rem;color:#B8F0CB;
+    font-size:1.32rem;color:#C5CAE9;
     margin-top:14px;
-    text-shadow:0 0 18px rgba(105,217,140,.55);
+    text-shadow:0 0 18px rgba(159,168,218,.55);
     position:relative;z-index:1;
   }
   .badge-desc{
-    font-size:.92rem;color:#C8F5D8;
+    font-size:.92rem;color:#C5CAE9;
     margin-top:8px;font-weight:700;opacity:.85;
     position:relative;z-index:1;
   }
@@ -438,36 +439,36 @@
     text-align:center;margin:46px 0 20px;position:relative;
   }
   .closing-box{
-    background:linear-gradient(145deg,#0D4A1C,#1A6B2E);
-    border:2px solid rgba(39,174,96,.42);
+    background:linear-gradient(145deg,#0D1733,#1B2A5E);
+    border:2px solid rgba(59,89,152,.42);
     border-radius:28px;padding:42px 38px;
     position:relative;overflow:hidden;
-    box-shadow:0 0 60px rgba(13,74,28,.58);
+    box-shadow:0 0 60px rgba(13,23,51,.58);
   }
   .closing-box h2{
     font-family:'Fredoka One',cursive;
     font-size:clamp(1.4rem,4vw,2.1rem);
     color:#fff;margin-bottom:14px;
-    text-shadow:0 0 22px rgba(39,174,96,.68);
+    text-shadow:0 0 22px rgba(92,107,192,.68);
   }
   .closing-box p{
-    font-size:1.04rem;color:#B8F0CB;
+    font-size:1.04rem;color:#C5CAE9;
     line-height:1.75;font-weight:700;
     max-width:580px;margin:0 auto 26px;
   }
   .cta-btn{
     display:inline-block;
-    background:linear-gradient(135deg,#1E7A34,#27AE60);
+    background:linear-gradient(135deg,#1B2A5E,#3B5998);
     color:#fff;font-family:'Fredoka One',cursive;
     font-size:1.2rem;padding:16px 46px;
     border-radius:50px;border:none;cursor:pointer;
-    box-shadow:0 0 34px rgba(39,174,96,.65),0 4px 16px rgba(0,0,0,.3);
+    box-shadow:0 0 34px rgba(59,89,152,.65),0 4px 16px rgba(0,0,0,.3);
     transition:transform .3s,box-shadow .3s;
     text-decoration:none;letter-spacing:1px;
   }
   .cta-btn:hover{
     transform:translateY(-4px) scale(1.05);
-    box-shadow:0 0 58px rgba(39,174,96,.9),0 8px 28px rgba(0,0,0,.4);
+    box-shadow:0 0 58px rgba(59,89,152,.9),0 8px 28px rgba(0,0,0,.4);
   }
   .closing-chars{
     display:flex;justify-content:center;align-items:flex-end;
@@ -475,44 +476,44 @@
   }
   .closing-chars img{
     height:148px;
-    filter:drop-shadow(0 0 16px rgba(39,174,96,.55));
+    filter:drop-shadow(0 0 16px rgba(59,89,152,.55));
     animation:float 4s ease-in-out infinite alternate;
   }
-  .closing-chars img:nth-child(2){height:125px;animation-delay:1s;}
+  .closing-chars img:nth-child(2){height:120px;animation-delay:1s;}
   .closing-chars img:nth-child(3){height:85px;animation-delay:.5s;opacity:.8;}
 
   /* ── DOCENTE ── */
   .docente-wrap{
     margin-top:54px;border-radius:20px;overflow:hidden;
-    border:1px solid rgba(30,122,52,.3);
-    box-shadow:0 4px 22px rgba(13,74,28,.3);
+    border:1px solid rgba(27,42,94,.3);
+    box-shadow:0 4px 22px rgba(13,23,51,.3);
   }
   .doc-toggle{
-    background:rgba(8,40,15,.88);
+    background:rgba(8,14,40,.88);
     padding:18px 28px;
     display:flex;justify-content:space-between;align-items:center;
     cursor:pointer;user-select:none;
     border:none;width:100%;
-    color:#B8F0CB;
+    color:#C5CAE9;
     font-family:'Nunito',sans-serif;font-weight:700;font-size:.95rem;
     letter-spacing:1px;transition:background .3s;
   }
-  .doc-toggle:hover{background:rgba(15,65,25,.95);}
+  .doc-toggle:hover{background:rgba(18,30,75,.95);}
   .doc-toggle .arrow{font-size:1.1rem;transition:transform .3s;}
   .doc-toggle.open .arrow{transform:rotate(180deg);}
-  .doc-body{display:none;background:rgba(5,20,8,.97);padding:28px;}
+  .doc-body{display:none;background:rgba(5,8,25,.97);padding:28px;}
   .doc-body.open{display:block;}
   .doc-body h4{
-    color:#27AE60;font-family:'Fredoka One',cursive;
+    color:#5C6BC0;font-family:'Fredoka One',cursive;
     font-size:1.1rem;margin-bottom:10px;
   }
   .doc-body p{
-    color:#B8F0CB;font-size:.92rem;line-height:1.72;font-weight:600;
+    color:#C5CAE9;font-size:.92rem;line-height:1.72;font-weight:600;
   }
   .doc-placeholder{
-    border:1px dashed rgba(39,174,96,.4);
+    border:1px dashed rgba(59,89,152,.4);
     border-radius:12px;padding:20px;text-align:center;
-    color:rgba(39,174,96,.5);font-size:.88rem;
+    color:rgba(92,107,192,.5);font-size:.88rem;
     margin-top:14px;font-weight:600;line-height:1.6;
   }
 
@@ -520,10 +521,9 @@
   @media(max-width:640px){
     .hero-block{padding:34px 18px 28px;}
     .hero-chars img{height:115px;}
-    .card-row,.orbits-inner{flex-direction:column;}
-    .card-char{width:110px;margin:0 auto;}
-    .orbits-visual{margin:0 auto;}
-    .act-grid{grid-template-columns:repeat(2,1fr);}
+    .card-row,.rights-inner{flex-direction:column;}
+    .card-char,.rights-char{width:110px;margin:0 auto;}
+    .act-grid,.changes-grid{grid-template-columns:repeat(2,1fr);}
     .closing-box{padding:28px 18px;}
     .badge-box{min-width:unset;width:100%;max-width:320px;}
   }
@@ -543,24 +543,27 @@
 <!-- Fixed sparkles -->
 <img class="fixed-spk" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754686/estrella_bbltv2.png" style="width:32px;top:7%;left:4%;animation-duration:3.2s;">
 <img class="fixed-spk" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754686/estrella_bbltv2.png" style="width:42px;top:18%;right:5%;animation-duration:4.5s;animation-delay:1s;">
-<img class="fixed-spk" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754682/corazon_vjqq8g.png" style="width:30px;top:43%;left:2%;animation-duration:2.8s;animation-delay:.6s;animation-name:heartPulse;">
-<img class="fixed-spk" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754686/estrella_bbltv2.png" style="width:26px;top:62%;right:3%;animation-duration:3.5s;animation-delay:2s;animation-name:starPop;">
-<img class="fixed-spk" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754682/corazon_vjqq8g.png" style="width:26px;top:82%;left:7%;animation-duration:3s;animation-delay:1.3s;animation-name:heartPulse;">
+<img class="fixed-spk" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754682/corazon_vjqq8g.png" style="width:28px;top:43%;left:2%;animation-duration:2.8s;animation-delay:.6s;animation-name:heartPulse;">
+<img class="fixed-spk" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754751/full_moon_k8gubh.png" style="width:36px;top:62%;right:3%;animation-duration:5s;animation-delay:2s;animation-name:floatSlow;">
+<img class="fixed-spk" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754686/estrella_bbltv2.png" style="width:24px;top:82%;left:7%;animation-duration:3s;animation-delay:1.3s;animation-name:starPop;">
 <img class="fixed-spk" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754686/estrella_bbltv2.png" style="width:36px;top:91%;right:10%;animation-duration:4.2s;animation-delay:.4s;">
 
 <div class="wrapper">
 
   <!-- ── HERO ── -->
   <div class="hero">
-    <div class="nivel-pill">✦ NIVEL 4 ✦</div>
+    <div class="nivel-pill">✦ NIVEL 5 ✦</div>
     <div class="hero-block">
+      <img class="hero-star tl" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754686/estrella_bbltv2.png" alt="">
+      <img class="hero-star tr" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754686/estrella_bbltv2.png" alt="">
+      <img class="hero-star br" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754686/estrella_bbltv2.png" alt="">
       <div class="hero-inner">
-        <p class="hero-nivel">NIVEL 4 — LECCIÓN 1</p>
-        <h1 class="hero-title">¡Eres <span>GranDiosa!</span></h1>
-        <p class="hero-subtitle">Autoestima y Autoconocimiento</p>
-        <div class="hero-lesson-tag">✨ LECCIÓN 1 — Las Órbitas de mi Universo</div>
+        <p class="hero-nivel">NIVEL 5 — LECCIÓN 1</p>
+        <h1 class="hero-title">Los <span>Poderes</span> de<br>Tu Nuevo Cuerpo</h1>
+        <p class="hero-subtitle">Pubertad y Cambios Corporales<br>Derechos Sexuales y Reproductivos</p>
+        <div class="hero-lesson-tag">🌌 LECCIÓN 1 — Los Cambios de la Pubertad</div>
         <div class="hero-chars">
-          <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754464/ceci_colombiana_zygti3.png" alt="Ceci feliz" style="height:205px;">
+          <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754470/ceci_luna_glowing_znifhg.png" alt="Ceci asombrada" style="height:255px;">
           </div>
       </div>
     </div>
@@ -568,7 +571,7 @@
 
   <!-- ── INTRO LABEL ── -->
   <div class="section-label">
-    <h2>✨ Introducción — Lección 1</h2>
+    <h2>🌌 Introducción — Lección 1</h2>
   </div>
 
   <!-- ── CARD 1: ¿Qué descubrirás? ── -->
@@ -577,25 +580,24 @@
       <div class="card-text">
         <span class="card-emoji">🌟</span>
         <h3>¿Qué descubrirás aquí?</h3>
-        <p>En este nivel descubrirás algo muy importante: <strong>dentro de ti existen talentos, cualidades y fortalezas únicas</strong>. No necesitas parecerte a nadie más para ser suficiente.</p>
+        <p>Tu cuerpo cambia mientras creces, y esos cambios forman parte de tu desarrollo. En este nivel explorarás los cambios <strong>físicos, hormonales y emocionales</strong> de la adolescencia desde una perspectiva positiva.</p>
       </div>
       <div class="card-char">
-        <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754478/ceci_satisfecha_r8qfmd.png" alt="Ceci satisfecha">
+        <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754467/ceci_curious_fxs0oy.png" alt="Ceci curiosa">
       </div>
     </div>
   </div>
 
   <!-- ── CARD 2: ¿Qué aprenderás? ── -->
   <div class="card c2" style="position:relative;">
-    <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754682/corazon_vjqq8g.png" class="deco-float" style="width:34px;right:18px;top:-12px;animation-duration:2.8s;animation-name:heartPulse;">
     <div class="card-row">
       <div class="card-char">
-        <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754353/alarma_usqm04.png" alt="Ceci espejo brillante" style="animation-delay:1s;">
+        <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754481/ceci_sitting_happy_viogds.png" alt="Ceci pensando" style="animation-delay:1s;">
       </div>
       <div class="card-text">
         <span class="card-emoji">📚</span>
         <h3>¿Qué aprenderás?</h3>
-        <p>Aprenderás a reconocer tus habilidades y aquello que te hace especial. <strong>Construirás una imagen positiva de ti misma</strong> basada en tus propias fortalezas.</p>
+        <p>Aprenderás sobre los cambios de la pubertad: cómo reconocerlos, cómo cuidarte y cómo entenderlos <strong>sin miedo ni vergüenza</strong>. También conocerás tus derechos sexuales y reproductivos.</p>
       </div>
     </div>
   </div>
@@ -606,36 +608,36 @@
       <div class="card-text">
         <span class="card-emoji">🎯</span>
         <h3>Objetivo del nivel</h3>
-        <p>Fortalecerás tu autoestima y reconocerás tus <strong>capacidades, talentos y cualidades personales</strong>, construyendo una percepción positiva y luminosa de ti misma.</p>
+        <p>Comprenderás los cambios de la pubertad como un proceso natural, reconociendo la <strong>diversidad de cuerpos y ritmos de desarrollo</strong>, y tus derechos sobre tu propio cuerpo <em style="font-style:normal;background:rgba(27,42,94,.12);padding:2px 8px;border-radius:6px;font-size:.95em;">(pág. 68 de la cartilla)</em>.</p>
       </div>
       <div class="card-char">
-        <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754477/ceci_pointing_l9mr0h.png" alt="Ceci apuntando" style="animation-delay:1.5s;">
+        <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754484/ceci_teaching_m5o8ln.png" alt="Ceci enseñando" style="animation-delay:1.5s;">
       </div>
     </div>
   </div>
 
+ 
+  <div class="divider"><span>🌌</span></div>
 
-
-  <!-- ── ORBITS CARD ── -->
   
-  <div class="divider"><span>🌱</span></div>
+  
 
   <!-- ── ACTIVITIES ── -->
   <div class="act-card" style="position:relative;">
-  <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754756/libro_qr5mnw.png" class="deco-float" style="width:46px;left:12px;bottom:-14px;animation-duration:4.5s;animation-delay:1s;">
+    <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754680/celular_hacriv.png" class="deco-float" style="width:42px;left:12px;bottom:-12px;animation-duration:4.5s;animation-delay:1s;">
     <h3>🎮 ¿Qué haremos en esta lección?</h3>
     <div class="act-grid">
       <div class="act-item">
-        <span class="act-icon">🎥</span>
-        <p class="act-label">Videos de mujeres que inspiran</p>
+        <span class="act-icon">📊</span>
+        <p class="act-label">Infografía interactiva de cambios</p>
       </div>
       <div class="act-item">
-        <span class="act-icon">🪐</span>
-        <p class="act-label">Las 5 órbitas de tu universo</p>
+        <span class="act-icon">🎮</span>
+        <p class="act-label">Completa la frase sobre pubertad</p>
       </div>
       <div class="act-item">
-        <span class="act-icon">💭</span>
-        <p class="act-label">Reflexión sobre comparación</p>
+        <span class="act-icon">⚖️</span>
+        <p class="act-label">Derechos sexuales y reproductivos</p>
       </div>
       <div class="act-item">
         <span class="act-icon">📸</span>
@@ -644,21 +646,28 @@
     </div>
   </div>
 
-  <div class="divider"><span>💚</span></div>
+  <div class="divider"><span>✨</span></div>
+
+  
+  <!-- caption for worried chars -->
+  <div style="text-align:center;margin:-10px 0 24px;">
+    <div style="display:inline-block;background:rgba(27,42,94,.75);border:1px solid rgba(59,89,152,.4);border-radius:50px;padding:8px 24px;font-size:.9rem;font-weight:700;color:#C5CAE9;">
+      🤗 ¡Es normal tener dudas! Ceci y Luna también las tienen — y juntas las resolvemos.
+    </div>
+  </div>
 
   <!-- ── BADGE ── -->
   <div class="badge-section">
-    <div class="badge-intro">🏅 Tu insignia del Nivel 4 te espera ✨</div>
-    <div style="margin-top:14px;"></div>
+    <p style="color:#9FA8DA;font-weight:700;font-size:.95rem;margin-bottom:18px;letter-spacing:1px;">🏅 TU INSIGNIA DEL NIVEL 5</p>
     <div class="badge-box">
       <div class="badge-halo"></div>
-      <img class="badge-img" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754357/badge4_ltkt8x.png" alt="Insignia Nivel 4">
-      <p class="badge-title">Insignia: ¡Eres GranDiosa!</p>
-      <p class="badge-desc">Completa las lecciones del Nivel 4<br>para desbloquearla 🌿</p>
+      <img class="badge-img" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754454/badge5_gxzrk7.png" alt="Insignia Nivel 5">
+      <p class="badge-title">Insignia: Conocedora de Tu Poder</p>
+      <p class="badge-desc">Completa las lecciones del Nivel 5<br>para desbloquearla ✨</p>
       <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754686/estrella_bbltv2.png" style="position:absolute;width:28px;top:12px;right:22px;animation:spkl 2.5s ease-in-out infinite alternate;">
       <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754682/corazon_vjqq8g.png" style="position:absolute;width:26px;bottom:22px;left:20px;animation:heartPulse 2.2s ease-in-out infinite;">
-      <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754686/estrella_bbltv2.png" style="position:absolute;width:34px;top:14px;left:20px;animation:spkl 3.8s ease-in-out infinite alternate;animation-delay:.5s;">
-      <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754686/estrella_bbltv2.png" style="position:absolute;width:22px;bottom:18px;right:18px;animation:starPop 3s ease-in-out infinite alternate;">
+      <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754751/full_moon_k8gubh.png" style="position:absolute;width:34px;top:14px;left:20px;animation:floatSlow 4.5s ease-in-out infinite alternate;">
+      <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754686/estrella_bbltv2.png" style="position:absolute;width:30px;bottom:18px;right:18px;animation:spkl 3.5s ease-in-out infinite alternate;animation-delay:1s;">
     </div>
   </div>
 
@@ -674,13 +683,13 @@
       <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754686/estrella_bbltv2.png"
            style="position:absolute;right:18px;bottom:22px;width:52px;opacity:.36;animation:floatSlow 5s ease-in-out infinite alternate;pointer-events:none;">
 
-      <h2>¡Tu universo interior es infinito! 🌿🌟</h2>
-      <p>No hay nadie en Pandora — ni en el mundo entero — igual a ti. Ceci y Luna te acompañan en este viaje de autodescubrimiento, con todo el cariño y la admiración que te mereces.</p>
+      <h2>¡Tu cuerpo tiene superpoderes! 🌌💙</h2>
+      <p>Conocerlos, entenderlos y defenderlos es parte de crecer. No estás sola en este viaje — Ceci y Luna están aquí, con toda la información que necesitas y sin ningún juicio.</p>
       <a href="#" class="cta-btn">¡Comenzar Lección 1! 🌟</a>
 
       <div class="closing-chars">
-        <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754457/bombillo_nqpvqy.png" alt="Bombillo" style="height:80px;opacity:.8;filter:drop-shadow(0 0 14px rgba(39,174,96,.7));">
-      </div>
+        <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754682/cohete_szsjlk.png" alt="Ceci asombrada">
+        </div>
     </div>
   </div>
 
@@ -692,16 +701,16 @@
     </button>
     <div class="doc-body" id="docBody">
       <h4>Valor académico de esta actividad</h4>
-      <p>Esta introducción abre el Nivel 4 del programa, centrado en autoestima y autoconocimiento. La propuesta pedagógica utiliza la metáfora de las "órbitas del universo interior" para explorar de forma lúdica las dimensiones del autoconcepto positivo, conectando con enfoques de psicología positiva y desarrollo de competencias socioemocionales.</p>
+      <p>Esta introducción abre el Nivel 5 del programa, centrado en pubertad, cambios corporales y derechos sexuales y reproductivos. La propuesta pedagógica aborda estos temas desde un enfoque de educación sexual integral (ESI), presentando la pubertad como proceso natural y diverso, y los derechos corporales como herramienta de empoderamiento y protección para las estudiantes. Se hace referencia a la pág. 68 de la cartilla para profundización en derechos.</p>
       <div class="doc-placeholder">
-       </div>
+        </div>
     </div>
   </div>
 
-</div><!-- end wrapper -->
+</div>
 
 <script>
-// ── GREEN STARFIELD ──
+// ── INDIGO STARFIELD ──
 const canvas = document.getElementById('starfield');
 const ctx = canvas.getContext('2d');
 let stars=[], W, H;
@@ -717,15 +726,15 @@ function rnd(a,b){ return a+Math.random()*(b-a); }
 
 function initStars(){
   stars=[];
-  const greens=['#E8F8EE','#B8F0CB','#69D98C','#27AE60','#C8F5D8','#2ECC71','#00C853'];
-  for(let i=0;i<290;i++){
+  const indigos=['#E8EAF6','#C5CAE9','#9FA8DA','#7986CB','#5C6BC0','#3B5998','#B3C5E8'];
+  for(let i=0;i<300;i++){
     stars.push({
       x:rnd(0,W), y:rnd(0,H),
-      r:rnd(.3,2.4),
+      r:rnd(.3,2.5),
       alpha:rnd(.2,1),
       speed:rnd(.003,.022),
       offset:rnd(0,Math.PI*2),
-      color:Math.random()>.5 ? greens[Math.floor(Math.random()*greens.length)] : '#ffffff'
+      color:Math.random()>.45 ? indigos[Math.floor(Math.random()*indigos.length)] : '#ffffff'
     });
   }
 }
@@ -742,7 +751,7 @@ function draw(){
     ctx.fillStyle=s.color;
     ctx.globalAlpha=s.alpha*pulse;
     ctx.fill();
-    if(s.r>1.7 && pulse>.83){
+    if(s.r>1.8 && pulse>.83){
       ctx.globalAlpha=s.alpha*pulse*.3;
       ctx.strokeStyle=s.color;ctx.lineWidth=.5;
       ctx.beginPath();
@@ -756,9 +765,9 @@ function draw(){
 }
 draw();
 
-// ── GREEN PARTICLES ──
-const ptC=['#27AE60','#E8F8EE','#2ECC71','#B8F0CB','#69D98C','#00C853','#C8F5D8'];
-for(let i=0;i<52;i++){
+// ── INDIGO PARTICLES ──
+const ptC=['#3B5998','#E8EAF6','#5C6BC0','#C5CAE9','#9FA8DA','#7986CB','#1B2A5E','#B3C5E8'];
+for(let i=0;i<55;i++){
   const p=document.createElement('div');
   p.className='pt';
   const sz=Math.random()*5+2;

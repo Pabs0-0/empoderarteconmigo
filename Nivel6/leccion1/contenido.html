@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>El Viaje de Ceci · Nivel 6 · Semáforo de Situaciones</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap');
+
+:root {
+  --principal: #1A1A4E;
+  --acento: #4A3080;
+  --claro: #EDEAF5;
+  --blanco: #ffffff;
+  --dorado: #F4C430;
+  --verde: #27AE60;
+  --amarillo: #F39C12;
+  --rojo: #C0392B;
+  --verde-soft: #D5F5E3;
+  --amarillo-soft: #FEF9E7;
+  --rojo-soft: #FADBD8;
+  --shadow: 0 6px 28px rgba(26,26,78,0.18);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Nunito', sans-serif;
+  min-height: 100vh;
+  background: url('https://res.cloudinary.com/dijezdfsr/image/upload/v1775754355/background_duuc07.png') center/cover fixed;
+  overflow-x: hidden;
+}
+
+/* ===== FIXED DECOS ===== */
+.deco-fix {
+  position: fixed;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.55;
+  animation: decoF 5s ease-in-out infinite alternate;
+}
+.deco-fix.d1 { top: 7%;  left: 3%;  width: 42px; animation-delay: 0s; }
+.deco-fix.d2 { top: 22%; right: 3%; width: 34px; animation-delay: 1s; }
+.deco-fix.d3 { bottom: 18%; left: 2%; width: 46px; animation-delay: 2s; }
+.deco-fix.d4 { bottom: 9%; right: 4%; width: 30px; animation-delay: 0.5s; }
+@keyframes decoF {
+  from { transform: translateY(0) rotate(-4deg); }
+  to   { transform: translateY(-12px) rotate(4deg); }
+}
+
+/* ===== PAGE ===== */
+.page {
+  position: relative;
+  z-index: 1;
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 22px 14px 70px;
+}
+
+/* ===== BADGE ===== */
+.nivel-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--principal);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 6px 20px;
+  border-radius: 20px;
+  margin-bottom: 12px;
+  box-shadow: 0 3px 14px rgba(26,26,78,0.35);
+}
+
+/* ===== INTRO BLOCK ===== */
+.intro-block {
+  background: var(--claro);
+  border: 3px solid var(--acento);
+  border-radius: 28px;
+  padding: 22px 22px 18px;
+  margin-bottom: 26px;
+  box-shadow: var(--shadow);
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+  position: relative;
+  overflow: hidden;
+}
+.intro-block::after {
+  content: '';
+  position: absolute; top: -40px; right: -40px;
+  width: 130px; height: 130px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(74,48,128,0.1), transparent 70%);
+  pointer-events: none;
+}
+.intro-char { flex-shrink: 0; }
+.intro-char img { height: 100px; object-fit: contain; filter: drop-shadow(0 4px 12px rgba(26,26,78,0.2)); }
+.intro-text { flex: 1; min-width: 180px; }
+.intro-text .tag {
+  display: inline-block;
+  background: var(--principal);
+  color: #fff;
+  font-size: 11px; font-weight: 900;
+  letter-spacing: 1px; text-transform: uppercase;
+  padding: 4px 14px; border-radius: 12px; margin-bottom: 8px;
+}
+.intro-text h1 {
+  font-size: clamp(20px, 4.5vw, 26px);
+  font-weight: 900; color: var(--principal);
+  line-height: 1.2; margin-bottom: 8px;
+}
+.intro-text p {
+  font-size: clamp(13px, 2.3vw, 15px);
+  font-weight: 600; color: #2a1a6e; line-height: 1.6;
+}
+
+/* ===== ACTIVITY WRAP ===== */
+.activity-wrap {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+}
+
+/* ===== SEMAPHORE ===== */
+.semaphore-side {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+.semaphore-box {
+  background: #1a1a1a;
+  border: 5px solid #333;
+  border-radius: 28px;
+  padding: 18px 16px;
+  width: clamp(110px, 22vw, 150px);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: center;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4), inset 0 0 20px rgba(255,255,255,0.03);
+  cursor: pointer;
+  transition: transform 0.2s;
+  position: relative;
+}
+.semaphore-box:hover { transform: scale(1.03); }
+.semaphore-box::before {
+  content: '';
+  position: absolute; top: -22px; left: 50%; transform: translateX(-50%);
+  width: 20px; height: 20px;
+  background: #333;
+  border-radius: 4px 4px 0 0;
+}
+.semaphore-box::after {
+  content: '';
+  position: absolute; bottom: -20px; left: 50%; transform: translateX(-50%);
+  width: 26px; height: 20px;
+  background: #444;
+  border-radius: 0 0 6px 6px;
+}
+
+.light {
+  width: clamp(52px, 11vw, 76px);
+  height: clamp(52px, 11vw, 76px);
+  border-radius: 50%;
+  background: #222;
+  border: 3px solid #444;
+  transition: background 0.4s, box-shadow 0.4s;
+  display: flex; align-items: center; justify-content: center;
+  font-size: clamp(22px, 5vw, 30px);
+}
+.light.active-red    { background: var(--rojo);    box-shadow: 0 0 28px var(--rojo),    0 0 56px rgba(192,57,43,0.4); }
+.light.active-yellow { background: var(--amarillo); box-shadow: 0 0 28px var(--amarillo), 0 0 56px rgba(243,156,18,0.4); }
+.light.active-green  { background: var(--verde);   box-shadow: 0 0 28px var(--verde),   0 0 56px rgba(39,174,96,0.4); }
+
+.sem-tap-hint {
+  font-size: 13px; font-weight: 800;
+  color: rgba(255,255,255,0.9);
+  background: var(--principal);
+  border: 2px solid var(--acento);
+  border-radius: 16px;
+  padding: 8px 14px;
+  text-align: center;
+  max-width: 150px;
+  line-height: 1.3;
+  animation: hintPulse 2s ease-in-out infinite;
+}
+@keyframes hintPulse { 0%,100% { opacity: 0.7; } 50% { opacity: 1; } }
+
+/* ===== SITUATION PANEL ===== */
+.situation-side {
+  flex: 1;
+  min-width: 240px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Progress bar */
+.progress-wrap {
+  background: rgba(237,234,245,0.9);
+  border: 2px solid var(--acento);
+  border-radius: 18px;
+  padding: 12px 16px;
+  box-shadow: var(--shadow);
+}
+.progress-label {
+  font-size: 12px; font-weight: 900;
+  color: var(--principal);
+  letter-spacing: 1px; text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.progress-bar-bg {
+  background: rgba(74,48,128,0.15);
+  border-radius: 20px; height: 10px; overflow: hidden;
+}
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--acento), #7B5FBB);
+  border-radius: 20px; width: 0%;
+  transition: width 0.5s cubic-bezier(0.34,1.56,0.64,1);
+}
+.progress-count {
+  margin-top: 6px; font-size: 13px; font-weight: 700;
+  color: var(--acento);
+}
+
+/* Situation card */
+.situation-card {
+  background: var(--claro);
+  border: 3px solid var(--acento);
+  border-radius: 24px;
+  padding: 20px 18px;
+  box-shadow: var(--shadow);
+  min-height: 160px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  justify-content: center;
+}
+.situation-card.off {
+  align-items: center;
+  text-align: center;
+  color: #8888aa;
+  font-size: 14px; font-weight: 700;
+}
+.situation-icon { font-size: 32px; }
+.situation-num {
+  font-size: 11px; font-weight: 900;
+  color: var(--acento); letter-spacing: 1.5px;
+  text-transform: uppercase; margin-bottom: 4px;
+}
+.situation-text {
+  font-size: clamp(15px, 3vw, 18px);
+  font-weight: 800; color: var(--principal);
+  line-height: 1.4;
+}
+.situation-img { height: 60px; object-fit: contain; margin: 0 auto; display: block; opacity: 0.7; }
+
+/* Traffic light buttons */
+.traffic-btns {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.traffic-btn {
+  flex: 1;
+  min-width: 80px;
+  max-width: 140px;
+  padding: 14px 10px;
+  border-radius: 20px;
+  border: none;
+  font-size: clamp(13px, 2.5vw, 15px);
+  font-weight: 900;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+}
+.traffic-btn:active { transform: scale(0.96); }
+.traffic-btn.btn-verde {
+  background: var(--verde); color: #fff;
+}
+.traffic-btn.btn-verde:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(39,174,96,0.4); }
+.traffic-btn.btn-amarillo {
+  background: var(--amarillo); color: #fff;
+}
+.traffic-btn.btn-amarillo:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(243,156,18,0.4); }
+.traffic-btn.btn-rojo {
+  background: var(--rojo); color: #fff;
+}
+.traffic-btn.btn-rojo:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(192,57,43,0.4); }
+.traffic-btn .btn-emoji { font-size: 22px; }
+.traffic-btn .btn-label { font-size: 11px; letter-spacing: 0.5px; }
+
+/* Feedback card */
+.feedback-card {
+  border-radius: 20px;
+  padding: 16px 18px;
+  font-size: 14px; font-weight: 800;
+  line-height: 1.5;
+  display: none;
+  gap: 12px;
+  align-items: flex-start;
+}
+.feedback-card.show { display: flex; animation: fadeSlideIn 0.4s ease; }
+@keyframes fadeSlideIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.feedback-card.correct {
+  background: var(--verde-soft);
+  border: 2px solid var(--verde);
+  color: #1a5c38;
+}
+.feedback-card.incorrect {
+  background: var(--amarillo-soft);
+  border: 2px solid var(--amarillo);
+  color: #7a4a00;
+}
+.feedback-card.rojo-alert {
+  background: var(--rojo-soft);
+  border: 3px solid var(--rojo);
+  color: #5a0a0a;
+  flex-direction: column;
+}
+.feedback-emoji { font-size: 24px; flex-shrink: 0; margin-top: 1px; }
+.feedback-text  { flex: 1; }
+.hotline-box {
+  background: var(--rojo);
+  color: #fff;
+  border-radius: 14px;
+  padding: 10px 14px;
+  font-size: 14px; font-weight: 900;
+  text-align: center;
+  width: 100%;
+  letter-spacing: 0.5px;
+  margin-top: 6px;
+}
+
+/* Next button */
+.next-btn {
+  width: 100%;
+  background: var(--principal);
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  padding: 14px;
+  font-size: 15px; font-weight: 900;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  display: none;
+  box-shadow: 0 4px 18px rgba(26,26,78,0.3);
+}
+.next-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(26,26,78,0.4); }
+.next-btn.show  { display: block; animation: fadeSlideIn 0.4s ease; }
+
+/* Completion banner */
+.completion-banner {
+  background: linear-gradient(135deg, #1A1A4E, #4A3080);
+  border-radius: 24px;
+  padding: 24px 22px;
+  text-align: center;
+  color: #fff;
+  box-shadow: var(--shadow);
+  display: none;
+}
+.completion-banner.show { display: block; animation: fadeSlideIn 0.6s ease; }
+.completion-banner h2 {
+  font-size: clamp(20px, 4vw, 26px);
+  font-weight: 900; margin-bottom: 8px;
+}
+.completion-banner p { font-size: 15px; font-weight: 700; opacity: 0.88; }
+
+/* ===== BONUS ===== */
+.bonus-section { margin-bottom: 28px; }
+.bonus-box {
+  background: linear-gradient(135deg, #0e0e2a 0%, #1e1e50 50%, #0e0e2a 100%);
+  border: 4px solid var(--dorado);
+  border-radius: 28px;
+  padding: 26px 22px;
+  text-align: center;
+  position: relative; overflow: hidden;
+  cursor: not-allowed;
+  transition: all 0.4s;
+  box-shadow: 0 8px 32px rgba(244,196,48,0.18);
+  animation: bonusFloat 3.2s ease-in-out infinite alternate;
+}
+.bonus-box.unlocked { cursor: pointer; animation: bonusFloat 3.2s ease-in-out infinite alternate, bonusGlow 2s ease-in-out infinite alternate; }
+.bonus-box::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(244,196,48,0.04) 10px, rgba(244,196,48,0.04) 20px);
+  pointer-events: none;
+}
+.bonus-box::after {
+  content: '';
+  position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+  background: radial-gradient(ellipse at center, rgba(244,196,48,0.07), transparent 60%);
+  animation: shimRot 6s linear infinite; pointer-events: none;
+}
+@keyframes bonusFloat { from { transform: translateY(0); } to { transform: translateY(-6px); } }
+@keyframes bonusGlow {
+  from { box-shadow: 0 8px 28px rgba(244,196,48,0.3); }
+  to   { box-shadow: 0 8px 28px rgba(244,196,48,0.7), 0 0 40px rgba(244,196,48,0.3); }
+}
+@keyframes shimRot { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+.bonus-icon  { font-size: 34px; margin-bottom: 8px; display: block; }
+.bonus-title { font-size: clamp(22px,5vw,28px); font-weight: 900; color: var(--dorado); letter-spacing: 2px; margin-bottom: 5px; text-shadow: 0 0 20px rgba(244,196,48,0.4); }
+.bonus-sub   { font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.65); }
+.bonus-box.unlocked .bonus-sub { color: rgba(255,255,255,0.9); }
+
+/* ===== BONUS MODAL ===== */
+.bonus-overlay {
+  position: fixed; inset: 0;
+  background: rgba(10,10,30,0.88);
+  z-index: 9999;
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.35s;
+  backdrop-filter: blur(8px);
+}
+.bonus-overlay.show { opacity: 1; pointer-events: all; }
+.bonus-modal {
+  background: linear-gradient(160deg, #0e0e2a 0%, #1e1e50 50%, #0e0e2a 100%);
+  border: 4px solid var(--acento);
+  border-radius: 30px;
+  padding: 34px 26px 30px;
+  max-width: 520px; width: 100%;
+  max-height: 90vh; overflow-y: auto;
+  position: relative;
+  box-shadow: 0 24px 80px rgba(74,48,128,0.5);
+  transform: scale(0.88) translateY(28px);
+  transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+}
+.bonus-overlay.show .bonus-modal { transform: scale(1) translateY(0); }
+.bonus-modal::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 4px;
+  background: linear-gradient(90deg, var(--acento), var(--dorado), var(--acento));
+  border-radius: 30px 30px 0 0; background-size: 200% 100%;
+  animation: shimLine 2s linear infinite;
+}
+@keyframes shimLine { from { background-position: 0%; } to { background-position: 200%; } }
+.bonus-close {
+  position: absolute; top: 13px; right: 13px;
+  background: var(--acento); border: none; border-radius: 50%;
+  width: 34px; height: 34px; font-size: 16px; font-weight: 900;
+  color: #fff; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: transform 0.2s; z-index: 1;
+}
+.bonus-close:hover { transform: scale(1.1) rotate(90deg); }
+.bonus-modal-header { text-align: center; margin-bottom: 22px; }
+.gift-emoji { font-size: 48px; display: block; margin-bottom: 6px; animation: giftBounce 1s ease infinite alternate; }
+@keyframes giftBounce { from { transform: scale(1); } to { transform: scale(1.1) rotate(5deg); } }
+.bonus-modal-header h2 { font-size: clamp(17px,4vw,22px); font-weight: 900; color: var(--dorado); margin-bottom: 4px; }
+.bonus-modal-header p  { font-size: 13px; color: rgba(255,255,255,0.7); font-weight: 600; }
+
+.bonus-block {
+  background: rgba(74,48,128,0.18);
+  border: 2px solid rgba(74,48,128,0.4);
+  border-radius: 18px;
+  padding: 16px 18px;
+  margin-bottom: 12px;
+}
+.bonus-block-title {
+  font-size: 14px; font-weight: 900; color: var(--dorado);
+  margin-bottom: 10px; display: flex; align-items: center; gap: 8px;
+}
+.bonus-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.bonus-list li {
+  font-size: clamp(13px,2.2vw,14px); font-weight: 700;
+  color: rgba(255,255,255,0.88); line-height: 1.5;
+  display: flex; gap: 10px; align-items: flex-start;
+}
+.bonus-list li .li-dot { flex-shrink: 0; margin-top: 2px; }
+.bonus-item {
+  background: rgba(74,48,128,0.15);
+  border: 2px solid rgba(74,48,128,0.3);
+  border-radius: 16px;
+  padding: 12px 16px; margin-bottom: 10px;
+  display: flex; gap: 12px; align-items: flex-start;
+}
+.bonus-item-emoji { font-size: 22px; flex-shrink: 0; margin-top: 2px; }
+.bonus-item-text  { font-size: clamp(13px,2.2vw,14px); font-weight: 700; color: rgba(255,255,255,0.9); line-height: 1.5; }
+
+.bonus-hotline {
+  background: rgba(192,57,43,0.2);
+  border: 2px solid rgba(192,57,43,0.5);
+  border-radius: 16px;
+  padding: 14px 18px; text-align: center;
+  font-size: 14px; font-weight: 900; color: #ff8888;
+  margin-bottom: 10px;
+}
+.bonus-closing {
+  background: rgba(244,196,48,0.1);
+  border: 2px solid rgba(244,196,48,0.3);
+  border-radius: 16px;
+  padding: 16px 18px;
+  display: flex; gap: 14px; align-items: center;
+}
+.bonus-closing img { height: 76px; object-fit: contain; flex-shrink: 0; }
+.bonus-closing p { font-size: clamp(13px,2.2vw,14px); color: rgba(255,255,255,0.9); font-weight: 700; line-height: 1.5; }
+.bonus-closing p em { color: var(--dorado); font-style: normal; font-weight: 900; }
+
+/* ===== TOAST ===== */
+.toast {
+  position: fixed; bottom: 24px; left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--principal); color: #fff;
+  padding: 10px 24px; border-radius: 50px;
+  font-size: 14px; font-weight: 800;
+  box-shadow: 0 8px 28px rgba(0,0,0,0.3);
+  z-index: 9998; opacity: 0;
+  transition: all 0.3s; pointer-events: none;
+  white-space: nowrap; border: 3px solid var(--acento);
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--acento); border-radius: 6px; }
+
+/* Mobile stacking */
+@media (max-width: 540px) {
+  .activity-wrap { flex-direction: column; align-items: center; }
+  .semaphore-side { flex-direction: row; align-items: center; gap: 16px; }
+  .semaphore-box { width: 90px; padding: 12px 10px; gap: 10px; }
+  .light { width: 44px; height: 44px; font-size: 18px; }
+  .sem-tap-hint { font-size: 12px; max-width: 180px; }
+  .situation-side { width: 100%; }
+}
+</style>
+</head>
+<body>
+
+<!-- Fixed decos -->
+<img class="deco-fix d1" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754686/estrella_bbltv2.png" alt="">
+<img class="deco-fix d2" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754682/corazon_vjqq8g.png" alt="">
+<img class="deco-fix d3" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754686/estrella_bbltv2.png" alt="">
+<img class="deco-fix d4" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754682/corazon_vjqq8g.png" alt="">
+
+<div class="page">
+
+  <!-- BADGE -->
+  <div style="text-align:center;margin-bottom:8px;">
+    <span class="nivel-badge"> ✦ Nivel 6 · El poder del “sí quiero” y el “no quiero” ✦</span>
+  </div>
+
+  <!-- INTRO -->
+  <section class="intro-block">
+    <div class="intro-char">
+      <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754461/ceci_asking_ukpsbg.png" alt="Ceci preguntando">
+    </div>
+    <div class="intro-text">
+      <span class="tag">📖 Lección 1 · Reconocer situaciones</span>
+      <h1>🚦 Semáforo de Situaciones</h1>
+      <p>Hay situaciones que nos hacen sentir <strong>seguras</strong>, otras que nos incomodan, y algunas que nos ponen en alerta. Aprender a reconocerlas nos ayuda a cuidarnos y pedir apoyo cuando lo necesitamos. <strong>¡Vamos a explorar juntas!</strong></p>
+    </div>
+  </section>
+
+  <!-- ACTIVITY -->
+  <div class="activity-wrap">
+
+    <!-- SEMAPHORE -->
+    <div class="semaphore-side">
+      <div class="semaphore-box" id="semaphoreBox" onclick="encenderSemaforo()">
+        <div class="light" id="lightRed">🔴</div>
+        <div class="light" id="lightYellow">🟡</div>
+        <div class="light" id="lightGreen">🟢</div>
+      </div>
+      <div class="sem-tap-hint" id="tapHint">Toca para encender el semáforo ✨</div>
+    </div>
+
+    <!-- SITUATIONS -->
+    <div class="situation-side" id="situationSide">
+
+      <!-- Progress -->
+      <div class="progress-wrap" id="progressWrap" style="display:none;">
+        <div class="progress-label">Tu progreso</div>
+        <div class="progress-bar-bg"><div class="progress-bar-fill" id="progressFill"></div></div>
+        <div class="progress-count" id="progressCount">Situación 1 de 10</div>
+      </div>
+
+      <!-- Situation card -->
+      <div class="situation-card off" id="situationCard">
+        <div class="situation-icon">🚦</div>
+        <div style="font-size:14px;font-weight:700;color:#8888aa;">Enciende el semáforo para comenzar</div>
+      </div>
+
+      <!-- Traffic buttons -->
+      <div class="traffic-btns" id="trafficBtns" style="display:none;">
+        <button class="traffic-btn btn-verde" onclick="choose('verde')">
+          <span class="btn-emoji">🟢</span>
+          <span>VERDE</span>
+          <span class="btn-label">Me siento segura</span>
+        </button>
+        <button class="traffic-btn btn-amarillo" onclick="choose('amarillo')">
+          <span class="btn-emoji">🟡</span>
+          <span>AMARILLO</span>
+          <span class="btn-label">Me siento incómoda</span>
+        </button>
+        <button class="traffic-btn btn-rojo" onclick="choose('rojo')">
+          <span class="btn-emoji">🔴</span>
+          <span>ROJO</span>
+          <span class="btn-label">Pido ayuda</span>
+        </button>
+      </div>
+
+      <!-- Feedback -->
+      <div class="feedback-card" id="feedbackCard"></div>
+
+      <!-- Next button -->
+      <button class="next-btn" id="nextBtn" onclick="nextSituation()">Siguiente situación →</button>
+
+      <!-- Completion banner -->
+      <div class="completion-banner" id="completionBanner">
+        <div style="font-size:36px;margin-bottom:10px;">🌟✨🌟</div>
+        <h2>¡Lo hiciste increíble!</h2>
+        <p>Completaste el Semáforo de Situaciones. Reconocer cómo te hacen sentir las situaciones es una forma de cuidarte. ¡Eres valiente! 💙</p>
+      </div>
+
+    </div><!-- /situation-side -->
+  </div><!-- /activity-wrap -->
+
+  <!-- BONUS -->
+  <section class="bonus-section">
+    <div class="bonus-box" id="bonusBox">
+      <span class="bonus-icon" id="bonusIcon">🔒</span>
+      <div class="bonus-title">BONUS</div>
+      <div class="bonus-sub" id="bonusSub">Completa la actividad para desbloquear</div>
+    </div>
+  </section>
+
+</div><!-- /page -->
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- BONUS MODAL -->
+<div class="bonus-overlay" id="bonusOverlay">
+  <div class="bonus-modal">
+    <button class="bonus-close" id="bonusClose">✕</button>
+    <div class="bonus-modal-header">
+      <span class="gift-emoji">🎁</span>
+      <h2>¡BONUS DESBLOQUEADO!</h2>
+      <p>Prevención de Ciberacoso</p>
+    </div>
+
+    <div class="bonus-block">
+      <div class="bonus-block-title">
+        <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754680/celular_hacriv.png" style="height:24px;object-fit:contain;" alt="">
+        🛡️ Lo que NO debes compartir en redes sociales:
+      </div>
+      <ul class="bonus-list">
+        <li><span class="li-dot">•</span><span>Fotos íntimas o en ropa interior, nunca, bajo ninguna circunstancia.</span></li>
+        <li><span class="li-dot">•</span><span>Tu dirección, nombre de colegio o datos de ubicación.</span></li>
+        <li><span class="li-dot">•</span><span>Contraseñas o información personal de otras personas.</span></li>
+      </ul>
+    </div>
+
+    <div class="bonus-item">
+      <div class="bonus-item-emoji">⚠️</div>
+      <div class="bonus-item-text">Si alguien te pide fotos íntimas, eso es <strong>violencia digital</strong>. No es tu culpa.</div>
+    </div>
+
+    <div class="bonus-hotline">
+      📞 Línea 141 (ICBF) · Línea 155 (orientación a mujeres)<br>
+      <span style="font-size:12px;font-weight:700;opacity:0.85;">Gratuitas y confidenciales. Puedes llamar cuando quieras.</span>
+    </div>
+
+    <div class="bonus-item">
+      <div class="bonus-item-emoji">✨</div>
+      <div class="bonus-item-text">Poner límites en internet también es un acto de <strong>valentía</strong>.</div>
+    </div>
+
+    <div class="bonus-closing">
+      <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754468/ceci_holding_phone_mifswt.png" alt="Ceci con teléfono">
+      <p>Tu seguridad digital importa tanto como tu seguridad en la vida real. <em>Tú tienes el poder de protegerte</em>. 💙</p>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============================
+// DATA
+// ============================
+const SITUATIONS = [
+  {
+    text: 'Una amiga te abraza cuando estás triste.',
+    correct: 'verde',
+    img: null,
+    feedbackCorrect: '💚 ¡Muy bien! Un abrazo con cariño de alguien de confianza es una señal de afecto seguro.',
+    feedbackWrong: '💜 Piensa si esta situación te hace sentir segura, incómoda o en alerta. ¡Tú lo sabes!',
+    feedbackDesc: '💚 Un abrazo con cariño de alguien de confianza es una señal de afecto seguro.',
+  },
+  {
+    text: 'Un familiar te pregunta antes de darte un beso.',
+    correct: 'verde',
+    img: null,
+    feedbackCorrect: '💚 Exacto. Pedir permiso antes de un gesto físico es una señal de respeto. ¡Lo estás haciendo genial!',
+    feedbackWrong: '💜 Intenta otra vez. Piensa si esta persona está respetando tus límites.',
+    feedbackDesc: '💚 Cuando alguien pide permiso antes de tocarte, está respetando tus límites. Eso es seguro.',
+  },
+  {
+    text: 'Tu docente te felicita por tu trabajo.',
+    correct: 'verde',
+    img: null,
+    feedbackCorrect: '💚 ¡Correcto! Recibir reconocimiento positivo de una persona de confianza es una situación segura.',
+    feedbackWrong: '💜 Sigue observando cómo te hace sentir la situación. ¿Te hace sentir bien y segura?',
+    feedbackDesc: '💚 Recibir una felicitación de alguien de confianza es una situación segura y positiva.',
+  },
+  {
+    text: 'Alguien te toma fotos sin pedirte permiso.',
+    correct: 'amarillo',
+    img: null,
+    feedbackCorrect: '🟡 Bien observado. Esta situación te puede hacer sentir incómoda. Tienes derecho a decir que no.',
+    feedbackWrong: '💜 Esta situación puede hacerte sentir incómoda. Nadie debe fotografiarte sin tu permiso.',
+    feedbackDesc: '🟡 Nadie debe tomarte fotos sin tu permiso. Puedes decir que no y eso está bien.',
+  },
+  {
+    text: 'Un compañero se sienta muy cerca aunque le dijiste que no.',
+    correct: 'amarillo',
+    img: null,
+    feedbackCorrect: '🟡 ¡Lo notaste! Si alguien no respeta tu espacio, eso te puede hacer sentir incómoda.',
+    feedbackWrong: '💜 Cuando alguien no respeta lo que dijiste, eso merece atención. ¿Cómo te hace sentir?',
+    feedbackDesc: '🟡 Si alguien no respeta tu "no", eso te genera incomodidad. Puedes alejarte y contárselo a alguien.',
+  },
+  {
+    text: 'Alguien hace comentarios sobre tu cuerpo sin que se lo hayas pedido.',
+    correct: 'amarillo',
+    img: null,
+    feedbackCorrect: '🟡 ¡Exacto! Comentarios no solicitados sobre tu cuerpo pueden hacerte sentir incómoda.',
+    feedbackWrong: '💜 Piensa si ese comentario respeta tus límites. ¿Te hace sentir bien o incómoda?',
+    feedbackDesc: '🟡 Nadie tiene derecho a hacer comentarios sobre tu cuerpo. Tienes derecho a sentirte incómoda.',
+  },
+  {
+    text: 'Alguien te toca sin tu permiso.',
+    correct: 'rojo',
+    img: null,
+    feedbackCorrect: '🔴 Reconociste una señal de alerta. Nadie puede tocarte sin tu permiso. Tienes derecho a pedir ayuda.',
+    feedbackWrong: '💜 Esta situación es una señal de alerta. Nadie puede tocarte sin tu permiso.',
+    feedbackDesc: '🔴 Nadie puede tocarte sin tu permiso. Siempre tienes derecho a pedir ayuda.',
+    isRed: true,
+  },
+  {
+    text: 'Alguien te pide que guardes un secreto que te duele.',
+    correct: 'rojo',
+    img: null,
+    feedbackCorrect: '🔴 Muy bien identificado. Si un secreto te duele, no estás obligada a guardarlo. Puedes hablar con alguien de confianza.',
+    feedbackWrong: '💜 Los secretos que duelen no deben guardarse. Esta es una señal de alerta.',
+    feedbackDesc: '🔴 Si alguien te pide guardar un secreto que te hace daño, cuéntaselo a un adulto de confianza.',
+    isRed: true,
+  },
+  {
+    text: 'Un adulto te hace sentir miedo cuando estás sola con esa persona.',
+    correct: 'rojo',
+    img: null,
+    feedbackCorrect: '🔴 Reconociste una señal de peligro. Confía en lo que sientes. Tienes derecho a alejarte y pedir ayuda.',
+    feedbackWrong: '💜 Si alguien te hace sentir miedo, eso es una señal de alerta. Confía en lo que sientes.',
+    feedbackDesc: '🔴 Si alguien te hace sentir miedo, aléjate y cuéntaselo a una persona de confianza.',
+    isRed: true,
+  },
+  {
+    text: 'Alguien te pide fotos íntimas por chat o te amenaza si no las envías.',
+    correct: 'rojo',
+    img: 'https://res.cloudinary.com/dijezdfsr/image/upload/v1775754680/celular_hacriv.png',
+    feedbackCorrect: '🔴 ¡Muy bien! Eso es violencia digital. No es tu culpa. Guarda las pruebas y cuéntaselo a un adulto.',
+    feedbackWrong: '💜 Pedir fotos íntimas o amenazar es violencia digital y es una señal de alerta.',
+    feedbackDesc: '🔴 Pedir fotos íntimas o amenazar por chat es violencia digital. No es tu culpa. Pide ayuda.',
+    isRed: true,
+    isCyber: true,
+  },
+];
+
+// ============================
+// STATE
+// ============================
+let started = false;
+let currentIdx = 0;
+let answered = false;
+let bonusUnlocked = false;
+let toastTimeout = null;
+
+// ============================
+// SEMAPHORE
+// ============================
+function encenderSemaforo() {
+  if (started) return;
+  started = true;
+
+  const box = document.getElementById('semaphoreBox');
+  box.style.cursor = 'default';
+  box.onclick = null;
+
+  document.getElementById('tapHint').textContent = '🚦 ¡Semáforo encendido!';
+  document.getElementById('tapHint').style.animationName = 'none';
+
+  // Light up all briefly then calm
+  ['lightRed','lightYellow','lightGreen'].forEach((id, i) => {
+    setTimeout(() => {
+      const classes = ['active-red','active-yellow','active-green'];
+      document.getElementById(id).classList.add(classes[i]);
+    }, i * 250);
+  });
+
+  setTimeout(() => {
+    // Settle to neutral
+    document.getElementById('lightRed').classList.remove('active-red');
+    document.getElementById('lightYellow').classList.remove('active-yellow');
+    document.getElementById('lightGreen').classList.remove('active-green');
+    showSituation();
+  }, 1200);
+}
+
+// ============================
+// SHOW SITUATION
+// ============================
+function showSituation() {
+  if (currentIdx >= SITUATIONS.length) {
+    finishActivity();
+    return;
+  }
+
+  answered = false;
+  const sit = SITUATIONS[currentIdx];
+
+  // Progress
+  document.getElementById('progressWrap').style.display = 'block';
+  const pct = (currentIdx / SITUATIONS.length) * 100;
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressCount').textContent =
+    'Situación ' + (currentIdx + 1) + ' de ' + SITUATIONS.length;
+
+  // Situation card
+  const card = document.getElementById('situationCard');
+  card.classList.remove('off');
+  card.innerHTML = `
+    <div class="situation-num">Situación ${currentIdx + 1} de ${SITUATIONS.length}</div>
+    <div class="situation-text">${sit.text}</div>
+    ${sit.img ? `<img src="${sit.img}" class="situation-img" alt="">` : ''}
+    ${sit.isCyber ? '<div style="font-size:12px;font-weight:800;color:var(--acento);margin-top:4px;">💻 Situación de violencia digital</div>' : ''}
+  `;
+
+  // Show buttons
+  document.getElementById('trafficBtns').style.display = 'flex';
+
+  // Hide feedback & next
+  const fb = document.getElementById('feedbackCard');
+  fb.className = 'feedback-card';
+  fb.innerHTML = '';
+  document.getElementById('nextBtn').className = 'next-btn';
+
+  // Light off
+  ['lightRed','lightYellow','lightGreen'].forEach(id => {
+    document.getElementById(id).classList.remove('active-red','active-yellow','active-green');
+  });
+}
+
+// ============================
+// CHOOSE
+// ============================
+function choose(color) {
+  if (answered) return;
+  answered = true;
+
+  const sit = SITUATIONS[currentIdx];
+  const correct = sit.correct === color;
+
+  // Light semaphore
+  const lightMap = { verde: 'active-green', amarillo: 'active-yellow', rojo: 'active-red' };
+  const lightIds  = { verde: 'lightGreen',   amarillo: 'lightYellow',    rojo: 'lightRed' };
+  document.getElementById(lightIds[color]).classList.add(lightMap[color]);
+
+  const fb = document.getElementById('feedbackCard');
+
+  if (correct) {
+    if (sit.isRed || color === 'rojo') {
+      // Red correct answer
+      fb.className = 'feedback-card rojo-alert show';
+      fb.innerHTML = `
+        <div class="feedback-emoji">🔴</div>
+        <div class="feedback-text">
+          <strong>${sit.feedbackCorrect}</strong>
+          <div class="hotline-box">📞 Línea 141 (ICBF) · Línea 155<br><span style="font-size:12px;font-weight:700;opacity:0.88;">Gratuitas · Puedes llamar cuando lo necesites</span></div>
+        </div>
+      `;
+    } else {
+      fb.className = 'feedback-card correct show';
+      fb.innerHTML = `<div class="feedback-emoji">✅</div><div class="feedback-text">${sit.feedbackCorrect}</div>`;
+    }
+  } else {
+    // Wrong — gentle hint
+    fb.className = 'feedback-card incorrect show';
+    fb.innerHTML = `<div class="feedback-emoji">💜</div><div class="feedback-text">${sit.feedbackWrong}<br><br><em>${sit.feedbackDesc}</em>`;
+
+    // If the real answer is red, also show hotline
+    if (sit.isRed) {
+      fb.className = 'feedback-card rojo-alert show';
+      fb.innerHTML = `
+        <div class="feedback-emoji">💜</div>
+        <div class="feedback-text">
+          ${sit.feedbackWrong}<br><br><em>${sit.feedbackDesc}</em>
+          <div class="hotline-box" style="margin-top:10px;">📞 Línea 141 (ICBF) · Línea 155<br><span style="font-size:12px;font-weight:700;opacity:0.88;">Gratuitas · Puedes llamar cuando lo necesites</span></div>
+        </div>
+      `;
+      // Also light the red
+      document.getElementById('lightRed').classList.add('active-red');
+    }
+  }
+
+  // Show next button
+  const nextBtn = document.getElementById('nextBtn');
+  nextBtn.className = 'next-btn show';
+  nextBtn.textContent = currentIdx < SITUATIONS.length - 1 ? 'Siguiente situación →' : '¡Terminar actividad! 🎉';
+}
+
+// ============================
+// NEXT
+// ============================
+function nextSituation() {
+  currentIdx++;
+  showSituation();
+}
+
+// ============================
+// FINISH
+// ============================
+function finishActivity() {
+  // Update progress to 100%
+  document.getElementById('progressFill').style.width = '100%';
+  document.getElementById('progressCount').textContent = '¡Completaste todas las situaciones! 🎉';
+
+  // Hide cards/buttons
+  document.getElementById('situationCard').style.display = 'none';
+  document.getElementById('trafficBtns').style.display = 'none';
+  document.getElementById('feedbackCard').className = 'feedback-card';
+  document.getElementById('nextBtn').className = 'next-btn';
+
+  // Show completion
+  document.getElementById('completionBanner').classList.add('show');
+
+  // Light all green
+  ['lightRed','lightYellow','lightGreen'].forEach(id =>
+    document.getElementById(id).classList.remove('active-red','active-yellow','active-green')
+  );
+  document.getElementById('lightGreen').classList.add('active-green');
+
+  // Unlock bonus
+  setTimeout(unlockBonus, 600);
+
+  showToast('🌟 ¡Completaste el Semáforo de Situaciones!', 4000);
+}
+
+// ============================
+// BONUS
+// ============================
+function unlockBonus() {
+  if (bonusUnlocked) return;
+  bonusUnlocked = true;
+  const box = document.getElementById('bonusBox');
+  box.classList.add('unlocked');
+  document.getElementById('bonusIcon').textContent = '🎁';
+  document.getElementById('bonusSub').textContent = '¡Toca para abrir tu BONUS!';
+  box.style.cursor = 'pointer';
+  showToast('🎁 ¡BONUS desbloqueado! Tócalo para abrirlo', 4000);
+}
+
+document.getElementById('bonusBox').addEventListener('click', () => {
+  if (!bonusUnlocked) {
+    showToast('💙 Completa la actividad para desbloquear el BONUS');
+    return;
+  }
+  document.getElementById('bonusOverlay').classList.add('show');
+  document.body.style.overflow = 'hidden';
+});
+document.getElementById('bonusClose').addEventListener('click', closeBonus);
+document.getElementById('bonusOverlay').addEventListener('click', e => {
+  if (e.target === e.currentTarget) closeBonus();
+});
+function closeBonus() {
+  document.getElementById('bonusOverlay').classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+// ============================
+// TOAST
+// ============================
+function showToast(msg, dur = 2800) {
+  const t = document.getElementById('toast');
+  clearTimeout(toastTimeout);
+  t.textContent = msg;
+  t.classList.add('show');
+  toastTimeout = setTimeout(() => t.classList.remove('show'), dur);
+}
+</script>
+</body>
+</html>

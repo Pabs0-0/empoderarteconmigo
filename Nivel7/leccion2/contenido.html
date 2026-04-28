@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>El Viaje de Ceci · Nivel 7 · Tu Plan de Embajadora</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap');
+
+:root {
+  --principal: #8B5E3C;
+  --acento: #C0873A;
+  --claro: #FDF5EC;
+  --dorado: #F4C430;
+  --crema: #FFF8F0;
+  --cafe-suave: #D4A574;
+  --cafe-oscuro: #5C3A1E;
+  --cafe-medio: #A0724A;
+  --verde: #4CAF88;
+  --verde-soft: #D5F5E3;
+  --shadow: 0 6px 28px rgba(139,94,60,0.16);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Nunito', sans-serif;
+  min-height: 100vh;
+  background: url('https://res.cloudinary.com/dijezdfsr/image/upload/v1775754355/background_duuc07.png') center/cover fixed;
+  overflow-x: hidden;
+}
+
+/* ===== FIXED DECOS ===== */
+.deco-fix {
+  position: fixed; pointer-events: none; z-index: 0;
+  opacity: 0.5; animation: decoF 5s ease-in-out infinite alternate;
+}
+.deco-fix.d1 { top: 7%;  left: 3%;  width: 38px; animation-delay: 0s; }
+.deco-fix.d2 { top: 22%; right: 4%; width: 44px; animation-delay: 1s; }
+.deco-fix.d3 { bottom: 18%; left: 2%; width: 42px; animation-delay: 2s; }
+.deco-fix.d4 { bottom: 9%; right: 3%; width: 34px; animation-delay: 0.5s; }
+@keyframes decoF { from { transform: translateY(0) rotate(-4deg); } to { transform: translateY(-12px) rotate(4deg); } }
+
+/* ===== PAGE ===== */
+.page { position: relative; z-index: 1; max-width: 680px; margin: 0 auto; padding: 22px 14px 70px; }
+
+/* ===== BADGE ===== */
+.nivel-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--principal); color: #fff;
+  font-size: 11px; font-weight: 900; letter-spacing: 2px; text-transform: uppercase;
+  padding: 6px 20px; border-radius: 20px; margin-bottom: 12px;
+  box-shadow: 0 3px 14px rgba(139,94,60,0.35);
+}
+
+/* ===== INTRO BLOCK ===== */
+.intro-block {
+  background: var(--claro); border: 3px solid var(--acento);
+  border-radius: 28px; padding: 24px 22px 20px; margin-bottom: 18px;
+  box-shadow: var(--shadow);
+  display: flex; gap: 14px; align-items: center; flex-wrap: wrap;
+  position: relative; overflow: hidden;
+}
+.intro-block::after {
+  content: ''; position: absolute; top: -40px; right: -40px;
+  width: 130px; height: 130px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(192,135,58,0.12), transparent 70%);
+  pointer-events: none;
+}
+.intro-char { flex-shrink: 0; }
+.intro-char img {
+  height: 108px; object-fit: contain;
+  filter: drop-shadow(0 4px 12px rgba(139,94,60,0.22));
+  animation: ceciFloat 4s ease-in-out infinite alternate;
+}
+@keyframes ceciFloat { from { transform: translateY(0); } to { transform: translateY(-8px); } }
+.intro-text { flex: 1; min-width: 180px; }
+.intro-text .tag {
+  display: inline-block; background: var(--principal); color: #fff;
+  font-size: 11px; font-weight: 900; letter-spacing: 1px; text-transform: uppercase;
+  padding: 4px 14px; border-radius: 12px; margin-bottom: 8px;
+}
+.intro-text h1 { font-size: clamp(19px,4.5vw,24px); font-weight: 900; color: var(--principal); line-height: 1.2; margin-bottom: 8px; }
+.intro-text p  { font-size: clamp(13px,2.3vw,15px); font-weight: 600; color: var(--cafe-oscuro); line-height: 1.6; }
+
+/* ===== ANTICIPATION BLOCK ===== */
+.anticipation-block {
+  background: var(--crema); border: 3px solid rgba(192,135,58,0.4);
+  border-radius: 22px; padding: 18px 20px; margin-bottom: 24px;
+  box-shadow: var(--shadow);
+  display: flex; gap: 14px; align-items: center; flex-wrap: wrap;
+}
+.ant-deco { flex-shrink: 0; }
+.ant-deco img { height: 60px; object-fit: contain; filter: drop-shadow(0 3px 8px rgba(139,94,60,0.2)); animation: ceciFloat 5s ease-in-out infinite alternate; animation-delay: 1s; }
+.ant-text { flex: 1; min-width: 180px; }
+.ant-text .ant-tag {
+  display: inline-block; background: rgba(192,135,58,0.15); color: var(--principal);
+  font-size: 11px; font-weight: 900; letter-spacing: 1px; text-transform: uppercase;
+  padding: 3px 12px; border-radius: 10px; margin-bottom: 6px;
+  border: 1.5px solid rgba(192,135,58,0.3);
+}
+.ant-text p { font-size: clamp(13px,2.2vw,15px); font-weight: 600; color: var(--cafe-oscuro); line-height: 1.6; }
+.ant-text p em { color: var(--acento); font-style: normal; font-weight: 900; }
+
+/* ===== PLAN SECTION ===== */
+.plan-section { margin-bottom: 24px; }
+.plan-header {
+  background: var(--principal); color: #fff;
+  border-radius: 18px; padding: 12px 22px; margin-bottom: 18px;
+  display: flex; align-items: center; gap: 10px;
+  font-size: clamp(15px,3vw,18px); font-weight: 900; box-shadow: var(--shadow);
+}
+
+/* Field cards */
+.field-card {
+  background: var(--claro); border: 3px solid rgba(192,135,58,0.28);
+  border-radius: 24px; padding: 20px 20px; margin-bottom: 14px;
+  box-shadow: 0 3px 16px rgba(139,94,60,0.08);
+  transition: border-color 0.25s, box-shadow 0.25s;
+  position: relative; overflow: hidden;
+}
+.field-card::before {
+  content: '';
+  position: absolute; left: 0; top: 0; bottom: 0; width: 5px;
+  background: rgba(192,135,58,0.2); border-radius: 24px 0 0 24px;
+  transition: background 0.25s;
+}
+.field-card:focus-within {
+  border-color: var(--acento);
+  box-shadow: 0 6px 24px rgba(139,94,60,0.18);
+}
+.field-card:focus-within::before { background: var(--acento); }
+.field-card.filled::before { background: var(--verde); }
+.field-card.filled { border-color: rgba(76,175,136,0.5); }
+
+.field-header {
+  display: flex; align-items: center; gap: 12px; margin-bottom: 12px;
+}
+.field-num {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: var(--principal); color: #fff;
+  font-size: 15px; font-weight: 900;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  transition: background 0.3s;
+}
+.field-card.filled .field-num { background: var(--verde); }
+.field-label { font-size: clamp(14px,2.8vw,16px); font-weight: 900; color: var(--principal); line-height: 1.3; flex: 1; }
+.field-check { font-size: 18px; opacity: 0; transition: opacity 0.3s; }
+.field-card.filled .field-check { opacity: 1; animation: checkPop 0.4s cubic-bezier(0.34,1.56,0.64,1); }
+@keyframes checkPop { 0%{transform:scale(0) rotate(-90deg);} 100%{transform:scale(1) rotate(0);} }
+
+.field-textarea {
+  width: 100%; min-height: 80px; resize: vertical;
+  background: #fff; border: 2px solid rgba(192,135,58,0.22);
+  border-radius: 16px; padding: 12px 16px;
+  font-family: 'Nunito', sans-serif; font-size: clamp(14px,2.5vw,15px); font-weight: 700;
+  color: var(--cafe-oscuro); line-height: 1.6; outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.field-textarea:focus { border-color: var(--acento); box-shadow: 0 0 0 3px rgba(192,135,58,0.12); }
+.field-textarea::placeholder { color: rgba(160,114,74,0.5); font-weight: 600; }
+
+/* Inline feedback */
+.field-feedback {
+  font-size: 12px; font-weight: 800; color: var(--acento);
+  margin-top: 8px; min-height: 18px; display: flex; align-items: center; gap: 6px;
+  transition: opacity 0.3s;
+}
+.field-feedback.visible { animation: fadeIn 0.3s ease; }
+@keyframes fadeIn { from{opacity:0;transform:translateY(-4px);} to{opacity:1;transform:translateY(0);} }
+
+/* ===== PROGRESS DOTS ===== */
+.progress-dots {
+  display: flex; gap: 8px; justify-content: center; margin-bottom: 20px;
+}
+.pdot {
+  width: 12px; height: 12px; border-radius: 50%;
+  background: rgba(253,245,236,0.7); border: 2px solid rgba(192,135,58,0.3);
+  transition: all 0.3s;
+}
+.pdot.filled { background: var(--acento); border-color: var(--acento); box-shadow: 0 0 8px rgba(192,135,58,0.5); }
+
+/* ===== SUBMIT BUTTON ===== */
+.submit-btn {
+  width: 100%; background: rgba(139,94,60,0.3); color: rgba(255,255,255,0.5);
+  border: 3px solid rgba(192,135,58,0.3); border-radius: 22px; padding: 18px;
+  font-family: 'Nunito', sans-serif; font-size: clamp(15px,3vw,17px); font-weight: 900;
+  cursor: not-allowed; transition: all 0.35s; margin-bottom: 16px;
+  box-shadow: none;
+}
+.submit-btn.ready {
+  background: var(--principal); color: #fff;
+  border-color: var(--acento); cursor: pointer;
+  box-shadow: 0 6px 22px rgba(139,94,60,0.35);
+  animation: btnReady 0.5s cubic-bezier(0.34,1.56,0.64,1);
+}
+@keyframes btnReady { 0%{transform:scale(0.97);} 60%{transform:scale(1.03);} 100%{transform:scale(1);} }
+.submit-btn.ready:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(139,94,60,0.4); }
+.submit-btn.ready:active { transform: scale(0.97); }
+
+/* ===== COMPLETION ===== */
+.completion-card {
+  background: linear-gradient(135deg, var(--principal), var(--cafe-medio));
+  border-radius: 28px; padding: 32px 24px; text-align: center;
+  box-shadow: var(--shadow); display: none; margin-bottom: 20px;
+  animation: cardSlideIn 0.6s cubic-bezier(0.34,1.56,0.64,1);
+}
+.completion-card.show { display: block; }
+@keyframes cardSlideIn { from{opacity:0;transform:translateY(24px) scale(0.95);} to{opacity:1;transform:translateY(0) scale(1);} }
+.comp-stars { font-size: 38px; margin-bottom: 12px; animation: starSpin 0.8s ease; }
+@keyframes starSpin { from{transform:scale(0) rotate(-180deg);} to{transform:scale(1) rotate(0);} }
+.completion-card h2 { font-size: clamp(22px,5vw,30px); font-weight: 900; color: #fff; margin-bottom: 10px; line-height: 1.2; }
+.completion-card .comp-sub { font-size: 15px; font-weight: 700; color: rgba(255,255,255,0.9); line-height: 1.65; margin-bottom: 12px; }
+.comp-preview {
+  background: rgba(255,255,255,0.12); border: 2px solid rgba(255,255,255,0.25);
+  border-radius: 20px; padding: 18px 20px; text-align: left;
+  margin: 16px 0;
+}
+.comp-preview-title { font-size: 12px; font-weight: 900; color: rgba(255,255,255,0.7); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 12px; }
+.comp-answer {
+  margin-bottom: 10px; display: flex; gap: 10px; align-items: flex-start;
+}
+.comp-answer .ca-label { font-size: 12px; font-weight: 900; color: var(--dorado); flex-shrink: 0; }
+.comp-answer .ca-text  { font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.9); line-height: 1.5; }
+.comp-teaser {
+  background: rgba(244,196,48,0.15); border: 2px solid rgba(244,196,48,0.35);
+  border-radius: 16px; padding: 14px 18px; margin-top: 14px;
+  font-size: clamp(13px,2.5vw,15px); font-weight: 800; color: var(--dorado);
+  line-height: 1.5;
+}
+.comp-char { margin-top: 18px; }
+.comp-char img { height: 80px; object-fit: contain; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.2)); animation: ceciFloat 3.5s ease-in-out infinite alternate; }
+.restart-btn {
+  margin-top: 18px; background: rgba(255,255,255,0.18);
+  border: 3px solid rgba(255,255,255,0.4); color: #fff;
+  border-radius: 18px; padding: 11px 26px;
+  font-family: 'Nunito', sans-serif; font-size: 14px; font-weight: 900;
+  cursor: pointer; transition: background 0.2s, transform 0.2s;
+}
+.restart-btn:hover { background: rgba(255,255,255,0.3); transform: scale(1.03); }
+
+/* Confetti */
+.confetti-piece {
+  position: fixed; border-radius: 2px;
+  pointer-events: none; z-index: 9999;
+  animation: confettiFall linear forwards;
+}
+@keyframes confettiFall { 0%{transform:translateY(-20px) rotate(0deg);opacity:1;} 100%{transform:translateY(100vh) rotate(720deg);opacity:0;} }
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--acento); border-radius: 6px; }
+</style>
+</head>
+<body>
+
+<img class="deco-fix d1" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754686/estrella_bbltv2.png" alt="">
+<img class="deco-fix d2" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754457/bombillo_nqpvqy.png" alt="">
+<img class="deco-fix d3" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754686/estrella_bbltv2.png" alt="">
+<img class="deco-fix d4" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754770/postit_fmhiyd.png" alt="">
+
+<div class="page">
+
+  <!-- BADGE -->
+  <div style="text-align:center;margin-bottom:8px;">
+    <span class="nivel-badge">🌟 Nivel 7 · Lección 2 · El Mundo de Pandora</span>
+  </div>
+
+  <!-- INTRO -->
+  <section class="intro-block">
+    <div class="intro-char">
+      <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754633/ceci_writing_mgcju3.png" alt="Ceci escribiendo">
+    </div>
+    <div class="intro-text">
+      <span class="tag">🌟 Actividad · Embajadora</span>
+      <h1>Tu primer plan como Embajadora</h1>
+      <p>En esta actividad vas a dar el primer paso para crear algo importante. <strong>No necesitas tener todo perfecto. Solo empezar.</strong> Pronto, en el siguiente nivel, desarrollarás esta idea con más profundidad. ✨</p>
+    </div>
+  </section>
+
+  <!-- ANTICIPATION -->
+  <section class="anticipation-block">
+    <div class="ant-deco">
+      <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754756/libro_qr5mnw.png" alt="Libro">
+    </div>
+    <div class="ant-text">
+      <div class="ant-tag">💡 ¿Qué harás hoy?</div>
+      <p>Hoy vas a crear un pequeño plan basado en algo que <em>te importa</em>. Es solo un primer borrador… tu idea puede crecer después. No hay respuestas incorrectas, solo tu perspectiva honesta.</p>
+    </div>
+  </section>
+
+  <!-- PLAN FORM -->
+  <section class="plan-section">
+    <div class="plan-header">🎮 Completa tu plan</div>
+
+    <!-- Progress dots -->
+    <div class="progress-dots" id="progressDots">
+      <div class="pdot" id="dot-0"></div>
+      <div class="pdot" id="dot-1"></div>
+      <div class="pdot" id="dot-2"></div>
+      <div class="pdot" id="dot-3"></div>
+    </div>
+
+    <!-- Field 1 -->
+    <div class="field-card" id="fcard-0">
+      <div class="field-header">
+        <div class="field-num" id="fnum-0">1</div>
+        <div class="field-label">Un problema que identifico en mi entorno es:</div>
+        <span class="field-check">✅</span>
+      </div>
+      <textarea class="field-textarea" id="field-0"
+        placeholder="Ej: En mi barrio no hay suficientes espacios seguros para jugar..."
+        rows="3" oninput="onFieldInput(0)"></textarea>
+      <div class="field-feedback" id="ffb-0"></div>
+    </div>
+
+    <!-- Field 2 -->
+    <div class="field-card" id="fcard-1">
+      <div class="field-header">
+        <div class="field-num" id="fnum-1">2</div>
+        <div class="field-label">Lo que yo podría hacer para ayudar es:</div>
+        <span class="field-check">✅</span>
+      </div>
+      <textarea class="field-textarea" id="field-1"
+        placeholder="Ej: Organizar una actividad de limpieza con mis vecinas..."
+        rows="3" oninput="onFieldInput(1)"></textarea>
+      <div class="field-feedback" id="ffb-1"></div>
+    </div>
+
+    <!-- Field 3 -->
+    <div class="field-card" id="fcard-2">
+      <div class="field-header">
+        <div class="field-num" id="fnum-2">3</div>
+        <div class="field-label">Necesitaría el apoyo de:</div>
+        <span class="field-check">✅</span>
+      </div>
+      <textarea class="field-textarea" id="field-2"
+        placeholder="Ej: Mi profesora, amigas del colegio, el líder comunal..."
+        rows="3" oninput="onFieldInput(2)"></textarea>
+      <div class="field-feedback" id="ffb-2"></div>
+    </div>
+
+    <!-- Field 4 -->
+    <div class="field-card" id="fcard-3">
+      <div class="field-header">
+        <div class="field-num" id="fnum-3">4</div>
+        <div class="field-label">El primer paso que daré es:</div>
+        <span class="field-check">✅</span>
+      </div>
+      <textarea class="field-textarea" id="field-3"
+        placeholder="Ej: Esta semana voy a hablar con una persona sobre mi idea..."
+        rows="3" oninput="onFieldInput(3)"></textarea>
+      <div class="field-feedback" id="ffb-3"></div>
+    </div>
+  </section>
+
+  <!-- SUBMIT -->
+  <button class="submit-btn" id="submitBtn" onclick="submitPlan()">✨ Terminar mi plan</button>
+
+  <!-- COMPLETION -->
+  <div class="completion-card" id="completionCard">
+    <div class="comp-stars">🌟✨🌟✨🌟</div>
+    <h2>¡GranDiosa! 👑</h2>
+    <div class="comp-sub">Ya tienes el primer borrador de tu proyecto como Embajadora.</div>
+
+    <div class="comp-preview" id="compPreview">
+      <div class="comp-preview-title">✦ Tu mini plan de acción</div>
+      <!-- Filled by JS -->
+    </div>
+
+    <div class="comp-teaser">
+      💡 En el <strong>Nivel 8</strong> desarrollarás esta idea usando el método <strong>L.I.D.E.R.A.R</strong>. Tu liderazgo está en construcción. ¡Sigue! 🚀
+    </div>
+
+    <div class="comp-char">
+      <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754477/ceci_pointing_l9mr0h.png" alt="Ceci apuntando">
+    </div>
+    <button class="restart-btn" onclick="restartPlan()">🌱 Volver a intentarlo</button>
+  </div>
+
+</div>
+
+<script>
+// ============================
+// DATA
+// ============================
+const FIELD_LABELS = [
+  'El problema que identifiqué',
+  'Lo que podría hacer',
+  'Necesito el apoyo de',
+  'Mi primer paso',
+];
+
+const FEEDBACK_MSGS = [
+  ['✨ Observar el entorno es el primer paso del liderazgo.', '💡 Tu idea es importante.', '🌟 Sigue construyendo, vas muy bien.'],
+  ['✨ ¡Eso es liderazgo en acción!', '💡 Cada idea pequeña puede crecer mucho.', '🌟 Estás pensando como una Embajadora.'],
+  ['✨ Construir equipo es clave.', '💡 Con apoyo las ideas van más lejos.', '🌟 ¡Vas muy bien!'],
+  ['✨ Un paso concreto lo cambia todo.', '💡 El primer paso siempre es el más importante.', '🌟 ¡Ya casi tienes tu plan completo!'],
+];
+
+// ============================
+// STATE
+// ============================
+const fieldState = [false, false, false, false];
+let toastTimeout = null;
+let feedbackTimers = [null, null, null, null];
+let feedbackIdx = [0, 0, 0, 0];
+
+// ============================
+// FIELD INPUT
+// ============================
+function onFieldInput(idx) {
+  const textarea = document.getElementById('field-' + idx);
+  const card     = document.getElementById('fcard-' + idx);
+  const fbEl     = document.getElementById('ffb-' + idx);
+  const dot      = document.getElementById('dot-' + idx);
+  const val      = textarea.value.trim();
+
+  const isFilled = val.length >= 5;
+
+  if (isFilled && !fieldState[idx]) {
+    fieldState[idx] = true;
+    card.classList.add('filled');
+    dot.classList.add('filled');
+  } else if (!isFilled && fieldState[idx]) {
+    fieldState[idx] = false;
+    card.classList.remove('filled');
+    dot.classList.remove('filled');
+  }
+
+  // Rotating feedback
+  if (val.length > 3) {
+    clearTimeout(feedbackTimers[idx]);
+    feedbackTimers[idx] = setTimeout(() => {
+      const msgs = FEEDBACK_MSGS[idx];
+      const msg = msgs[feedbackIdx[idx] % msgs.length];
+      feedbackIdx[idx]++;
+      fbEl.textContent = msg;
+      fbEl.className = 'field-feedback visible';
+    }, 600);
+  } else {
+    fbEl.className = 'field-feedback';
+    fbEl.textContent = '';
+  }
+
+  updateSubmitBtn();
+}
+
+function updateSubmitBtn() {
+  const allFilled = fieldState.every(Boolean);
+  const btn = document.getElementById('submitBtn');
+  if (allFilled) {
+    btn.classList.add('ready');
+    btn.textContent = '✨ Terminar mi plan';
+  } else {
+    btn.classList.remove('ready');
+    const remaining = fieldState.filter(Boolean).length;
+    btn.textContent = remaining > 0
+      ? `✨ Faltan ${4 - remaining} campo${4-remaining===1?'':'s'} por completar`
+      : '✨ Terminar mi plan';
+  }
+}
+
+// ============================
+// SUBMIT
+// ============================
+function submitPlan() {
+  if (!fieldState.every(Boolean)) return;
+
+  // Build completion preview
+  const preview = document.getElementById('compPreview');
+  const answers = [0,1,2,3].map(i => document.getElementById('field-' + i).value.trim());
+  preview.innerHTML = '<div class="comp-preview-title">✦ Tu mini plan de acción</div>';
+  answers.forEach((ans, i) => {
+    const div = document.createElement('div');
+    div.className = 'comp-answer';
+    div.innerHTML = `<span class="ca-label">${i+1}.</span><span class="ca-text">${escapeHtml(ans)}</span>`;
+    preview.appendChild(div);
+  });
+
+  // Show
+  const card = document.getElementById('completionCard');
+  card.classList.add('show');
+  card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  launchConfetti();
+}
+
+function escapeHtml(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function restartPlan() {
+  [0,1,2,3].forEach(i => {
+    document.getElementById('field-' + i).value = '';
+    document.getElementById('fcard-' + i).classList.remove('filled');
+    document.getElementById('dot-' + i).classList.remove('filled');
+    document.getElementById('ffb-' + i).className = 'field-feedback';
+    document.getElementById('ffb-' + i).textContent = '';
+    fieldState[i] = false;
+    feedbackIdx[i] = 0;
+  });
+  document.getElementById('completionCard').classList.remove('show');
+  updateSubmitBtn();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ============================
+// CONFETTI
+// ============================
+function launchConfetti() {
+  const colors = ['#8B5E3C','#C0873A','#FDF5EC','#F4C430','#D4A574','#fff'];
+  for (let i = 0; i < 52; i++) {
+    const c = document.createElement('div');
+    c.className = 'confetti-piece';
+    c.style.left = Math.random() * 100 + 'vw';
+    c.style.top = '-20px';
+    c.style.background = colors[Math.floor(Math.random() * colors.length)];
+    c.style.width  = (7 + Math.random() * 9) + 'px';
+    c.style.height = (7 + Math.random() * 9) + 'px';
+    c.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+    c.style.animationDuration  = (1.4 + Math.random() * 2.2) + 's';
+    c.style.animationDelay     = (Math.random() * 1.2) + 's';
+    document.body.appendChild(c);
+    setTimeout(() => c.remove(), 4500);
+  }
+}
+
+// ===== INIT =====
+updateSubmitBtn();
+</script>
+</body>
+</html>

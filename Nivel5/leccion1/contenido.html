@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>El Viaje de Ceci · Nivel 5 · Mi Cuerpo en Cambio</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap');
+
+:root {
+  --principal: #1B2A5E;
+  --acento: #3B5998;
+  --claro: #E8EAF6;
+  --blanco: #ffffff;
+  --dorado: #F4C430;
+  --lila: #7986CB;
+  --cielo: #C5CAE9;
+  --shadow: 0 6px 28px rgba(27,42,94,0.16);
+
+  --sexuales: #7A2FA8;
+  --sexuales-soft: #57B9D2;
+  --repro: #7A2FA8;
+  --repro-soft: #56C7E3;
+  --banner: #F5AF3F;
+  --ink: #1a2850;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Nunito', sans-serif;
+  min-height: 100vh;
+  background: url('https://res.cloudinary.com/dijezdfsr/image/upload/v1775754355/background_duuc07.png') center/cover fixed;
+  overflow-x: hidden;
+}
+
+/* ===== DECO FIXED ===== */
+.deco-fix {
+  position: fixed;
+  pointer-events: none;
+  z-index: 0;
+  animation: decoF 5s ease-in-out infinite alternate;
+  opacity: 0.6;
+}
+.deco-fix.d1 { top: 6%;  left: 3%;  width: 44px; animation-delay: 0s; }
+.deco-fix.d2 { top: 20%; right: 4%; width: 36px; animation-delay: 1s; }
+.deco-fix.d3 { bottom: 16%; left: 2%; width: 50px; animation-delay: 2s; }
+.deco-fix.d4 { bottom: 10%; right: 3%; width: 32px; animation-delay: 0.5s; }
+@keyframes decoF {
+  from { transform: translateY(0) rotate(-4deg); }
+  to   { transform: translateY(-12px) rotate(4deg); }
+}
+
+/* ===== PAGE ===== */
+.page {
+  position: relative;
+  z-index: 1;
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 24px 14px 70px;
+}
+
+/* ===== BADGE ===== */
+.nivel-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--principal);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 6px 20px;
+  border-radius: 20px;
+  margin-bottom: 12px;
+  box-shadow: 0 3px 14px rgba(27,42,94,0.35);
+}
+
+/* ===== INTRO BLOCK ===== */
+.intro-block {
+  background: var(--claro);
+  border: 3px solid var(--acento);
+  border-radius: 28px;
+  padding: 24px 24px 20px;
+  margin-bottom: 28px;
+  box-shadow: var(--shadow);
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  flex-wrap: wrap;
+  position: relative;
+  overflow: hidden;
+}
+.intro-block::after {
+  content: '';
+  position: absolute;
+  top: -40px; right: -40px;
+  width: 140px; height: 140px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(59,89,152,0.1), transparent 70%);
+  pointer-events: none;
+}
+.intro-char { flex-shrink: 0; }
+.intro-char img { height: 110px; object-fit: contain; filter: drop-shadow(0 4px 12px rgba(27,42,94,0.2)); }
+.intro-text { flex: 1; min-width: 180px; }
+.intro-text .tag {
+  display: inline-block;
+  background: var(--principal);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 4px 14px;
+  border-radius: 12px;
+  margin-bottom: 8px;
+}
+.intro-text h1 {
+  font-size: clamp(20px, 4.5vw, 28px);
+  font-weight: 900;
+  color: var(--principal);
+  line-height: 1.2;
+  margin-bottom: 8px;
+}
+.intro-text p {
+  font-size: clamp(13px, 2.3vw, 15px);
+  font-weight: 600;
+  color: #2a3a70;
+  line-height: 1.6;
+}
+
+/* ===== SECTION TITLE ===== */
+.section-title {
+  background: var(--principal);
+  color: #fff;
+  font-size: clamp(15px, 3vw, 19px);
+  font-weight: 900;
+  padding: 12px 22px;
+  border-radius: 18px;
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: var(--shadow);
+}
+
+/* ===== BODY EXPLORATION ===== */
+.silhouette-section {
+  background: var(--claro);
+  border: 3px solid var(--acento);
+  border-radius: 28px;
+  padding: 24px 18px;
+  margin-bottom: 28px;
+  box-shadow: var(--shadow);
+}
+.silhouette-hint {
+  text-align: center;
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--acento);
+  margin-bottom: 16px;
+  animation: hintPulse 2.5s ease-in-out infinite;
+}
+@keyframes hintPulse {
+  0%,100% { opacity: 0.7; }
+  50%      { opacity: 1; }
+}
+.silhouette-wrap {
+  display: flex;
+  gap: 22px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.figure-container {
+  position: relative;
+  flex-shrink: 0;
+  width: clamp(210px, 38%, 290px);
+  margin: 0 auto;
+}
+
+.figure-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 16px rgba(27,42,94,0.18));
+}
+
+.body-point {
+  appearance: none;
+  -webkit-appearance: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background: transparent;
+}
+
+.ceci-point {
+  position: absolute;
+  width: clamp(32px, 5vw, 40px);
+  height: clamp(32px, 5vw, 40px);
+  border-radius: 50%;
+  border: 2px solid #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(14px, 2vw, 18px);
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 0 4px rgba(255,255,255,0.28), 0 4px 12px rgba(27,42,94,0.2);
+  transition: transform 0.2s, box-shadow 0.2s, filter 0.2s;
+  z-index: 2;
+  filter: drop-shadow(0 0 4px rgba(255,255,255,0.6));
+}
+.ceci-point:hover,
+.ceci-point.active {
+  transform: translate(-50%, -50%) scale(1.08);
+  box-shadow: 0 0 0 6px rgba(255,255,255,0.34), 0 6px 18px rgba(27,42,94,0.28);
+  filter: drop-shadow(0 0 10px rgba(255,255,255,0.9));
+}
+.ceci-point.explored {
+  box-shadow: 0 0 0 4px rgba(244,196,48,0.55), 0 4px 18px rgba(27,42,94,0.22);
+}
+.point-pulse {
+  animation: pointPulse 2s ease-in-out infinite;
+}
+@keyframes pointPulse {
+  0%,100% { opacity: 0.65; transform: translate(-50%, -50%) scale(1); }
+  50%      { opacity: 1; transform: translate(-50%, -50%) scale(1.14); }
+}
+
+/* Info panel */
+.info-panel {
+  flex: 1;
+  min-width: 200px;
+}
+.info-card {
+  background: #fff;
+  border: 3px solid var(--acento);
+  border-radius: 22px;
+  padding: 20px 18px;
+  min-height: 140px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: 0 4px 20px rgba(27,42,94,0.12);
+  transition: all 0.3s ease;
+}
+.info-card-empty {
+  text-align: center;
+  color: #8899bb;
+  font-weight: 700;
+  font-size: 14px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.info-card-empty .arrow-hint { font-size: 28px; animation: bounce 1.5s ease-in-out infinite alternate; }
+@keyframes bounce { from { transform: translateX(-4px); } to { transform: translateX(4px); } }
+
+.info-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.info-emoji { font-size: 30px; }
+.info-name {
+  font-size: clamp(16px, 3vw, 20px);
+  font-weight: 900;
+  color: var(--principal);
+  line-height: 1.2;
+}
+.info-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.info-tag {
+  font-size: 12px;
+  font-weight: 800;
+  padding: 4px 12px;
+  border-radius: 20px;
+  color: #fff;
+}
+.info-tag.age  { background: var(--lila); }
+.info-tag.why  { background: var(--acento); }
+.info-tag.tip  { background: #4CAF88; }
+.info-desc {
+  font-size: clamp(13px, 2.2vw, 15px);
+  font-weight: 600;
+  color: #2a3a70;
+  line-height: 1.6;
+  background: var(--claro);
+  border-radius: 12px;
+  padding: 10px 14px;
+}
+
+/* Explore progress */
+.explore-progress {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 14px;
+}
+.exp-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: rgba(59,89,152,0.25);
+  transition: background 0.3s;
+}
+.exp-dot.done { background: var(--acento); box-shadow: 0 0 6px rgba(59,89,152,0.5); }
+
+/* ===== TABLE ===== */
+.table-section {
+  background: var(--claro);
+  border: 3px solid var(--acento);
+  border-radius: 28px;
+  padding: 24px 18px;
+  margin-bottom: 28px;
+  box-shadow: var(--shadow);
+  overflow-x: auto;
+}
+.body-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 8px;
+  min-width: 500px;
+}
+.body-table thead th {
+  background: var(--principal);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 0.5px;
+  padding: 12px 14px;
+  text-align: left;
+}
+.body-table thead th:first-child { border-radius: 14px 0 0 14px; }
+.body-table thead th:last-child  { border-radius: 0 14px 14px 0; }
+.body-table tbody tr {
+  background: #fff;
+  transition: background 0.3s, transform 0.2s;
+  cursor: default;
+}
+.body-table tbody tr.highlighted {
+  background: #dde3f8;
+  transform: scale(1.01);
+  box-shadow: 0 2px 12px rgba(59,89,152,0.2);
+}
+.body-table tbody tr td {
+  padding: 12px 14px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #1a2850;
+  vertical-align: top;
+  line-height: 1.5;
+}
+.body-table tbody tr td:first-child {
+  border-radius: 14px 0 0 14px;
+  font-weight: 900;
+  color: var(--acento);
+}
+.body-table tbody tr td:last-child { border-radius: 0 14px 14px 0; }
+.td-tip {
+  background: rgba(59,89,152,0.08);
+  border-radius: 8px;
+  padding: 4px 8px;
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--principal);
+  display: inline-block;
+}
+
+/* Mobile table → cards */
+@media (max-width: 560px) {
+  .body-table { display: none; }
+  .mobile-table-cards { display: flex; flex-direction: column; gap: 10px; }
+}
+@media (min-width: 561px) {
+  .mobile-table-cards { display: none; }
+}
+.mobile-card {
+  background: #fff;
+  border-radius: 18px;
+  padding: 14px 16px;
+  border: 2px solid var(--cielo);
+  box-shadow: 0 2px 12px rgba(27,42,94,0.08);
+  transition: background 0.3s, box-shadow 0.3s;
+}
+.mobile-card.highlighted { background: #dde3f8; box-shadow: 0 4px 18px rgba(59,89,152,0.25); }
+.mobile-card-name { font-size: 15px; font-weight: 900; color: var(--acento); margin-bottom: 6px; }
+.mobile-card-row { font-size: 13px; font-weight: 600; color: #2a3a70; margin-bottom: 3px; }
+.mobile-card-row span { font-weight: 900; color: var(--principal); }
+
+/* ===== RIGHTS BLOCK – INFOGRAPHIC STYLE ===== */
+.rights-section {
+  background: #DCEAF0;
+  border: 3px solid var(--acento);
+  border-radius: 28px;
+  padding: 24px 18px 26px;
+  margin-bottom: 28px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.rights-banner {
+  position: relative;
+  background: var(--banner);
+  color: #231f20;
+  border: 3px solid #3e2d1d;
+  border-radius: 0 18px 18px 0;
+  padding: 16px 26px 16px 24px;
+  margin-bottom: 18px;
+  clip-path: polygon(0 0, 94% 0, 100% 50%, 94% 100%, 0 100%);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+}
+.rights-banner h2 {
+  font-size: clamp(20px, 4.8vw, 38px);
+  line-height: 0.95;
+  font-weight: 900;
+  color: #ffffff;
+  text-shadow:
+    -2px -2px 0 #231f20,
+     2px -2px 0 #231f20,
+    -2px  2px 0 #231f20,
+     2px  2px 0 #231f20;
+  letter-spacing: 0.5px;
+}
+.rights-banner h2 span {
+  display: inline-block;
+  margin-left: 8px;
+  font-size: clamp(14px, 3vw, 24px);
+  vertical-align: middle;
+}
+
+.rights-cats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 12px;
+}
+.rights-cat {
+  border-radius: 16px;
+  padding: 10px 14px;
+  color: #fff;
+  font-weight: 900;
+  text-align: center;
+  font-size: clamp(15px, 2vw, 18px);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  border: 3px solid rgba(255,255,255,0.55);
+  box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+}
+.rights-cat.sexuales { background: linear-gradient(90deg, #5FC0D4 0%, #5FC0D4 52%, #B522A8 52%, #B522A8 100%); }
+.rights-cat.reproductivos { background: linear-gradient(90deg, #8E2FB3 0%, #8E2FB3 52%, #56C7E3 52%, #56C7E3 100%); }
+
+.rights-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.rights-column {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.right-card {
+  display: grid;
+  grid-template-columns: 54px 1fr;
+  gap: 10px;
+  align-items: stretch;
+}
+.right-card .icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  width: 54px;
+  height: 54px;
+  align-self: center;
+  justify-self: center;
+  background: #FDB43C;
+  border: 3px solid #fff;
+  box-shadow: 0 0 0 2px rgba(27,42,94,0.15);
+  font-size: 22px;
+}
+.right-card .txt-wrap {
+  border-radius: 0;
+  padding: 10px 12px;
+  color: #fff;
+  font-size: clamp(12px, 1.55vw, 13.5px);
+  line-height: 1.35;
+  font-weight: 800;
+  min-height: 54px;
+  display: flex;
+  align-items: center;
+}
+.sex-card .txt-wrap { background: #7A2FA8; }
+.repro-card .txt-wrap { background: #56C7E3; color: #08223f; font-weight: 900; }
+
+.rights-note {
+  margin-top: 16px;
+  background: rgba(255,255,255,0.74);
+  border-radius: 16px;
+  padding: 14px 16px;
+  font-size: 13px;
+  color: #224;
+  line-height: 1.55;
+  font-weight: 700;
+  border: 2px solid rgba(59,89,152,0.12);
+}
+
+@media (max-width: 720px) {
+  .rights-cats,
+  .rights-columns {
+    grid-template-columns: 1fr;
+  }
+
+  .rights-banner {
+    clip-path: none;
+    border-radius: 18px;
+    padding-right: 18px;
+  }
+}
+
+/* ===== BONUS ===== */
+.bonus-section { margin-bottom: 30px; }
+.bonus-box {
+  background: linear-gradient(135deg, #0d1a3a 0%, #1b3060 50%, #0d1a3a 100%);
+  border: 4px solid var(--dorado);
+  border-radius: 28px;
+  padding: 28px 22px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  cursor: not-allowed;
+  transition: all 0.4s;
+  box-shadow: 0 8px 32px rgba(244,196,48,0.2);
+  animation: bonusFloat 3.2s ease-in-out infinite alternate;
+}
+.bonus-box.unlocked { cursor: pointer; animation: bonusFloat 3.2s ease-in-out infinite alternate, bonusGlow 2s ease-in-out infinite alternate; }
+.bonus-box::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(244,196,48,0.04) 10px, rgba(244,196,48,0.04) 20px);
+  pointer-events: none;
+}
+.bonus-box::after {
+  content: '';
+  position: absolute;
+  top: -50%; left: -50%; width: 200%; height: 200%;
+  background: radial-gradient(ellipse at center, rgba(244,196,48,0.07), transparent 60%);
+  animation: shimRot 6s linear infinite;
+  pointer-events: none;
+}
+@keyframes bonusFloat { from { transform: translateY(0); } to { transform: translateY(-6px); } }
+@keyframes bonusGlow {
+  from { box-shadow: 0 8px 28px rgba(244,196,48,0.3); }
+  to   { box-shadow: 0 8px 28px rgba(244,196,48,0.7), 0 0 40px rgba(244,196,48,0.3); }
+}
+@keyframes shimRot { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+.bonus-icon  { font-size: 36px; margin-bottom: 8px; display: block; }
+.bonus-title { font-size: clamp(22px,5vw,28px); font-weight: 900; color: var(--dorado); letter-spacing: 2px; margin-bottom: 6px; text-shadow: 0 0 20px rgba(244,196,48,0.4); }
+.bonus-sub   { font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.65); }
+.bonus-box.unlocked .bonus-sub { color: rgba(255,255,255,0.9); }
+.bonus-prog  { margin-top: 10px; font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.5); }
+.bonus-prog span { color: var(--dorado); }
+
+/* ===== BONUS MODAL ===== */
+.bonus-overlay {
+  position: fixed; inset: 0;
+  background: rgba(10,15,40,0.85);
+  z-index: 9999;
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.35s;
+  backdrop-filter: blur(8px);
+}
+.bonus-overlay.show { opacity: 1; pointer-events: all; }
+.bonus-modal {
+  background: linear-gradient(160deg, #0d1a40 0%, #1b3060 50%, #0d1a40 100%);
+  border: 4px solid var(--acento);
+  border-radius: 30px;
+  padding: 34px 26px 30px;
+  max-width: 540px; width: 100%;
+  max-height: 90vh; overflow-y: auto;
+  position: relative;
+  box-shadow: 0 24px 80px rgba(59,89,152,0.5);
+  transform: scale(0.88) translateY(28px);
+  transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+}
+.bonus-overlay.show .bonus-modal { transform: scale(1) translateY(0); }
+.bonus-modal::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 4px;
+  background: linear-gradient(90deg, var(--acento), var(--dorado), var(--acento));
+  border-radius: 30px 30px 0 0;
+  background-size: 200% 100%;
+  animation: shimLine 2s linear infinite;
+}
+@keyframes shimLine { from { background-position: 0%; } to { background-position: 200%; } }
+.bonus-close {
+  position: absolute; top: 13px; right: 13px;
+  background: var(--acento); border: none; border-radius: 50%;
+  width: 34px; height: 34px; font-size: 16px; font-weight: 900;
+  color: #fff; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: transform 0.2s; z-index: 1;
+}
+.bonus-close:hover { transform: scale(1.1) rotate(90deg); }
+.bonus-modal-header { text-align: center; margin-bottom: 22px; }
+.bonus-modal-header .gift { font-size: 48px; display: block; margin-bottom: 6px; animation: giftBounce 1s ease infinite alternate; }
+@keyframes giftBounce { from { transform: scale(1); } to { transform: scale(1.1) rotate(5deg); } }
+.bonus-modal-header h2 { font-size: clamp(17px,4vw,22px); font-weight: 900; color: var(--dorado); margin-bottom: 4px; }
+.bonus-modal-header p  { font-size: 13px; color: rgba(255,255,255,0.7); font-weight: 600; }
+
+.bonus-item {
+  background: rgba(59,89,152,0.15);
+  border: 2px solid rgba(59,89,152,0.35);
+  border-radius: 16px;
+  padding: 13px 16px;
+  margin-bottom: 10px;
+  display: flex; gap: 12px; align-items: flex-start;
+}
+.bonus-item-emoji { font-size: 24px; flex-shrink: 0; margin-top: 2px; }
+.bonus-item-text  { font-size: clamp(13px,2.2vw,15px); font-weight: 700; color: rgba(255,255,255,0.9); line-height: 1.5; }
+
+.bonus-closing {
+  background: rgba(244,196,48,0.1);
+  border: 2px solid rgba(244,196,48,0.3);
+  border-radius: 16px;
+  padding: 16px 18px;
+  margin-top: 16px;
+  display: flex; gap: 14px; align-items: center;
+}
+.bonus-closing img { height: 76px; object-fit: contain; flex-shrink: 0; }
+.bonus-closing p { font-size: clamp(13px,2.2vw,14px); color: rgba(255,255,255,0.9); font-weight: 700; line-height: 1.5; }
+.bonus-closing p em { color: var(--dorado); font-style: normal; font-weight: 900; }
+
+/* ===== TOAST ===== */
+.toast {
+  position: fixed; bottom: 26px; left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--principal);
+  color: #fff; padding: 11px 24px;
+  border-radius: 50px; font-size: 14px; font-weight: 800;
+  box-shadow: 0 8px 28px rgba(0,0,0,0.3);
+  z-index: 9998; opacity: 0;
+  transition: all 0.3s; pointer-events: none;
+  white-space: nowrap; border: 3px solid var(--acento);
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--acento); border-radius: 6px; }
+
+@media (max-width: 560px) {
+  .figure-container {
+    width: min(260px, 72vw);
+  }
+
+  .toast {
+    white-space: normal;
+    width: calc(100vw - 32px);
+    text-align: center;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- Fixed decos -->
+<img class="deco-fix d1" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754686/estrella_bbltv2.png" alt="">
+<img class="deco-fix d2" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754682/corazon_vjqq8g.png" alt="">
+<img class="deco-fix d3" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754766/mariposa_ep7ez6.png" alt="">
+<img class="deco-fix d4" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754686/estrella_bbltv2.png" alt="">
+
+<div class="page">
+
+  <div style="text-align:center;margin-bottom:8px;">
+    <span class="nivel-badge">✦ Nivel 5 · Los poderes de tu nuevo cuerpo ✦</span>
+  </div>
+
+  <!-- INTRO -->
+  <section class="intro-block">
+    <div class="intro-char">
+      <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754484/ceci_teaching_m5o8ln.png" alt="Ceci enseñando">
+    </div>
+    <div class="intro-text">
+      <span class="tag">📖 Lección 1 · Tu cuerpo en cambio</span>
+      <h1>Mi Cuerpo en Cambio 🌟</h1>
+      <p>Durante la pubertad tu cuerpo vive transformaciones increíbles. Cada cambio tiene una razón, ocurre a su propio ritmo y no hay una forma "correcta" de crecer. <strong>¡Toca cada punto para descubrirlo!</strong></p>
+    </div>
+  </section>
+
+  <!-- BODY EXPLORATION -->
+  <section class="silhouette-section">
+    <div class="section-title">🫧 Explora tu cuerpo · Toca cada punto brillante</div>
+    <div class="silhouette-hint">✨ Toca un punto para conocer ese cambio</div>
+
+    <div class="silhouette-wrap">
+      <!-- Ceci figure -->
+      <div class="figure-container" id="svgContainer">
+        <img
+          class="figure-img"
+          src="https://res.cloudinary.com/dijezdfsr/image/upload/v1776453723/ceci_standing_kyhpoy.png"
+          alt="Ceci mostrando los cambios del cuerpo durante la pubertad"
+        >
+
+        <button class="body-point point-pulse ceci-point" id="pt-cabeza"  data-id="cabeza"  style="top:9%; left:49%; background:#7986CB;">😊</button>
+        <button class="body-point point-pulse ceci-point" id="pt-cerebro" data-id="cerebro" style="top:13%; left:64%; background:#5C6BC0;">🧠</button>
+        <button class="body-point point-pulse ceci-point" id="pt-piel"    data-id="piel"    style="top:27%; left:76%; background:#3B5998;">✨</button>
+        <button class="body-point point-pulse ceci-point" id="pt-axilas"  data-id="axilas"  style="top:28%; left:21%; background:#4A6FA5;">💧</button>
+        <button class="body-point point-pulse ceci-point" id="pt-busto"   data-id="busto"   style="top:37%; left:76%; background:#1B5E9E;">💙</button>
+        <button class="body-point point-pulse ceci-point" id="pt-cintura" data-id="cintura" style="top:51%; left:21%; background:#283593;">🌸</button>
+        <button class="body-point point-pulse ceci-point" id="pt-pelvis"  data-id="pelvis"  style="top:66%; left:49%; background:#1A237E;">🌺</button>
+        <button class="body-point point-pulse ceci-point" id="pt-piernas" data-id="piernas" style="top:82%; left:73%; background:#0D47A1;">🌱</button>
+      </div>
+
+      <!-- Info panel -->
+      <div class="info-panel">
+        <div class="info-card" id="infoCard">
+          <div class="info-card-empty" id="infoEmpty">
+            <span class="arrow-hint">👈</span>
+            <span>Toca un punto de Ceci para conocer ese cambio</span>
+          </div>
+          <div id="infoContent" style="display:none; flex-direction:column; gap:10px;">
+            <div class="info-header">
+              <span class="info-emoji" id="iEmoji"></span>
+              <span class="info-name" id="iName"></span>
+            </div>
+            <div class="info-tags">
+              <span class="info-tag age" id="iAge"></span>
+              <span class="info-tag why" id="iWhy"></span>
+              <span class="info-tag tip" id="iTip"></span>
+            </div>
+            <div class="info-desc" id="iDesc"></div>
+          </div>
+        </div>
+
+        <div class="explore-progress" id="expDots"></div>
+        <div style="text-align:center;margin-top:8px;font-size:12px;font-weight:800;color:var(--acento);">
+          Explorados: <span id="expCount">0</span> / 8
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TABLE -->
+  <section class="table-section">
+    <div class="section-title">📋 Tabla de cambios corporales</div>
+
+    <table class="body-table">
+      <thead>
+        <tr>
+          <th>Parte del cuerpo</th>
+          <th>¿Cuándo ocurre?</th>
+          <th>¿Por qué ocurre?</th>
+          <th>Consejo de cuidado</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody"></tbody>
+    </table>
+
+    <div class="mobile-table-cards" id="mobileCards"></div>
+  </section>
+
+  <!-- RIGHTS -->
+  <section class="rights-section">
+    <div class="rights-banner">
+      <h2>DERECHOS <span>SEXUALES Y REPRODUCTIVOS</span></h2>
+    </div>
+
+    <div class="rights-cats">
+      <div class="rights-cat sexuales">Derechos Sexuales</div>
+      <div class="rights-cat reproductivos">Derechos Reproductivos</div>
+    </div>
+
+    <div class="rights-columns">
+      <!-- Columna sexual -->
+      <div class="rights-column">
+        <div class="right-card sex-card">
+          <div class="icon-wrap">💙</div>
+          <div class="txt-wrap">Derecho a fortalecer la autonomía y la autoestima en el ejercicio de la sexualidad.</div>
+        </div>
+        <div class="right-card sex-card">
+          <div class="icon-wrap">🧍</div>
+          <div class="txt-wrap">Derecho a explorar y disfrutar una vida sexual placentera.</div>
+        </div>
+        <div class="right-card sex-card">
+          <div class="icon-wrap">👥</div>
+          <div class="txt-wrap">Derecho a elegir libremente las parejas sexuales.</div>
+        </div>
+        <div class="right-card sex-card">
+          <div class="icon-wrap">✋</div>
+          <div class="txt-wrap">Derecho a vivir la sexualidad sin ningún tipo de violencia.</div>
+        </div>
+        <div class="right-card sex-card">
+          <div class="icon-wrap">🤝</div>
+          <div class="txt-wrap">Derecho a tener relaciones sexuales basadas en el consentimiento.</div>
+        </div>
+        <div class="right-card sex-card">
+          <div class="icon-wrap">🗣️</div>
+          <div class="txt-wrap">Derecho a decidir libremente cuándo y con quién iniciar la vida sexual.</div>
+        </div>
+        <div class="right-card sex-card">
+          <div class="icon-wrap">🔗</div>
+          <div class="txt-wrap">Derecho a decidir sobre la unión con otras personas.</div>
+        </div>
+        <div class="right-card sex-card">
+          <div class="icon-wrap">🌈</div>
+          <div class="txt-wrap">Derecho a vivir y expresar libremente la orientación sexual y la identidad de género.</div>
+        </div>
+        <div class="right-card sex-card">
+          <div class="icon-wrap">🛡️</div>
+          <div class="txt-wrap">Derecho a la protección y prevención de infecciones de transmisión sexual o embarazos no deseados.</div>
+        </div>
+        <div class="right-card sex-card">
+          <div class="icon-wrap">🏥</div>
+          <div class="txt-wrap">Derecho a recibir información y servicios de salud de calidad sobre sexualidad, sin discriminación.</div>
+        </div>
+        <div class="right-card sex-card">
+          <div class="icon-wrap">📚</div>
+          <div class="txt-wrap">Derecho a una educación integral para la sexualidad a lo largo de la vida.</div>
+        </div>
+      </div>
+
+      <!-- Columna reproductiva -->
+      <div class="rights-column">
+        <div class="right-card repro-card">
+          <div class="icon-wrap">🧒</div>
+          <div class="txt-wrap">Derecho a tomar decisiones sobre la reproducción sin discriminación, coerción ni violencia.</div>
+        </div>
+        <div class="right-card repro-card">
+          <div class="icon-wrap">🍼</div>
+          <div class="txt-wrap">Derecho a decidir libremente si se desea o no tener hijas o hijos.</div>
+        </div>
+        <div class="right-card repro-card">
+          <div class="icon-wrap">🔢</div>
+          <div class="txt-wrap">Derecho a decidir el número de hijas o hijos y el tiempo entre embarazos.</div>
+        </div>
+        <div class="right-card repro-card">
+          <div class="icon-wrap">👨‍👩‍👧</div>
+          <div class="txt-wrap">Derecho a decidir sobre el tipo de familia que se quiere formar.</div>
+        </div>
+        <div class="right-card repro-card">
+          <div class="icon-wrap">🤰</div>
+          <div class="txt-wrap">Derecho a ejercer la maternidad con trato equitativo en la familia, la escuela y el trabajo.</div>
+        </div>
+        <div class="right-card repro-card">
+          <div class="icon-wrap">🧴</div>
+          <div class="txt-wrap">Derecho a acceder a métodos de anticoncepción modernos, incluida la anticoncepción de emergencia.</div>
+        </div>
+        <div class="right-card repro-card">
+          <div class="icon-wrap">🩺</div>
+          <div class="txt-wrap">Derecho al acceso a servicios integrales de salud y atención médica para una maternidad segura.</div>
+        </div>
+        <div class="right-card repro-card">
+          <div class="icon-wrap">🧪</div>
+          <div class="txt-wrap">Derecho a acceder a los beneficios de los avances científicos en salud sexual y reproductiva.</div>
+        </div>
+        <div class="right-card repro-card">
+          <div class="icon-wrap">📖</div>
+          <div class="txt-wrap">Derecho a acceder a información de calidad para prevenir embarazos no deseados y tomar decisiones informadas.</div>
+        </div>
+        <div class="right-card repro-card">
+          <div class="icon-wrap">⚖️</div>
+          <div class="txt-wrap">Derecho a acceder a servicios para la Interrupción Voluntaria del Embarazo de acuerdo con la ley vigente.</div>
+        </div>
+      </div>
+    </div>
+
+    
+  </section>
+
+  <!-- BONUS -->
+  <section class="bonus-section">
+    <div class="bonus-box" id="bonusBox">
+      <span class="bonus-icon" id="bonusIcon">🔒</span>
+      <div class="bonus-title">BONUS</div>
+      <div class="bonus-sub" id="bonusSub">Explora todos los puntos para desbloquear</div>
+      <div class="bonus-prog">Explorados: <span id="bonusExpCount">0</span> / 8</div>
+    </div>
+  </section>
+
+</div><!-- /page -->
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- BONUS MODAL -->
+<div class="bonus-overlay" id="bonusOverlay">
+  <div class="bonus-modal">
+    <button class="bonus-close" id="bonusClose">✕</button>
+    <div class="bonus-modal-header">
+      <span class="gift">🎁</span>
+      <h2>¡BONUS DESBLOQUEADO!</h2>
+      <p>Diversidad corporal y redes sociales</p>
+    </div>
+
+    <div class="bonus-item">
+      <div class="bonus-item-emoji">📷</div>
+      <div class="bonus-item-text">Las fotos en redes generalmente tienen filtros y edición. No representan cuerpos reales.</div>
+    </div>
+    <div class="bonus-item">
+      <div class="bonus-item-emoji">🌍</div>
+      <div class="bonus-item-text">Los cuerpos humanos son naturalmente diversos. No existe un solo tipo "correcto" de cuerpo.</div>
+    </div>
+    <div class="bonus-item">
+      <div class="bonus-item-emoji">⚡</div>
+      <div class="bonus-item-text">Compararte con imágenes de redes puede afectar tu autoestima sin que te des cuenta.</div>
+    </div>
+    <div class="bonus-item">
+      <div class="bonus-item-emoji">💜</div>
+      <div class="bonus-item-text">Tu cuerpo es único y valioso exactamente como es, en este momento.</div>
+    </div>
+    <div class="bonus-item">
+      <div class="bonus-item-emoji">✨</div>
+      <div class="bonus-item-text">Si alguien hace comentarios negativos sobre tu cuerpo, recuerda: tienes derecho a establecer límites.</div>
+    </div>
+
+    <div class="bonus-closing">
+      <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754768/pandora_pxwrpp.png" alt="Pandora">
+      <p>¿Alguna vez te has sentido diferente a lo que ves en redes? Eso es porque las redes <em>no muestran la realidad</em>. Tú eres real. Y eso es hermoso. 💜</p>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============================
+// DATA
+// ============================
+const POINTS = [
+  {
+    id: 'cabeza',
+    name: 'Cabeza · Emociones',
+    emoji: '😊',
+    change: 'Cambios emocionales, búsqueda de identidad',
+    age: '10–16 años',
+    why: 'El cerebro se reorganiza',
+    tip: 'Habla de lo que sientes',
+    desc: 'Durante la pubertad el cerebro se reorganiza y procesa las emociones de forma más intensa. Es normal sentirse diferente o explorar quién eres.',
+    tableRow: 0,
+  },
+  {
+    id: 'cerebro',
+    name: 'Hormonas',
+    emoji: '🧠',
+    change: 'Cambios hormonales (hipófisis, GnRH, FSH, LH)',
+    age: 'Inicio de pubertad',
+    why: 'El cuerpo se prepara',
+    tip: 'Las hormonas son mensajeras',
+    desc: 'La hipófisis envía señales hormonales que activan todos los cambios. Las hormonas son como mensajeros internos que coordinan tu crecimiento.',
+    tableRow: 1,
+  },
+  {
+    id: 'piel',
+    name: 'Piel',
+    emoji: '✨',
+    change: 'Acné, mayor producción de grasa',
+    age: '11–14 años',
+    why: 'Activación hormonal',
+    tip: 'Rutina de higiene suave',
+    desc: 'Las hormonas activan las glándulas sebáceas produciendo más grasa. Una rutina de limpieza suave dos veces al día ayuda mucho.',
+    tableRow: 2,
+  },
+  {
+    id: 'axilas',
+    name: 'Axilas',
+    emoji: '💧',
+    change: 'Vello axilar y mayor sudoración',
+    age: '10–14 años',
+    why: 'Acción hormonal',
+    tip: 'El desodorante es tu aliado',
+    desc: 'Con las hormonas aparece el vello en las axilas y aumenta la sudoración. El desodorante y la higiene diaria te ayudan a sentirte cómoda.',
+    tableRow: 3,
+  },
+  {
+    id: 'busto',
+    name: 'Busto',
+    emoji: '💙',
+    change: 'Desarrollo mamario',
+    age: '8–13 años',
+    why: 'Estrógenos',
+    tip: 'Normal que no sean iguales',
+    desc: 'Los estrógenos inician el desarrollo de los senos. Es completamente normal que tengan tamaños distintos o que uno crezca antes que el otro.',
+    tableRow: 4,
+  },
+  {
+    id: 'cintura',
+    name: 'Cintura · Figura',
+    emoji: '🌸',
+    change: 'Cambios en la figura y redistribución de grasa',
+    age: '10–16 años',
+    why: 'Redistribución hormonal',
+    tip: 'Cada cuerpo tiene su forma',
+    desc: 'Las hormonas redistribuyen la grasa corporal dando forma a caderas y cintura. Cada cuerpo tiene su ritmo y su forma única, y eso es hermoso.',
+    tableRow: 5,
+  },
+  {
+    id: 'pelvis',
+    name: 'Zona pélvica',
+    emoji: '🌺',
+    change: 'Vello púbico y primera menstruación',
+    age: '9–16 años',
+    why: 'Hormonas',
+    tip: 'Conocer tu cuerpo es poder',
+    desc: 'Aparece el vello púbico y puede llegar la primera menstruación (menarquía). Conocer tu cuerpo te ayuda a cuidarlo y entenderlo mejor.',
+    tableRow: 6,
+  },
+  {
+    id: 'piernas',
+    name: 'Piernas · Altura',
+    emoji: '🌱',
+    change: 'Mayor altura y aparición de vello',
+    age: '10–16 años',
+    why: 'Hormona del crecimiento',
+    tip: 'Crecer no es competencia',
+    desc: 'La hormona del crecimiento hace que el cuerpo gane altura y aparezca vello en las piernas. Cada niña crece a su propio ritmo.',
+    tableRow: 7,
+  },
+];
+
+const TOAST_MSGS = [
+  '✨ ¡Descubriste un cambio!',
+  '✨ ¡Muy bien! Sigues explorando',
+  '✨ ¡Genial! Tu cuerpo es increíble',
+  '✨ ¡Así es! Sigue descubriendo',
+  '✨ ¡Lo tienes! Sigue adelante',
+];
+
+// ============================
+// STATE
+// ============================
+let exploredSet = new Set();
+let bonusUnlocked = false;
+let toastTimeout = null;
+
+// ============================
+// BUILD TABLE
+// ============================
+function buildTable() {
+  const tbody = document.getElementById('tableBody');
+  const mobile = document.getElementById('mobileCards');
+
+  POINTS.forEach((p) => {
+    const tr = document.createElement('tr');
+    tr.id = 'row-' + p.id;
+    tr.innerHTML = `
+      <td><strong>${p.emoji} ${p.name}</strong></td>
+      <td>${p.age}</td>
+      <td>${p.why}</td>
+      <td><span class="td-tip">💡 ${p.tip}</span></td>
+    `;
+    tbody.appendChild(tr);
+
+    const mc = document.createElement('div');
+    mc.className = 'mobile-card';
+    mc.id = 'mcard-' + p.id;
+    mc.innerHTML = `
+      <div class="mobile-card-name">${p.emoji} ${p.name}</div>
+      <div class="mobile-card-row"><span>⏰ Cuándo:</span> ${p.age}</div>
+      <div class="mobile-card-row"><span>🔬 Por qué:</span> ${p.why}</div>
+      <div class="mobile-card-row"><span>💡 Consejo:</span> ${p.tip}</div>
+    `;
+    mobile.appendChild(mc);
+  });
+}
+
+// ============================
+// BUILD EXPLORE DOTS
+// ============================
+function buildDots() {
+  const wrap = document.getElementById('expDots');
+  POINTS.forEach(p => {
+    const dot = document.createElement('div');
+    dot.className = 'exp-dot';
+    dot.id = 'dot-' + p.id;
+    wrap.appendChild(dot);
+  });
+}
+
+// ============================
+// POINT CLICK
+// ============================
+function onPointClick(id) {
+  const pt = POINTS.find(p => p.id === id);
+  if (!pt) return;
+
+  document.getElementById('infoEmpty').style.display = 'none';
+  const content = document.getElementById('infoContent');
+  content.style.display = 'flex';
+  document.getElementById('iEmoji').textContent = pt.emoji;
+  document.getElementById('iName').textContent = pt.name;
+  document.getElementById('iAge').textContent = '⏰ ' + pt.age;
+  document.getElementById('iWhy').textContent = '🔬 ' + pt.why;
+  document.getElementById('iTip').textContent = '💡 ' + pt.tip;
+  document.getElementById('iDesc').textContent = pt.desc;
+
+  document.querySelectorAll('.body-table tbody tr').forEach(r => r.classList.remove('highlighted'));
+  document.querySelectorAll('.mobile-card').forEach(c => c.classList.remove('highlighted'));
+  const row = document.getElementById('row-' + id);
+  const mc  = document.getElementById('mcard-' + id);
+  if (row) { row.classList.add('highlighted'); row.scrollIntoView({behavior:'smooth', block:'nearest'}); }
+  if (mc)  mc.classList.add('highlighted');
+
+  if (!exploredSet.has(id)) {
+    exploredSet.add(id);
+
+    const dot = document.getElementById('dot-' + id);
+    if (dot) dot.classList.add('done');
+
+    const ptEl = document.getElementById('pt-' + id);
+    if (ptEl) ptEl.classList.add('explored');
+
+    document.getElementById('expCount').textContent = exploredSet.size;
+    document.getElementById('bonusExpCount').textContent = exploredSet.size;
+
+    showToast(TOAST_MSGS[Math.floor(Math.random() * TOAST_MSGS.length)]);
+
+    if (exploredSet.size === POINTS.length && !bonusUnlocked) {
+      bonusUnlocked = true;
+      setTimeout(unlockBonus, 600);
+    }
+  }
+}
+
+// ============================
+// SETUP POINT EVENTS
+// ============================
+function setupPoints() {
+  POINTS.forEach(p => {
+    const el = document.getElementById('pt-' + p.id);
+    if (!el) return;
+    el.addEventListener('click', () => onPointClick(p.id));
+    el.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      onPointClick(p.id);
+    }, {passive: false});
+    el.style.cursor = 'pointer';
+  });
+}
+
+// ============================
+// BONUS
+// ============================
+function unlockBonus() {
+  const box = document.getElementById('bonusBox');
+  box.classList.add('unlocked');
+  document.getElementById('bonusIcon').textContent = '🎁';
+  document.getElementById('bonusSub').textContent = '¡Toca para abrir tu BONUS!';
+  box.style.cursor = 'pointer';
+  showToast('🎁 ¡BONUS desbloqueado! Tócalo para abrirlo', 4000);
+}
+
+document.getElementById('bonusBox').addEventListener('click', () => {
+  if (!bonusUnlocked) {
+    showToast('💙 Explora todos los puntos para desbloquear el BONUS');
+    return;
+  }
+  document.getElementById('bonusOverlay').classList.add('show');
+  document.body.style.overflow = 'hidden';
+});
+
+document.getElementById('bonusClose').addEventListener('click', () => {
+  document.getElementById('bonusOverlay').classList.remove('show');
+  document.body.style.overflow = '';
+});
+document.getElementById('bonusOverlay').addEventListener('click', e => {
+  if (e.target === e.currentTarget) {
+    document.getElementById('bonusOverlay').classList.remove('show');
+    document.body.style.overflow = '';
+  }
+});
+
+// ============================
+// TOAST
+// ============================
+function showToast(msg, dur = 2600) {
+  const t = document.getElementById('toast');
+  clearTimeout(toastTimeout);
+  t.textContent = msg;
+  t.classList.add('show');
+  toastTimeout = setTimeout(() => t.classList.remove('show'), dur);
+}
+
+// ============================
+// INIT
+// ============================
+buildTable();
+buildDots();
+setupPoints();
+</script>
+</body>
+</html>

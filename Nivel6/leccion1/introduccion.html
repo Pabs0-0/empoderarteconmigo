@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>El Viaje de Ceci — Nivel 6 · Lección 1 · El Poder del Sí y el No</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fredoka+One&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --deep:     #0A0A2E;
+    --main:     #1A1A4E;
+    --accent:   #4A3080;
+    --light:    #EDEAF5;
+    --violet:   #6A4CAF;
+    --lavender: #9B8AC4;
+    --lilac:    #C4B8E8;
+    --cream:    #F6F4FF;
+    --silver:   #D4D0E8;
+    --rose:     #E879B0;
+    --gold:     #FFD54F;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    font-family:'Nunito',sans-serif;
+    background:#07071C;
+    color:#fff;
+    overflow-x:hidden;
+    min-height:100vh;
+  }
+
+  #starfield {
+    position:fixed;top:0;left:0;
+    width:100%;height:100%;
+    z-index:0;pointer-events:none;
+  }
+
+  /* ── NEBULAE ── */
+  .neb{position:fixed;border-radius:50%;filter:blur(95px);opacity:.17;z-index:0;pointer-events:none;animation:nebPulse 9s ease-in-out infinite alternate;}
+  .n1{width:700px;height:700px;background:#1A1A4E;top:-140px;left:-170px;animation-delay:0s;}
+  .n2{width:520px;height:520px;background:#4A3080;top:200px;right:-120px;animation-delay:2.5s;}
+  .n3{width:450px;height:450px;background:#6A4CAF;bottom:60px;left:20%;animation-delay:4s;}
+  .n4{width:330px;height:330px;background:#9B8AC4;top:55%;right:7%;animation-delay:1.8s;}
+  .n5{width:280px;height:280px;background:#E879B0;top:32%;left:52%;animation-delay:3.2s;opacity:.1;}
+  .n6{width:310px;height:310px;background:#C4B8E8;bottom:15%;left:4%;animation-delay:2s;opacity:.1;}
+  @keyframes nebPulse{from{opacity:.1;transform:scale(1);}to{opacity:.22;transform:scale(1.1);}}
+
+  /* ── PARTICLES ── */
+  .pt{position:fixed;border-radius:50%;pointer-events:none;z-index:0;animation:ptFall linear infinite;}
+  @keyframes ptFall{0%{transform:translateY(-20px) rotate(0deg);opacity:0;}10%{opacity:1;}90%{opacity:.8;}100%{transform:translateY(110vh) rotate(720deg);opacity:0;}}
+
+  /* ── KEYFRAMES ── */
+  @keyframes float{from{transform:translateY(0);}to{transform:translateY(-13px);}}
+  @keyframes floatSlow{from{transform:translateY(0) rotate(-4deg);}to{transform:translateY(-9px) rotate(4deg);}}
+  @keyframes spkl{0%{opacity:.2;transform:scale(.7) rotate(0deg);}50%{opacity:1;transform:scale(1.25) rotate(180deg);}100%{opacity:.4;transform:scale(.9) rotate(360deg);}}
+  @keyframes heartPulse{0%,100%{transform:scale(1);}50%{transform:scale(1.22);}}
+  @keyframes haloBreath{from{transform:translate(-50%,-50%) scale(.88);opacity:.5;}to{transform:translate(-50%,-50%) scale(1.25);opacity:1;}}
+  @keyframes borderShim{0%{opacity:.4;}50%{opacity:1;}100%{opacity:.4;}}
+  @keyframes pillGlow{from{box-shadow:0 0 16px rgba(74,48,128,.4);}to{box-shadow:0 0 44px rgba(74,48,128,.95);}}
+  @keyframes breatheScale{from{transform:scale(1);}to{transform:scale(1.07);}}
+  @keyframes starPop{0%,100%{transform:scale(1) rotate(0deg);}50%{transform:scale(1.3) rotate(20deg);}}
+  @keyframes violetGlow{from{box-shadow:0 0 12px rgba(74,48,128,.3);}to{box-shadow:0 0 28px rgba(106,76,175,.7);}}
+  @keyframes mirrorShine{
+    0%{box-shadow:0 0 20px rgba(74,48,128,.3),inset 0 0 20px rgba(74,48,128,.1);}
+    50%{box-shadow:0 0 55px rgba(106,76,175,.75),inset 0 0 40px rgba(155,138,196,.2);}
+    100%{box-shadow:0 0 20px rgba(74,48,128,.3),inset 0 0 20px rgba(74,48,128,.1);}
+  }
+  @keyframes siNoAnim{
+    0%,100%{transform:scale(1);text-shadow:0 0 20px rgba(74,48,128,.5);}
+    50%{transform:scale(1.08);text-shadow:0 0 40px rgba(232,121,176,.8);}
+  }
+
+  /* ── FIXED SPARKLES ── */
+  .fixed-spk{position:fixed;z-index:1;pointer-events:none;animation:spkl ease-in-out infinite alternate;}
+
+  /* ── WRAPPER ── */
+  .wrapper{position:relative;z-index:2;max-width:960px;margin:0 auto;padding:0 20px 72px;}
+
+  /* ── NIVEL PILL ── */
+  .nivel-pill{display:inline-block;background:linear-gradient(135deg,#1A1A4E,#4A3080);color:#fff;font-family:'Fredoka One',cursive;font-size:.95rem;letter-spacing:3px;padding:8px 28px;border-radius:50px;box-shadow:0 0 26px rgba(74,48,128,.6);margin-bottom:20px;animation:pillGlow 3s ease-in-out infinite alternate;}
+
+  /* ── HERO ── */
+  .hero{position:relative;padding:48px 20px 0;text-align:center;}
+
+  .hero-block{
+    background:linear-gradient(145deg,#0A0A2E 0%,#1A1A4E 52%,#0A0A2E 100%);
+    border:2px solid rgba(74,48,128,.55);border-radius:32px;padding:52px 40px 46px;
+    position:relative;overflow:hidden;
+    box-shadow:0 0 80px rgba(10,10,46,.9),0 0 140px rgba(26,26,78,.25),inset 0 1px 0 rgba(255,255,255,.08);
+  }
+  .hero-block::after{content:'';position:absolute;top:-2px;left:-2px;right:-2px;bottom:-2px;border-radius:34px;background:linear-gradient(135deg,rgba(74,48,128,.38),transparent,rgba(232,121,176,.18));z-index:0;animation:borderShim 5s linear infinite;}
+
+  .hero-deco{position:absolute;z-index:2;opacity:.42;animation:floatSlow ease-in-out infinite alternate;}
+  .hero-deco.tl{top:20px;left:28px;width:44px;animation-duration:4s;}
+  .hero-deco.tr{top:22px;right:28px;width:50px;animation-duration:5.2s;animation-delay:.8s;}
+
+  .hero-inner{position:relative;z-index:1;}
+  .hero-nivel{font-family:'Fredoka One',cursive;font-size:1rem;color:#9B8AC4;letter-spacing:4px;text-transform:uppercase;margin-bottom:8px;}
+  .hero-title{font-family:'Fredoka One',cursive;font-size:clamp(1.8rem,5vw,3.5rem);color:#fff;text-shadow:0 0 32px rgba(106,76,175,.88),0 2px 4px rgba(0,0,0,.4);line-height:1.15;margin-bottom:10px;}
+  .hero-title span{color:#C4B8E8;}
+  .hero-subtitle{font-size:1rem;color:#C4B8E8;font-weight:700;margin-bottom:18px;}
+  .hero-lesson-tag{display:inline-block;background:rgba(26,26,78,.4);border:1px solid rgba(74,48,128,.5);border-radius:50px;padding:8px 26px;font-family:'Fredoka One',cursive;font-size:1rem;color:#C4B8E8;letter-spacing:1px;margin-bottom:24px;}
+
+  /* SI / NO big visual */
+  .sino-display{display:flex;justify-content:center;align-items:center;gap:24px;margin-bottom:24px;}
+  .sino-btn{
+    font-family:'Fredoka One',cursive;font-size:2.5rem;
+    padding:14px 36px;border-radius:50px;border:3px solid;
+    animation:siNoAnim 4s ease-in-out infinite;
+  }
+  .sino-si{background:rgba(46,204,113,.18);border-color:rgba(46,204,113,.6);color:#A8F0C6;animation-delay:0s;}
+  .sino-no{background:rgba(232,121,176,.18);border-color:rgba(232,121,176,.6);color:#F0A8D8;animation-delay:2s;}
+  .sino-eq{font-size:1.8rem;color:#9B8AC4;animation:breatheScale 3s ease-in-out infinite alternate;}
+
+  .hero-chars{display:flex;justify-content:center;align-items:flex-end;gap:18px;margin-top:10px;}
+  .hero-chars img{height:200px;filter:drop-shadow(0 0 24px rgba(74,48,128,.7));animation:float 4s ease-in-out infinite alternate;}
+  .hero-chars img:nth-child(2){height:100px;animation-delay:.8s;}
+  .hero-chars img:nth-child(3){height:165px;animation-delay:1.7s;}
+
+  /* ── SECTION LABEL ── */
+  .section-label{text-align:center;margin:44px 0 28px;}
+  .section-label h2{font-family:'Fredoka One',cursive;font-size:clamp(1.2rem,3.8vw,1.85rem);color:#C4B8E8;background:rgba(10,10,46,.75);border:1px solid rgba(74,48,128,.45);display:inline-block;padding:12px 36px;border-radius:50px;box-shadow:0 0 24px rgba(26,26,78,.35);}
+
+  /* ── CONTENT CARDS ── */
+  .card{background:var(--light);border-radius:26px;padding:34px 38px;margin-bottom:24px;border:2px solid rgba(26,26,78,.2);box-shadow:0 10px 50px rgba(10,10,46,.42),0 2px 8px rgba(0,0,0,.2);position:relative;overflow:hidden;}
+  .card::before{content:'';position:absolute;top:0;left:0;right:0;height:5px;border-radius:26px 26px 0 0;}
+  .card.c1::before{background:linear-gradient(90deg,#1A1A4E,#4A3080,#6A4CAF);}
+  .card.c2::before{background:linear-gradient(90deg,#4A3080,#6A4CAF,#9B8AC4);}
+  .card.c3::before{background:linear-gradient(90deg,#E879B0,#4A3080,#1A1A4E);}
+
+  .card-row{display:flex;align-items:center;gap:26px;}
+  .card-text{flex:1;}
+  .card-char{flex-shrink:0;width:130px;}
+  .card-char img{width:100%;filter:drop-shadow(0 4px 14px rgba(26,26,78,.45));animation:float 4.5s ease-in-out infinite alternate;}
+  .card-emoji{font-size:2.2rem;margin-bottom:10px;display:block;}
+  .card h3{font-family:'Fredoka One',cursive;font-size:1.45rem;color:#0A0A2E;margin-bottom:13px;}
+  .card p{font-size:1.05rem;color:#1A1440;line-height:1.8;font-weight:700;}
+
+  /* ── VOICE CARD (dark) ── */
+  .voice-card{
+    background:linear-gradient(145deg,#0A0A2E,#1A1A4E);
+    border:2px solid rgba(74,48,128,.42);border-radius:26px;padding:36px 40px;margin-bottom:26px;
+    position:relative;overflow:hidden;animation:mirrorShine 7s ease-in-out infinite;
+  }
+  .voice-card::before{content:'';position:absolute;top:0;left:0;right:0;height:5px;background:linear-gradient(90deg,#E879B0,#4A3080,#C4B8E8);border-radius:26px 26px 0 0;}
+  .voice-inner{display:flex;align-items:center;gap:28px;}
+  .voice-text{flex:1;}
+  .voice-char{flex-shrink:0;width:135px;}
+  .voice-char img{width:100%;filter:drop-shadow(0 0 18px rgba(74,48,128,.6));animation:breatheScale 4.5s ease-in-out infinite alternate;}
+  .voice-card h3{font-family:'Fredoka One',cursive;font-size:1.4rem;color:#C4B8E8;margin-bottom:14px;}
+  .voice-card p{font-size:1.02rem;color:#D4CCEC;line-height:1.8;font-weight:700;}
+
+  /* boundaries list */
+  .boundary-list{display:flex;flex-direction:column;gap:10px;margin-top:16px;}
+  .boundary-item{display:flex;align-items:center;gap:12px;background:rgba(74,48,128,.22);border:1px solid rgba(74,48,128,.4);border-radius:14px;padding:11px 16px;font-size:.96rem;font-weight:700;color:#C4B8E8;transition:transform .3s;cursor:default;}
+  .boundary-item:hover{transform:translateX(6px);}
+  .b-icon{font-size:1.3rem;flex-shrink:0;}
+
+  /* ── TRAFFIC LIGHT ── */
+  .traffic-card{background:var(--light);border-radius:26px;padding:34px 38px;margin-bottom:26px;border:2px solid rgba(26,26,78,.2);box-shadow:0 10px 50px rgba(10,10,46,.4);position:relative;overflow:hidden;}
+  .traffic-card::before{content:'';position:absolute;top:0;left:0;right:0;height:5px;background:linear-gradient(90deg,#6A4CAF,#4A3080,#9B8AC4);border-radius:26px 26px 0 0;}
+  .traffic-card h3{font-family:'Fredoka One',cursive;font-size:1.4rem;color:#0A0A2E;margin-bottom:18px;}
+  .traffic-inner{display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap;}
+  .traffic-pole{
+    display:flex;flex-direction:column;align-items:center;gap:10px;
+    background:linear-gradient(145deg,#0A0A2E,#1A1A4E);
+    border-radius:20px;padding:22px 18px;min-width:100px;
+    border:1px solid rgba(74,48,128,.35);
+    box-shadow:0 4px 18px rgba(10,10,46,.5);
+    flex:1;min-width:120px;
+    animation:violetGlow 3s ease-in-out infinite alternate;
+  }
+  .traffic-pole:nth-child(2){animation-delay:.6s;}
+  .traffic-pole:nth-child(3){animation-delay:1.2s;}
+  .traffic-light{width:44px;height:44px;border-radius:50%;margin-bottom:4px;flex-shrink:0;}
+  .light-green{background:radial-gradient(circle,#2ECC71,#1A8A4A);box-shadow:0 0 16px rgba(46,204,113,.7);}
+  .light-yellow{background:radial-gradient(circle,#F0B429,#B8861F);box-shadow:0 0 16px rgba(240,180,41,.7);}
+  .light-red{background:radial-gradient(circle,#E879B0,#A8305A);box-shadow:0 0 16px rgba(232,121,176,.7);}
+  .traffic-pole p{font-size:.82rem;font-weight:700;color:#C4B8E8;text-align:center;line-height:1.4;}
+  .traffic-desc{flex:2;min-width:200px;}
+  .traffic-desc p{font-size:.98rem;color:#1A1440;line-height:1.75;font-weight:700;}
+
+  /* ── ACTIVITIES ── */
+  .act-card{background:var(--light);border-radius:26px;padding:34px 38px;margin-bottom:26px;border:2px solid rgba(26,26,78,.2);box-shadow:0 10px 50px rgba(10,10,46,.4);position:relative;overflow:hidden;}
+  .act-card::before{content:'';position:absolute;top:0;left:0;right:0;height:5px;background:linear-gradient(90deg,#9B8AC4,#4A3080,#E879B0);border-radius:26px 26px 0 0;}
+  .act-card h3{font-family:'Fredoka One',cursive;font-size:1.45rem;color:#0A0A2E;margin-bottom:20px;}
+  .act-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;}
+  .act-item{background:linear-gradient(145deg,#0A0A2E,#1A1A4E);border-radius:20px;padding:22px 18px;text-align:center;border:1px solid rgba(74,48,128,.35);box-shadow:0 4px 22px rgba(10,10,46,.5);transition:transform .3s,box-shadow .3s;cursor:default;}
+  .act-item:hover{transform:translateY(-6px);box-shadow:0 14px 32px rgba(74,48,128,.55);}
+  .act-icon{font-size:1.9rem;margin-bottom:9px;display:block;}
+  .act-label{font-size:.88rem;font-weight:700;color:#EDEAF5;line-height:1.45;}
+
+  /* ── DECO FLOAT ── */
+  .deco-float{position:absolute;pointer-events:none;z-index:1;opacity:.75;animation:float ease-in-out infinite alternate;}
+
+  /* ── DIVIDER ── */
+  .divider{display:flex;align-items:center;gap:14px;margin:28px 0;opacity:.38;}
+  .divider::before,.divider::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,#4A3080,transparent);}
+  .divider span{font-size:1.1rem;}
+
+  /* ── BADGE ── */
+  .badge-section{text-align:center;margin:36px 0;}
+  .badge-box{background:linear-gradient(145deg,#0A0A2E,#1A1A4E);border:2px solid rgba(74,48,128,.55);border-radius:28px;padding:42px 30px;display:inline-block;min-width:290px;position:relative;overflow:hidden;box-shadow:0 0 60px rgba(26,26,78,.5),inset 0 1px 0 rgba(255,255,255,.08);}
+  .badge-halo{position:absolute;top:50%;left:50%;width:220px;height:220px;background:radial-gradient(circle,rgba(106,76,175,.28) 0%,transparent 70%);transform:translate(-50%,-50%);border-radius:50%;animation:haloBreath 3s ease-in-out infinite alternate;}
+  .badge-img{width:115px;filter:drop-shadow(0 0 26px rgba(196,184,232,.78)) drop-shadow(0 0 10px rgba(106,76,175,.82));position:relative;z-index:1;animation:float 3.5s ease-in-out infinite alternate;}
+  .badge-title{font-family:'Fredoka One',cursive;font-size:1.32rem;color:#C4B8E8;margin-top:14px;text-shadow:0 0 18px rgba(196,184,232,.55);position:relative;z-index:1;}
+  .badge-desc{font-size:.92rem;color:#C4B8E8;margin-top:8px;font-weight:700;opacity:.85;position:relative;z-index:1;}
+
+  /* ── CLOSING ── */
+  .closing{text-align:center;margin:46px 0 20px;position:relative;}
+  .closing-box{background:linear-gradient(145deg,#0A0A2E,#1A1A4E);border:2px solid rgba(74,48,128,.42);border-radius:28px;padding:42px 38px;position:relative;overflow:hidden;box-shadow:0 0 60px rgba(10,10,46,.58);}
+  .closing-box h2{font-family:'Fredoka One',cursive;font-size:clamp(1.4rem,4vw,2.1rem);color:#fff;margin-bottom:14px;text-shadow:0 0 22px rgba(106,76,175,.68);}
+  .closing-box p{font-size:1.04rem;color:#C4B8E8;line-height:1.75;font-weight:700;max-width:580px;margin:0 auto 26px;}
+  .cta-btn{display:inline-block;background:linear-gradient(135deg,#1A1A4E,#4A3080);color:#fff;font-family:'Fredoka One',cursive;font-size:1.2rem;padding:16px 46px;border-radius:50px;border:none;cursor:pointer;box-shadow:0 0 34px rgba(74,48,128,.65),0 4px 16px rgba(0,0,0,.3);transition:transform .3s,box-shadow .3s;text-decoration:none;letter-spacing:1px;}
+  .cta-btn:hover{transform:translateY(-4px) scale(1.05);box-shadow:0 0 58px rgba(74,48,128,.9),0 8px 28px rgba(0,0,0,.4);}
+  .closing-chars{display:flex;justify-content:center;align-items:flex-end;gap:20px;margin-top:30px;flex-wrap:wrap;}
+  .closing-chars img{height:148px;filter:drop-shadow(0 0 16px rgba(74,48,128,.55));animation:float 4s ease-in-out infinite alternate;}
+  .closing-chars img:nth-child(2){height:120px;animation-delay:1s;}
+  .closing-chars img:nth-child(3){height:82px;animation-delay:.5s;opacity:.8;}
+
+  /* ── DOCENTE ── */
+  .docente-wrap{margin-top:54px;border-radius:20px;overflow:hidden;border:1px solid rgba(26,26,78,.3);box-shadow:0 4px 22px rgba(10,10,46,.3);}
+  .doc-toggle{background:rgba(5,5,25,.88);padding:18px 28px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;user-select:none;border:none;width:100%;color:#C4B8E8;font-family:'Nunito',sans-serif;font-weight:700;font-size:.95rem;letter-spacing:1px;transition:background .3s;}
+  .doc-toggle:hover{background:rgba(18,18,55,.95);}
+  .doc-toggle .arrow{font-size:1.1rem;transition:transform .3s;}
+  .doc-toggle.open .arrow{transform:rotate(180deg);}
+  .doc-body{display:none;background:rgba(4,4,18,.97);padding:28px;}
+  .doc-body.open{display:block;}
+  .doc-body h4{color:#6A4CAF;font-family:'Fredoka One',cursive;font-size:1.1rem;margin-bottom:10px;}
+  .doc-body p{color:#C4B8E8;font-size:.92rem;line-height:1.72;font-weight:600;}
+  .doc-placeholder{border:1px dashed rgba(74,48,128,.4);border-radius:12px;padding:20px;text-align:center;color:rgba(106,76,175,.5);font-size:.88rem;margin-top:14px;font-weight:600;line-height:1.6;}
+
+  @media(max-width:640px){
+    .hero-block{padding:34px 18px 28px;}
+    .sino-btn{font-size:1.8rem;padding:10px 24px;}
+    .hero-chars img{height:115px;}
+    .card-row,.voice-inner,.traffic-inner{flex-direction:column;}
+    .card-char,.voice-char{width:110px;margin:0 auto;}
+    .act-grid{grid-template-columns:repeat(2,1fr);}
+    .closing-box{padding:28px 18px;}
+    .badge-box{min-width:unset;width:100%;max-width:320px;}
+  }
+</style>
+</head>
+<body>
+
+<canvas id="starfield"></canvas>
+<div class="neb n1"></div><div class="neb n2"></div><div class="neb n3"></div>
+<div class="neb n4"></div><div class="neb n5"></div><div class="neb n6"></div>
+
+<img class="fixed-spk" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754686/estrella_bbltv2.png" style="width:32px;top:7%;left:4%;animation-duration:3.2s;">
+<img class="fixed-spk" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754686/estrella_bbltv2.png" style="width:42px;top:18%;right:5%;animation-duration:4.5s;animation-delay:1s;">
+<img class="fixed-spk" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754682/corazon_vjqq8g.png" style="width:28px;top:43%;left:2%;animation-duration:2.8s;animation-delay:.6s;animation-name:heartPulse;">
+<img class="fixed-spk" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754686/estrella_bbltv2.png" style="width:26px;top:62%;right:3%;animation-duration:3.5s;animation-delay:2s;animation-name:starPop;">
+<img class="fixed-spk" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754682/corazon_vjqq8g.png" style="width:24px;top:82%;left:7%;animation-duration:3s;animation-delay:1.3s;animation-name:heartPulse;">
+<img class="fixed-spk" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754686/estrella_bbltv2.png" style="width:36px;top:91%;right:10%;animation-duration:4.2s;animation-delay:.4s;">
+
+<div class="wrapper">
+
+  <!-- ── HERO ── -->
+  <div class="hero">
+    <div class="nivel-pill">✦ NIVEL 6 ✦</div>
+    <div class="hero-block">
+      <img class="hero-deco tl" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754686/estrella_bbltv2.png" alt="">
+      <img class="hero-deco tr" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754686/estrella_bbltv2.png" alt="">
+      <div class="hero-inner">
+        <p class="hero-nivel">NIVEL 6 — LECCIÓN 1</p>
+        <h1 class="hero-title">El <span>Poder</span> del<br> “sí quiero” y el “no quiero”</h1>
+        <p class="hero-subtitle">Límites, Consentimiento y Asertividad</p>
+        <div class="hero-lesson-tag">🔮 LECCIÓN 1 — Mi Voz, Mi Poder</div>
+
+        <!-- SI / NO visual -->
+        <div class="sino-display">
+          <div class="sino-btn sino-si">✅ SÍ</div>
+          <div class="sino-eq">⟺</div>
+          <div class="sino-btn sino-no">🛑 NO</div>
+        </div>
+
+        <div class="hero-chars">
+          <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754685/espejo_chlx8r.png" alt="Ceci apuntando" style="height:205px;">
+         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── INTRO LABEL ── -->
+  <div class="section-label">
+    <h2>🔮 Introducción — Lección 1</h2>
+  </div>
+
+  <!-- ── CARD 1 ── -->
+  <div class="card c1">
+    <div class="card-row">
+      <div class="card-text">
+        <span class="card-emoji">🌟</span>
+        <h3>¿Qué descubrirás aquí?</h3>
+        <p>En este nivel descubrirás que <strong>tu voz es importante</strong> y que puedes expresar lo que quieres y lo que no quieres. Aprender a decir NO también es una forma de cuidarte.</p>
+      </div>
+      <div class="card-char">
+        <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754461/ceci_asking_ukpsbg.png" alt="Ceci preguntando">
+      </div>
+    </div>
+  </div>
+
+  <!-- ── CARD 2 ── -->
+  <div class="card c2" style="position:relative;">
+    <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754682/corazon_vjqq8g.png" class="deco-float" style="width:32px;right:18px;top:-12px;animation-duration:2.8s;animation-name:heartPulse;">
+    <div class="card-row">
+      <div class="card-char">
+        <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754481/ceci_skater_fkkq8b.png" alt="Ceci pensando" style="animation-delay:1s;">
+      </div>
+      <div class="card-text">
+        <span class="card-emoji">📚</span>
+        <h3>¿Qué aprenderás?</h3>
+        <p>Aprenderás sobre <strong>límites, respeto y consentimiento</strong>. Entenderás que tu cuerpo es tuyo y que nadie puede tocarlo o presionarte sin tu permiso.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── CARD 3 ── -->
+  <div class="card c3">
+    <div class="card-row">
+      <div class="card-text">
+        <span class="card-emoji">🎯</span>
+        <h3>Objetivo del nivel</h3>
+        <p>Comprenderás la importancia del consentimiento, el respeto y la <strong>toma de decisiones sobre tu propio cuerpo</strong>, e identificarás situaciones incómodas o peligrosas.</p>
+      </div>
+      <div class="card-char">
+        <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1776190587/olderceciface_o7qbsi.png" alt="Ceci espejo brillante" style="animation-delay:1.5s;">
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"><span>💫</span></div>
+
+  <!-- ── ACTIVITIES ── -->
+  <div class="act-card" style="position:relative;">
+    <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754686/estrella_bbltv2.png" class="deco-float" style="width:50px;right:16px;top:-16px;animation-duration:5.5s;">
+    <h3>🎮 ¿Qué haremos en esta lección?</h3>
+    <div class="act-grid">
+      <div class="act-item">
+        <span class="act-icon">🚦</span>
+        <p class="act-label">Semáforo de situaciones</p>
+      </div>
+      <div class="act-item">
+        <span class="act-icon">✅</span>
+        <p class="act-label">Verdadero o falso sobre límites</p>
+      </div>
+      <div class="act-item">
+        <span class="act-icon">📱</span>
+        <p class="act-label">Prevención de ciberacoso</p>
+      </div>
+      <div class="act-item">
+        <span class="act-icon">📸</span>
+        <p class="act-label">Subir evidencia de la cartilla</p>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ── BADGE ── -->
+  <div class="badge-section">
+    <p style="color:#9B8AC4;font-weight:700;font-size:.95rem;margin-bottom:18px;letter-spacing:1px;">🏅 TU INSIGNIA DEL NIVEL 6</p>
+    <div class="badge-box">
+      <div class="badge-halo"></div>
+      <img class="badge-img" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754454/badge6_xfnnhu.png" alt="Insignia Nivel 6">
+      <p class="badge-title">Insignia: Guardiana de Tu Voz</p>
+      <p class="badge-desc">Completa las lecciones del Nivel 6<br>para desbloquearla ✨</p>
+      <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754686/estrella_bbltv2.png" style="position:absolute;width:28px;top:12px;right:22px;animation:spkl 2.5s ease-in-out infinite alternate;">
+      <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754682/corazon_vjqq8g.png" style="position:absolute;width:26px;bottom:22px;left:20px;animation:heartPulse 2.2s ease-in-out infinite;">
+      <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754686/estrella_bbltv2.png" style="position:absolute;width:34px;top:14px;left:20px;animation:spkl 3.8s ease-in-out infinite alternate;animation-delay:.5s;">
+      <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754686/estrella_bbltv2.png" style="position:absolute;width:22px;bottom:18px;right:18px;animation:starPop 3s ease-in-out infinite alternate;">
+    </div>
+  </div>
+
+  <div class="divider"><span>🌟</span></div>
+
+  <!-- ── CLOSING ── -->
+  <div class="closing">
+    <div class="closing-box">
+      <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754686/estrella_bbltv2.png"
+           style="position:absolute;right:-10px;top:-14px;width:98px;opacity:.38;animation:float 6s ease-in-out infinite alternate;pointer-events:none;">
+      <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754682/corazon_vjqq8g.png"
+           style="position:absolute;left:16px;top:16px;width:44px;opacity:.44;animation:heartPulse 2.5s ease-in-out infinite;pointer-events:none;">
+      <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754686/estrella_bbltv2.png"
+           style="position:absolute;right:18px;bottom:22px;width:52px;opacity:.36;animation:floatSlow 5s ease-in-out infinite alternate;pointer-events:none;">
+
+      <h2>¡Tu voz es tu poder más grande! 🔮💜</h2>
+      <p>Decir SÍ cuando quieres y NO cuando no quieres es un acto de amor propio. Ceci y Luna están aquí contigo — para que te sientas segura, respetada y poderosa en cada decisión que tomas.</p>
+      <a href="#" class="cta-btn">¡Comenzar Lección 1! 🌟</a>
+
+      <div class="closing-chars">
+        <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1776191195/olderceciyluna_c6ot7m.png" alt="Ceci apuntando">
+        </div>
+    </div>
+  </div>
+
+  <!-- ── DOCENTE ── -->
+  <div class="docente-wrap">
+    <button class="doc-toggle" id="docBtn" onclick="toggleDoc()">
+      <span>📋 Información pedagógica para docentes</span>
+      <span class="arrow">▼</span>
+    </button>
+    <div class="doc-body" id="docBody">
+      <h4>Valor académico de esta actividad</h4>
+      <p>Esta introducción abre el Nivel 6 del programa, centrado en límites, consentimiento y asertividad. La propuesta pedagógica presenta el consentimiento y la voz propia como competencias socioemocionales y de protección, abordando el tema desde un enfoque empoderador y libre de victimización. Incluye elementos de prevención del ciberacoso y reconocimiento de situaciones de riesgo.</p>
+      <div class="doc-placeholder">
+       </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ── DEEP VIOLET STARFIELD ──
+const canvas = document.getElementById('starfield');
+const ctx = canvas.getContext('2d');
+let stars=[], W, H;
+
+function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight;}
+resize();
+window.addEventListener('resize', resize);
+function rnd(a,b){return a+Math.random()*(b-a);}
+
+function initStars(){
+  stars=[];
+  const pal=['#EDEAF5','#C4B8E8','#9B8AC4','#6A4CAF','#4A3080','#D4D0E8','#E879B0'];
+  for(let i=0;i<310;i++){
+    stars.push({x:rnd(0,W),y:rnd(0,H),r:rnd(.3,2.5),alpha:rnd(.2,1),speed:rnd(.003,.022),offset:rnd(0,Math.PI*2),color:Math.random()>.45?pal[Math.floor(Math.random()*pal.length)]:'#ffffff'});
+  }
+}
+initStars();
+
+let tick=0;
+function draw(){
+  ctx.clearRect(0,0,W,H);tick+=.012;
+  stars.forEach(s=>{
+    const p=.5+.5*Math.sin(tick*s.speed*60+s.offset);
+    ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fillStyle=s.color;ctx.globalAlpha=s.alpha*p;ctx.fill();
+    if(s.r>1.8&&p>.83){
+      ctx.globalAlpha=s.alpha*p*.3;ctx.strokeStyle=s.color;ctx.lineWidth=.5;
+      ctx.beginPath();ctx.moveTo(s.x-s.r*3.5,s.y);ctx.lineTo(s.x+s.r*3.5,s.y);ctx.moveTo(s.x,s.y-s.r*3.5);ctx.lineTo(s.x,s.y+s.r*3.5);ctx.stroke();
+    }
+    ctx.globalAlpha=1;
+  });
+  requestAnimationFrame(draw);
+}
+draw();
+
+const ptC=['#4A3080','#EDEAF5','#6A4CAF','#C4B8E8','#9B8AC4','#E879B0','#1A1A4E','#D4D0E8'];
+for(let i=0;i<55;i++){
+  const p=document.createElement('div');p.className='pt';
+  const sz=Math.random()*5+2;
+  p.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*100}vw;background:${ptC[Math.floor(Math.random()*ptC.length)]};opacity:${Math.random()*.55+.2};animation-duration:${Math.random()*12+8}s;animation-delay:${Math.random()*12}s;filter:blur(${Math.random()}px);`;
+  document.body.appendChild(p);
+}
+
+function toggleDoc(){
+  document.getElementById('docBtn').classList.toggle('open');
+  document.getElementById('docBody').classList.toggle('open');
+}
+</script>
+</body>
+</html>

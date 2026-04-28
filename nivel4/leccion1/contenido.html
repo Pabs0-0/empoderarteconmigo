@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🪐 Órbitas — Mi Universo Personal | Pandora Nivel 4</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@400;600;700;800&display=swap');
+
+  :root {
+    --verde: #1E7A34;
+    --acento: #27AE60;
+    --claro: #E8F8EE;
+    --blanco: #ffffff;
+    --dorado: #F9D342;
+    --coral: #FF6B6B;
+    --azul-magic: #6EC6F0;
+    --purpura: #B983FF;
+    --text-dark: #1a2e1a;
+    --sombra: rgba(30,122,52,0.18);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    min-height: 100vh;
+    background-image: url('https://res.cloudinary.com/dijezdfsr/image/upload/v1775754355/background_duuc07.png');
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    overflow-x: hidden;
+  }
+
+  /* ===== PARTÍCULAS ===== */
+  .particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; overflow: hidden; }
+  .particle {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--acento), transparent);
+    opacity: 0;
+    animation: floatParticle linear infinite;
+  }
+
+  @keyframes floatParticle {
+    0% { transform: translateY(100vh) scale(0); opacity: 0; }
+    10% { opacity: 0.6; }
+    90% { opacity: 0.3; }
+    100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+  }
+
+  /* ===== CONTENEDOR PRINCIPAL ===== */
+  .main-wrapper {
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 24px 16px 60px;
+  }
+
+  /* ===== BLOQUE INTRO ===== */
+  .intro-block {
+    background: var(--blanco);
+    border-radius: 28px;
+    padding: 32px 28px;
+    margin-bottom: 24px;
+    box-shadow: 0 8px 32px var(--sombra), 0 0 0 3px var(--acento);
+    position: relative;
+    overflow: visible;
+  }
+
+  .intro-top {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .ceci-intro {
+    width: 90px;
+    min-width: 90px;
+    filter: drop-shadow(0 4px 12px rgba(30,122,52,0.3));
+    animation: ceciFloat 3s ease-in-out infinite;
+  }
+
+  @keyframes ceciFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+
+  .intro-text h1 {
+    font-family: 'Baloo 2', cursive;
+    font-size: clamp(22px, 5vw, 34px);
+    color: var(--verde);
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 10px;
+  }
+
+  .intro-text p {
+    font-size: clamp(14px, 3.5vw, 16px);
+    color: #3a5c3a;
+    line-height: 1.6;
+    font-weight: 600;
+  }
+
+  .nivel-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--verde);
+    color: white;
+    font-size: 12px;
+    font-weight: 800;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 8px;
+    letter-spacing: 0.5px;
+  }
+
+  /* ===== CAMPO NOMBRE ===== */
+  .nombre-section {
+    background: var(--blanco);
+    border-radius: 24px;
+    padding: 24px 24px 20px;
+    margin-bottom: 24px;
+    box-shadow: 0 6px 24px var(--sombra), 0 0 0 2px var(--acento);
+    text-align: center;
+  }
+
+  .nombre-section label {
+    display: block;
+    font-family: 'Baloo 2', cursive;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--verde);
+    margin-bottom: 12px;
+  }
+
+  .nombre-input {
+    width: 100%;
+    max-width: 380px;
+    font-family: 'Baloo 2', cursive;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--verde);
+    background: var(--claro);
+    border: 3px solid var(--acento);
+    border-radius: 50px;
+    padding: 12px 24px;
+    text-align: center;
+    outline: none;
+    transition: all 0.3s;
+    box-shadow: 0 4px 14px rgba(39,174,96,0.15);
+  }
+
+  .nombre-input:focus {
+    border-color: var(--verde);
+    box-shadow: 0 0 0 5px rgba(39,174,96,0.2), 0 4px 14px rgba(39,174,96,0.2);
+    transform: scale(1.02);
+  }
+
+  .nombre-input::placeholder { color: #a0c8a0; font-weight: 600; }
+
+  /* ===== MÓDULO ÓRBITAS ===== */
+  .orbitas-module {
+    background: linear-gradient(160deg, #0b3d1a 0%, #1a5c2a 40%, #0e4020 100%);
+    border-radius: 32px;
+    padding: 40px 20px;
+    margin-bottom: 24px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 12px 48px rgba(0,0,0,0.35), 0 0 0 3px var(--acento), inset 0 1px 0 rgba(255,255,255,0.1);
+  }
+
+  /* Stars inside orbit module */
+  .orbit-stars { position: absolute; inset: 0; pointer-events: none; }
+  .star-dot {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+    animation: twinkle ease-in-out infinite;
+  }
+
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.2; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.4); }
+  }
+
+  /* Solar system */
+  .solar-system {
+    position: relative;
+    width: 320px;
+    height: 320px;
+    margin: 0 auto 32px;
+  }
+
+  /* Center */
+  .orbit-center {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90px; height: 90px;
+    background: radial-gradient(circle at 35% 35%, #52e07c, #1E7A34 60%, #0b3010);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column;
+    box-shadow: 0 0 0 4px rgba(82,224,124,0.4), 0 0 30px rgba(39,174,96,0.6), 0 0 60px rgba(39,174,96,0.3);
+    z-index: 10;
+    cursor: default;
+    animation: centerPulse 2.5s ease-in-out infinite;
+  }
+
+  @keyframes centerPulse {
+    0%, 100% { box-shadow: 0 0 0 4px rgba(82,224,124,0.4), 0 0 30px rgba(39,174,96,0.6), 0 0 60px rgba(39,174,96,0.3); }
+    50% { box-shadow: 0 0 0 8px rgba(82,224,124,0.3), 0 0 50px rgba(39,174,96,0.8), 0 0 90px rgba(39,174,96,0.4); }
+  }
+
+  .center-name {
+    font-family: 'Baloo 2', cursive;
+    font-size: 13px;
+    font-weight: 800;
+    color: white;
+    text-align: center;
+    padding: 4px 8px;
+    line-height: 1.2;
+    word-break: break-word;
+    max-width: 80px;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+  }
+
+  /* Orbit rings */
+  .orbit-ring {
+    position: absolute;
+    top: 50%; left: 50%;
+    border-radius: 50%;
+    border: 1.5px solid rgba(82,224,124,0.2);
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+
+  /* Planet orbit items */
+  .orbit-item {
+    position: absolute;
+    width: 64px; height: 64px;
+    cursor: pointer;
+    transition: transform 0.25s, filter 0.25s;
+    z-index: 5;
+  }
+
+  .orbit-item:hover .planet-ball, .orbit-item:focus .planet-ball {
+    transform: scale(1.18);
+    filter: brightness(1.3);
+  }
+
+  .planet-ball {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column;
+    font-size: 11px;
+    font-weight: 800;
+    color: white;
+    text-align: center;
+    line-height: 1.2;
+    transition: all 0.3s;
+    position: relative;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+    text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+    animation: orbitSpin var(--duration, 12s) linear infinite;
+    transform-origin: center center;
+  }
+
+  .planet-emoji { font-size: 20px; display: block; }
+  .planet-label { font-size: 9px; padding: 0 4px; }
+
+  .orbit-item.completed .planet-ball {
+    box-shadow: 0 0 0 3px var(--dorado), 0 0 20px rgba(249,211,66,0.7), 0 4px 16px rgba(0,0,0,0.4);
+    animation: completedGlow 1.5s ease-in-out infinite;
+  }
+
+  @keyframes completedGlow {
+    0%, 100% { box-shadow: 0 0 0 3px var(--dorado), 0 0 20px rgba(249,211,66,0.6), 0 4px 16px rgba(0,0,0,0.4); }
+    50% { box-shadow: 0 0 0 5px var(--dorado), 0 0 35px rgba(249,211,66,0.9), 0 4px 16px rgba(0,0,0,0.4); }
+  }
+
+  .check-badge {
+    position: absolute;
+    top: -4px; right: -4px;
+    width: 20px; height: 20px;
+    background: var(--dorado);
+    border-radius: 50%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    border: 2px solid white;
+    z-index: 10;
+  }
+
+  .orbit-item.completed .check-badge { display: flex; }
+
+  /* Planet colors */
+  .planet-0 .planet-ball { background: radial-gradient(circle at 35% 30%, #7be8ff, #2196f3 60%, #0a4f8a); }
+  .planet-1 .planet-ball { background: radial-gradient(circle at 35% 30%, #ffa3e0, #e040fb 60%, #6a0b7a); }
+  .planet-2 .planet-ball { background: radial-gradient(circle at 35% 30%, #ffe97a, #f9a825 60%, #a06000); }
+  .planet-3 .planet-ball { background: radial-gradient(circle at 35% 30%, #ff9f9f, #f44336 60%, #7f0000); }
+  .planet-4 .planet-ball { background: radial-gradient(circle at 35% 30%, #a8ffb8, #27AE60 60%, #0b3d1a); }
+
+  /* Orbit positions - desktop circular */
+  .orbit-r1 { width: 120px; height: 120px; }
+  .orbit-r2 { width: 210px; height: 210px; }
+  .orbit-r3 { width: 290px; height: 290px; }
+
+  /* Planet positions (% from center) */
+  .planet-pos-0 { top: calc(50% - 130px); left: 50%; transform: translateX(-50%); }
+  .planet-pos-1 { top: 50%; left: calc(50% + 100px); transform: translateY(-50%); }
+  .planet-pos-2 { top: calc(50% + 82px); left: calc(50% + 66px); }
+  .planet-pos-3 { top: calc(50% + 82px); left: calc(50% - 130px); }
+  .planet-pos-4 { top: 50%; left: calc(50% - 164px); transform: translateY(-50%); }
+
+  /* ===== PROGRESS BAR ===== */
+  .progress-wrapper {
+    text-align: center;
+    color: white;
+    margin-top: 8px;
+  }
+  .progress-label {
+    font-size: 13px; font-weight: 700; margin-bottom: 8px; opacity: 0.85;
+  }
+  .progress-bar-bg {
+    background: rgba(255,255,255,0.15);
+    border-radius: 20px;
+    height: 10px;
+    max-width: 280px;
+    margin: 0 auto;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--acento), var(--dorado));
+    border-radius: 20px;
+    transition: width 0.6s cubic-bezier(.34,1.56,.64,1);
+    width: 0%;
+  }
+
+  /* Mobile orbit layout */
+  @media (max-width: 520px) {
+    .solar-system { width: 260px; height: 260px; }
+    .orbit-center { width: 74px; height: 74px; }
+    .center-name { font-size: 11px; max-width: 64px; }
+    .orbit-item { width: 54px; height: 54px; }
+    .planet-ball { width: 54px; height: 54px; font-size: 10px; }
+    .planet-emoji { font-size: 17px; }
+    .planet-pos-0 { top: calc(50% - 112px); }
+    .planet-pos-1 { left: calc(50% + 85px); }
+    .planet-pos-2 { top: calc(50% + 70px); left: calc(50% + 54px); }
+    .planet-pos-3 { top: calc(50% + 70px); left: calc(50% - 108px); }
+    .planet-pos-4 { left: calc(50% - 138px); }
+  }
+
+  /* ===== GRID MÓVIL debajo de órbitas cuando sea muy pequeño ===== */
+  .orbits-grid {
+    display: none;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  @media (max-width: 340px) {
+    .solar-system { display: none; }
+    .orbits-grid { display: grid; }
+  }
+
+  .orbit-card-mini {
+    background: rgba(255,255,255,0.1);
+    border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 16px;
+    padding: 12px 10px;
+    cursor: pointer;
+    text-align: center;
+    color: white;
+    font-weight: 700;
+    font-size: 12px;
+    transition: all 0.3s;
+  }
+
+  .orbit-card-mini:hover { background: rgba(255,255,255,0.2); transform: scale(1.04); }
+  .orbit-card-mini.completed-mini { border-color: var(--dorado); background: rgba(249,211,66,0.15); }
+
+  /* ===== MODAL ===== */
+  .modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(4px);
+    z-index: 100;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    animation: fadeIn 0.3s;
+  }
+
+  .modal-overlay.open { display: flex; }
+
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  .modal-card {
+    background: var(--blanco);
+    border-radius: 28px;
+    padding: 28px 24px;
+    max-width: 460px;
+    width: 100%;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 0 3px var(--acento);
+    animation: modalIn 0.35s cubic-bezier(.34,1.56,.64,1);
+  }
+
+  @keyframes modalIn {
+    from { transform: scale(0.7) translateY(30px); opacity: 0; }
+    to { transform: scale(1) translateY(0); opacity: 1; }
+  }
+
+  .modal-planet-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 16px;
+  }
+
+  .modal-planet-icon {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px;
+    flex-shrink: 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  }
+
+  .modal-planet-info h3 {
+    font-family: 'Baloo 2', cursive;
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--verde);
+    margin-bottom: 2px;
+  }
+
+  .modal-planet-info p {
+    font-size: 14px;
+    color: #5a8a5a;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  .modal-textarea {
+    width: 100%;
+    min-height: 100px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-dark);
+    background: var(--claro);
+    border: 2px solid var(--acento);
+    border-radius: 16px;
+    padding: 14px 16px;
+    resize: vertical;
+    outline: none;
+    transition: border 0.3s, box-shadow 0.3s;
+    line-height: 1.5;
+    margin-bottom: 16px;
+  }
+
+  .modal-textarea:focus {
+    border-color: var(--verde);
+    box-shadow: 0 0 0 4px rgba(39,174,96,0.2);
+  }
+
+  .modal-textarea::placeholder { color: #a0c8a0; font-style: italic; font-weight: 500; }
+
+  .modal-btn {
+    width: 100%;
+    background: linear-gradient(135deg, var(--verde), var(--acento));
+    color: white;
+    font-family: 'Baloo 2', cursive;
+    font-size: 18px;
+    font-weight: 700;
+    border: none;
+    border-radius: 50px;
+    padding: 14px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 6px 20px rgba(30,122,52,0.4);
+  }
+
+  .modal-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(30,122,52,0.5); }
+  .modal-btn:active { transform: translateY(0); }
+
+  .modal-close {
+    position: absolute;
+    top: 14px; right: 16px;
+    background: var(--claro);
+    border: none;
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    font-size: 18px;
+    cursor: pointer;
+    color: var(--verde);
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s;
+  }
+
+  .modal-close:hover { background: rgba(39,174,96,0.2); }
+
+  /* ===== PERFIL FINAL ===== */
+  .perfil-final {
+    display: none;
+    background: var(--blanco);
+    border-radius: 32px;
+    padding: 32px 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 12px 48px var(--sombra), 0 0 0 4px var(--dorado);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    animation: perfilReveal 0.7s cubic-bezier(.34,1.56,.64,1);
+  }
+
+  @keyframes perfilReveal {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+
+  .perfil-final.visible { display: block; }
+
+  .perfil-bg-deco {
+    position: absolute; top: -20px; right: -20px;
+    width: 120px; height: 120px;
+    background: radial-gradient(circle, rgba(249,211,66,0.15), transparent);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .perfil-header {
+    font-family: 'Baloo 2', cursive;
+    font-size: clamp(20px, 5vw, 28px);
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--verde), var(--acento), var(--dorado));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 20px;
+  }
+
+  .perfil-texto {
+    background: var(--claro);
+    border-radius: 20px;
+    padding: 22px 20px;
+    font-size: clamp(15px, 3.8vw, 17px);
+    font-weight: 700;
+    color: #2d5a2d;
+    line-height: 1.7;
+    border-left: 5px solid var(--acento);
+    text-align: left;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 12px rgba(39,174,96,0.1);
+  }
+
+  .perfil-texto strong { color: var(--verde); font-size: 1.05em; }
+
+  .ceci-final {
+    width: 80px;
+    filter: drop-shadow(0 4px 12px rgba(30,122,52,0.35));
+    animation: ceciFloat 3s ease-in-out infinite;
+    margin-bottom: 10px;
+  }
+
+  /* Confetti */
+  .confetti-container {
+    position: fixed; inset: 0;
+    pointer-events: none;
+    z-index: 200;
+    overflow: hidden;
+  }
+
+  .confetti-piece {
+    position: absolute;
+    width: 10px; height: 10px;
+    top: -10px;
+    animation: confettiFall linear forwards;
+    border-radius: 2px;
+  }
+
+  @keyframes confettiFall {
+    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+  }
+
+  /* ===== BONUS ===== */
+  .bonus-wrapper {
+    margin-bottom: 32px;
+  }
+
+  .bonus-locked {
+    background: linear-gradient(135deg, #2d2d2d, #1a1a1a);
+    border-radius: 28px;
+    padding: 24px 20px;
+    text-align: center;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.35), 0 0 0 3px rgba(255,255,255,0.1);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.6s;
+    cursor: default;
+  }
+
+  .bonus-locked::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(39,174,96,0.05), rgba(249,211,66,0.05));
+    border-radius: 28px;
+  }
+
+  .bonus-shine {
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: conic-gradient(transparent 0deg, rgba(249,211,66,0.08) 60deg, transparent 120deg);
+    animation: bonusRotate 4s linear infinite;
+    pointer-events: none;
+  }
+
+  @keyframes bonusRotate { to { transform: rotate(360deg); } }
+
+  .bonus-lock-icon { font-size: 40px; display: block; margin-bottom: 10px; filter: grayscale(0.3); }
+
+  .bonus-title-locked {
+    font-family: 'Baloo 2', cursive;
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--dorado);
+    letter-spacing: 3px;
+    text-shadow: 0 0 20px rgba(249,211,66,0.5), 0 2px 4px rgba(0,0,0,0.5);
+    display: block;
+  }
+
+  .bonus-locked p {
+    color: rgba(255,255,255,0.5);
+    font-size: 13px;
+    font-weight: 600;
+    margin-top: 8px;
+  }
+
+  /* Bonus unlocked */
+  .bonus-unlocked {
+    display: none;
+    background: linear-gradient(160deg, #0d3d1a, #1a5c2a 60%, #276b30);
+    border-radius: 28px;
+    padding: 28px 20px;
+    box-shadow: 0 12px 48px rgba(39,174,96,0.4), 0 0 0 4px var(--acento);
+    animation: bonusReveal 0.8s cubic-bezier(.34,1.56,.64,1);
+  }
+
+  @keyframes bonusReveal {
+    from { transform: scale(0.85) rotate(-2deg); opacity: 0; }
+    to { transform: scale(1) rotate(0deg); opacity: 1; }
+  }
+
+  .bonus-unlocked.visible { display: block; }
+
+  .bonus-header {
+    font-family: 'Baloo 2', cursive;
+    font-size: clamp(18px, 4.5vw, 24px);
+    font-weight: 900;
+    color: var(--dorado);
+    text-align: center;
+    margin-bottom: 6px;
+    text-shadow: 0 0 20px rgba(249,211,66,0.6);
+  }
+
+  .bonus-subtitulo {
+    text-align: center;
+    color: rgba(255,255,255,0.75);
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+
+  .comparacion-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .comparacion-card {
+    background: rgba(0,0,0,0.25);
+    border-radius: 18px;
+    overflow: hidden;
+    border: 1.5px solid rgba(255,255,255,0.1);
+    cursor: pointer;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+
+  .comparacion-card:hover { border-color: rgba(39,174,96,0.5); }
+  .comparacion-card.revealed { border-color: var(--acento); box-shadow: 0 0 20px rgba(39,174,96,0.3); }
+
+  .frase-negativa {
+    padding: 14px 16px;
+    color: rgba(255,255,255,0.7);
+    font-size: 14px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .frase-negativa span.quote-neg { font-style: italic; flex: 1; }
+  .click-hint { font-size: 11px; opacity: 0.5; white-space: nowrap; }
+
+  .frase-positiva {
+    padding: 0 16px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease, padding 0.3s;
+    background: linear-gradient(135deg, rgba(39,174,96,0.2), rgba(82,224,124,0.1));
+  }
+
+  .comparacion-card.revealed .frase-positiva {
+    max-height: 80px;
+    padding: 12px 16px;
+  }
+
+  .frase-positiva-inner {
+    color: #a8ffc4;
+    font-size: 14px;
+    font-weight: 800;
+    line-height: 1.5;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .frase-positiva-inner::before { content: '✨'; font-size: 16px; flex-shrink: 0; }
+
+  .bonus-mensaje-final {
+    background: rgba(255,255,255,0.1);
+    border-radius: 18px;
+    padding: 18px;
+    text-align: center;
+    border: 2px solid rgba(255,255,255,0.2);
+  }
+
+  .bonus-mensaje-final p {
+    font-family: 'Baloo 2', cursive;
+    font-size: clamp(16px, 4vw, 20px);
+    font-weight: 800;
+    color: white;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  }
+
+  /* ===== DECORATIVOS ===== */
+  .deco-float {
+    position: absolute;
+    pointer-events: none;
+    opacity: 0.85;
+    animation: decoFloat 4s ease-in-out infinite;
+  }
+
+  @keyframes decoFloat {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-10px) rotate(5deg); }
+  }
+
+  /* ===== FOOTER ===== */
+  .page-footer {
+    text-align: center;
+    color: rgba(255,255,255,0.0);
+    padding: 10px;
+    font-size: 12px;
+  }
+
+  /* Mobile adjustments */
+  @media (max-width: 480px) {
+    .intro-top { flex-direction: column; align-items: center; text-align: center; }
+    .ceci-intro { width: 70px; }
+    .modal-card { padding: 22px 18px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Partículas flotantes -->
+<div class="particles" id="particles"></div>
+
+<!-- Confetti container -->
+<div class="confetti-container" id="confetti"></div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modal" role="dialog" aria-modal="true">
+  <div class="modal-card">
+    <button class="modal-close" onclick="closeModal()" aria-label="Cerrar">✕</button>
+    <div class="modal-planet-header">
+      <div class="modal-planet-icon" id="modal-icon"></div>
+      <div class="modal-planet-info">
+        <h3 id="modal-title"></h3>
+        <p id="modal-question"></p>
+      </div>
+    </div>
+    <textarea class="modal-textarea" id="modal-textarea" rows="4"></textarea>
+    <button class="modal-btn" onclick="saveOrbit()">✨ ¡Listo!</button>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main-wrapper">
+
+  <!-- INTRO -->
+  <div class="intro-block">
+    <div class="deco-float" style="top:12px;right:16px;width:48px;animation-delay:0.5s;">
+      <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754686/estrella_bbltv2.png" width="48" alt="">
+    </div>
+    <div class="intro-top">
+      <img class="ceci-intro" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754460/ceci_arquera_ilpomc.png" alt="Ceci señalando">
+      <div class="intro-text">
+        <div class="nivel-badge">✦ Nivel 4 · ¡Eres GranDiosa! ✦</div>
+        <h1>🪐 Órbitas<br>Mi Universo Personal</h1>
+        <p>¡Hola! Hoy vamos a construir un pequeño mapa de <strong>ti misma</strong> ✨<br>
+        Cada órbita representa una parte especial de quién eres. Haz clic en cada planeta para explorarte y descubrir tu esencia única. No hay respuestas incorrectas, solo <em>las tuyas</em> 💚</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- NOMBRE -->
+  <div class="nombre-section">
+    <label for="nombre-input">¿Cómo te llamas? 🌟</label>
+    <input
+      type="text"
+      class="nombre-input"
+      id="nombre-input"
+      placeholder="Escribe tu nombre aquí"
+      maxlength="20"
+      oninput="updateName(this.value)"
+      autocomplete="off"
+    >
+  </div>
+
+  <!-- MÓDULO ÓRBITAS -->
+  <div class="orbitas-module">
+    <!-- Estrellas internas -->
+    <div class="orbit-stars" id="orbit-stars"></div>
+
+    <div style="text-align:center; margin-bottom:20px;">
+      <span style="font-family:'Baloo 2',cursive; font-size:clamp(16px,4vw,20px); font-weight:800; color:rgba(255,255,255,0.9); text-shadow: 0 0 20px rgba(82,224,124,0.5);">
+        ✨ Toca cada planeta para completar tu universo ✨
+      </span>
+    </div>
+
+    <!-- Sistema solar -->
+    <div class="solar-system" id="solar-system">
+      <!-- Anillos decorativos -->
+      <div class="orbit-ring" style="width:140px;height:140px;"></div>
+      <div class="orbit-ring" style="width:220px;height:220px;"></div>
+      <div class="orbit-ring" style="width:300px;height:300px;"></div>
+
+      <!-- Centro -->
+      <div class="orbit-center" id="orbit-center">
+        <div class="center-name" id="center-name">Tu nombre aquí</div>
+      </div>
+
+      <!-- Planetas dinámicos -->
+      <div id="planets-container"></div>
+    </div>
+
+    <!-- Grid alternativo móvil muy pequeño -->
+    <div class="orbits-grid" id="orbits-grid"></div>
+
+    <!-- Progress -->
+    <div class="progress-wrapper">
+      <div class="progress-label" id="progress-label">0 de 5 órbitas completadas</div>
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill" id="progress-bar"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PERFIL FINAL -->
+  <div class="perfil-final" id="perfil-final">
+    <div class="perfil-bg-deco"></div>
+    <img class="ceci-final" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754478/ceci_satisfecha_r8qfmd.png" alt="Ceci satisfecha">
+    <div class="perfil-header">🌟 ¡Tu Universo Personal está completo! 🌟</div>
+    <div class="perfil-texto" id="perfil-texto"></div>
+    <div style="display:flex; justify-content:center; gap:16px; flex-wrap:wrap;">
+      <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754464/ceci_colombiana_zygti3.png" width="60" alt="Luna" style="filter:drop-shadow(0 4px 12px rgba(30,122,52,0.3));">
+      </div>
+  </div>
+
+  <!-- BONUS -->
+  <div class="bonus-wrapper">
+    <!-- Bloqueado -->
+    <div class="bonus-locked" id="bonus-locked">
+      <div class="bonus-shine"></div>
+      <span class="bonus-lock-icon">🔒</span>
+      <span class="bonus-title-locked">BONUS</span>
+      <p>Completa las 5 órbitas para desbloquearlo 🌟</p>
+      <div style="margin-top:12px; display:flex; justify-content:center; gap:12px; opacity:0.4;">
+        <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754682/corazon_vjqq8g.png" width="30" alt="">
+        <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754686/estrella_bbltv2.png" width="28" alt="">
+        <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754457/bombillo_nqpvqy.png" width="28" alt="">
+      </div>
+    </div>
+
+    <!-- Desbloqueado -->
+    <div class="bonus-unlocked" id="bonus-unlocked">
+      <div style="text-align:center; margin-bottom:6px; display:flex; justify-content:center; gap:10px;">
+        <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754682/corazon_vjqq8g.png" width="36" alt="">
+        <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754457/bombillo_nqpvqy.png" width="34" alt="">
+        <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754766/mariposa_ep7ez6.png" width="36" alt="">
+      </div>
+      <div class="bonus-header">🎁 ¡BONUS DESBLOQUEADO!</div>
+      <div class="bonus-subtitulo">La trampa de la comparación</div>
+
+      <div class="comparacion-grid" id="comparacion-grid"></div>
+
+      <div class="bonus-mensaje-final">
+        <p>✨ Ser tú misma es tu mayor poder. 💜 ✨</p>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end main-wrapper -->
+
+<script>
+  // ===== DATA =====
+  const orbitas = [
+    {
+      id: 0,
+      emoji: '🌍',
+      nombre: 'Lo que me gusta hacer',
+      pregunta: '¿Qué actividades disfrutas en tu día a día?',
+      placeholder: 'Por ejemplo: dibujar, bailar, jugar fútbol, leer, cocinar...',
+      placeholder2: 'Por ejemplo: ser médica, viajar, aprender mucho...',
+      colorClass: 'planet-0'
+    },
+    {
+      id: 1,
+      emoji: '🪐',
+      nombre: 'Lo que sueño ser o lograr',
+      pregunta: '¿Qué sueños tienes para tu futuro?',
+      placeholder: 'Por ejemplo: ser médica, viajar por el mundo, aprender idiomas...',
+      colorClass: 'planet-1'
+    },
+    {
+      id: 2,
+      emoji: '⭐',
+      nombre: 'Algo en lo que soy buena',
+      pregunta: '¿Cuáles son tus talentos o habilidades especiales?',
+      placeholder: 'Por ejemplo: escuchar, cantar, resolver problemas, hacer reír...',
+      colorClass: 'planet-2'
+    },
+    {
+      id: 3,
+      emoji: '🌕',
+      nombre: 'Las personas que me apoyan',
+      pregunta: '¿Quiénes te hacen sentir bien y te acompañan?',
+      placeholder: 'Por ejemplo: mi mamá, mi abuela, una amiga, mi profe...',
+      colorClass: 'planet-3'
+    },
+    {
+      id: 4,
+      emoji: '🔥',
+      nombre: 'Lo que me hace única',
+      pregunta: '¿Qué hace diferente tu forma de ser?',
+      placeholder: 'Por ejemplo: mi forma de pensar, mi creatividad, mi ternura...',
+      colorClass: 'planet-4'
+    }
+  ];
+
+  const comparaciones = [
+    { neg: '"No soy suficiente"', pos: 'Estoy aprendiendo a conocerme y eso es un gran paso.' },
+    { neg: '"No soy como las demás"', pos: 'Soy única y eso es mi mayor fortaleza.' },
+    { neg: '"No soy buena en nada"', pos: 'Tengo talentos que estoy descubriendo cada día.' },
+    { neg: '"Siempre me comparo con otras"', pos: 'Mi camino es diferente y eso está bien.' }
+  ];
+
+  // ===== STATE =====
+  const answers = {};
+  let currentOrbit = null;
+  let userName = '';
+
+  // ===== INIT =====
+  function init() {
+    createParticles();
+    createOrbitStars();
+    createPlanets();
+    createOrbitsMini();
+    createComparaciones();
+    updateProgress();
+  }
+
+  // ===== PARTICLES =====
+  function createParticles() {
+    const c = document.getElementById('particles');
+    for (let i = 0; i < 18; i++) {
+      const p = document.createElement('div');
+      p.className = 'particle';
+      const size = Math.random() * 6 + 3;
+      p.style.cssText = `
+        width:${size}px;height:${size}px;
+        left:${Math.random()*100}%;
+        animation-duration:${8+Math.random()*12}s;
+        animation-delay:${Math.random()*10}s;
+        opacity:0;
+      `;
+      c.appendChild(p);
+    }
+  }
+
+  // ===== ORBIT STARS =====
+  function createOrbitStars() {
+    const c = document.getElementById('orbit-stars');
+    for (let i = 0; i < 40; i++) {
+      const s = document.createElement('div');
+      s.className = 'star-dot';
+      const size = Math.random() * 3 + 1;
+      s.style.cssText = `
+        width:${size}px;height:${size}px;
+        top:${Math.random()*100}%;
+        left:${Math.random()*100}%;
+        animation-duration:${1.5+Math.random()*3}s;
+        animation-delay:${Math.random()*3}s;
+      `;
+      c.appendChild(s);
+    }
+  }
+
+  // ===== PLANETS =====
+  const planetPositions = [
+    { top: 'calc(50% - 130px)', left: '50%', transform: 'translateX(-50%)' },
+    { top: '50%', left: 'calc(50% + 102px)', transform: 'translateY(-50%)' },
+    { top: 'calc(50% + 84px)', left: 'calc(50% + 66px)', transform: '' },
+    { top: 'calc(50% + 84px)', left: 'calc(50% - 130px)', transform: '' },
+    { top: '50%', left: 'calc(50% - 162px)', transform: 'translateY(-50%)' }
+  ];
+
+  function createPlanets() {
+    const container = document.getElementById('planets-container');
+    orbitas.forEach((orb, i) => {
+      const pos = planetPositions[i];
+      const div = document.createElement('div');
+      div.className = `orbit-item ${orb.colorClass}`;
+      div.id = `planet-${i}`;
+      div.style.cssText = `
+        position:absolute;
+        top:${pos.top};
+        left:${pos.left};
+        transform:${pos.transform || 'translate(-50%,-50%)'};
+        width:64px;height:64px;
+      `;
+      div.setAttribute('tabindex', '0');
+      div.setAttribute('role', 'button');
+      div.setAttribute('aria-label', orb.nombre);
+      div.innerHTML = `
+        <div class="planet-ball">
+          <span class="planet-emoji">${orb.emoji}</span>
+          <span class="planet-label">${orb.nombre.split(' ').slice(0,2).join(' ')}</span>
+        </div>
+        <div class="check-badge">✓</div>
+      `;
+      div.onclick = () => openModal(i);
+      div.onkeydown = (e) => { if (e.key === 'Enter' || e.key === ' ') openModal(i); };
+      container.appendChild(div);
+    });
+  }
+
+  // ===== MINI GRID =====
+  function createOrbitsMini() {
+    const grid = document.getElementById('orbits-grid');
+    orbitas.forEach((orb, i) => {
+      const card = document.createElement('div');
+      card.className = 'orbit-card-mini';
+      card.id = `mini-${i}`;
+      card.innerHTML = `${orb.emoji} ${orb.nombre}`;
+      card.onclick = () => openModal(i);
+      grid.appendChild(card);
+    });
+  }
+
+  // ===== COMPARACIONES BONUS =====
+  function createComparaciones() {
+    const grid = document.getElementById('comparacion-grid');
+    comparaciones.forEach((c, i) => {
+      const card = document.createElement('div');
+      card.className = 'comparacion-card';
+      card.id = `comp-${i}`;
+      card.innerHTML = `
+        <div class="frase-negativa">
+          <span class="quote-neg">💬 ${c.neg}</span>
+          <span class="click-hint">Toca ›</span>
+        </div>
+        <div class="frase-positiva">
+          <div class="frase-positiva-inner">${c.pos}</div>
+        </div>
+      `;
+      card.onclick = () => {
+        card.classList.toggle('revealed');
+        const hint = card.querySelector('.click-hint');
+        if (card.classList.contains('revealed')) hint.textContent = '✓';
+      };
+      grid.appendChild(card);
+    });
+  }
+
+  // ===== NAME UPDATE =====
+  function updateName(val) {
+    userName = val.trim();
+    const cn = document.getElementById('center-name');
+    cn.textContent = userName || 'Tu nombre aquí';
+  }
+
+  // ===== MODAL =====
+  function openModal(index) {
+    currentOrbit = index;
+    const orb = orbitas[index];
+    const modal = document.getElementById('modal');
+    const iconEl = document.getElementById('modal-icon');
+    const titleEl = document.getElementById('modal-title');
+    const questionEl = document.getElementById('modal-question');
+    const textarea = document.getElementById('modal-textarea');
+
+    iconEl.textContent = orb.emoji;
+    iconEl.style.background = getIconBg(index);
+    titleEl.textContent = orb.nombre;
+    questionEl.textContent = orb.pregunta;
+    textarea.placeholder = orb.placeholder;
+    textarea.value = answers[index] || '';
+
+    modal.classList.add('open');
+    setTimeout(() => textarea.focus(), 400);
+  }
+
+  function getIconBg(i) {
+    const bgs = [
+      'radial-gradient(circle, #7be8ff, #2196f3)',
+      'radial-gradient(circle, #ffa3e0, #e040fb)',
+      'radial-gradient(circle, #ffe97a, #f9a825)',
+      'radial-gradient(circle, #ff9f9f, #f44336)',
+      'radial-gradient(circle, #a8ffb8, #27AE60)'
+    ];
+    return bgs[i];
+  }
+
+  function closeModal() {
+    document.getElementById('modal').classList.remove('open');
+    currentOrbit = null;
+  }
+
+  function saveOrbit() {
+    const textarea = document.getElementById('modal-textarea');
+    const val = textarea.value.trim();
+    if (!val) {
+      textarea.style.borderColor = '#f44336';
+      textarea.placeholder = 'Escribe algo, aunque sea una palabra 💚';
+      setTimeout(() => { textarea.style.borderColor = ''; }, 1500);
+      return;
+    }
+    answers[currentOrbit] = val;
+    markOrbitCompleted(currentOrbit);
+    closeModal();
+    updateProgress();
+    checkAllCompleted();
+  }
+
+  // ===== MARK COMPLETED =====
+  function markOrbitCompleted(index) {
+    const planet = document.getElementById(`planet-${index}`);
+    if (planet) planet.classList.add('completed');
+    const mini = document.getElementById(`mini-${index}`);
+    if (mini) mini.classList.add('completed-mini');
+  }
+
+  // ===== PROGRESS =====
+  function updateProgress() {
+    const count = Object.keys(answers).length;
+    const label = document.getElementById('progress-label');
+    const bar = document.getElementById('progress-bar');
+    label.textContent = `${count} de 5 órbitas completadas`;
+    bar.style.width = `${(count / 5) * 100}%`;
+  }
+
+  // ===== ALL COMPLETED =====
+  function checkAllCompleted() {
+    if (Object.keys(answers).length === 5) {
+      setTimeout(() => {
+        showPerfilFinal();
+        unlockBonus();
+        launchConfetti();
+      }, 400);
+    }
+  }
+
+  // ===== PERFIL FINAL =====
+  function showPerfilFinal() {
+    const name = userName || 'GranDiosa';
+    const a = answers;
+    const template = `
+      <strong>✨ ${name}</strong>, eres una <strong>GranDiosa</strong> que sueña con <strong>${a[1] || '...'}</strong>,
+      disfruta <strong>${a[0] || '...'}</strong>, tiene talento en <strong>${a[2] || '...'}</strong>
+      y se rodea de personas que <strong>${a[3] || '...'}</strong>.
+      Tu esencia es única porque <strong>${a[4] || '...'}</strong>. 🌟
+    `;
+    document.getElementById('perfil-texto').innerHTML = template;
+    const perfil = document.getElementById('perfil-final');
+    perfil.classList.add('visible');
+    perfil.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  // ===== UNLOCK BONUS =====
+  function unlockBonus() {
+    document.getElementById('bonus-locked').style.display = 'none';
+    document.getElementById('bonus-unlocked').classList.add('visible');
+  }
+
+  // ===== CONFETTI =====
+  function launchConfetti() {
+    const c = document.getElementById('confetti');
+    const colors = ['#27AE60', '#F9D342', '#FF6B6B', '#6EC6F0', '#B983FF', '#52e07c', '#ffffff'];
+    for (let i = 0; i < 70; i++) {
+      const piece = document.createElement('div');
+      piece.className = 'confetti-piece';
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      const size = Math.random() * 10 + 6;
+      const shape = Math.random() > 0.5 ? '50%' : '2px';
+      piece.style.cssText = `
+        width:${size}px;height:${size}px;
+        background:${color};
+        left:${Math.random()*100}%;
+        border-radius:${shape};
+        animation-duration:${1.5+Math.random()*2.5}s;
+        animation-delay:${Math.random()*0.8}s;
+      `;
+      c.appendChild(piece);
+    }
+    setTimeout(() => { c.innerHTML = ''; }, 5000);
+  }
+
+  // ===== CLOSE MODAL ON OVERLAY =====
+  document.getElementById('modal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
+
+  // ===== KEYBOARD ESCAPE =====
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeModal();
+  });
+
+  // ===== START =====
+  init();
+</script>
+</body>
+</html>

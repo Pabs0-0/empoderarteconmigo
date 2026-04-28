@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>El Viaje de Ceci — Nivel 8 · Lección 2 · Celebración y Certificación</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fredoka+One&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --deep:     #3D1060;
+    --main:     #7D3C98;
+    --accent:   #BB6BD9;
+    --light:    #F5EEF8;
+    --violet:   #9B59B6;
+    --lavender: #D7BDE2;
+    --lilac:    #E8D5F0;
+    --rose:     #E879B0;
+    --gold:     #FFD700;
+    --cream:    #FBF5FF;
+    --white:    #FFFFFF;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    font-family:'Nunito',sans-serif;
+    background:#0D0520;
+    color:#fff;
+    overflow-x:hidden;
+    min-height:100vh;
+  }
+
+  #starfield { position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none; }
+
+  /* ── NEBULAE ── */
+  .neb{position:fixed;border-radius:50%;filter:blur(95px);opacity:.18;z-index:0;pointer-events:none;animation:nebPulse 9s ease-in-out infinite alternate;}
+  .n1{width:700px;height:700px;background:#7D3C98;top:-140px;left:-170px;animation-delay:0s;}
+  .n2{width:520px;height:520px;background:#BB6BD9;top:200px;right:-120px;animation-delay:2.5s;}
+  .n3{width:450px;height:450px;background:#9B59B6;bottom:60px;left:20%;animation-delay:4s;}
+  .n4{width:330px;height:330px;background:#E879B0;top:55%;right:7%;animation-delay:1.8s;opacity:.14;}
+  .n5{width:280px;height:280px;background:#D7BDE2;top:32%;left:52%;animation-delay:3.2s;opacity:.13;}
+  .n6{width:380px;height:380px;background:#FFD700;bottom:10%;left:3%;animation-delay:2s;opacity:.09;}
+  .n7{width:260px;height:260px;background:#E879B0;top:10%;right:20%;animation-delay:1s;opacity:.1;}
+  @keyframes nebPulse{from{opacity:.1;transform:scale(1);}to{opacity:.23;transform:scale(1.1);}}
+
+  /* ── PARTICLES ── */
+  .pt{position:fixed;border-radius:50%;pointer-events:none;z-index:0;animation:ptFall linear infinite;}
+  @keyframes ptFall{0%{transform:translateY(-20px) rotate(0deg);opacity:0;}10%{opacity:1;}90%{opacity:.8;}100%{transform:translateY(110vh) rotate(720deg);opacity:0;}}
+
+  /* ── CONFETTI ── */
+  .confetti{position:fixed;pointer-events:none;z-index:1;animation:confettiFall linear infinite;}
+  @keyframes confettiFall{0%{transform:translateY(-30px) rotate(0deg) translateX(0);opacity:0;}5%{opacity:.9;}90%{opacity:.7;}100%{transform:translateY(110vh) rotate(720deg) translateX(50px);opacity:0;}}
+
+  /* ── KEYFRAMES ── */
+  @keyframes float{from{transform:translateY(0);}to{transform:translateY(-13px);}}
+  @keyframes floatSlow{from{transform:translateY(0) rotate(-4deg);}to{transform:translateY(-9px) rotate(4deg);}}
+  @keyframes spkl{0%{opacity:.2;transform:scale(.7) rotate(0deg);}50%{opacity:1;transform:scale(1.25) rotate(180deg);}100%{opacity:.4;transform:scale(.9) rotate(360deg);}}
+  @keyframes heartPulse{0%,100%{transform:scale(1);}50%{transform:scale(1.22);}}
+  @keyframes haloBreath{from{transform:translate(-50%,-50%) scale(.88);opacity:.5;}to{transform:translate(-50%,-50%) scale(1.25);opacity:1;}}
+  @keyframes borderShim{0%{opacity:.4;}50%{opacity:1;}100%{opacity:.4;}}
+  @keyframes pillGlow{from{box-shadow:0 0 16px rgba(187,107,217,.4);}to{box-shadow:0 0 44px rgba(187,107,217,.95);}}
+  @keyframes breatheScale{from{transform:scale(1);}to{transform:scale(1.07);}}
+  @keyframes starPop{0%,100%{transform:scale(1) rotate(0deg);}50%{transform:scale(1.3) rotate(20deg);}}
+  @keyframes goldPulse{0%,100%{text-shadow:0 0 20px rgba(255,215,0,.5),0 0 40px rgba(255,215,0,.3);}50%{text-shadow:0 0 40px rgba(255,215,0,.9),0 0 80px rgba(255,215,0,.6);}}
+  @keyframes celebShine{
+    0%{box-shadow:0 0 24px rgba(187,107,217,.3),inset 0 0 24px rgba(187,107,217,.1);}
+    50%{box-shadow:0 0 60px rgba(232,121,176,.75),inset 0 0 44px rgba(215,189,226,.2);}
+    100%{box-shadow:0 0 24px rgba(187,107,217,.3),inset 0 0 24px rgba(187,107,217,.1);}
+  }
+  @keyframes goldFloat{
+    0%{transform:translateY(0) rotate(0deg);filter:drop-shadow(0 0 14px rgba(255,215,0,.5));}
+    50%{transform:translateY(-10px) rotate(8deg);filter:drop-shadow(0 0 28px rgba(255,215,0,.9));}
+    100%{transform:translateY(0) rotate(0deg);filter:drop-shadow(0 0 14px rgba(255,215,0,.5));}
+  }
+  @keyframes celebBadge{
+    0%{transform:scale(1) rotate(0deg);filter:drop-shadow(0 0 18px rgba(255,215,0,.5));}
+    50%{transform:scale(1.1) rotate(6deg);filter:drop-shadow(0 0 42px rgba(255,215,0,.95));}
+    100%{transform:scale(1) rotate(0deg);filter:drop-shadow(0 0 18px rgba(255,215,0,.5));}
+  }
+  @keyframes beginningPulse{
+    0%,100%{transform:scale(1);box-shadow:0 0 24px rgba(255,215,0,.3);}
+    50%{transform:scale(1.04);box-shadow:0 0 50px rgba(255,215,0,.8),0 0 90px rgba(187,107,217,.4);}
+  }
+  @keyframes levelOrbit{
+    from{transform:rotate(0deg) translateX(3px) rotate(0deg);}
+    to{transform:rotate(360deg) translateX(3px) rotate(-360deg);}
+  }
+
+  .fixed-spk{position:fixed;z-index:1;pointer-events:none;animation:spkl ease-in-out infinite alternate;}
+
+  .wrapper{position:relative;z-index:2;max-width:960px;margin:0 auto;padding:0 20px 72px;}
+
+  /* ── TOP CELEBRATION BANNER ── */
+  .celeb-banner{
+    background:linear-gradient(135deg,rgba(255,215,0,.2),rgba(187,107,217,.25),rgba(232,121,176,.15));
+    border:2px solid rgba(255,215,0,.5);border-radius:22px;
+    padding:16px 28px;margin-bottom:24px;text-align:center;
+    font-family:'Fredoka One',cursive;font-size:1.05rem;
+    letter-spacing:2px;
+    animation:beginningPulse 4s ease-in-out infinite;
+  }
+
+  /* ── NIVEL PILL ── */
+  .nivel-pill{display:inline-block;background:linear-gradient(135deg,#7D3C98,#BB6BD9);color:#fff;font-family:'Fredoka One',cursive;font-size:.95rem;letter-spacing:3px;padding:8px 28px;border-radius:50px;box-shadow:0 0 26px rgba(187,107,217,.6);margin-bottom:20px;animation:pillGlow 3s ease-in-out infinite alternate;}
+
+  /* ── HERO ── */
+  .hero{position:relative;text-align:center;}
+  .hero-block{
+    background:linear-gradient(145deg,#3D1060 0%,#6B2090 52%,#3D1060 100%);
+    border:2px solid rgba(187,107,217,.55);border-radius:32px;padding:52px 40px 46px;
+    position:relative;overflow:hidden;
+    box-shadow:0 0 80px rgba(61,16,96,.9),0 0 140px rgba(125,60,152,.25),inset 0 1px 0 rgba(255,255,255,.08);
+  }
+  .hero-block::after{content:'';position:absolute;top:-2px;left:-2px;right:-2px;bottom:-2px;border-radius:34px;background:linear-gradient(135deg,rgba(187,107,217,.38),transparent,rgba(232,121,176,.22));z-index:0;animation:borderShim 5s linear infinite;}
+
+  .hero-star{position:absolute;z-index:2;opacity:.48;animation:floatSlow ease-in-out infinite alternate;}
+  .hero-star.tl{top:20px;left:28px;width:46px;animation-duration:4s;}
+  .hero-star.tr{top:22px;right:28px;width:54px;animation-duration:5.2s;animation-delay:.8s;}
+  .hero-star.bl{bottom:18px;left:22px;width:38px;animation-duration:3.8s;animation-delay:1.4s;}
+  .hero-star.br{bottom:20px;right:22px;width:40px;animation-duration:4.5s;animation-delay:.4s;}
+
+  .hero-inner{position:relative;z-index:1;}
+  .hero-nivel{font-family:'Fredoka One',cursive;font-size:1rem;color:#D7BDE2;letter-spacing:4px;text-transform:uppercase;margin-bottom:8px;}
+  .hero-title{font-family:'Fredoka One',cursive;font-size:clamp(1.8rem,5vw,3.5rem);color:#fff;text-shadow:0 0 32px rgba(187,107,217,.88),0 2px 4px rgba(0,0,0,.4);line-height:1.15;margin-bottom:8px;}
+  .hero-title span{color:#FFD700;animation:goldPulse 3s ease-in-out infinite;}
+  .hero-sub2{font-size:.95rem;color:#D7BDE2;font-weight:700;margin-bottom:18px;line-height:1.55;}
+  .hero-lesson-tag{display:inline-block;background:rgba(61,16,96,.4);border:1px solid rgba(187,107,217,.5);border-radius:50px;padding:8px 26px;font-family:'Fredoka One',cursive;font-size:1rem;color:#FFD700;letter-spacing:1px;margin-bottom:28px;}
+
+  .hero-chars{display:flex;justify-content:center;align-items:flex-end;gap:18px;margin-top:10px;}
+  .hero-chars img{height:200px;filter:drop-shadow(0 0 24px rgba(187,107,217,.7));animation:float 4s ease-in-out infinite alternate;}
+  .hero-chars img:nth-child(2){height:105px;animation-delay:.8s;}
+  .hero-chars img:nth-child(3){height:160px;animation-delay:1.7s;}
+
+  /* ── SECTION LABEL ── */
+  .section-label{text-align:center;margin:44px 0 28px;}
+  .section-label h2{font-family:'Fredoka One',cursive;font-size:clamp(1.2rem,3.8vw,1.85rem);color:#FFD700;background:rgba(61,16,96,.75);border:1px solid rgba(187,107,217,.45);display:inline-block;padding:12px 36px;border-radius:50px;box-shadow:0 0 28px rgba(125,60,152,.4);}
+
+  /* ── MAIN GRANDIOSA CARD ── */
+  .main-card{
+    background:var(--light);border-radius:26px;padding:36px 40px;margin-bottom:26px;
+    border:2px solid rgba(125,60,152,.2);
+    box-shadow:0 10px 50px rgba(61,16,96,.42),0 2px 8px rgba(0,0,0,.2);
+    position:relative;overflow:hidden;
+  }
+  .main-card::before{content:'';position:absolute;top:0;left:0;right:0;height:5px;background:linear-gradient(90deg,#FFD700,#BB6BD9,#E879B0);border-radius:26px 26px 0 0;}
+  .main-row{display:flex;align-items:center;gap:28px;}
+  .main-text{flex:1;}
+  .main-char{flex-shrink:0;width:140px;}
+  .main-char img{width:100%;filter:drop-shadow(0 4px 14px rgba(125,60,152,.45));animation:float 4.5s ease-in-out infinite alternate;}
+  .grandiosa{font-family:'Fredoka One',cursive;font-size:clamp(1.7rem,4.5vw,2.4rem);color:#3D1060;margin-bottom:14px;}
+  .grandiosa span{color:#7D3C98;}
+  .grandiosa .gold{color:#8B6914;background:linear-gradient(135deg,#C0873A,#D4A055);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+  .main-card p{font-size:1.08rem;color:#4A1070;line-height:1.82;font-weight:700;}
+
+  /* ── 8 NIVELES STRIP ── */
+  .niveles-strip{
+    background:var(--light);border-radius:26px;padding:30px 36px;margin-bottom:26px;
+    border:2px solid rgba(125,60,152,.2);
+    box-shadow:0 10px 50px rgba(61,16,96,.4);
+    position:relative;overflow:hidden;
+  }
+  .niveles-strip::before{content:'';position:absolute;top:0;left:0;right:0;height:5px;background:linear-gradient(90deg,#7D3C98,#BB6BD9,#E879B0,#BB6BD9,#7D3C98);border-radius:26px 26px 0 0;}
+  .niveles-strip h3{font-family:'Fredoka One',cursive;font-size:1.4rem;color:#3D1060;margin-bottom:18px;text-align:center;}
+  .niveles-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+  .nivel-chip{
+    background:linear-gradient(145deg,#3D1060,#6B2090);
+    border-radius:14px;padding:12px 10px;text-align:center;
+    border:1px solid rgba(187,107,217,.4);
+    box-shadow:0 4px 14px rgba(61,16,96,.45);
+    font-family:'Fredoka One',cursive;
+    transition:transform .3s;cursor:default;
+    animation:pillGlow 3s ease-in-out infinite alternate;
+  }
+  .nivel-chip:nth-child(2){animation-delay:.3s;}
+  .nivel-chip:nth-child(3){animation-delay:.6s;}
+  .nivel-chip:nth-child(4){animation-delay:.9s;}
+  .nivel-chip:nth-child(5){animation-delay:1.2s;}
+  .nivel-chip:nth-child(6){animation-delay:1.5s;}
+  .nivel-chip:nth-child(7){animation-delay:1.8s;}
+  .nivel-chip:nth-child(8){animation-delay:2.1s;border-color:rgba(255,215,0,.6);box-shadow:0 4px 18px rgba(255,215,0,.35);}
+  .nivel-chip:hover{transform:translateY(-4px) scale(1.04);}
+  .chip-num{font-size:1.5rem;color:#D7BDE2;display:block;line-height:1;}
+  .chip-name{font-size:.72rem;color:#9B8AC4;margin-top:4px;line-height:1.3;}
+  .nivel-chip.final .chip-num{color:#FFD700;text-shadow:0 0 12px rgba(255,215,0,.6);}
+  .nivel-chip.final .chip-name{color:#D4A055;}
+
+  /* ── BEGINNING NOT END CARD ── */
+  .begin-card{
+    background:linear-gradient(145deg,#3D1060,#6B2090);
+    border:3px solid rgba(255,215,0,.5);border-radius:28px;padding:40px;margin-bottom:26px;
+    position:relative;overflow:hidden;text-align:center;
+    animation:beginningPulse 5s ease-in-out infinite;
+  }
+  .begin-card::before{content:'';position:absolute;top:0;left:0;right:0;height:6px;background:linear-gradient(90deg,#FFD700,#E879B0,#BB6BD9,#FFD700);border-radius:28px 28px 0 0;}
+  .begin-row{display:flex;align-items:center;gap:28px;}
+  .begin-char{flex-shrink:0;width:140px;}
+  .begin-char img{width:100%;filter:drop-shadow(0 0 18px rgba(232,121,176,.6));animation:goldFloat 4s ease-in-out infinite;}
+  .begin-text{flex:1;text-align:left;}
+  .begin-tag{display:inline-block;background:rgba(255,215,0,.18);border:1px solid rgba(255,215,0,.5);color:#FFD700;font-family:'Fredoka One',cursive;font-size:.9rem;letter-spacing:2px;padding:6px 20px;border-radius:50px;margin-bottom:16px;}
+  .begin-quote{
+    font-family:'Fredoka One',cursive;
+    font-size:clamp(1.4rem,4vw,2rem);
+    color:#FFD700;margin-bottom:14px;
+    text-shadow:0 0 24px rgba(255,215,0,.55);
+    line-height:1.25;
+  }
+  .begin-sub{font-size:1.02rem;color:#D7BDE2;line-height:1.8;font-weight:700;}
+
+  /* ── CERT CARD ── */
+  .cert-card{
+    background:var(--light);border-radius:26px;padding:34px 38px;margin-bottom:26px;
+    border:2px solid rgba(125,60,152,.2);
+    box-shadow:0 10px 50px rgba(61,16,96,.4);
+    position:relative;overflow:hidden;
+  }
+  .cert-card::before{content:'';position:absolute;top:0;left:0;right:0;height:5px;background:linear-gradient(90deg,#E879B0,#BB6BD9,#FFD700);border-radius:26px 26px 0 0;}
+  .cert-card h3{font-family:'Fredoka One',cursive;font-size:1.45rem;color:#3D1060;margin-bottom:16px;}
+  .cert-card p{font-size:1.05rem;color:#4A1070;line-height:1.8;font-weight:700;}
+  .cert-steps{display:flex;flex-direction:column;gap:12px;margin-top:18px;}
+  .cert-step{
+    display:flex;align-items:center;gap:14px;
+    background:linear-gradient(145deg,rgba(125,60,152,.12),rgba(187,107,217,.08));
+    border:1px solid rgba(187,107,217,.3);
+    border-radius:14px;padding:14px 18px;
+    font-size:1rem;font-weight:700;color:#3D1060;
+    transition:transform .3s;cursor:default;
+  }
+  .cert-step:hover{transform:translateX(6px);}
+  .cert-icon{font-size:1.6rem;flex-shrink:0;}
+
+  /* ── DIVIDER ── */
+  .divider{display:flex;align-items:center;gap:14px;margin:28px 0;opacity:.38;}
+  .divider::before,.divider::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,#BB6BD9,transparent);}
+  .divider span{font-size:1.1rem;}
+
+  /* ── BADGES GRAND FINALE ── */
+  .badges-grand{
+    background:linear-gradient(145deg,#3D1060,#6B2090);
+    border:3px solid rgba(255,215,0,.45);border-radius:28px;
+    padding:44px 36px;margin-bottom:26px;
+    text-align:center;position:relative;overflow:hidden;
+    box-shadow:0 0 80px rgba(61,16,96,.7),0 0 120px rgba(255,215,0,.15);
+  }
+  .badges-grand::before{content:'';position:absolute;top:0;left:0;right:0;height:6px;background:linear-gradient(90deg,#FFD700,#BB6BD9,#E879B0,#BB6BD9,#FFD700);border-radius:28px 28px 0 0;animation:borderShim 4s linear infinite;}
+  .badges-grand h3{font-family:'Fredoka One',cursive;font-size:clamp(1.4rem,4vw,2rem);color:#FFD700;margin-bottom:6px;text-shadow:0 0 20px rgba(255,215,0,.5);}
+  .badges-grand-sub{font-size:1rem;color:#D7BDE2;font-weight:700;margin-bottom:28px;}
+  .badges-row{display:flex;justify-content:center;align-items:flex-end;gap:40px;flex-wrap:wrap;}
+  .badge-wrap{text-align:center;position:relative;}
+  .badge-halo{position:absolute;top:50%;left:50%;width:170px;height:170px;border-radius:50%;transform:translate(-50%,-50%);animation:haloBreath 3s ease-in-out infinite alternate;}
+  .badge-halo.lilac{background:radial-gradient(circle,rgba(187,107,217,.3) 0%,transparent 70%);}
+  .badge-halo.gold{background:radial-gradient(circle,rgba(255,215,0,.38) 0%,transparent 70%);}
+  .badge-img{position:relative;z-index:1;}
+  .badge-img.b8{width:108px;animation:celebBadge 4s ease-in-out infinite;}
+  .badge-img.b9{width:136px;animation:celebBadge 4s ease-in-out infinite;animation-delay:1.5s;}
+  .badge-lbl{font-family:'Fredoka One',cursive;font-size:.95rem;color:#D7BDE2;margin-top:12px;}
+  .badge-lbl.gold{color:#FFD700;text-shadow:0 0 12px rgba(255,215,0,.5);}
+
+  /* ── DECO FLOAT ── */
+  .deco-float{position:absolute;pointer-events:none;z-index:1;opacity:.75;animation:float ease-in-out infinite alternate;}
+
+  /* ── GRAND FINAL CLOSING ── */
+  .grand-final{text-align:center;margin:46px 0 20px;position:relative;}
+  .grand-box{
+    background:linear-gradient(145deg,#3D1060,#5A1880,#3D1060);
+    border:3px solid rgba(255,215,0,.5);
+    border-radius:32px;padding:56px 44px;
+    position:relative;overflow:hidden;
+    box-shadow:0 0 90px rgba(61,16,96,.75),0 0 150px rgba(255,215,0,.18);
+  }
+  .grand-box::before{content:'';position:absolute;top:0;left:0;right:0;height:7px;background:linear-gradient(90deg,#FFD700,#BB6BD9,#E879B0,#BB6BD9,#FFD700,#BB6BD9,#FFD700);border-radius:32px 32px 0 0;animation:borderShim 3s linear infinite;}
+
+  .grand-emoji-row{display:flex;justify-content:center;gap:16px;font-size:2rem;margin-bottom:18px;flex-wrap:wrap;}
+  .grand-emoji-row span{animation:starPop 3s ease-in-out infinite;display:inline-block;}
+  .grand-emoji-row span:nth-child(2){animation-delay:.4s;}
+  .grand-emoji-row span:nth-child(3){animation-delay:.8s;}
+  .grand-emoji-row span:nth-child(4){animation-delay:1.2s;}
+  .grand-emoji-row span:nth-child(5){animation-delay:1.6s;}
+
+  .grand-box h2{font-family:'Fredoka One',cursive;font-size:clamp(1.6rem,4.5vw,2.6rem);color:#FFD700;margin-bottom:18px;text-shadow:0 0 30px rgba(255,215,0,.65);line-height:1.2;animation:goldPulse 3s ease-in-out infinite;}
+  .grand-box .grand-p{font-size:1.06rem;color:#D7BDE2;line-height:1.82;font-weight:700;max-width:620px;margin:0 auto 30px;}
+  .grand-box .grand-big{font-family:'Fredoka One',cursive;font-size:clamp(1.2rem,3vw,1.6rem);color:#fff;margin-bottom:28px;text-shadow:0 0 16px rgba(187,107,217,.6);}
+
+  .cta-btn{display:inline-block;background:linear-gradient(135deg,#7D3C98,#BB6BD9);color:#fff;font-family:'Fredoka One',cursive;font-size:1.25rem;padding:20px 56px;border-radius:50px;border:none;cursor:pointer;box-shadow:0 0 40px rgba(187,107,217,.7),0 4px 18px rgba(0,0,0,.3);transition:transform .3s,box-shadow .3s;text-decoration:none;letter-spacing:1px;}
+  .cta-btn:hover{transform:translateY(-5px) scale(1.06);box-shadow:0 0 65px rgba(187,107,217,.95),0 10px 32px rgba(0,0,0,.4);}
+
+  .grand-chars{display:flex;justify-content:center;align-items:flex-end;gap:18px;margin-top:36px;flex-wrap:wrap;}
+  .grand-chars img{height:170px;filter:drop-shadow(0 0 20px rgba(187,107,217,.65));animation:float 4s ease-in-out infinite alternate;}
+  .grand-chars img:nth-child(1){height:185px;animation-duration:3.5s;}
+  .grand-chars img:nth-child(2){height:130px;animation-delay:.8s;}
+  .grand-chars img:nth-child(3){height:115px;animation-delay:1.4s;}
+  .grand-chars img:nth-child(4){height:98px;animation-delay:.4s;opacity:.85;}
+
+  /* ── DOCENTE ── */
+  .docente-wrap{margin-top:54px;border-radius:20px;overflow:hidden;border:1px solid rgba(125,60,152,.3);box-shadow:0 4px 22px rgba(61,16,96,.3);}
+  .doc-toggle{background:rgba(25,5,50,.88);padding:18px 28px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;user-select:none;border:none;width:100%;color:#D7BDE2;font-family:'Nunito',sans-serif;font-weight:700;font-size:.95rem;letter-spacing:1px;transition:background .3s;}
+  .doc-toggle:hover{background:rgba(50,10,80,.95);}
+  .doc-toggle .arrow{font-size:1.1rem;transition:transform .3s;}
+  .doc-toggle.open .arrow{transform:rotate(180deg);}
+  .doc-body{display:none;background:rgba(10,3,22,.97);padding:28px;}
+  .doc-body.open{display:block;}
+  .doc-body h4{color:#BB6BD9;font-family:'Fredoka One',cursive;font-size:1.1rem;margin-bottom:10px;}
+  .doc-body p{color:#D7BDE2;font-size:.92rem;line-height:1.72;font-weight:600;}
+  .doc-placeholder{border:1px dashed rgba(187,107,217,.4);border-radius:12px;padding:20px;text-align:center;color:rgba(187,107,217,.5);font-size:.88rem;margin-top:14px;font-weight:600;line-height:1.6;}
+
+  @media(max-width:640px){
+    .hero-block{padding:34px 18px 28px;}
+    .hero-chars img{height:115px;}
+    .main-row,.begin-row{flex-direction:column;}
+    .main-char,.begin-char{width:115px;margin:0 auto;}
+    .begin-text{text-align:center;}
+    .niveles-grid{grid-template-columns:repeat(2,1fr);}
+    .grand-box{padding:34px 18px;}
+    .badges-row{gap:22px;}
+    .cert-card{padding:24px 20px;}
+  }
+</style>
+</head>
+<body>
+
+<canvas id="starfield"></canvas>
+<div class="neb n1"></div><div class="neb n2"></div><div class="neb n3"></div>
+<div class="neb n4"></div><div class="neb n5"></div><div class="neb n6"></div><div class="neb n7"></div>
+
+<img class="fixed-spk" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754686/estrella_bbltv2.png" style="width:34px;top:7%;left:4%;animation-duration:3.2s;">
+<img class="fixed-spk" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754686/estrella_bbltv2.png" style="width:44px;top:16%;right:5%;animation-duration:4.5s;animation-delay:1s;">
+<img class="fixed-spk" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754682/corazon_vjqq8g.png" style="width:30px;top:40%;left:2%;animation-duration:2.8s;animation-delay:.6s;animation-name:heartPulse;">
+<img class="fixed-spk" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754686/estrella_bbltv2.png" style="width:28px;top:58%;right:3%;animation-duration:3.5s;animation-delay:2s;animation-name:starPop;">
+<img class="fixed-spk" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754686/estrella_bbltv2.png" style="width:36px;top:78%;left:7%;animation-duration:4.2s;animation-delay:.4s;">
+<img class="fixed-spk" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754682/corazon_vjqq8g.png" style="width:24px;top:92%;right:10%;animation-duration:3s;animation-delay:1.3s;animation-name:heartPulse;">
+
+<div class="wrapper">
+
+  <!-- ── CELEBRATION BANNER ── -->
+  <div style="padding-top:48px;text-align:center;">
+    <div class="celeb-banner" style="color:#FFD700;">
+      🎊 ¡CELEBRACIÓN Y CERTIFICACIÓN FINAL — EL VIAJE DE PANDORA! 🎊
+    </div>
+    <div class="nivel-pill">✦ NIVEL 8 ✦</div>
+  </div>
+
+  <!-- ── HERO ── -->
+  <div class="hero" style="margin-bottom:40px;">
+    <div class="hero-block">
+      <img class="hero-star tl" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754686/estrella_bbltv2.png" alt="">
+      <img class="hero-star tr" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754686/estrella_bbltv2.png" alt="">
+      <img class="hero-star bl" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754682/corazon_vjqq8g.png" alt="" style="width:36px;">
+      <img class="hero-star br" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754686/estrella_bbltv2.png" alt="" style="width:38px;">
+      <div class="hero-inner">
+        <p class="hero-nivel">NIVEL 8 — LECCIÓN 2 </p>
+        <h1 class="hero-title">Lidera como<br><span>Embajadora</span> 👑</h1>
+        <p class="hero-sub2">Proyecto de Impacto · Método L.I.D.E.R.A.R. · Certificación · Celebración</p>
+        <div class="hero-lesson-tag">🎊 LECCIÓN 2 — Celebración y Certificación</div>
+        <div class="hero-chars">
+          <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1776435697/da3ce3bb-88f8-45d2-aae5-e89fde4f92c3_removalai_preview_ubhttx.png" alt="Ceci y Luna brillando" style="height:218px;">
+          </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── INTRO LABEL ── -->
+  <div class="section-label">
+    <h2>🎊 Introducción — Lección 2</h2>
+  </div>
+
+  <!-- ── MAIN GRANDIOSA CARD ── -->
+  <div class="main-card">
+    <div class="main-row">
+      <div class="main-text">
+        <h2 class="grandiosa">¡<span class="gold">GranDiosa</span>, lo lograste! 🎊</h2>
+        <p>Has llegado al final de tu aventura en Pandora. <strong>Recorriste 8 niveles</strong> — cada uno con sus aprendizajes, reflexiones, juegos y retos. Y aquí estás, al otro lado, brillando.</p>
+        <p style="margin-top:12px;">Es tiempo de celebrar todo lo que <strong>eres</strong> y todo lo que <strong>serás</strong>. ✨</p>
+      </div>
+      <div class="main-char">
+        <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754480/ceci_side_laugh_xpsxfb.png" alt="Ceci riendo">
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 8 NIVELES STRIP ── -->
+  <div class="niveles-strip" style="position:relative;">
+    <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754686/estrella_bbltv2.png" class="deco-float" style="width:28px;right:18px;top:-12px;animation-duration:3.2s;animation-name:starPop;">
+    <h3>🌟 Tu recorrido por Pandora — 8 Niveles completados</h3>
+    <div class="niveles-grid">
+      <div class="nivel-chip"><span class="chip-num">N1</span><p class="chip-name">Estereotipos y Autenticidad</p></div>
+      <div class="nivel-chip"><span class="chip-num">N2</span><p class="chip-name">Inteligencia Emocional</p></div>
+      <div class="nivel-chip"><span class="chip-num">N3</span><p class="chip-name">Ciclo Menstrual</p></div>
+      <div class="nivel-chip"><span class="chip-num">N4</span><p class="chip-name">Autoestima</p></div>
+      <div class="nivel-chip"><span class="chip-num">N5</span><p class="chip-name">Pubertad y Derechos</p></div>
+      <div class="nivel-chip"><span class="chip-num">N6</span><p class="chip-name">Consentimiento</p></div>
+      <div class="nivel-chip"><span class="chip-num">N7</span><p class="chip-name">Liderazgo</p></div>
+      <div class="nivel-chip final"><span class="chip-num">N8</span><p class="chip-name">¡Embajadora! 👑</p></div>
+    </div>
+  </div>
+
+  <!-- ── BEGINNING NOT END CARD ── -->
+  <div class="begin-card">
+    <div class="begin-row">
+      <div class="begin-char">
+        <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754478/ceci_satisfecha_r8qfmd.png" alt="Ceci satisfecha">
+      </div>
+      <div class="begin-text">
+        <div class="begin-tag">💡 Un recordatorio especial</div>
+        <p class="begin-quote">Este no es el final.<br>Es el comienzo. 🌅</p>
+        <p class="begin-sub">Todo lo que aprendiste es tuyo <strong>para siempre</strong>. Los 8 niveles no desaparecen cuando termina el programa — viven contigo, en cada decisión que tomes, en cada vez que alces tu voz, en cada niña que inspires.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"><span>🏆</span></div>
+
+  <!-- ── BADGES GRAND FINALE ── -->
+  <div class="badges-grand" style="position:relative;">
+    <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754686/estrella_bbltv2.png" class="deco-float" style="width:28px;right:22px;top:-12px;animation-duration:3.2s;animation-name:starPop;">
+    <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754682/corazon_vjqq8g.png" class="deco-float" style="width:26px;left:18px;top:-10px;animation-duration:2.8s;animation-name:heartPulse;">
+    <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754686/estrella_bbltv2.png" class="deco-float" style="width:34px;right:18px;bottom:-12px;animation-duration:4s;animation-delay:1s;">
+
+    <h3>🏆 Tus insignias de cierre</h3>
+    <p class="badges-grand-sub">Dos reconocimientos especiales por completar el viaje completo</p>
+    <div class="badges-row">
+      <div class="badge-wrap">
+        <div class="badge-halo lilac"></div>
+        <img class="badge-img b8" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754455/badge8_ohzk4o.png" alt="Badge Proyecto">
+        <p class="badge-lbl">Insignia: Proyecto de Impacto</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"><span>✨</span></div>
+
+  <!-- ── GRAND FINAL CLOSING ── -->
+  <div class="grand-final">
+    <div class="grand-box">
+      <div class="grand-emoji-row">
+        <span>🌟</span><span>👑</span><span>🎉</span><span>💜</span><span>🌟</span>
+      </div>
+
+      <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754686/estrella_bbltv2.png"
+           style="position:absolute;right:-10px;top:-14px;width:100px;opacity:.38;animation:goldFloat 6s ease-in-out infinite;pointer-events:none;">
+      <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754682/corazon_vjqq8g.png"
+           style="position:absolute;left:16px;top:16px;width:46px;opacity:.44;animation:heartPulse 2.5s ease-in-out infinite;pointer-events:none;">
+      <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754686/estrella_bbltv2.png"
+           style="position:absolute;right:18px;bottom:22px;width:54px;opacity:.36;animation:spkl 4s ease-in-out infinite alternate;pointer-events:none;">
+
+      <h2>¡Gracias por ser parte de Pandora! 🌟</h2>
+      <p class="grand-p">Has recorrido 8 niveles de crecimiento, aprendizaje, valentía y liderazgo. Conociste a Ceci y a Luna. Exploraste tus emociones, tu cuerpo, tus derechos, tu autoestima y tu poder de cambio. Y ahora, con certificado en mano, llevas todo eso contigo a donde quieras ir.</p>
+      <p class="grand-big">Eres una GranDiosa Embajadora. 💜</p>
+      <a href="#" class="cta-btn">¡Celebrar mi Certificación! 🎉</a>
+
+      <div class="grand-chars">
+        <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754470/ceci_luna_glowing_znifhg.png" alt="Ceci y Luna brillando">
+        </div>
+    </div>
+  </div>
+
+  <!-- ── DOCENTE ── -->
+  <div class="docente-wrap">
+    <button class="doc-toggle" id="docBtn" onclick="toggleDoc()">
+      <span>📋 Información pedagógica para docentes</span>
+      <span class="arrow">▼</span>
+    </button>
+    <div class="doc-body" id="docBody">
+      <h4>Valor académico de esta actividad</h4>
+      <p>Esta lección cierra el programa completo "El Viaje de Ceci en el Mundo de Pandora" con un enfoque de celebración, reconocimiento y proyección. La propuesta pedagógica busca generar cierre emocional positivo, reforzar la identidad como agentes de cambio y consolidar los 8 niveles de aprendizaje en un momento de certificación significativo para las estudiantes. La presentación del proyecto de impacto como acto público fortalece la agencia y el sentido de comunidad.</p>
+      <div class="doc-placeholder">
+        </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ── GRAND FINALE STARFIELD ──
+const canvas = document.getElementById('starfield');
+const ctx = canvas.getContext('2d');
+let stars=[], W, H;
+
+function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight;}
+resize();
+window.addEventListener('resize', resize);
+function rnd(a,b){return a+Math.random()*(b-a);}
+
+function initStars(){
+  stars=[];
+  const celeb=['#F5EEF8','#D7BDE2','#BB6BD9','#9B59B6','#E879B0','#FFD700','#E8D5F0','#ffffff','#FFF8DC'];
+  for(let i=0;i<360;i++){
+    stars.push({
+      x:rnd(0,W),y:rnd(0,H),
+      r:rnd(.3,2.7),alpha:rnd(.2,1),
+      speed:rnd(.003,.022),offset:rnd(0,Math.PI*2),
+      color:Math.random()>.35?celeb[Math.floor(Math.random()*celeb.length)]:'#ffffff'
+    });
+  }
+}
+initStars();
+
+let tick=0;
+function draw(){
+  ctx.clearRect(0,0,W,H);tick+=.012;
+  stars.forEach(s=>{
+    const p=.5+.5*Math.sin(tick*s.speed*60+s.offset);
+    ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fillStyle=s.color;ctx.globalAlpha=s.alpha*p;ctx.fill();
+    if(s.r>1.8&&p>.83){
+      ctx.globalAlpha=s.alpha*p*.3;ctx.strokeStyle=s.color;ctx.lineWidth=.5;
+      ctx.beginPath();ctx.moveTo(s.x-s.r*3.5,s.y);ctx.lineTo(s.x+s.r*3.5,s.y);ctx.moveTo(s.x,s.y-s.r*3.5);ctx.lineTo(s.x,s.y+s.r*3.5);ctx.stroke();
+    }
+    ctx.globalAlpha=1;
+  });
+  requestAnimationFrame(draw);
+}
+draw();
+
+// ── PARTICLES ──
+const ptC=['#BB6BD9','#F5EEF8','#9B59B6','#D7BDE2','#E879B0','#FFD700','#E8D5F0'];
+for(let i=0;i<65;i++){
+  const p=document.createElement('div');p.className='pt';
+  const sz=Math.random()*5+2;
+  p.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*100}vw;background:${ptC[Math.floor(Math.random()*ptC.length)]};opacity:${Math.random()*.55+.2};animation-duration:${Math.random()*12+8}s;animation-delay:${Math.random()*14}s;filter:blur(${Math.random()}px);`;
+  document.body.appendChild(p);
+}
+
+// ── GRAND CONFETTI ──
+const confC=['#FFD700','#BB6BD9','#E879B0','#F5EEF8','#9B59B6','#D7BDE2','#fff'];
+const shapes=['★','♦','●','▲','✦','❋'];
+for(let i=0;i<35;i++){
+  const c=document.createElement('div');c.className='confetti';
+  const sz=Math.random()*14+6;
+  c.innerHTML=shapes[Math.floor(Math.random()*shapes.length)];
+  c.style.cssText=`font-size:${sz}px;left:${Math.random()*100}vw;color:${confC[Math.floor(Math.random()*confC.length)]};opacity:${Math.random()*.75+.2};animation-duration:${Math.random()*15+9}s;animation-delay:${Math.random()*16}s;`;
+  document.body.appendChild(c);
+}
+
+function toggleDoc(){
+  document.getElementById('docBtn').classList.toggle('open');
+  document.getElementById('docBody').classList.toggle('open');
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>El Viaje de Ceci — Nivel 2 · Árbol de Emociones</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap');
+
+:root {
+  --principal: #D4760A;
+  --acento: #E89830;
+  --claro: #FFF3E0;
+  --blanco: #ffffff;
+  --dorado: #F5C842;
+  --shadow: 0 6px 28px rgba(212,118,10,0.18);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Nunito', sans-serif;
+  min-height: 100vh;
+  background: url('https://res.cloudinary.com/dijezdfsr/image/upload/v1775754355/background_duuc07.png') center/cover fixed;
+  overflow-x: hidden;
+}
+
+/* ===== DECORATIVE FLOATING ELEMENTS ===== */
+.deco {
+  position: fixed;
+  pointer-events: none;
+  z-index: 0;
+  animation: decoFloat 5s ease-in-out infinite alternate;
+  opacity: 0.75;
+}
+.deco-star1  { top: 6%;  left: 4%;  width: 44px; animation-delay: 0s; }
+.deco-star2  { top: 50%; right: 3%; width: 32px; animation-delay: 1.2s; }
+.deco-heart  { top: 18%; right: 6%; width: 40px; animation-delay: 0.6s; }
+.deco-butter { bottom: 15%; left: 3%; width: 52px; animation-delay: 2s; }
+.deco-star3  { bottom: 8%; right: 9%; width: 28px; animation-delay: 0.9s; }
+
+@keyframes decoFloat {
+  from { transform: translateY(0px) rotate(-4deg); }
+  to   { transform: translateY(-12px) rotate(4deg); }
+}
+
+/* ===== PAGE WRAPPER ===== */
+.page {
+  position: relative;
+  z-index: 1;
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 24px 14px 70px;
+}
+
+/* ===== HEADER BADGE ===== */
+.nivel-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--principal);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 6px 20px;
+  border-radius: 20px;
+  margin-bottom: 12px;
+  box-shadow: 0 3px 14px rgba(212,118,10,0.35);
+}
+
+/* ===== INTRO BLOCK ===== */
+.intro-block {
+  background: var(--claro);
+  border: 3px solid var(--acento);
+  border-radius: 28px;
+  padding: 24px 24px 20px;
+  margin-bottom: 26px;
+  box-shadow: var(--shadow);
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  flex-wrap: wrap;
+  position: relative;
+  overflow: hidden;
+}
+.intro-block::after {
+  content: '';
+  position: absolute;
+  top: -40px; right: -40px;
+  width: 130px; height: 130px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(232,152,48,0.12), transparent 70%);
+  pointer-events: none;
+}
+.intro-chars {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  flex-shrink: 0;
+}
+.intro-chars img {
+  height: 100px;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 10px rgba(212,118,10,0.2));
+}
+.intro-text { flex: 1; min-width: 180px; }
+.intro-text .tag {
+  display: inline-block;
+  background: var(--principal);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 4px 14px;
+  border-radius: 12px;
+  margin-bottom: 8px;
+}
+.intro-text h1 {
+  font-size: clamp(20px, 5vw, 30px);
+  font-weight: 900;
+  color: var(--principal);
+  line-height: 1.2;
+  margin-bottom: 8px;
+}
+.intro-text p {
+  font-size: clamp(14px, 2.5vw, 16px);
+  font-weight: 600;
+  color: #5a3200;
+  line-height: 1.6;
+}
+
+/* ===== TREE ZONE ===== */
+.tree-zone {
+  background: rgba(255,243,224,0.92);
+  border: 3px solid var(--acento);
+  border-radius: 32px;
+  padding: 28px 18px 24px;
+  margin-bottom: 24px;
+  box-shadow: var(--shadow);
+  position: relative;
+  overflow: hidden;
+  min-height: 480px;
+}
+.tree-zone-title {
+  text-align: center;
+  font-size: clamp(14px, 2.8vw, 17px);
+  font-weight: 800;
+  color: var(--principal);
+  margin-bottom: 20px;
+  opacity: 0.85;
+}
+.tree-zone-title span { color: var(--acento); }
+
+/* ===== FLOATING DECORATIVE LEAVES ===== */
+.floating-leaves {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.ceci-center,
+.leaves-grid,
+.progress-bar-wrap,
+.tree-zone-title {
+  position: relative;
+  z-index: 2;
+}
+
+.float-leaf {
+  position: absolute;
+  width: 34px;
+  height: 46px;
+  border-radius: 22px 8px 22px 8px;
+  transform: translate(-50%, -50%) rotate(var(--r, 0deg));
+  opacity: 0.78;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.10);
+  border: 2px solid rgba(255,255,255,0.45);
+  will-change: transform, left, top;
+}
+
+.float-leaf::after {
+  content: '';
+  position: absolute;
+  inset: 5px 6px;
+  border-radius: 16px 6px 16px 6px;
+  background: linear-gradient(135deg, var(--c1), var(--c2));
+  opacity: 0.95;
+}
+
+@media (max-width: 520px) {
+  .float-leaf {
+    width: 28px;
+    height: 38px;
+  }
+}
+
+/* ===== CECI CENTER ===== */
+.ceci-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+  position: relative;
+}
+.ceci-center img {
+  height: 155px;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 20px rgba(212,118,10,0.2));
+  transition: all 0.3s ease;
+  animation: ceciBreath 4s ease-in-out infinite alternate;
+}
+@keyframes ceciBreath {
+  from { transform: translateY(0px); }
+  to   { transform: translateY(-6px); }
+}
+.ceci-center .ceci-label {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--principal);
+  background: rgba(255,243,224,0.9);
+  border: 2px solid var(--acento);
+  border-radius: 14px;
+  padding: 4px 16px;
+  margin-top: 6px;
+}
+
+/* ===== LEAVES GRID ===== */
+.leaves-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-top: 18px;
+}
+@media (max-width: 520px) {
+  .leaves-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+}
+
+/* ===== LEAF ===== */
+.leaf {
+  border-radius: 30px 8px 30px 8px;
+  padding: 14px 10px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  border: 3px solid rgba(255,255,255,0.6);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+  transition: transform 0.2s, box-shadow 0.2s, filter 0.2s;
+  position: relative;
+  animation: leafSway 3s ease-in-out infinite alternate;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  min-height: 100px;
+  justify-content: center;
+}
+.leaf:nth-child(even) { animation-direction: alternate-reverse; animation-delay: 0.5s; }
+.leaf:nth-child(3n)  { animation-delay: 1s; }
+.leaf:nth-child(5n)  { animation-delay: 1.5s; }
+
+@keyframes leafSway {
+  from { transform: rotate(-2deg) translateY(0px); }
+  to   { transform: rotate(2deg) translateY(-5px); }
+}
+.leaf:active, .leaf:hover {
+  transform: scale(1.08) rotate(0deg);
+  box-shadow: 0 8px 28px rgba(0,0,0,0.22);
+  filter: brightness(1.05);
+}
+.leaf.explored {
+  opacity: 0.72;
+  border-style: dashed;
+}
+.leaf.explored::after {
+  content: '✓';
+  position: absolute;
+  top: 6px; right: 8px;
+  font-size: 14px;
+  font-weight: 900;
+  color: rgba(255,255,255,0.9);
+}
+.leaf-emoji { font-size: 26px; line-height: 1; }
+.leaf-name {
+  font-size: clamp(12px, 2.2vw, 14px);
+  font-weight: 900;
+  color: #fff;
+  text-align: center;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.3);
+  line-height: 1.2;
+}
+
+/* ===== LEAF COLORS ===== */
+.leaf-alegria    { background: linear-gradient(135deg, #F5C842, #E89830); }
+.leaf-tristeza   { background: linear-gradient(135deg, #5B9BD5, #3A7BBF); }
+.leaf-enojo      { background: linear-gradient(135deg, #E85C5C, #C43030); }
+.leaf-miedo      { background: linear-gradient(135deg, #8C8C9E, #5C5C70); }
+.leaf-calma      { background: linear-gradient(135deg, #5BBF8C, #3A9B6A); }
+.leaf-frustracion{ background: linear-gradient(135deg, #E89830, #D4760A); }
+.leaf-decepcion  { background: linear-gradient(135deg, #9B5CBF, #7B3FA0); }
+
+/* ===== PROGRESS HINT ===== */
+.progress-bar-wrap {
+  margin-top: 18px;
+  text-align: center;
+}
+.progress-label {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--principal);
+  margin-bottom: 8px;
+}
+.progress-bar {
+  height: 10px;
+  background: rgba(212,118,10,0.18);
+  border-radius: 10px;
+  overflow: hidden;
+  max-width: 300px;
+  margin: 0 auto;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--acento), var(--principal));
+  border-radius: 10px;
+  width: 0%;
+  transition: width 0.5s cubic-bezier(0.34,1.56,0.64,1);
+}
+
+/* ===== EMOTION MODAL ===== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(80,30,0,0.55);
+  z-index: 9000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+  backdrop-filter: blur(6px);
+}
+.modal-overlay.show {
+  opacity: 1;
+  pointer-events: all;
+}
+.emotion-card {
+  border-radius: 28px;
+  padding: 32px 26px 28px;
+  max-width: 400px;
+  width: 100%;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+  transform: scale(0.88) translateY(20px);
+  transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
+  border: 4px solid rgba(255,255,255,0.5);
+  text-align: center;
+}
+.modal-overlay.show .emotion-card {
+  transform: scale(1) translateY(0);
+}
+.emotion-card .close-btn {
+  position: absolute;
+  top: 14px; right: 14px;
+  background: rgba(255,255,255,0.3);
+  border: none; border-radius: 50%;
+  width: 34px; height: 34px;
+  font-size: 18px; font-weight: 900;
+  color: #fff; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: transform 0.2s, background 0.2s;
+  flex-shrink: 0;
+}
+.emotion-card .close-btn:hover { transform: rotate(90deg) scale(1.1); background: rgba(255,255,255,0.5); }
+.emotion-card .card-emoji {
+  font-size: 54px;
+  margin-bottom: 10px;
+  display: block;
+  animation: emojiBounce 0.6s cubic-bezier(0.34,1.56,0.64,1);
+}
+@keyframes emojiBounce {
+  0% { transform: scale(0); }
+  100% { transform: scale(1); }
+}
+.emotion-card h2 {
+  font-size: clamp(22px, 5vw, 28px);
+  font-weight: 900;
+  color: #fff;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  margin-bottom: 14px;
+}
+.emotion-card .card-block {
+  background: rgba(255,255,255,0.18);
+  border: 2px solid rgba(255,255,255,0.3);
+  border-radius: 18px;
+  padding: 14px 16px;
+  margin-bottom: 10px;
+  text-align: left;
+}
+.emotion-card .card-block .block-label {
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 5px;
+}
+.emotion-card .card-block p {
+  font-size: clamp(14px, 2.8vw, 16px);
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.5;
+}
+.emotion-card .card-cta {
+  margin-top: 16px;
+  background: rgba(255,255,255,0.25);
+  border: 2px solid rgba(255,255,255,0.4);
+  border-radius: 50px;
+  padding: 10px 22px;
+  font-size: 14px;
+  font-weight: 800;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+  border-style: none;
+  width: 100%;
+  display: block;
+}
+.emotion-card .card-cta:hover { background: rgba(255,255,255,0.38); transform: scale(1.02); }
+
+/* ===== BONUS BOX ===== */
+.bonus-wrap {
+  margin-bottom: 24px;
+}
+.bonus-box {
+  background: linear-gradient(135deg, #5a2e00 0%, #8b4a00 50%, #5a2e00 100%);
+  border: 4px solid var(--dorado);
+  border-radius: 28px;
+  padding: 28px 24px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  cursor: not-allowed;
+  transition: all 0.4s;
+  box-shadow: 0 8px 32px rgba(245,200,66,0.2);
+  animation: bonusFloat 3.2s ease-in-out infinite alternate;
+}
+.bonus-box.unlocked { cursor: pointer; animation: bonusFloat 3.2s ease-in-out infinite alternate, bonusGlow 2s ease-in-out infinite alternate; }
+.bonus-box::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(245,200,66,0.04) 10px, rgba(245,200,66,0.04) 20px);
+  pointer-events: none;
+}
+.bonus-box::after {
+  content: '';
+  position: absolute;
+  top: -50%; left: -50%; width: 200%; height: 200%;
+  background: radial-gradient(ellipse at center, rgba(245,200,66,0.08), transparent 60%);
+  animation: shimmer 6s linear infinite;
+  pointer-events: none;
+}
+@keyframes bonusFloat {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-6px); }
+}
+@keyframes bonusGlow {
+  from { box-shadow: 0 8px 28px rgba(245,200,66,0.3); }
+  to   { box-shadow: 0 8px 28px rgba(245,200,66,0.7), 0 0 40px rgba(245,200,66,0.3); }
+}
+@keyframes shimmer { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+.bonus-icon { font-size: 36px; margin-bottom: 8px; display: block; }
+.bonus-title {
+  font-size: clamp(22px, 5vw, 30px);
+  font-weight: 900;
+  color: var(--dorado);
+  letter-spacing: 2px;
+  margin-bottom: 6px;
+  text-shadow: 0 0 20px rgba(245,200,66,0.4);
+}
+.bonus-sub   { font-size: 13px; color: rgba(255,255,255,0.65); font-weight: 700; }
+.bonus-box.unlocked .bonus-sub { color: rgba(255,255,255,0.88); }
+.bonus-progress { margin-top: 10px; font-size: 13px; color: rgba(255,255,255,0.5); font-weight: 700; }
+.bonus-progress span { color: var(--dorado); }
+
+/* ===== BONUS MODAL ===== */
+.bonus-modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(60,20,0,0.82);
+  z-index: 9999;
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.35s;
+  backdrop-filter: blur(8px);
+}
+.bonus-modal-overlay.show { opacity: 1; pointer-events: all; }
+.bonus-modal {
+  background: linear-gradient(160deg, #3d1a00 0%, #6b3200 50%, #3d1a00 100%);
+  border: 4px solid var(--acento);
+  border-radius: 32px;
+  padding: 36px 28px 32px;
+  max-width: 560px; width: 100%;
+  max-height: 92vh; overflow-y: auto;
+  position: relative;
+  box-shadow: 0 24px 80px rgba(232,152,48,0.45);
+  transform: scale(0.88) translateY(28px);
+  transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+}
+.bonus-modal-overlay.show .bonus-modal { transform: scale(1) translateY(0); }
+.bonus-modal::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 4px;
+  background: linear-gradient(90deg, var(--acento), var(--dorado), var(--acento));
+  border-radius: 32px 32px 0 0;
+  background-size: 200% 100%;
+  animation: shimLine 2s linear infinite;
+}
+@keyframes shimLine { from { background-position: 0%; } to { background-position: 200%; } }
+.bonus-modal-close {
+  position: absolute; top: 14px; right: 14px;
+  background: var(--principal); border: none; border-radius: 50%;
+  width: 36px; height: 36px; font-size: 18px; font-weight: 900;
+  color: #fff; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: transform 0.2s;
+  z-index: 1;
+}
+.bonus-modal-close:hover { transform: scale(1.1) rotate(90deg); }
+
+.bonus-modal-header { text-align: center; margin-bottom: 26px; }
+.bonus-modal-header .gift {
+  font-size: 50px;
+  display: block;
+  margin-bottom: 6px;
+  animation: giftBounce 1s ease infinite alternate;
+}
+@keyframes giftBounce { from { transform: scale(1); } to { transform: scale(1.1) rotate(5deg); } }
+.bonus-modal-header h2 { font-size: clamp(18px, 4vw, 24px); font-weight: 900; color: var(--dorado); margin-bottom: 4px; }
+.bonus-modal-header p  { font-size: 14px; color: rgba(255,255,255,0.7); font-weight: 600; }
+
+.bonus-step {
+  background: rgba(232,152,48,0.12);
+  border: 2px solid rgba(232,152,48,0.3);
+  border-radius: 18px;
+  padding: 14px 18px;
+  margin-bottom: 12px;
+  display: flex; gap: 14px; align-items: flex-start;
+}
+.bonus-step-num { font-size: 22px; flex-shrink: 0; margin-top: 2px; }
+.bonus-step-body { flex: 1; }
+.bonus-step-title { font-size: clamp(14px, 2.5vw, 16px); font-weight: 900; color: var(--dorado); margin-bottom: 4px; }
+.bonus-step-desc  { font-size: clamp(13px, 2.2vw, 15px); font-weight: 600; color: rgba(255,255,255,0.8); line-height: 1.5; }
+
+.bonus-closing {
+  background: rgba(245,200,66,0.1);
+  border: 2px solid rgba(245,200,66,0.3);
+  border-radius: 18px;
+  padding: 18px;
+  margin-top: 20px;
+  display: flex; gap: 14px; align-items: center;
+}
+.bonus-closing img { height: 80px; object-fit: contain; flex-shrink: 0; }
+.bonus-closing p { font-size: clamp(13px, 2.2vw, 15px); color: rgba(255,255,255,0.9); font-weight: 700; line-height: 1.5; }
+.bonus-closing p span { color: var(--dorado); }
+
+/* ===== TOAST ===== */
+.toast {
+  position: fixed; top: 70px; left: 50%;
+  transform: translateX(-50%) translateY(-20px);
+  background: var(--principal);
+  color: #fff;
+  padding: 12px 26px;
+  border-radius: 50px;
+  font-size: 15px;
+  font-weight: 800;
+  box-shadow: 0 8px 28px rgba(0,0,0,0.3);
+  z-index: 9998;
+  opacity: 0;
+  transition: all 0.3s;
+  pointer-events: none;
+  white-space: nowrap;
+  border: 3px solid var(--acento);
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--acento); border-radius: 6px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .deco,
+  .ceci-center img,
+  .leaf,
+  .bonus-box,
+  .bonus-box.unlocked {
+    animation: none !important;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- Decorative floaters -->
+<img class="deco deco-star1"  src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754686/estrella_bbltv2.png" alt="">
+<img class="deco deco-star2"  src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754686/estrella_bbltv2.png" alt="">
+<img class="deco deco-heart"  src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754682/corazon_vjqq8g.png" alt="">
+<img class="deco deco-butter" src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754766/mariposa_ep7ez6.png" alt="">
+<img class="deco deco-star3"  src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754686/estrella_bbltv2.png" alt="">
+
+<div class="page">
+
+  <!-- BADGE -->
+  <div style="text-align:center; margin-bottom:6px;">
+    <span class="nivel-badge">✦ Nivel 2 · El árbol de las emociones ✦</span>
+  </div>
+
+  <!-- INTRO BLOCK -->
+  <section class="intro-block">
+    <div class="intro-chars">
+      <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754461/ceci_asking_ukpsbg.png" alt="Ceci preguntando">
+      </div>
+    <div class="intro-text">
+      <span class="tag">📖 Lección 1 · Páginas 23-34 de tu cartilla</span>
+      <h1>Árbol de Emociones Interactivo</h1>
+      <p>Las emociones son como hojas de un árbol mágico: cada una tiene su color, su nombre y algo que enseñarnos. <strong>Toca cada hoja</strong> para descubrir qué esconde. ✨</p>
+    </div>
+  </section>
+
+  <!-- TREE ZONE -->
+  <section class="tree-zone">
+    <div class="tree-zone-title">🍃 Toca una hoja para explorar la emoción · <span>¡Todas tienen algo especial!</span></div>
+
+    <div class="floating-leaves" id="floatingLeaves" aria-hidden="true"></div>
+
+    <!-- Ceci at center -->
+    <div class="ceci-center">
+      <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754542/ceci_tree_p3wyqb.png" alt="Ceci" id="ceciImg">
+      <div class="ceci-label">✨ Ceci te acompaña</div>
+    </div>
+
+    <!-- Leaves grid -->
+    <div class="leaves-grid" id="leavesGrid">
+      <!-- Generated by JS -->
+    </div>
+
+    <!-- Progress -->
+    <div class="progress-bar-wrap">
+      <div class="progress-label">Emociones exploradas: <span id="progressTxt">0</span> de 7</div>
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
+  </section>
+
+  <!-- BONUS BOX -->
+  <section class="bonus-wrap">
+    <div class="bonus-box" id="bonusBox">
+      <span class="bonus-icon" id="bonusIcon">🔒</span>
+      <div class="bonus-title">BONUS</div>
+      <div class="bonus-sub" id="bonusSub">Explora las emociones para desbloquear</div>
+      <div class="bonus-progress">Exploradas: <span id="bonusCount">0</span> / 7</div>
+    </div>
+  </section>
+
+</div><!-- /page -->
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- EMOTION MODAL -->
+<div class="modal-overlay" id="emotionOverlay">
+  <div class="emotion-card" id="emotionCard">
+    <button class="close-btn" id="emotionClose">✕</button>
+    <span class="card-emoji" id="cardEmoji"></span>
+    <h2 id="cardName"></h2>
+    <div class="card-block">
+      <div class="block-label">¿Cuándo aparece?</div>
+      <p id="cardWhen"></p>
+    </div>
+    <div class="card-block">
+      <div class="block-label">💜 ¿Qué puedes hacer?</div>
+      <p id="cardHow"></p>
+    </div>
+    <button class="card-cta" id="cardCta">¡Lo tengo! Seguir explorando 🍃</button>
+  </div>
+</div>
+
+<!-- BONUS MODAL -->
+<div class="bonus-modal-overlay" id="bonusModalOverlay">
+  <div class="bonus-modal">
+    <button class="bonus-modal-close" id="bonusModalClose">✕</button>
+    <div class="bonus-modal-header">
+      <span class="gift">🎁</span>
+      <h2>¡BONUS DESBLOQUEADO!</h2>
+      <p>Primeros Auxilios Psicológicos</p>
+    </div>
+
+    <div style="text-align:center; margin-bottom:18px;">
+      <div style="font-size:15px; font-weight:800; color:var(--dorado); margin-bottom:6px;">¿Cómo ayudar a una amiga que se siente mal?</div>
+    </div>
+
+    <div class="bonus-step">
+      <div class="bonus-step-num">1️⃣</div>
+      <div class="bonus-step-body">
+        <div class="bonus-step-title">ESCUCHA sin juzgar</div>
+        <div class="bonus-step-desc">Deja que hable. No le digas «no llores» ni «no es para tanto».</div>
+      </div>
+    </div>
+    <div class="bonus-step">
+      <div class="bonus-step-num">2️⃣</div>
+      <div class="bonus-step-body">
+        <div class="bonus-step-title">VALIDA lo que siente</div>
+        <div class="bonus-step-desc">Di: «Entiendo que te sientes así» o «Tiene sentido que estés triste».</div>
+      </div>
+    </div>
+    <div class="bonus-step">
+      <div class="bonus-step-num">3️⃣</div>
+      <div class="bonus-step-body">
+        <div class="bonus-step-title">ACOMPAÑA con presencia</div>
+        <div class="bonus-step-desc">A veces no necesitas decir nada. Solo estar ahí es suficiente.</div>
+      </div>
+    </div>
+    <div class="bonus-step">
+      <div class="bonus-step-num">4️⃣</div>
+      <div class="bonus-step-body">
+        <div class="bonus-step-title">PREGUNTA si necesita algo</div>
+        <div class="bonus-step-desc">«¿Quieres que hablemos?» o «¿Necesitas que busquemos a alguien de confianza?»</div>
+      </div>
+    </div>
+    <div class="bonus-step">
+      <div class="bonus-step-num">5️⃣</div>
+      <div class="bonus-step-body">
+        <div class="bonus-step-title">BUSCA AYUDA si es necesario</div>
+        <div class="bonus-step-desc">Si algo te preocupa mucho, cuéntale a un adulto de confianza. Eso no es delatar, es cuidar.</div>
+      </div>
+    </div>
+
+    <div class="bonus-closing">
+      <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754768/pandora_pxwrpp.png" alt="Pandora">
+      <p>Ser una buena amiga también es saber cuándo <span>pedir ayuda</span>. 💜</p>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============================
+// DATA
+// ============================
+// ============================
+// DATA
+// ============================
+const EMOTIONS = [
+  {
+    id: 'alegria',
+    name: 'Alegría',
+    emoji: '😊',
+    colorClass: 'leaf-alegria',
+    when: 'Aparece cuando algo te hace sentir bien y feliz.',
+    how: 'Comparte ese momento, sonríe y agradece lo que sientes.',
+    ceciImage: 'https://res.cloudinary.com/dijezdfsr/image/upload/v1775754480/ceci_side_laugh_xpsxfb.png',
+  },
+  {
+    id: 'tristeza',
+    name: 'Tristeza',
+    emoji: '😢',
+    colorClass: 'leaf-tristeza',
+    when: 'Aparece cuando algo te duele o te decepciona.',
+    how: 'Escribe lo que sientes, llora si lo necesitas o habla con alguien de confianza.',
+    ceciImage: 'https://res.cloudinary.com/dijezdfsr/image/upload/v1775754639/ceci5_cdmomy.png',
+  },
+  {
+    id: 'enojo',
+    name: 'Enojo',
+    emoji: '😡',
+    colorClass: 'leaf-enojo',
+    when: 'Aparece cuando algo te parece injusto o te lastima.',
+    how: 'Respira profundo 3 veces y pon en palabras lo que sientes.',
+    ceciImage: 'https://res.cloudinary.com/dijezdfsr/image/upload/v1775754634/ceci_upset_slqcwf.png',
+  },
+  {
+    id: 'miedo',
+    name: 'Miedo',
+    emoji: '😨',
+    colorClass: 'leaf-miedo',
+    when: 'Aparece cuando algo te hace sentir insegura o en peligro.',
+    how: 'Abrázate, respira despacio y pide apoyo a alguien de confianza.',
+    ceciImage: 'https://res.cloudinary.com/dijezdfsr/image/upload/v1775754483/ceci_stressed_m5rajm.png',
+  },
+  {
+    id: 'calma',
+    name: 'Calma',
+    emoji: '😌',
+    colorClass: 'leaf-calma',
+    when: 'Aparece cuando te sientes tranquila y en paz.',
+    how: 'Disfruta ese momento y cuídalo: ¡te lo mereces!',
+    ceciImage: 'https://res.cloudinary.com/dijezdfsr/image/upload/v1775754481/ceci_sitting_happy_viogds.png',
+  },
+  {
+    id: 'frustracion',
+    name: 'Frustración',
+    emoji: '😣',
+    colorClass: 'leaf-frustracion',
+    when: 'Aparece cuando algo no sale como esperabas.',
+    how: 'Haz una pausa y recuerda que aprender toma tiempo. ¡Puedes intentarlo de nuevo!',
+    ceciImage: 'https://res.cloudinary.com/dijezdfsr/image/upload/v1775754633/ceci_worried_yja07t.png',
+  },
+  {
+    id: 'decepcion',
+    name: 'Decepción',
+    emoji: '😞',
+    colorClass: 'leaf-decepcion',
+    when: 'Aparece cuando algo o alguien no era como esperabas.',
+    how: 'Habla de lo que pasó con alguien que te escuche con cariño.',
+    ceciImage: 'https://res.cloudinary.com/dijezdfsr/image/upload/v1775754637/ceci2_b6thu9.png',
+  },
+];
+
+
+const SUCCESS_MSGS = [
+  '✨ ¡Descubriste una emoción!',
+  '✨ ¡Muy bien! Sigamos explorando',
+  '✨ ¡Genial! Cada emoción tiene algo que enseñar',
+  '✨ ¡Así es! ¡Eres increíble!',
+  '✨ ¡Lo tienes! Sigue explorando',
+];
+
+// ============================
+// STATE
+// ============================
+let exploredCount = 0;
+let exploredSet = new Set();
+let bonusUnlocked = false;
+let toastTimeout = null;
+let floatingStart = performance.now();
+
+// ============================
+// INIT
+// ============================
+function init() {
+  renderLeaves();
+  createFloatingLeaves();
+  setupBonusBox();
+  setupModals();
+  requestAnimationFrame(animateFloatingLeaves);
+}
+
+function renderLeaves() {
+  const grid = document.getElementById('leavesGrid');
+  EMOTIONS.forEach(em => {
+    const leaf = document.createElement('div');
+    leaf.className = `leaf ${em.colorClass}`;
+    leaf.dataset.id = em.id;
+    leaf.innerHTML = `<span class="leaf-emoji">${em.emoji}</span><span class="leaf-name">${em.name}</span>`;
+    leaf.addEventListener('click', () => openEmotion(em.id));
+    grid.appendChild(leaf);
+  });
+}
+
+// ============================
+// FLOATING DECORATIVE LEAVES
+// ============================
+function createFloatingLeaves() {
+  const field = document.getElementById('floatingLeaves');
+  if (!field) return;
+
+  field.innerHTML = '';
+
+  const palette = [
+    ['rgba(245,200,66,0.95)', 'rgba(232,152,48,0.85)'],
+    ['rgba(91,155,213,0.95)', 'rgba(58,123,191,0.85)'],
+    ['rgba(232,92,92,0.95)', 'rgba(196,48,48,0.85)'],
+    ['rgba(91,191,140,0.95)', 'rgba(58,155,106,0.85)'],
+    ['rgba(155,92,191,0.95)', 'rgba(123,63,160,0.85)']
+  ];
+
+  const count = window.innerWidth <= 520 ? 10 : 14;
+
+  for (let i = 0; i < count; i++) {
+    const leaf = document.createElement('div');
+    leaf.className = 'float-leaf';
+
+    const p = palette[Math.floor(Math.random() * palette.length)];
+    leaf.style.setProperty('--c1', p[0]);
+    leaf.style.setProperty('--c2', p[1]);
+    leaf.style.setProperty('--r', (Math.random() * 180 - 90) + 'deg');
+
+    leaf.dataset.a = (Math.random() * Math.PI * 2).toString();
+    leaf.dataset.r = (60 + Math.random() * 150).toString();
+    leaf.dataset.h = (0.10 + Math.random() * 0.80).toString();
+    leaf.dataset.sp = (0.35 + Math.random() * 0.55).toString();
+
+    leaf.style.left = '50%';
+    leaf.style.top = '50%';
+
+    field.appendChild(leaf);
+  }
+}
+
+function animateFloatingLeaves(now) {
+  const field = document.getElementById('floatingLeaves');
+  const zone = document.querySelector('.tree-zone');
+  if (!field || !zone) {
+    requestAnimationFrame(animateFloatingLeaves);
+    return;
+  }
+
+  const t = (now - floatingStart) / 1000;
+  const rect = zone.getBoundingClientRect();
+  const cx = rect.width / 2;
+  const cy = rect.height / 2 - 10;
+
+  [...field.children].forEach((el) => {
+    const a0 = parseFloat(el.dataset.a);
+    const r0 = parseFloat(el.dataset.r);
+    const h  = parseFloat(el.dataset.h);
+    const sp = parseFloat(el.dataset.sp);
+
+    const a = a0 + t * sp;
+    const r = r0 * (0.45 + h);
+    const ySpread = (h - 0.5) * rect.height * 0.75;
+
+    const x = cx + Math.cos(a) * r * 0.75;
+    const y = cy + ySpread + Math.sin(a * 1.3) * 12;
+
+    el.style.left = x + 'px';
+    el.style.top = y + 'px';
+    el.style.transform = `translate(-50%, -50%) rotate(${Math.sin(a * 1.8) * 18}deg)`;
+  });
+
+  requestAnimationFrame(animateFloatingLeaves);
+}
+
+window.addEventListener('resize', () => {
+  createFloatingLeaves();
+});
+
+// ============================
+// EMOTION MODAL
+// ============================
+function openEmotion(id) {
+  const em = EMOTIONS.find(e => e.id === id);
+  if (!em) return;
+
+  const card = document.getElementById('emotionCard');
+  const colorMap = {
+    'leaf-alegria':     'linear-gradient(155deg, #c49200, #e8a800)',
+    'leaf-tristeza':    'linear-gradient(155deg, #2a5fa0, #4a80c0)',
+    'leaf-enojo':       'linear-gradient(155deg, #a02020, #d04040)',
+    'leaf-miedo':       'linear-gradient(155deg, #3c3c52, #6c6c88)',
+    'leaf-calma':       'linear-gradient(155deg, #2a7a4a, #4aaa70)',
+    'leaf-frustracion': 'linear-gradient(155deg, #a84000, #d46010)',
+    'leaf-decepcion':   'linear-gradient(155deg, #5c2a88, #8c50b8)',
+  };
+  card.style.background = colorMap[em.colorClass] || 'linear-gradient(155deg, #3d1a00, #6b3200)';
+
+  document.getElementById('cardEmoji').textContent = em.emoji;
+  document.getElementById('cardName').textContent = em.name;
+  document.getElementById('cardWhen').textContent = em.when;
+  document.getElementById('cardHow').textContent = em.how;
+
+  document.getElementById('emotionOverlay').classList.add('show');
+  document.body.style.overflow = 'hidden';
+
+  if (!exploredSet.has(id)) {
+    exploredSet.add(id);
+    exploredCount++;
+    updateProgress();
+    markLeafExplored(id);
+    showToast(SUCCESS_MSGS[Math.floor(Math.random() * SUCCESS_MSGS.length)]);
+
+    const ceciImg = document.getElementById('ceciImg');
+    ceciImg.src = em.ceciImage;
+
+    checkBonusUnlock();
+  }
+}
+
+function closeEmotion() {
+  document.getElementById('emotionOverlay').classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+function markLeafExplored(id) {
+  const leaf = document.querySelector(`.leaf[data-id="${id}"]`);
+  if (leaf) leaf.classList.add('explored');
+}
+
+// ============================
+// PROGRESS
+// ============================
+function updateProgress() {
+  document.getElementById('progressTxt').textContent = exploredCount;
+  document.getElementById('bonusCount').textContent = exploredCount;
+  const pct = (exploredCount / EMOTIONS.length) * 100;
+  document.getElementById('progressFill').style.width = pct + '%';
+}
+
+// ============================
+// BONUS
+// ============================
+function checkBonusUnlock() {
+  if (!bonusUnlocked && exploredCount >= 5) {
+    bonusUnlocked = true;
+    unlockBonus();
+  }
+}
+
+function unlockBonus() {
+  const box = document.getElementById('bonusBox');
+  box.classList.add('unlocked');
+  document.getElementById('bonusIcon').textContent = '🎁';
+  document.getElementById('bonusSub').textContent = '¡Toca para abrir tu BONUS!';
+  box.style.cursor = 'pointer';
+  showToast('🎁 ¡BONUS desbloqueado! Tócalo para abrirlo', 4000);
+}
+
+function setupBonusBox() {
+  document.getElementById('bonusBox').addEventListener('click', () => {
+    if (!bonusUnlocked) {
+      showToast('💜 Explora más emociones para desbloquear el BONUS');
+      return;
+    }
+    document.getElementById('bonusModalOverlay').classList.add('show');
+    document.body.style.overflow = 'hidden';
+  });
+}
+
+// ============================
+// MODALS SETUP
+// ============================
+function setupModals() {
+  document.getElementById('emotionClose').addEventListener('click', closeEmotion);
+  document.getElementById('cardCta').addEventListener('click', closeEmotion);
+  document.getElementById('emotionOverlay').addEventListener('click', e => {
+    if (e.target === e.currentTarget) closeEmotion();
+  });
+
+  document.getElementById('bonusModalClose').addEventListener('click', () => {
+    document.getElementById('bonusModalOverlay').classList.remove('show');
+    document.body.style.overflow = '';
+  });
+  document.getElementById('bonusModalOverlay').addEventListener('click', e => {
+    if (e.target === e.currentTarget) {
+      document.getElementById('bonusModalOverlay').classList.remove('show');
+      document.body.style.overflow = '';
+    }
+  });
+}
+
+// ============================
+// TOAST
+// ============================
+function showToast(msg, duration = 2600) {
+  const t = document.getElementById('toast');
+  clearTimeout(toastTimeout);
+  t.textContent = msg;
+  t.classList.add('show');
+  toastTimeout = setTimeout(() => t.classList.remove('show'), duration);
+}
+
+// ============================
+// START
+// ============================
+init();
+</script>
+</body>
+</html>
