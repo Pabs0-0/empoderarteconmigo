@@ -263,7 +263,7 @@ body {
 
   <!-- BADGE -->
   <div style="text-align:center;margin-bottom:8px;">
-    <span class="nivel-badge">🌟 Nivel 7 · Lección 2 · El Mundo de Pandora</span>
+    <span class="nivel-badge"> Nivel 7 · Lección 2 · El Mundo de Pandora</span>
   </div>
 
   <!-- INTRO -->
@@ -272,9 +272,9 @@ body {
       <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754633/ceci_writing_mgcju3.png" alt="Ceci escribiendo">
     </div>
     <div class="intro-text">
-      <span class="tag">🌟 Actividad · Embajadora</span>
+      <span class="tag"> Actividad · Embajadora</span>
       <h1>Tu primer plan como Embajadora</h1>
-      <p>En esta actividad vas a dar el primer paso para crear algo importante. <strong>No necesitas tener todo perfecto. Solo empezar.</strong> Pronto, en el siguiente nivel, desarrollarás esta idea con más profundidad. ✨</p>
+      <p>En esta actividad vas a dar el primer paso para crear algo importante. <strong>No necesitas tener todo perfecto. Solo empezar.</strong> Pronto, en el siguiente nivel, desarrollarás esta idea con más profundidad. </p>
     </div>
   </section>
 
@@ -284,14 +284,14 @@ body {
       <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754756/libro_qr5mnw.png" alt="Libro">
     </div>
     <div class="ant-text">
-      <div class="ant-tag">💡 ¿Qué harás hoy?</div>
+      <div class="ant-tag"> ¿Qué harás hoy?</div>
       <p>Hoy vas a crear un pequeño plan basado en algo que <em>te importa</em>. Es solo un primer borrador… tu idea puede crecer después. No hay respuestas incorrectas, solo tu perspectiva honesta.</p>
     </div>
   </section>
 
   <!-- PLAN FORM -->
   <section class="plan-section">
-    <div class="plan-header">🎮 Completa tu plan</div>
+    <div class="plan-header"> Completa tu plan</div>
 
     <!-- Progress dots -->
     <div class="progress-dots" id="progressDots">
@@ -355,11 +355,11 @@ body {
   </section>
 
   <!-- SUBMIT -->
-  <button class="submit-btn" id="submitBtn" onclick="submitPlan()">✨ Terminar mi plan</button>
+  <button class="submit-btn" id="submitBtn" onclick="submitPlan()"> Terminar mi plan</button>
 
   <!-- COMPLETION -->
   <div class="completion-card" id="completionCard">
-    <div class="comp-stars">🌟✨🌟✨🌟</div>
+    <div class="comp-stars"></div>
     <h2>¡GranDiosa! 👑</h2>
     <div class="comp-sub">Ya tienes el primer borrador de tu proyecto como Embajadora.</div>
 
@@ -369,13 +369,13 @@ body {
     </div>
 
     <div class="comp-teaser">
-      💡 En el <strong>Nivel 8</strong> desarrollarás esta idea usando el método <strong>L.I.D.E.R.A.R</strong>. Tu liderazgo está en construcción. ¡Sigue! 🚀
+       En el <strong>Nivel 8</strong> desarrollarás esta idea usando el método <strong>L.I.D.E.R.A.R</strong>. Tu liderazgo está en construcción. ¡Sigue! 🚀
     </div>
 
     <div class="comp-char">
       <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754477/ceci_pointing_l9mr0h.png" alt="Ceci apuntando">
     </div>
-    <button class="restart-btn" onclick="restartPlan()">🌱 Volver a intentarlo</button>
+    <button class="restart-btn" onclick="restartPlan()"> Volver a intentarlo</button>
   </div>
 
 </div>
@@ -392,10 +392,10 @@ const FIELD_LABELS = [
 ];
 
 const FEEDBACK_MSGS = [
-  ['✨ Observar el entorno es el primer paso del liderazgo.', '💡 Tu idea es importante.', '🌟 Sigue construyendo, vas muy bien.'],
-  ['✨ ¡Eso es liderazgo en acción!', '💡 Cada idea pequeña puede crecer mucho.', '🌟 Estás pensando como una Embajadora.'],
-  ['✨ Construir equipo es clave.', '💡 Con apoyo las ideas van más lejos.', '🌟 ¡Vas muy bien!'],
-  ['✨ Un paso concreto lo cambia todo.', '💡 El primer paso siempre es el más importante.', '🌟 ¡Ya casi tienes tu plan completo!'],
+  [' Observar el entorno es el primer paso del liderazgo.', '💡 Tu idea es importante.', '🌟 Sigue construyendo, vas muy bien.'],
+  [' ¡Eso es liderazgo en acción!', '💡 Cada idea pequeña puede crecer mucho.', '🌟 Estás pensando como una Embajadora.'],
+  [' Construir equipo es clave.', '💡 Con apoyo las ideas van más lejos.', '🌟 ¡Vas muy bien!'],
+  [' Un paso concreto lo cambia todo.', '💡 El primer paso siempre es el más importante.', '🌟 ¡Ya casi tienes tu plan completo!'],
 ];
 
 // ============================
@@ -451,13 +451,13 @@ function updateSubmitBtn() {
   const btn = document.getElementById('submitBtn');
   if (allFilled) {
     btn.classList.add('ready');
-    btn.textContent = '✨ Terminar mi plan';
+    btn.textContent = ' Terminar mi plan';
   } else {
     btn.classList.remove('ready');
     const remaining = fieldState.filter(Boolean).length;
     btn.textContent = remaining > 0
       ? `✨ Faltan ${4 - remaining} campo${4-remaining===1?'':'s'} por completar`
-      : '✨ Terminar mi plan';
+      : ' Terminar mi plan';
   }
 }
 

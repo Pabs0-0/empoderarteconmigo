@@ -367,15 +367,15 @@ body {
       <img src="https://res.cloudinary.com/dijezdfsr/image/upload/v1775754484/ceci_teaching_m5o8ln.png" alt="Ceci enseñando">
     </div>
     <div class="intro-text">
-      <span class="tag">📖 Lección 1 · Liderazgo Emocional</span>
-      <h1>👑 Tu estilo de liderazgo</h1>
-      <p>El liderazgo no es solo dar órdenes. Liderar es inspirar, cuidar, crear y usar tu voz. Hay muchas formas de ser líder, ¡y todas son válidas! Descubre cuáles te representan mejor. ✨</p>
+      <span class="tag"> Lección 1 · Liderazgo Emocional</span>
+      <h1> Tu estilo de liderazgo</h1>
+      <p>El liderazgo no es solo dar órdenes. Liderar es inspirar, cuidar, crear y usar tu voz. Hay muchas formas de ser líder, ¡y todas son válidas! Descubre cuáles te representan mejor. </p>
     </div>
   </section>
 
   <!-- LEADERSHIP CARDS -->
   <section class="cards-section">
-    <div class="sec-title">✨ ¿Cuál es tu estilo de liderazgo? · Selecciona los que te representan</div>
+    <div class="sec-title"> ¿Cuál es tu estilo de liderazgo? · Selecciona los que te representan</div>
 
     <div class="question-block">
       <p>Observa cada estilo y toca los que sientas que eres tú. <strong>¡Puedes elegir más de uno!</strong></p>
@@ -387,7 +387,7 @@ body {
 
   <!-- SELECTION FEEDBACK -->
   <div class="selection-feedback" id="selFeedback">
-    <div class="feedback-stars" id="fbStars">🌟✨🌟</div>
+    <div class="feedback-stars" id="fbStars"></div>
     <div class="feedback-text" id="fbText"></div>
     <div class="feedback-sub" id="fbSub"></div>
     <div class="selected-tags" id="selTags"></div>
@@ -418,35 +418,35 @@ body {
     </div>
 
     <div class="embajadora-item" style="animation-delay:0.05s">
-      <div class="emb-emoji">🏆</div>
+      <div class="emb-emoji"></div>
       <div class="emb-body">
         <div class="emb-name">Malala Yousafzai</div>
         <div class="emb-desc">Luchó por la educación de las niñas. Premio Nobel de Paz a los 17 años.</div>
       </div>
     </div>
     <div class="embajadora-item" style="animation-delay:0.12s">
-      <div class="emb-emoji">🌿</div>
+      <div class="emb-emoji"></div>
       <div class="emb-body">
         <div class="emb-name">Greta Thunberg</div>
         <div class="emb-desc">Inició el movimiento global de huelga climática desde los 15 años.</div>
       </div>
     </div>
     <div class="embajadora-item" style="animation-delay:0.19s">
-      <div class="emb-emoji">🚀</div>
+      <div class="emb-emoji"></div>
       <div class="emb-body">
         <div class="emb-name">Diana Trujillo</div>
         <div class="emb-desc">Caleña, directora de Vuelo Artemis II en la NASA.</div>
       </div>
     </div>
     <div class="embajadora-item" style="animation-delay:0.26s">
-      <div class="emb-emoji">🏃</div>
+      <div class="emb-emoji"></div>
       <div class="emb-body">
         <div class="emb-name">Caterine Ibargüen</div>
         <div class="emb-desc">Campeona olímpica de triple salto. Orgullo de Colombia y del mundo.</div>
       </div>
     </div>
     <div class="embajadora-item" style="animation-delay:0.33s">
-      <div class="emb-emoji">🎨</div>
+      <div class="emb-emoji"></div>
       <div class="emb-body">
         <div class="emb-name">Shakira</div>
         <div class="emb-desc">Artista y fundadora de la Fundación Pies Descalzos para la educación.</div>
@@ -454,7 +454,7 @@ body {
     </div>
 
     <div class="bonus-you">
-      <span class="you-emoji">✨</span>
+      <span class="you-emoji"></span>
       <p><span>Tú:</span> el primer paso de tu liderazgo empieza aquí, en Pandora.<br>Cada una de ellas también comenzó con un primer paso. ¡Este es el tuyo!</p>
     </div>
   </div>
@@ -548,7 +548,7 @@ function toggleCard(id, card, lt) {
   } else {
     selectedIds.add(id);
     card.classList.add('selected');
-    showToast('✨ ' + lt.feedbackMsg);
+    showToast(' ' + lt.feedbackMsg);
     spawnBurst(card);
   }
   updateFeedback();
@@ -570,7 +570,7 @@ function updateFeedback() {
   const combo = FEEDBACK_COMBOS[Math.min(count, 5)];
   document.getElementById('fbText').textContent = combo[0];
   document.getElementById('fbSub').textContent  = combo[1];
-  document.getElementById('fbStars').textContent = count >= 3 ? '🌟✨🌟✨🌟' : '🌟✨🌟';
+  document.getElementById('fbStars').textContent = count >= 3 ? '' : '';
 
   // Tags
   const tagsWrap = document.getElementById('selTags');
